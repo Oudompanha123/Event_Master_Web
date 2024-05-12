@@ -1,0 +1,1 @@
+export const NavbarComponent = () => <p>Dashbaord navbar</p>

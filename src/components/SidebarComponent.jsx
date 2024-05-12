@@ -1,0 +1,1 @@
+export const SidebarComponent = () => <p>Dashboard Sidebar</p>
