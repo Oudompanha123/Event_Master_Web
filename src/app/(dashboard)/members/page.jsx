@@ -1,3 +1,3 @@
-const Page = () => <p>Member page</p>
+const Page = () => <p>Member pages</p>
 
 export default Page
