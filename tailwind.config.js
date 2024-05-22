@@ -12,6 +12,17 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors: {
+        primary: {
+          DEFAULT: '#7939EF',
+        },
+        default: {
+          DEFAULT: '#344054'
+        },
+      },
+      fontFamily: {
+        jakarta: ['Plus Jakarta Sans', 'sans-serif']
+      },
     },
   },
   plugins: [],

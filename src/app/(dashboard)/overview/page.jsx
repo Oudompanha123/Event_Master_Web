@@ -1,3 +1,9 @@
-const Page = () => <p>dashbaord overview page</p>
+const Page = () => {
+    return (
+        <>
+            overview page
+        </>
+    )
+}
 
 export default Page
