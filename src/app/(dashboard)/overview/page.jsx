@@ -1,9 +1,3 @@
-const Page = () => {
-    return (
-        <>
-            overview page
-        </>
-    )
-}
+const Page = () => <p>Overview page</p>
 
 export default Page
