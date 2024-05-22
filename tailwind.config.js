@@ -19,10 +19,7 @@ module.exports = {
         default: {
           DEFAULT: '#344054'
         },
-      },
-      fontFamily: {
-        jakarta: ['Plus Jakarta Sans', 'sans-serif']
-      },
+      }
     },
   },
   plugins: [],

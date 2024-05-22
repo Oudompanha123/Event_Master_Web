@@ -1,9 +1,9 @@
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "../globals.css";
 import { SidebarComponent } from "@/components/SidebarComponent";
 import { NavbarComponent } from "@/components/NavbarComponent";
 
-const inter = Inter({ subsets: ["latin"] });
+const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export const metadata = {
     title: "Create Next App",
@@ -13,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={jakarta.className}>
                 <div className="flex">
                     <SidebarComponent className={`w-[20%]`} />
                     <div className="w-[80%]">
