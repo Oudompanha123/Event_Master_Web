@@ -12,13 +12,19 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      borderWidth: {
+        '1px': '1px',
+      },
+      borderRadius: {
+        'radiusUi': '15px',
+      },
       colors: {
-        primary: {
-          DEFAULT: '#7939EF',
-        },
-        default: {
-          DEFAULT: '#344054'
-        },
+        "purple-text": "#7939EF",
+        "primary-text": "#344054",
+        "blueUi": "#551FFF",
+        "greenUi": "#038446",
+        "redUi": "#E74C3C",
+        "greyUi": "#888888"
       }
     },
   },
