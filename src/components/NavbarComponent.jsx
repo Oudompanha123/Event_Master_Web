@@ -28,7 +28,7 @@ export const NavbarComponent = ({ className }) => {
                 <div className="bg-[#F7F9FB] p-3.5 rounded-full">
                     <Notification size="24" color="#344054" variant="Bulk" />
                 </div>
-                <div className="flex bg-[#F7F9FB] w-[157px] gap-2 p-4 rounded-md">
+                <div className="flex bg-[#F7F9FB] w-[157px] gap-2 p-4 rounded-full">
                     <AddSquare size="24" color="#344054" variant="Bulk" />
                     <p>New Event</p>
                 </div>
