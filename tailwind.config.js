@@ -7,10 +7,20 @@ module.exports = {
   ],
   theme: {
     extend: {
+      container: {
+        center: true,
+        screens: {
+          sm: '640px',
+          md: '728px',
+          lg: '984px',
+          xl: '1380px'
+        }
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "pattern": "url('/images/pattern.jpg')"
       },
       borderWidth: {
         '1px': '1px',
