@@ -7,9 +7,8 @@ import { usePathname } from "next/navigation";
 
 export const NavbarComponent = () => {
     const pathname = usePathname();
-    console.log(pathname)
     return (
-        <div className="flex justify-between py-6">
+        <div className="flex justify-between py-6 container">
             <Link className="flex items-center gap-6" href={'/'}>
                 <Image src={image} height={64} width={64} />
                 <h2 className="text-2xl font-bold">EventMaster</h2>

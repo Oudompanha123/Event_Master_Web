@@ -1,18 +1,17 @@
 import Image from "next/image";
-import { CategoryCardComponent } from "./_componenets/CategoryCardComponent";
 import { EventCardComponent } from "./_componenets/EventCardComponent";
-import { NavbarComponent } from "./_componenets/NavbarComponent";
 import skiImage from "../../public/images/ski.jpg"
 import chillImage from "../../public/images/sea-chill.jpg"
 import festivalImage from "../../public/images/festival.jpg"
 import racingImage from "../../public/images/racing.jpg"
 import conferenceImage from "../../public/images/conference.jpg"
 import { CategoryCardListComponent } from "./_componenets/CategoryCardListComponent";
+import { TitleComponent } from "./_componenets/TitleComponent";
+import { CTAComponent } from "./_componenets/CTAComponent";
 
 export default function Home() {
   return (
     <div className="container">
-      <NavbarComponent />
       {/* hero section */}
       <section className="bg-pattern bg-contain relative">
         <div className="text-center space-y-12 mt-16">
@@ -23,7 +22,10 @@ export default function Home() {
               Planning and Exquisite Execution.
             </p>
           </div>
-          <button className="bg-purple-text text-white px-8 py-4 rounded-full text-xl font-semibold">Let's Explore</button>
+          <button className="bg-purple-text text-white px-8 py-4 rounded-full text-xl font-semibold relative">
+            Let's Explore
+            {/* <span class="animate-ping absolute top-0 left-0 h-full w-full rounded-full bg-purple-text opacity-75"></span> */}
+          </button>
         </div>
         <div className="grid grid-cols-5 gap-6">
           <Image src={festivalImage} className="rounded-3xl relative -top-32 h-[450px] object-cover" />
@@ -50,11 +52,16 @@ export default function Home() {
       </section>
       {/* event section */}
       <section>
-        <div className="grid grid-cols-3 gap-8">
+        <TitleComponent title="Conference" />
+        <div className="grid grid-cols-3 gap-8 mt-8">
           <EventCardComponent />
           <EventCardComponent />
           <EventCardComponent />
         </div>
+      </section>
+      {/* cta section */}
+      <section>
+        <CTAComponent />
       </section>
     </div>
   );

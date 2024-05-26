@@ -10,8 +10,6 @@ export const CategoryCardListComponent = () => {
             <Swiper
                 spaceBetween={24}
                 slidesPerView={2.5}
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => console.log(swiper)}
             >
                 <SwiperSlide>
                     <CategoryCardComponent />

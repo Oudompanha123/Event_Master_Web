@@ -34,7 +34,8 @@ module.exports = {
         "blueUi": "#551FFF",
         "greenUi": "#038446",
         "redUi": "#E74C3C",
-        "greyUi": "#888888"
+        "greyUi": "#888888",
+        "softwhiteUi": "#f7f7f7"
       }
     },
   },
