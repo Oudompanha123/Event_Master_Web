@@ -5,12 +5,12 @@ export const AgendaComponent = ({ time, title, description }) => {
                 <div className="w-1 bg-green-500 h-full"></div>
             </div>
             <div className="space-y-4 w-full">
-                <p className="font-light">3:00 PM - 4:00 PM</p>
-                <p className="font-medium text-xl">Guest Registeration</p>
+                <p className="font-light text-sm lg:text-base">3:00 PM - 4:00 PM</p>
+                <p className="font-medium lg:text-xl">Guest Registeration</p>
                 {description &&
                     <div>
                         <hr />
-                        <p className="w-2/3 font-light">
+                        <p className="w-2/3 font-light text-sm lg:text-base">
                             Fun game & activity booths all around,food & drinks on offer,live Dj,test rides,Vespa club
                             Cambodia signup & Card collection
                         </p>
