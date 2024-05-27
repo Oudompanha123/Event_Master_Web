@@ -5,10 +5,12 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: false,
   theme: {
     extend: {
       container: {
         center: true,
+        padding: "1rem",
         screens: {
           sm: '640px',
           md: '728px',
@@ -39,5 +41,10 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  daisyui: {
+    themes: ["light"],
+  },
+  plugins: [
+    require('daisyui'),
+  ],
 };
