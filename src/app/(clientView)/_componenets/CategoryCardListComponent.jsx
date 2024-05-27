@@ -9,7 +9,17 @@ export const CategoryCardListComponent = () => {
         <div>
             <Swiper
                 spaceBetween={24}
-                slidesPerView={2.5}
+                breakpoints={{
+                    640: {
+                        slidesPerView: 1,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 2.5
+                    }
+                }}
             >
                 <SwiperSlide>
                     <CategoryCardComponent />

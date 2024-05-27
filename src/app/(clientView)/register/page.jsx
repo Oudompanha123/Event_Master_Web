@@ -6,9 +6,9 @@ const Page = () => {
             <RedirectBackComponent link={'/'} />
             <div className="p-6 rounded-3xl border-2 border-slate-50">
                 <h2 className="font-bold text-2xl mb-8">Register Form</h2>
-                <form action="" className="space-y-6">
+                <form action="" className="space-y-4 lg:space-y-6">
                     {/* first row  */}
-                    <div className="flex w-full gap-16">
+                    <div className="flex flex-col lg:flex-row w-full gap-8 lg:gap-16">
                         <div className="flex flex-col w-full gap-2">
                             <label className="font-semibold" htmlFor="">Full Name</label>
                             <input className="px-6 rounded-3xl py-5 border-2 border-softwhiteUi w-full" type="text" placeholder="Enter full name" />
@@ -23,7 +23,7 @@ const Page = () => {
                         </div>
                     </div>
                     {/* second row  */}
-                    <div className="flex w-full gap-16">
+                    <div className="flex flex-col lg:flex-row w-full gap-8 lg:gap-16">
                         <div className="flex flex-col w-full gap-2">
                             <label className="font-semibold" htmlFor="">Phone Number</label>
                             <input className="px-6 rounded-3xl py-5 border-2 border-softwhiteUi w-full" type="tel" placeholder="Enter phone number" />
@@ -34,7 +34,7 @@ const Page = () => {
                         </div>
                     </div>
                     {/* third row  */}
-                    <div className="flex w-full gap-16">
+                    <div className="flex flex-col lg:flex-row w-full gap-8 lg:gap-16">
                         <div className="flex flex-col w-full gap-2">
                             <label className="font-semibold" htmlFor="">Company Name</label>
                             <input className="px-6 rounded-3xl py-5 border-2 border-softwhiteUi w-full" type="text" placeholder="Enter company name" />
@@ -45,7 +45,7 @@ const Page = () => {
                         </div>
                     </div>
                     <div className="w-full text-end">
-                        <button className="rounded-full px-8 py-4 bg-purple-text text-white font-bold">Submit</button>
+                        <button className="rounded-full text-sm lg:text-base px-8 py-4 bg-purple-text text-white font-bold">Submit</button>
                     </div>
                 </form>
             </div>
