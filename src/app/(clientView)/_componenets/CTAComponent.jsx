@@ -1,6 +1,6 @@
 import Image from "next/image"
-import haloEmoji from "../../../public/images/halo-emoji.png"
-import sunglassEmoji from "../../../public/images/sunglass-emoji.png"
+import haloEmoji from "../../../../public/images/halo-emoji.png"
+import sunglassEmoji from "../../../../public/images/sunglass-emoji.png"
 
 export const CTAComponent = () => {
     return (

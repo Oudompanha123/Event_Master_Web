@@ -1,5 +1,5 @@
 import Image from "next/image"
-import carImage from "../../../public/images/racing-car.jpg"
+import carImage from "../../../../public/images/racing-car.jpg"
 
 export const CategoryCardComponent = ({ url }) => {
     return (

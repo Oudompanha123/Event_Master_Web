@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
-import image from "../../../public/images/event-master-logo.png"
-import racing from "../../../public/images/racing-car.jpg"
+import image from "../../../../public/images/event-master-logo.png"
+import racing from "../../../../public/images/racing-car.jpg"
 
 export const EventCardComponent = () => {
     return (

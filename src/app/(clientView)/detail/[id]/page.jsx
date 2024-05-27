@@ -1,7 +1,7 @@
-import { RedirectBackComponent } from "@/app/_componenets/RedirectButtonComponent"
+import { RedirectBackComponent } from "@/app/(clientView)/_componenets/RedirectButtonComponent"
 import Image from "next/image"
-import demoImage from "../../../../public/images/sea-chill.jpg"
-import { AgendaComponent } from "@/app/_componenets/AgendaComponent"
+import demoImage from "../../../../../public/images/sea-chill.jpg"
+import { AgendaComponent } from "@/app/(clientView)/_componenets/AgendaComponent"
 import Link from "next/link"
 
 const Page = () => {

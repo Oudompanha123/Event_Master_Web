@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import image from "../../../public/images/event-master-logo.png"
+import image from "../../../../public/images/event-master-logo.png"
 import { usePathname } from "next/navigation";
 
 export const NavbarComponent = () => {
