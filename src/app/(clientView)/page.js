@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { EventCardComponent } from "./_componenets/EventCardComponent";
-import skiImage from "../../public/images/ski.jpg"
-import chillImage from "../../public/images/sea-chill.jpg"
-import festivalImage from "../../public/images/festival.jpg"
-import racingImage from "../../public/images/racing.jpg"
-import conferenceImage from "../../public/images/conference.jpg"
+import skiImage from "../../../public/images/ski.jpg"
+import chillImage from "../../../public/images/sea-chill.jpg"
+import festivalImage from "../../../public/images/festival.jpg"
+import racingImage from "../../../public/images/racing.jpg"
+import conferenceImage from "../../../public/images/conference.jpg"
 import { CategoryCardListComponent } from "./_componenets/CategoryCardListComponent";
 import { TitleComponent } from "./_componenets/TitleComponent";
 import { CTAComponent } from "./_componenets/CTAComponent";
@@ -23,7 +23,7 @@ export default function Home() {
             </p>
           </div>
           <button className="bg-purple-text text-white px-8 py-4 rounded-full text-xl font-semibold relative">
-            Let's Explore
+            <a href="#content">Let's Explore</a>
             {/* <span class="animate-ping absolute top-0 left-0 h-full w-full rounded-full bg-purple-text opacity-75"></span> */}
           </button>
         </div>
@@ -51,7 +51,7 @@ export default function Home() {
         <CategoryCardListComponent />
       </section>
       {/* event section */}
-      <section>
+      <section id="content">
         <TitleComponent title="Conference" />
         <div className="grid grid-cols-3 gap-8 mt-8">
           <EventCardComponent />
