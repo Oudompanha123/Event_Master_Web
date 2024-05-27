@@ -1,5 +1,7 @@
 import Link from "next/link"
-
+import googleIcon from "../../../../public/icons/google.png"
+import facebookIcon from "../../../../public/icons/facebook.png"
+import Image from "next/image"
 
 export const FooterComponent = () => {
     return (
@@ -13,9 +15,19 @@ export const FooterComponent = () => {
             <hr />
             <div className="flex justify-between">
                 <p className="font-light">@Copyright 2024 EventMaster</p>
-                <div className="flex">
-                    <p>facebook</p>
-                    <p>google</p>
+                <div className="flex gap-4">
+                    <Image
+                        src={facebookIcon}
+                        className="p-1 rounded-full border-1px border-greyUi"
+                        width={32}
+                        height={32}
+                    />
+                    <Image
+                        src={googleIcon}
+                        className="p-1 rounded-full border-1px border-greyUi"
+                        width={32}
+                        height={32}
+                    />
                 </div>
             </div>
         </footer>
