@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
                     <SidebarComponent className={`w-[20%]`} />
                     <div className="w-[80%]">
                         <NavbarComponent />
-                        <div className="px-[52px] py-[24px]">
+                        <div className="px-[52px] py-[24px] bg-backgroundUi">
                             {children}
                         </div>
                     </div>

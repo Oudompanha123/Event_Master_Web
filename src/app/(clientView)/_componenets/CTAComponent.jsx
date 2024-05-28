@@ -13,12 +13,14 @@ export const CTAComponent = () => {
                 className="absolute top-10 right-80 hidden xl:block"
                 width={40}
                 height={40}
+                alt="icon"
             />
             <Image
                 src={sunglassEmoji}
                 className="absolute bottom-0 left-80 hidden xl:block"
                 width={114}
                 height={114}
+                alt="icon"
             />
         </div>
     )

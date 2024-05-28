@@ -11,7 +11,7 @@ export const NavbarComponent = () => {
     return (
         <div className="flex justify-between py-6 container items-center sticky top-0 z-50 bg-white">
             <Link className="flex items-center gap-6" href={'/'}>
-                <Image src={image} height={64} width={64} />
+                <Image src={image} height={64} width={64} alt="logoImage" />
                 <h2 className="text-2xl hidden lg:block font-bold">EventMaster</h2>
             </Link>
             <div className="gap-8 items-center hidden lg:flex">

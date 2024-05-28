@@ -7,14 +7,14 @@ export const EventCardComponent = () => {
     return (
         <div className="shadow-md rounded-3xl">
             <div className="relative">
-                <Image src={racing} className="rounded-t-3xl" />
+                <Image src={racing} className="rounded-t-3xl" alt="racingImage" />
                 <div className="absolute top-0 right-0 p-6 ">
                     <span className="bg-white text-sm lg:text-base rounded-full py-2 px-4 font-bold text-blueUi">Open</span>
                 </div>
             </div>
             <div className="bg-white px-6 py-8 rounded-b-3xl space-y-4 h-auto">
                 <div className="flex gap-3 items-center">
-                    <Image src={image} height={40} width={40} />
+                    <Image src={image} height={40} width={40} alt="orgImage" />
                     <p className="text-sm lg:text-base">Daisy Corp</p>
                 </div>
                 <div className="flex text-sm lg:text-base justify-between">

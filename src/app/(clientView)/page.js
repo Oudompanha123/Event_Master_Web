@@ -27,17 +27,17 @@ export default function Home() {
           </button>
         </div>
         <div className="hidden lg:grid grid-cols-5 gap-6">
-          <Image src={festivalImage} className="rounded-3xl relative -top-32 h-[450px] object-cover" />
+          <Image width="auto" height="auto" src={festivalImage} className="rounded-3xl relative -top-32 h-[450px] object-cover" alt="festivalImage" />
           <div className="flex items-end">
-            <Image src={conferenceImage} className="rounded-3xl h-[350px] object-cover" />
+            <Image width="auto" height="auto" src={conferenceImage} className="rounded-3xl h-[350px] object-cover" alt="conferenceImage" />
           </div>
           <div className="flex items-end">
-            <Image src={chillImage} className="rounded-3xl h-1/2 object-cover" />
+            <Image width="auto" height="auto" src={chillImage} className="rounded-3xl h-1/2 object-cover" alt="chillImage" />
           </div>
           <div className="flex items-end">
-            <Image src={skiImage} className="rounded-3xl h-[350px] object-cover" />
+            <Image width="auto" height="auto" src={skiImage} className="rounded-3xl h-[350px] object-cover" alt="skiImage" />
           </div>
-          <Image src={racingImage} className="rounded-3xl relative -top-32 h-[450px] object-cover" />
+          <Image width="auto" height="auto" src={racingImage} className="rounded-3xl relative -top-32 h-[450px] object-cover" alt="racingImage" />
         </div>
         <div className="hidden lg:block bg-gradient-to-t from-white to-transparent h-[200px] w-full absolute -bottom-0 left-0"></div>
       </section>

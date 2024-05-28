@@ -2,14 +2,14 @@
 
 import Image from "next/image"
 import logo from "../../public/images/event-master-logo.png"
-import { AddSquare, Notification } from "iconsax-react"
+import { AddSquare } from "iconsax-react"
 import { usePathname } from "next/navigation"
 import { NotificationMenu } from "./NotificationMenu"
 
 export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
     return (
-        <div className={`${className} sticky top-0 bg-white flex justify-between items-center py-6 px-14 border-b-[1px]`}>
+        <div className={`${className} sticky top-0 z-50 bg-white flex justify-between items-center py-6 px-14 border-b-[1px]`}>
             <h2 className="text-2xl font-semibold">
                 {pathname === '/overview' ?
                     'Overview' :
@@ -30,8 +30,8 @@ export const NavbarComponent = ({ className }) => {
                     {/* <Notification size="24" color="#344054" variant="Bulk" /> */}
                     <NotificationMenu />
                 </div>
-                <div className="flex bg-[#F7F9FB] w-[157px] gap-2 p-4 rounded-full">
-                    <AddSquare size="24" color="#344054" variant="Bulk" />
+                <div className="flex bg-[#F7F9FB] gap-2 py-4 px-6 rounded-full">
+                    <AddSquare size="24" color="#344054" variant="Bold" />
                     <p>New Event</p>
                 </div>
                 <div className="flex gap-4">

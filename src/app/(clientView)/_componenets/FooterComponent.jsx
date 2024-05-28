@@ -21,12 +21,14 @@ export const FooterComponent = () => {
                         className="p-1 rounded-full border-1px border-greyUi"
                         width={32}
                         height={32}
+                        alt="facebook-icon"
                     />
                     <Image
                         src={googleIcon}
                         className="p-1 rounded-full border-1px border-greyUi"
                         width={32}
                         height={32}
+                        alt="google-icon"
                     />
                 </div>
             </div>

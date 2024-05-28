@@ -30,6 +30,7 @@ module.exports = {
       },
       borderRadius: {
         'radiusUi': '15px',
+        'radius64': '64px'
       },
       colors: {
         "purple-text": "#7939EF",
