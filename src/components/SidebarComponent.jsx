@@ -13,7 +13,7 @@ export const SidebarComponent = ({ className }) => {
     const [click, setClick] = useState(false);
 
     return (
-        <div className={`${className} space-y-6 p-8 border-r-1px`}>
+        <div className={`${className} space-y-6 p-8 border-r-1px sticky top-0 h-screen`}>
             <div>
                 <Image src={logo} height={100} width={100} />
             </div>
