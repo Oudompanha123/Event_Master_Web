@@ -9,7 +9,7 @@ import { HambergerMenu } from "iconsax-react";
 export const NavbarComponent = () => {
     const pathname = usePathname();
     return (
-        <div className="flex justify-between py-6 container items-center">
+        <div className="flex justify-between py-6 container items-center sticky top-0 z-50 bg-white">
             <Link className="flex items-center gap-6" href={'/'}>
                 <Image src={image} height={64} width={64} />
                 <h2 className="text-2xl hidden lg:block font-bold">EventMaster</h2>
