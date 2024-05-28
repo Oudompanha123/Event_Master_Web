@@ -9,7 +9,7 @@ const Page = () => {
         <div className="container">
             <RedirectBackComponent link={'/'} />
             <section className="p-6 rounded-3xl border-2 border-slate-50">
-                <Image src={demoImage} className="h-[350px] lg:h-[650px] object-cover rounded-2xl" />
+                <Image src={demoImage} className="h-[350px] lg:h-[650px] object-cover rounded-2xl" alt="blog-image" />
                 <div className="space-y-6 mt-6">
                     <div className="flex justify-between items-center">
                         <h2 className="text-xl lg:text-2xl font-semibold">Design Skill & Tech Session</h2>
