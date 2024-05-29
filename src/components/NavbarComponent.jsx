@@ -9,8 +9,8 @@ import { NotificationMenu } from "./NotificationMenu"
 export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
     return (
-        <div className={`${className} sticky top-0 z-50 bg-white flex justify-between items-center py-6 px-14 border-b-[1px]`}>
-            <h2 className="text-2xl font-semibold">
+        <div className={`${className} sticky top-0 z-50 bg-white flex justify-between items-center py-4 px-14 border-b-[1px]`}>
+            <h2 className="text-xl font-semibold">
                 {pathname === '/overview' ?
                     'Overview' :
                     pathname === '/members' ?
@@ -30,14 +30,14 @@ export const NavbarComponent = ({ className }) => {
                     {/* <Notification size="24" color="#344054" variant="Bulk" /> */}
                     <NotificationMenu />
                 </div>
-                <div className="flex bg-[#F7F9FB] gap-2 py-4 px-6 rounded-full">
+                <div className="flex items-center bg-[#F7F9FB] gap-2 py-4 px-6 rounded-full">
                     <AddSquare size="24" color="#344054" variant="Bold" />
-                    <p>New Event</p>
+                    <p className="text-sm">New Event</p>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex items-center gap-4">
                     <div>
-                        <p className="font-medium text-lg">Thomas Brown</p>
-                        <p>ThomasNikola@gmail.com</p>
+                        <p className="font-medium">Thomas Brown</p>
+                        <p className="text-sm">ThomasNikola@gmail.com</p>
                     </div>
                     <div className="w-[48px] h-48px]">
                         <Image src={logo} height={48} width={48} />

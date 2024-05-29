@@ -14,16 +14,16 @@ const Page = () => {
                 <OverviewCardComponent />
             </section>
             {/* second row */}
-            <section className="flex gap-8">
-                <div className=" bg-white w-full h-auto p-6 rounded-3xl space-y-6">
-                    <h2 className="text-2xl font-bold">Total Event By Category</h2>
+            <section className="flex gap-8 w-full">
+                <div className=" bg-white w-1/2 h-auto p-6 rounded-3xl space-y-6">
+                    <h2 className="text-xl font-semibold">Total Event By Category</h2>
                     <div className="p-6 border-2 border-[#E2E8F0] rounded-3xl">
                         <BarChartComponent />
                     </div>
                 </div>
-                <div className="rounded-3xl relative bg-[#7B61FF] space-y-8 p-8 overflow-hidden">
+                <div className="w-1/2 rounded-3xl relative bg-[#7B61FF] space-y-8 p-8 overflow-hidden">
                     <h2 className="text-white text-3xl font-bold w-4/5">Let's manage your event with us</h2>
-                    <p className="text-lg font-medium text-white w-4/5">
+                    <p className="font-medium text-white w-4/5">
                         Create fast, manage fast.Create fast,
                         manage fast.Create fast, manage
                         fast.Create fast, manage fast
@@ -39,16 +39,16 @@ const Page = () => {
             <section>
                 <div className="space-y-8 rounded-3xl p-6 border-2 border-slate-100 bg-white">
                     <div className="flex justify-between items-center">
-                        <h2 className="text-2xl font-semibold">Event Category</h2>
+                        <h2 className="text-xl font-semibold">Event Category</h2>
                         <Link href={'#'}>
                             <button className="border-1px border-purple-text text-purple-text rounded-full px-5 py-3 flex items-center space-x-3">
                                 <AddSquare size="20" color="#8C59FE" variant="Bold" />
-                                <p>New Category</p>
+                                <p className="text-sm">New Category</p>
                             </button>
                         </Link>
                     </div>
                     <div className="overflow-x-auto space-y-3">
-                        <div className="grid grid-cols-5 px-6 py-7 rounded-2xl border-2 border-slate-50 uppercase font-semibold">
+                        <div className="lg:text-xs xl:text-sm grid grid-cols-5 px-6 py-7 rounded-2xl border-2 border-slate-50 uppercase font-semibold">
                             <span>No</span>
                             <span>Name</span>
                             <span>Created at</span>
@@ -56,7 +56,7 @@ const Page = () => {
                             <span>Action</span>
                         </div>
                         {userData.data.map((x, index) => (
-                            <div key={index} className={`grid grid-cols-5 px-6 py-5 rounded-2xl border-2 border-slate-50 even:bg-softwhiteUi odd:bg-white`}>
+                            <div key={index} className={`lg:text-xs xl:text-sm grid grid-cols-5 px-6 py-5 rounded-2xl border-2 border-slate-50 even:bg-softwhiteUi odd:bg-white`}>
                                 <span className="flex items-center">{index + 1}</span>
                                 <span className="flex items-center">{x.name}</span>
                                 <span className="flex items-center">{x.gender}</span>

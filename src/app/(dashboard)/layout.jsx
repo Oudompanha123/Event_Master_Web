@@ -15,8 +15,8 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body className={jakarta.className}>
                 <div className="flex">
-                    <SidebarComponent className={`w-[20%]`} />
-                    <div className="w-[80%]">
+                    <SidebarComponent className={`w-[17%]`} />
+                    <div className="w-[83%]">
                         <NavbarComponent />
                         <div className="px-[52px] py-[24px] bg-backgroundUi">
                             {children}

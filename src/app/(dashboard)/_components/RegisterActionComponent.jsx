@@ -6,7 +6,7 @@ export const RegisterActionComponent = () => {
     return (
         <div className="flex gap-3">
             <div>
-                <button className="px-5 py-3 bg-greenUi text-white rounded-full text-sm" onClick={() => document.getElementById('my_modal_3').showModal()}>Approve</button>
+                <button className="px-5 py-3 bg-greenUi text-white rounded-full lg:text-xs xl:text-sm" onClick={() => document.getElementById('my_modal_3').showModal()}>Approve</button>
                 <dialog id="my_modal_3" className="modal">
                     <div className="modal-box w-[362px]">
                         <form method="dialog">
@@ -22,7 +22,7 @@ export const RegisterActionComponent = () => {
                 </dialog>
             </div>
             <div>
-                <button className="px-5 py-3 bg-redUi text-white rounded-full text-sm" onClick={() => document.getElementById('my_modal_4').showModal()}>Reject</button>
+                <button className="px-5 py-3 bg-redUi text-white rounded-full lg:text-xs xl:text-sm" onClick={() => document.getElementById('my_modal_4').showModal()}>Reject</button>
                 <dialog id="my_modal_4" className="modal">
                     <div className="modal-box w-[362px]">
                         <form method="dialog">
