@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  padding: 0;
+  margin: 0;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -16,7 +21,13 @@
   }
 }
 
+.table-row-gap > tbody > tr:not(:last-child) {
+  margin-bottom: 32px; /* Adjust this value to change the gap */
+  display: block;
+}
+
 body {
+  scroll-behavior: smooth;
   color: #344054;
   /* color: rgb(var(--foreground-rgb));
   background: linear-gradient(
