@@ -1,6 +1,6 @@
 export const AgendaComponent = ({ time, title, description }) => {
     return (
-        <div className="flex rounded-3xl border-2 border-slate-50 p-5 odd:bg-softwhiteUi even:bg-white">
+        <div className="flex rounded-3xl border-1px border-greyUi p-5 odd:bg-softwhiteUi even:bg-white">
             <div className="px-4">
                 <div className="w-1 bg-green-500 h-full"></div>
             </div>
