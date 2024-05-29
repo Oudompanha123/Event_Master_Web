@@ -22,7 +22,7 @@ export const DeleteComponent = () => {
             </form>
             {/* <img className="mx-auto" src="/images/accept.svg" alt="accept-image" /> */}
             <img
-              src="/images/photo_2024-05-28_10-00-33.jpg"
+              src="/images/image 231.svg"
               className=" w-174.4px] h-[197.76px] m-auto "
               alt=""
             />
