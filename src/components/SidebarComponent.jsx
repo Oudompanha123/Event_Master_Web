@@ -35,7 +35,7 @@ export const SidebarComponent = ({ className }) => {
                 ))}
                 {/* dropdown sidebar  */}
                 <ul className={`menu p-0 w-ful cursor-pointer rounded-radiusUi`}>
-                    <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-center xl:justify-start items-center gap-3 rounded-radiusUi px-4 py-3 ${pathname === "/organization-profile" || pathname === "/user-profile" && "text-white bg-purple-text"}`}>
+                    <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-center xl:justify-start items-center gap-3 rounded-radiusUi px-4 py-3 ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`}>
                         <Setting2 size="20" color={`${pathname === "/organization-profile" || pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                         <p className={`text-sm hidden xl:block font-normal ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white" : 'text-primary-text'}`}>Account Setting</p>
                     </h2>

@@ -39,8 +39,13 @@ export const BarChartComponent = () => {
                 grid: {
                     display: false
                 }
-            }
-        }
+            },
+        },
+        plugins: {
+            legend: {
+                display: false,
+            },
+        },
     }
 
     return (

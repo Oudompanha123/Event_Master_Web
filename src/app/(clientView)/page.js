@@ -16,13 +16,13 @@ export default function Home() {
       <section className="bg-pattern bg-cover md:bg-contain relative">
         <div className="text-center space-y-12 mt-16">
           <div className="space-y-8">
-            <h1 className="font-bold text-5xl md:text-6xl lg:text-7xl w-full lg:w-3/4 2xl:w-1/2 mx-auto">Bringing everyone all together</h1>
-            <p className="text-sm md:text-base w-full md:w-3/4 lg:w-2/3 xl:w-1/3 mx-auto font-light">Unite, Celebrate, Create: Bringing Everyone Together
+            <h1 className="!leading-tight font-bold text-5xl md:text-6xl lg:text-7xl w-full lg:w-3/4 2xl:w-1/2 mx-auto">Bringing everyone all together</h1>
+            <p className="text-sm md:text-base w-full md:w-3/4 lg:w-2/3 xl:w-1/3 mx-auto">Unite, Celebrate, Create: Bringing Everyone Together
               for Unforgettable Events, Perfectly Realized with Seamless
               Planning and Exquisite Execution.
             </p>
           </div>
-          <button className="bg-purple-text text-white px-8 py-4 rounded-full text-base lg:text-xl font-semibold relative">
+          <button className="bg-purple-text text-white px-8 py-4 rounded-full text-base lg:text-lg font-semibold relative">
             <a href="#content">Let's Explore</a>
           </button>
         </div>
@@ -45,7 +45,7 @@ export default function Home() {
       <section className="space-y-12 py-32">
         <div className="text-center space-y-8">
           <h2 className="text-4xl lg:text-5xl font-semibold w-full sm:w-2/3 lg:w-1/2 mx-auto">Find event base on category you love.</h2>
-          <p className="text-sm md:text-base font-light">explore new thing by gathering with people.</p>
+          <p className="text-sm md:text-base">explore new thing by gathering with people.</p>
         </div>
         <CategoryCardListComponent />
       </section>

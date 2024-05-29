@@ -23,7 +23,7 @@ const Page = () => {
                 <div className="h-20"></div>
             </section>
             <section className="relative lg:-top-40">
-                <h2 className="text-4xl lg:text-6xl font-semibold text-center">Our Feature</h2>
+                <h2 className="text-4xl lg:text-6xl font-semibold text-center">Our Features</h2>
                 <div className="grid grid-col-1 lg:grid-cols-2 gap-8 mt-6 relative">
                     <AboutCardComponent />
                     <AboutCardComponent />
@@ -40,7 +40,7 @@ const Page = () => {
                         skills and innovative ideas.
                     </p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 mt-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 mt-16">
                     <TeamCardComponent />
                     <TeamCardComponent />
                     <TeamCardComponent />
