@@ -40,7 +40,9 @@ module.exports = {
         "redUi": "#E74C3C",
         "greyUi": "#888888",
         "softwhiteUi": "#f7f7f7",
-        "backgroundUi" : "#F7F9FB"
+        "backgroundUi" : "#F7F9FB",
+        "softGreenUi": "#E3F4DB",
+        "softRedUi": "#FFECEB"
       }
     },
   },

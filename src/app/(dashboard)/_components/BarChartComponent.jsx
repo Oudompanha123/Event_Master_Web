@@ -44,7 +44,7 @@ export const BarChartComponent = () => {
     }
 
     return (
-        <div className="bg-white" >
+        <div className="bg-white w-full" >
             <Line data={chartData} options={chartOptions} />
         </div >
     )

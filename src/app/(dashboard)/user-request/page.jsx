@@ -5,9 +5,9 @@ const Page = () => {
     return (
         <>
             <div className="space-y-8 rounded-3xl p-6 border-2 border-slate-100 bg-white">
-                <h2 className="text-xl font-semibold">Show All User Request</h2>
+                <h2 className="text-lg xl:text-xl font-semibold">Show All User Request</h2>
                 <div className="overflow-x-auto space-y-3">
-                    <div className="lg:text-xs xl:text-sm grid grid-cols-6 px-6 py-7 rounded-2xl border-2 border-slate-50 uppercase font-semibold">
+                    <div className="lg:text-xs xl:text-sm grid grid-cols-6 px-6 py-4 rounded-2xl border-2 border-slate-50 uppercase font-semibold">
                         <span>No</span>
                         <span>Name</span>
                         <span>Gender</span>
@@ -16,7 +16,7 @@ const Page = () => {
                         <span>Action</span>
                     </div>
                     {userData.data.map((x, index) => (
-                        <div key={index} className={`lg:text-xs xl:text-sm grid grid-cols-6 px-6 py-5 rounded-2xl border-2 border-slate-50 even:bg-softwhiteUi odd:bg-white`}>
+                        <div key={index} className={`lg:text-xs xl:text-sm 2xl:text-base grid grid-cols-6 px-6 py-4 rounded-2xl border-2 border-slate-50 even:bg-softwhiteUi odd:bg-white`}>
                             <span className="flex items-center">{index + 1}</span>
                             <span className="flex items-center">{x.name}</span>
                             <span className="flex items-center">{x.gender}</span>
