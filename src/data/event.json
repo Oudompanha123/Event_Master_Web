@@ -1,0 +1,60 @@
+{
+    "payload": [
+        {
+            "name": "Angkor",
+            "qty": "22",
+            "unit": "box",
+            "createby": "koko",
+            "status": "instock"
+        },
+        {
+            "name": "water",
+            "qty": "22",
+            "unit": "bottom",
+            "createby": "koko",
+            "status": "instock"
+        },
+        {
+            "name": "coca cola",
+            "qty": "22",
+            "unit": "box",
+            "createby": "koko",
+            "status": "instock"
+        },
+        {
+            "name": "sting",
+            "qty": "10",
+            "unit": "box",
+            "createby": "koko",
+            "status": "out of stock"
+        },
+        {
+            "name": "Angkor",
+            "qty": "22",
+            "unit": "box",
+            "createby": "koko",
+            "status": "instock"
+        },
+        {
+            "name": "water",
+            "qty": "22",
+            "unit": "bottom",
+            "createby": "koko",
+            "status": "instock"
+        },
+        {
+            "name": "coca cola",
+            "qty": "22",
+            "unit": "box",
+            "createby": "koko",
+            "status": "instock"
+        },
+        {
+            "name": "sting",
+            "qty": "10",
+            "unit": "box",
+            "createby": "koko",
+            "status": "out of stock"
+        }
+    ]
+}

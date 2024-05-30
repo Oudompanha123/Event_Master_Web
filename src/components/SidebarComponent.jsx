@@ -13,7 +13,7 @@ export const SidebarComponent = ({ className }) => {
     const [click, setClick] = useState(false);
 
     return (
-        <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-8 border-r-1px sticky top-0 h-screen`}>
+        <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-8 border-r-1px sticky top-0 h-screen`}>
             <div className="p-2">
                 <Image src={logo} height={75} width={75} />
             </div>
@@ -29,7 +29,7 @@ export const SidebarComponent = ({ className }) => {
                                             : x.icon == "request" ? <Notification size="20" color={`${pathname === "/user-request" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                                 : x.icon == "setting" ? <Setting2 size="20" color={`${pathname === "/account-setting" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                                     : x.icon == "logout" ? <LogoutCurve size="20" color="#344054" variant="Bulk" /> : <LogoutCurve size="24" color="#344054" variant="Bulk" />}
-                            <p className="hidden xl:block text-sm">{x.name}</p>
+                            <p className="hidden xl:block text-sm 2xl:text-lg">{x.name}</p>
                         </div>
                     </Link>
                 ))}
@@ -37,7 +37,7 @@ export const SidebarComponent = ({ className }) => {
                 <ul className={`menu p-0 w-ful cursor-pointer rounded-radiusUi`}>
                     <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-center xl:justify-start items-center gap-3 rounded-radiusUi px-4 py-3 ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`}>
                         <Setting2 size="20" color={`${pathname === "/organization-profile" || pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
-                        <p className={`text-sm hidden xl:block font-normal ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white" : 'text-primary-text'}`}>Account Setting</p>
+                        <p className={`text-sm 2xl:text-lg hidden xl:block font-normal ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white" : 'text-primary-text'}`}>Account Setting</p>
                     </h2>
                     <ul className={`${!click && 'hidden'}`}>
                         <li className={`ml-8 ${pathname == '/organization-profile' && 'underline'}`}>
@@ -51,7 +51,7 @@ export const SidebarComponent = ({ className }) => {
                 <Link onClick={() => setClick(false)} href={'/logout'}>
                     <div className={`space-x-3 px-4 py-4 flex justify-center xl:justify-start rounded-radiusUi w-full items-center`}>
                         <LogoutCurve size="20" color="#344054" variant="Bulk" />
-                        <p className="hidden xl:block text-sm">Logout</p>
+                        <p className="hidden xl:block text-sm 2xl:text-lg">Logout</p>
                     </div>
                 </Link>
             </div>
