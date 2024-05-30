@@ -15,10 +15,10 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body className={jakarta.className}>
                 <div className="flex">
-                    <SidebarComponent className={`w-[20%]`} />
-                    <div className="w-[80%]">
+                    <SidebarComponent className={`w-[13%] xl:w-1/6 2xl:w-[16%]`} />
+                    <div className="w-[87%] xl:w-5/6 2xl:w-[84%]">
                         <NavbarComponent />
-                        <div className="px-[52px] py-[24px]">
+                        <div className="p-6 bg-backgroundUi">
                             {children}
                         </div>
                     </div>

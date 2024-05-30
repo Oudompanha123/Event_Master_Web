@@ -10,15 +10,17 @@ export const CTAComponent = () => {
             <button className="bg-white text-primary-text px-8 py-4 rounded-full lg:text-lg font-semibold z-50">Register now</button>
             <Image
                 src={haloEmoji}
-                className="absolute top-10 right-80 hidden xl:block"
+                className="absolute top-10 right-80 w-auto h-auto hidden xl:block"
                 width={40}
                 height={40}
+                alt="icon"
             />
             <Image
                 src={sunglassEmoji}
-                className="absolute bottom-0 left-80 hidden xl:block"
+                className="absolute bottom-0 left-80 hidden w-auto h-auto xl:block"
                 width={114}
                 height={114}
+                alt="icon"
             />
         </div>
     )

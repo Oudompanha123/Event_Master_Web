@@ -1,0 +1,285 @@
+"use client";
+import { useState } from "react";
+import { TbEdit } from "react-icons/tb";
+import { LiaUserEditSolid } from "react-icons/lia";
+import { BsFillPlusSquareFill } from "react-icons/bs";
+import Image from "next/image";
+
+const Page = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [organizationName, setOrganizationName] = useState("EventMaster");
+  const [address, setAddress] = useState("Phnom Penh, Cambodia");
+  const [profileImage, setProfileImage] = useState(
+    "/images/event-master-logo.png"
+  );
+
+  const handleUpdateClick = () => {
+    setIsEditing(true);
+  };
+
+  // const handleSaveChanges = () => {
+  //   // Here, you can save the changes to the input fields
+  //   setIsEditing(false);
+  // };
+
+  // const handleCancelChanges = () => {
+  //   setIsEditing(false);
+  //   setOrganizationName("");
+  //   setAddress("");
+  // };
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const imageUrl = URL.createObjectURL(file);
+    setProfileImage(imageUrl);
+  };
+
+  const handleSaveChanges = () => {
+    setIsEditing(false);
+  };
+
+  const handleCancelChanges = () => {
+    setIsEditing(false);
+    setOrganizationName("EventMaster");
+    setAddress("Phnom Penh, Cambodia");
+    setProfileImage("/images/event-master-logo.png");
+  };
+
+  // copy text
+  const [text, setText] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text)
+      .then(() => setCopied(true))
+      .catch(error => console.error('Error copying text: ', error));
+    
+    setTimeout(() => {
+      setCopied(false);
+    }, 1000);
+  };
+
+  return (
+    <main className="px-4 max-h-full lg:h-[700px] lg:px-0">
+      <div className="bg-white drop-shadow-md w-full max-w-full rounded-2xl lg:h-full overflow-hidden">
+        {/* Cover */}
+        <div className="w-full h-40 bg-purple-300 rounded-t-2xl lg:h-28 sm:h-52"></div>
+
+        {/* Profile */}
+        <div className="flex flex-col items-center mt-20 lg:-mt-20">
+          <div className="w-60 h-60 rounded-full lg:w-40 lg:h-40">
+            <Image
+              src={profileImage}
+              alt="My Image"
+              width={250}
+              height={250}
+              className="mt-2 rounded-full"
+            />
+            <div className="w-8 h-8 rounded-full flex justify-center items-center mt-[-30px] ml-28 z-50">
+              <label
+                htmlFor="image-upload"
+                className="w-full h-full bg-purple-200 rounded-full flex items-center justify-center hover:bg-gray-400 cursor-pointer"
+              >
+                <LiaUserEditSolid className="w-5 h-5 text-gray-700" />
+                <input
+                  id="image-upload"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageUpload}
+                />
+              </label>
+            </div>
+          </div>
+          <h2 className="text-primary-text font-bold text-3xl mt-10 lg:mt-6 lg:text-2xl">
+            {organizationName}
+          </h2>
+        </div>
+
+        {/* Input Fields */}
+        <div className="h-[280px] w-full lg:h-[100px] px-6 lg:px-4 ">
+          <div className="w-full max-w-[500px] mx-auto mt-12 lg:mt-8 lg:max-w-[400px]">
+            <div className="text-primary-text text-lg font-semibold lg:text-base flex">
+              Organization Name <p className="text-red-700">*</p>
+            </div>
+            <input
+              type="text"
+              placeholder="Enter FullName"
+              className="input w-full text-gray-400 border-gray-300 bg-none mt-3 lg:h-12"
+              value={organizationName}
+              onChange={(e) => setOrganizationName(e.target.value)}
+              disabled={!isEditing}
+            />
+            <div className="mt-12 text-primary-text text-lg font-semibold lg:text-base lg:mt-7 flex">
+              Address <p className="text-red-700">*</p>
+            </div>
+            <input
+              type="text"
+              placeholder="Enter Address"
+              className="input w-full text-gray-400 border-gray-300 bg-none mt-3 lg:h-12"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              disabled={!isEditing}
+            />
+            <div className="mt-16 text-primary-text text-lg font-semibold lg:text-base lg:mt-7 flex">
+              Organization code <p className="text-red-700">*</p>
+            </div>
+            {/* <div className="relative">
+              <input
+                type="text"
+                placeholder="123456"
+                className="input w-full text-gray-400 border-gray-300 bg-none mt-3 lg:h-12"
+                readOnly
+              />
+
+              <button
+                class="absolute inset-y-0 left-0 pl-3  
+                    flex items-center  
+                    pointer-events-none 
+                    cursor-pointer"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="ml-[350px] mt-3"
+                >
+                  <path
+                    d="M11.5715 3.21484H3.85725C3.14717 3.21484 2.57153 3.79048 2.57153 4.50056V16.072C2.57153 16.7821 3.14717 17.3577 3.85725 17.3577H11.5715C12.2816 17.3577 12.8572 16.7821 12.8572 16.072V4.50056C12.8572 3.79048 12.2816 3.21484 11.5715 3.21484Z"
+                    stroke="#344054"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M5.14307 6.42773H10.2859"
+                    stroke="#344054"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M5.14307 9.64258H10.2859"
+                    stroke="#344054"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M5.14307 12.8574H7.71449"
+                    stroke="#344054"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M5.78589 0.642578H14.143C14.484 0.642578 14.8111 0.778037 15.0522 1.01915C15.2932 1.26027 15.4287 1.5873 15.4287 1.92829V14.1426"
+                    stroke="#344054"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div> */}
+
+            <div className="relative">
+              <input
+                type="text"
+                id="textInput"
+                placeholder="123456"
+                className="input w-full text-gray-400 border-gray-300 bg-none mt-3 lg:h-12"
+                readOnly
+              />
+              <button
+                onClick={handleCopy}
+                className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none cursor-pointer"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="ml-[350px] mt-3"
+                >
+                  {/* Your SVG paths */}
+                  <path
+                    d="M11.5715 3.21484H3.85725C3.14717 3.21484 2.57153 3.79048 2.57153 4.50056V16.072C2.57153 16.7821 3.14717 17.3577 3.85725 17.3577H11.5715C12.2816 17.3577 12.8572 16.7821 12.8572 16.072V4.50056C12.8572 3.79048 12.2816 3.21484 11.5715 3.21484Z"
+                    stroke="#344054"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M5.14307 6.42773H10.2859"
+                    stroke="#344054"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M5.14307 9.64258H10.2859"
+                    stroke="#344054"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M5.14307 12.8574H7.71449"
+                    stroke="#344054"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M5.78589 0.642578H14.143C14.484 0.642578 14.8111 0.778037 15.0522 1.01915C15.2932 1.26027 15.4287 1.5873 15.4287 1.92829V14.1426"
+                    stroke="#344054"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              {copied && (
+                <span className="absolute top-0 right-0 bg-green-500 text-white px-2 py-1 text-xs">
+                  Copied!
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* button  */}
+          <div className="flex justify-end mr-6 mt-12 lg:mt-9 lg:mr-10">
+            {isEditing ? (
+              <>
+                <button
+                  className="btn btn-outline border-solid border-1 border-primary-text text-lg w-40 lg:w-32 lg:text-base"
+                  onClick={handleCancelChanges}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="btn btn-primary text-white w-40 text-lg lg:w-32 lg:text-base ml-5"
+                  onClick={handleSaveChanges}
+                >
+                  <BsFillPlusSquareFill className="w-7 h-7 lg:w-5 lg:h-5" />
+                  Save
+                </button>
+              </>
+            ) : (
+              <button
+                className="btn btn-success text-white w-40 text-lg lg:w-32 lg:text-base "
+                onClick={handleUpdateClick}
+              >
+                <TbEdit className="w-7 h-7 lg:w-6 lg:h-6" />
+                Edit
+              </button>
+            )}
+          </div>
+        </div>
+        <Image
+          src="/images/bg-1.png"
+          alt="My Image"
+          width={500}
+          height={400}
+          className=" rounded-bl-2xl lg:mt-[-100px] lg:w-[250px]"
+        />
+      </div>
+    </main>
+  );
+};
+
+export default Page;

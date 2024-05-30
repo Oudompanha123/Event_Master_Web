@@ -6,7 +6,7 @@ import { DeleteAssetComponent } from "../_components/DeleteAssetComponent";
 export default function asset_page() {
   return (
     <>
-      <div className="main">
+      <div className="main bg-white p-6 rounded-3xl">
         <div className="title font-semibold text-base p-6">
           {" "}
           Asset Management

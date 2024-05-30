@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "false",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -29,16 +30,19 @@ module.exports = {
       },
       borderRadius: {
         'radiusUi': '15px',
+        'radius64': '64px'
       },
       colors: {
         "purple-text": "#7939EF",
         "primary-text": "#344054",
         "blueUi": "#551FFF",
         "greenUi": "#038446",
-        "redUi": "#E74C3C",
-        "greyUi": "#888888",
+        "redUi": "#D72222",
+        "greyUi": "#808080",
         "softwhiteUi": "#f7f7f7",
-        "backgroundUi" : "#F7F9FB"
+        "backgroundUi" : "#F7F9FB",
+        "softGreenUi": "#E3F4DB",
+        "softRedUi": "#FFECEB"
       }
     },
   },
