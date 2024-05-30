@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import logo from "../../public/images/event-master-logo.png"
-import { Calendar1, I3Dcube, Layer, LogoutCurve, Notification, People, Setting2 } from "iconsax-react"
+import { ArrowDown2, Buildings2, Calendar1, I3Dcube, Layer, LogoutCurve, Notification, People, Personalcard, Setting2 } from "iconsax-react"
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import data from "../data/sidebar.json"
@@ -13,7 +13,7 @@ export const SidebarComponent = ({ className }) => {
     const [click, setClick] = useState(false);
 
     return (
-        <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-8 border-r-1px sticky top-0 h-screen`}>
+        <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-5 border-r-1px sticky top-0 h-screen`}>
             <div className="p-2">
                 <Image src={logo} height={75} width={75} />
             </div>
@@ -34,20 +34,45 @@ export const SidebarComponent = ({ className }) => {
                     </Link>
                 ))}
                 {/* dropdown sidebar  */}
-                <ul className={`menu p-0 w-ful cursor-pointer rounded-radiusUi`}>
-                    <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-center xl:justify-start items-center gap-3 rounded-radiusUi px-4 py-3 ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`}>
-                        <Setting2 size="20" color={`${pathname === "/organization-profile" || pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
-                        <p className={`text-sm 2xl:text-lg hidden xl:block font-normal ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white" : 'text-primary-text'}`}>Account Setting</p>
+                <ul className={`menu p-0 w-ful cursor-pointer rounded-radiusUi hidden xl:block`}>
+                    {/* <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-center xl:justify-start items-center gap-3 rounded-radiusUi px-4 py-3 ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`}> */}
+                    <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-center xl:justify-start items-center gap-3 rounded-radiusUi px-4 py-3`}>
+                        <Setting2 size="20" color={`${pathname === "/organization-profile" || pathname === "/user-profile" ? '#344054' : '#344054'}`} variant="Bulk" />
+                        <div className="flex items-center space-x-2">
+                            <p className={`text-sm 2xl:text-lg hidden xl:block font-normal ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-primary-text" : 'text-primary-text'}`}>
+                                Account Setting
+                            </p>
+                            <ArrowDown2 className={`${click && 'rotate-180 duration-300'} duration-300`} size="20" color="#344054" variant="Outline" />
+                        </div>
                     </h2>
                     <ul className={`${!click && 'hidden'}`}>
-                        <li className={`ml-8 ${pathname == '/organization-profile' && 'underline'}`}>
-                            <Link href={'/organization-profile'}>Organization Profile</Link>
+                        <li>
+                            <Link className={`hover:!bg-none pl-10 py-3 ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
+                                <Buildings2 size="20" color={`${pathname === "/organization-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
+                                Organization Profile
+                            </Link>
                         </li>
-                        <li className={`ml-8 ${pathname == '/user-profile' && 'underline'}`}>
-                            <Link href={'/user-profile'}>User Profile</Link>
+                        <li>
+                            <Link className={`hover:!bg-none pl-10 py-3 ${pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`} href={'/user-profile'}>
+                                <Personalcard size="20" color={`${pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
+                                User Profile
+                            </Link>
                         </li>
                     </ul>
                 </ul>
+                {/* dropdown sidebar on mobile */}
+                <div className="block xl:hidden">
+                    <Link onClick={() => setClick(false)} href={'/organization-profile'}>
+                        <div className={`flex justify-center mx-auto items-center rounded-radiusUi px-3 w-fit py-3 ${pathname == "/organization-profile" && "text-white bg-purple-text"}`}>
+                            <Buildings2 size="20" color={`${pathname === "/organization-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
+                        </div>
+                    </Link>
+                    <Link onClick={() => setClick(false)} href={'/user-profile'}>
+                        <div className={`flex justify-center mx-auto items-center rounded-radiusUi px-3 w-fit py-3 ${pathname == "/user-profile" && "text-white bg-purple-text"}`}>
+                            <Personalcard size="20" color={`${pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
+                        </div>
+                    </Link>
+                </div>
                 <Link onClick={() => setClick(false)} href={'/logout'}>
                     <div className={`space-x-3 px-4 py-4 flex justify-center xl:justify-start rounded-radiusUi w-full items-center`}>
                         <LogoutCurve size="20" color="#344054" variant="Bulk" />
