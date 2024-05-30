@@ -82,18 +82,18 @@ export default function Event() {
         </form>
       </div>
 
-      <div className="relative">
+      <div className="relative z-3 mb-5">
         <div className="flex grid-cols-2 ">
           <input
-            className=" border-[1px] pl-10 text-primary-text rounded-full w-full py-2 px-3 "
-            id="search"
+            class=" border-[1px] pl-10 text-primary-text rounded-full w-full py-2  "
+            id="username"
             type="text"
-            placeholder="Search"
+            placeholder="Search..."
           />
           <div className="absolute left-0 inset-y-0 flex items-center ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 ml-4 text-gray-400"
+              class="h-6 w-6 ml-3 text-gray-400"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -110,6 +110,7 @@ export default function Event() {
       </div>
 
       <CardEventComponent />
+      
     </main>
   );
 }

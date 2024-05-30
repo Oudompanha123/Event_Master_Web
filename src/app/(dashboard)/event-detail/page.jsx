@@ -1,35 +1,26 @@
 import React from "react";
-import { FaRankingStar, FaRegEdit } from "react-icons/fa";
-import { HiOutlineSwatch } from "react-icons/hi";
-import { TiFlashOutline } from "react-icons/ti";
-import { LuClipboardCheck } from "react-icons/lu";
-import { FiAlertOctagon } from "react-icons/fi";
-import { AddSquare } from "iconsax-react";
-import { MdDateRange, MdMoreVert } from "react-icons/md";
-import {
-  RiArrowDropDownLine,
-  RiDeleteBinLine,
-  RiContactsBookLine,
-} from "react-icons/ri";
-import { IoAddCircleOutline } from "react-icons/io5";
-import Image from "next/image";
+import { FaRegEdit } from "react-icons/fa";
 import AgendaComponent from "../_components/AgendaComponet";
 
 const Page = async ({ params: { id } }) => {
   return (
     <main>
-      <div className="absolute w-[74%] rounded-2xl bg-white shadow-md ">
-        <div className="mt-7 m-auto w-[97%] rounded-2xl h-[53%] bg-white shadow-[#D5D4DC] shadow">
-          <div className="relative bg-cover">
-            <img
-              className="w-full rounded-lg px-5 py-5 h-72"
-              src="https://images.bzyjr9ji.ext.evbdomains.com/marketing/landingpages/assets/2023/organizer/a_organizer_event--creator-eventbrite-.webp"
-              alt=""
-            />
-            <div className=" bg-slate-100 p-2 rounded-full absolute top-5 right-5 m-3">
+      <div className=" rounded-2xl bg-white shadow-md z-0 pt-[2%] px-[2%]">
+        <div className=" m-auto w-full rounded-2xl h-[50%] bg-white shadow-[#D5D4DC] shadow  pt-4 ">
+          <div
+            className="w-[96%] ml-[2%] h-68 bg-cover bg-center rounded-3xl flex justify-end p-3 mb-2 "
+            style={{
+              backgroundImage:
+                `url(https://images.bzyjr9ji.ext.evbdomains.com/marketing/landingpages/assets/2023/organizer/a_organizer_event--creator-eventbrite-.webp)`,
+              height: "256px",
+            }}
+            alt="Event Photo"
+           >
+            <div className=" bg-white rounded-full bg-opacity-80	 right-5 w-10 h-10 items-center pl-1	flex flex-row justify-center">
               <FaRegEdit size="20" color="#344054" />
             </div>
           </div>
+
           <div className="flex justify-between px-5">
             <div className="text-primary-text font-semibold text-2xl">
               Design Skill & Tech Session{" "}
@@ -50,11 +41,10 @@ const Page = async ({ params: { id } }) => {
           </p>
           <button className="px-5 py-3 rounded-full bg-blue-200 text-blueUi ml-5 m-5">
             02 August 2023
-          </button>
+          </button>   
         </div>
         <AgendaComponent />
       </div>
-      
     </main>
   );
 };
