@@ -9,7 +9,7 @@ import { NotificationMenu } from "./NotificationMenu"
 export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
     return (
-        <div className={`${className} sticky top-0 bg-white flex justify-between items-center py-6 px-14 border-b-[1px]`}>
+        <div className={`${className} sticky top-0 bg-white flex justify-between items-center py-6 px-14 border-b-[1px] z-20`}>
             <h2 className="text-2xl font-semibold">
                 {pathname === '/overview' ?
                     'Overview' :
