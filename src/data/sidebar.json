@@ -24,16 +24,6 @@
             "link": "/user-request",
             "name": "User Request",
             "icon": "request"
-        },
-        {
-            "link": "/account-setting",
-            "name": "Account Setting",
-            "icon": "setting"
-        },
-        {
-            "link": "/logout",
-            "name": "Logout",
-            "icon": "logout"
         }
     ]
 }

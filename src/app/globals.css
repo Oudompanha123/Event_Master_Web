@@ -21,7 +21,13 @@
   }
 }
 
+.table-row-gap > tbody > tr:not(:last-child) {
+  margin-bottom: 32px; /* Adjust this value to change the gap */
+  display: block;
+}
+
 body {
+  scroll-behavior: smooth;
   color: #344054;
   /* color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -30,6 +36,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb)); */
+  
 }
 
 @layer utilities {
