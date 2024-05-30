@@ -3,15 +3,16 @@ import { OverviewCardComponent } from "../_components/OverviewCardComponent"
 import userData from "../../../data/member.json"
 import { AddSquare } from "iconsax-react"
 import { BarChartComponent } from "../_components/BarChartComponent"
+import statusData from "../../../data/overview.json"
+import Image from "next/image"
 
 const Page = () => {
     return (
         <div className="space-y-4 xl:space-y-7">
             <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 xl:gap-6">
-                <OverviewCardComponent />
-                <OverviewCardComponent />
-                <OverviewCardComponent />
-                <OverviewCardComponent />
+                {statusData.payload.map((x, index) => (
+                    <OverviewCardComponent key={index} title={x.title} count={x.count} logo={x.logo} />
+                ))}
             </section>
             {/* second row */}
             <section className="flex flex-col xl:flex-row gap-4 xl:gap-8 w-full">
@@ -54,7 +55,7 @@ const Page = () => {
                             </button>
                         </Link>
                     </div>
-                    <div className="overflow-x-auto space-y-3">
+                    <div className="overflow-x-auto space-y-3 w-full">
                         <div className="text-xs xl:text-sm grid grid-cols-5 px-6 py-4 rounded-2xl border-1px border-[#D9D9D9]">
                             <span>No</span>
                             <span>Name</span>
@@ -66,9 +67,12 @@ const Page = () => {
                             <div key={index} className={`text-xs xl:text-sm grid grid-cols-5 px-6 py-4 rounded-2xl border-1px border-slate-100 even:bg-softwhiteUi odd:bg-white odd:border-borderUi`}>
                                 <span className="flex items-center">{index + 1}</span>
                                 <span className="flex items-center">{x.name}</span>
-                                <span className="flex items-center min-w-28">{x.gender}</span>
-                                <span className="flex items-center min-w-28">{x.tel}</span>
-                                <span className="flex items-center min-w-28">{x.email}</span>
+                                <span className="flex items-center">{x.gender}</span>
+                                <span className="flex items-center">{x.tel}</span>
+                                <span className="flex items-center space-x-4">
+                                    <Image src="/icons/trash.svg" width={20} height={20} />
+                                    <Image src="/icons/edit.svg" width={20} height={20} />
+                                </span>
                             </div>
                         ))}
                     </div>

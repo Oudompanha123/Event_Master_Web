@@ -7,7 +7,7 @@ const Page = () => {
             <div className="space-y-8 rounded-3xl p-6 border-2 border-slate-100 bg-white">
                 <h2 className="md:text-lg xl:text-xl font-semibold">Show All User Request</h2>
                 <div className="overflow-x-auto space-y-3">
-                    <div className="text-xs xl:text-sm grid grid-cols-6 px-6 py-4 rounded-2xl border-1px border-borderUi uppercase font-semibold">
+                    <div className="text-xs xl:text-sm grid grid-cols-6 px-6 py-4 rounded-2xl border-1px border-borderUi">
                         <span>No</span>
                         <span>Name</span>
                         <span>Gender</span>
