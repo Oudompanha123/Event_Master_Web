@@ -42,7 +42,8 @@ module.exports = {
         "softwhiteUi": "#f7f7f7",
         "backgroundUi" : "#F7F9FB",
         "softGreenUi": "#E3F4DB",
-        "softRedUi": "#FFECEB"
+        "softRedUi": "#FFECEB",
+        "borderUi": "#D9D9D9"
       }
     },
   },

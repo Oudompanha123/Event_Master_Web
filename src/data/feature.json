@@ -1,0 +1,24 @@
+{
+    "payload": [
+        {
+            "logo": "one",
+            "title": "Streamline Registration",
+            "detail": "The software would offer a user-friendly, online registration system that eliminates the need for manual processing. Moreover, automated features like confirmation emails, waitlist management, and attendance tracking would help organizers stay on top of the registration process."
+        },
+        {
+            "logo": "two",
+            "title": "Real-Time Notification",
+            "detail": "Instant alerts for organizers when new registrations come in or when attendance register into the event. Moreover, push notifications and in-app alerts to inform attendees about schedule changes, session updates, speaker updates, etc."
+        },
+        {
+            "logo": "three",
+            "title": "Tracking and Managing Resource",
+            "detail": "Centralized attendee database to store registration details, contact information, and attendance history. For event organizers, allow organizers to check availability, reserve spaces, and manage venue-related details."
+        },
+        {
+            "logo": "four",
+            "title": "Agenda and Schedule Management",
+            "detail": "Agenda and schedule management in event software enables seamless session planning, speaker coordination, and personalized attendee itineraries for a streamlined event experience."
+        }
+    ]
+}

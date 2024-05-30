@@ -15,15 +15,15 @@ export const EventCardComponent = () => {
             <div className="bg-white px-6 py-8 rounded-b-3xl space-y-4 h-auto">
                 <div className="flex gap-3 items-center">
                     <Image src={image} height={40} width={40} alt="orgImage" />
-                    <p className="text-sm">Daisy Corp</p>
+                    <p className="text-sm font-medium">Daisy Corp</p>
                 </div>
-                <div className="flex text-sm justify-between">
+                <div className="flex text-sm justify-between font-medium">
                     <p>Chamkar Mon</p>
                     <p>Nov 1, 2024</p>
                 </div>
                 <div className="flex flex-col gap-3">
                     <h2 className="text-lg lg:text-xl font-bold">Academic</h2>
-                    <p className="text-sm lg:text-base font-light line-clamp-2">specialized gatherings where scholars,
+                    <p className="text-sm lg:text-base line-clamp-2 font-medium">specialized gatherings where scholars,
                         researchers, and professionals ...
                     </p>
                 </div>

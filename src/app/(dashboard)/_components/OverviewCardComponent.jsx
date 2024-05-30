@@ -7,7 +7,7 @@ export const OverviewCardComponent = () => {
                 <div className="p-2 rounded-full w-fit bg-white">
                     <Calendar1 size="20" color="#7B61FF" variant="Bulk" />
                 </div>
-                <p className="text-sm font-medium">Event Count</p>
+                <p className="text-base lg:text-base font-medium">Event Count</p>
             </div>
             <h2 className="font-semibold text-2xl">128</h2>
         </div>
