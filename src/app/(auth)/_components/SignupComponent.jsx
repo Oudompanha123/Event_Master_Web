@@ -1,14 +1,16 @@
+import Link from "next/link";
+
 const SignupComponent = () => {
     return (
         <div>
             <div className="mx-[42%] mt-48 w-[45%] bg-white rounded-[40px] shadow-md absolute">
                 <div className="flex justify-start p-6 pt-12 mx-8">
                     <button type="sign Up" id="sign-up"
-                            className="shadow-sm bg-white border border-gray-300 primary-text font-medium text-sm rounded-3xl px-9 py-3.5">
+                            className="shadow-sm bg-white border border-gray-300 primary-text font-medium text-sm rounded-3xl px-10 py-3.5">
                         ADMIN
                     </button>
                     <button type="sign Up" id="sign-up"
-                            className="bg-purple-text text-white font-medium text-sm rounded-3xl px-12 py-3.5 ml-[-35px]">
+                            className="bg-purple-text text-white font-medium text-sm rounded-3xl px-12 py-3.5 ml-[-36px]">
                         USER
                     </button>
                 </div>
@@ -17,7 +19,7 @@ const SignupComponent = () => {
                     <form action="#">
                         <div className="grid grid-cols-6 gap-6">
                             <div className="col-span-6 sm:col-span-3">
-                                <label htmlFor="name" className="text-sm font-medium primary-text block mb-2">Full
+                                <label htmlFor="name" className="text-sm font-medium primary-text block mb-2 ">Full
                                     Name <span className="text-red-600">*</span></label>
                                 <input type="text" name="product-name" id="product-name"
                                        className="shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:ring-cyan-600 focus:border-cyan-600 block w-full p-3.5"
@@ -79,7 +81,8 @@ const SignupComponent = () => {
 
                 <div className="flex justify-center p-6 pb-16">
                     <button type="sign Up" id="sign-up"
-                            className="bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 hover:bg-greyUi shadow-md shadow-violet-400">Sign Up
+                            className="bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400">
+                        <Link href={`/login`}>Sign Up</Link>
                     </button>
                 </div>
 

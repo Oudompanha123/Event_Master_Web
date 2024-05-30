@@ -53,7 +53,7 @@ const LoginComponent = () => {
                         </div>
 
                         <p className="flex justify-center primary-text mb-5 mt-5">Don't have an account?
-                            <Link href="/signup" className="text-purple-text font-bold"> Sign Up</Link>
+                            <Link href={`/signup`} className="text-purple-text font-bold"> Sign Up</Link>
                         </p>
                     </form>
 
