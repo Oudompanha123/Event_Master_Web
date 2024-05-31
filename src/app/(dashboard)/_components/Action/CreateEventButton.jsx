@@ -2,6 +2,7 @@
 
 import { AddSquare } from "iconsax-react"
 import Image from "next/image";
+import { ToogleBtn } from "./ToogleBtn";
 
 export const CreateEventButton = () => {
     const handleDragOver = (e) => {
@@ -196,8 +197,11 @@ export const CreateEventButton = () => {
                                     />
                                 </div>
                             </div>
-                            <div>
-                                Create this event as:
+                            <div className="flex items-center gap-5">
+                                <p>Create this event as :</p>
+                                <div>
+                                    <ToogleBtn />
+                                </div>
                             </div>
                             <div className="flex justify-end space-x-3">
                                 <button className="px-6 py-3 rounded-2xl border-1px border-borderUi">Cancel</button>
