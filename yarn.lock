@@ -85,13 +85,13 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@knocklabs/client@^0.10.9":
-  version "0.10.9"
-  resolved "https://registry.npmjs.org/@knocklabs/client/-/client-0.10.9.tgz"
-  integrity sha512-H2ABQA1qxiTGL+P4Vpo/12dJ9BueLsJB8sSlxmvIjbpVcmW4loEFmKRutoWwvv1+vDHkco1Yjyqzq2NpHyHnpg==
+"@knocklabs/client@^0.10.10":
+  version "0.10.10"
+  resolved "https://registry.npmjs.org/@knocklabs/client/-/client-0.10.10.tgz"
+  integrity sha512-gmOuLYiprKfE4BpVTUF3nMyWYh7VlQ7mzugySLKriwXBWrg1XFwZXIgHvdboC308caWIf474rNsmV53x+Vgmlg==
   dependencies:
     "@babel/runtime" "^7.23.9"
-    "@knocklabs/types" "^0.1.3"
+    "@knocklabs/types" "^0.1.4"
     "@types/phoenix" "^1.5.4"
     axios "^1.6.0"
     axios-retry "^3.1.9"
@@ -100,23 +100,23 @@
     phoenix "1.6.16"
     zustand "^3.7.2"
 
-"@knocklabs/react-core@^0.2.20":
-  version "0.2.20"
-  resolved "https://registry.npmjs.org/@knocklabs/react-core/-/react-core-0.2.20.tgz"
-  integrity sha512-AED5JKHmc756MJtshOLiPTWPd9Q6P98O6ZHpHW+i0B3P6N3BKrwloX/VSxO0Yf/BG78TUF5stb3+FGpoNkfiEw==
+"@knocklabs/react-core@^0.2.21":
+  version "0.2.21"
+  resolved "https://registry.npmjs.org/@knocklabs/react-core/-/react-core-0.2.21.tgz"
+  integrity sha512-Zyec0aKZP5b5ti0O19T9F72gppG4C+wlJNRURospInIQLHVTRNTd3dCyrATUU78zuEInvZQEOGDO+tdMyDFzIA==
   dependencies:
-    "@knocklabs/client" "^0.10.9"
+    "@knocklabs/client" "^0.10.10"
     date-fns "^3.3.1"
     swr "^2.2.5"
     zustand "^3.7.2"
 
 "@knocklabs/react@^0.2.22":
-  version "0.2.22"
-  resolved "https://registry.npmjs.org/@knocklabs/react/-/react-0.2.22.tgz"
-  integrity sha512-P14NYVp1MdqvWsmeqTm53XKHLqtBwUX23Vmult2yoeTe9f+QLZ67BbMIxXGCuMeUWdf2V0Nlund/EBpJj1jdiA==
+  version "0.2.23"
+  resolved "https://registry.npmjs.org/@knocklabs/react/-/react-0.2.23.tgz"
+  integrity sha512-xYXtboPEL9syelKEe/DOUMc9DpIjugKUXsLKLGSrCF0Nx5qLKHlN3rcTwAHxcQNMsArYJglpq8UxM8/69xAS4g==
   dependencies:
-    "@knocklabs/client" "^0.10.9"
-    "@knocklabs/react-core" "^0.2.20"
+    "@knocklabs/client" "^0.10.10"
+    "@knocklabs/react-core" "^0.2.21"
     "@popperjs/core" "^2.11.8"
     "@radix-ui/react-popover" "^1.0.7"
     "@radix-ui/react-visually-hidden" "^1.0.3"
@@ -124,10 +124,15 @@
     react-popper "^2.3.0"
     react-popper-tooltip "^4.4.2"
 
-"@knocklabs/types@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.npmjs.org/@knocklabs/types/-/types-0.1.3.tgz"
-  integrity sha512-8WnEqvcR7ZWPccI/gHdE3mFRWVcbS//QRIRLkcjet0YGX2MROb+ddJ6N9tmZtsz7HcwzU23QE/kgsc2ErnGGfQ==
+"@knocklabs/types@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.npmjs.org/@knocklabs/types/-/types-0.1.4.tgz"
+  integrity sha512-KdEESYtIYDaBy9CTNKco7MJ+PcX9wfWt3WVNBKHrrARX++Fa/gn1Zn8WQ5K39hckXm/c2AL6WhNjGv6ovkxwFw==
+
+"@kurkle/color@^0.3.0":
+  version "0.3.2"
+  resolved "https://registry.npmjs.org/@kurkle/color/-/color-0.3.2.tgz"
+  integrity sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==
 
 "@next/env@14.2.3":
   version "14.2.3"
@@ -497,6 +502,13 @@ caniuse-lite@^1.0.30001579:
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001617.tgz"
   integrity sha512-mLyjzNI9I+Pix8zwcrpxEbGlfqOkF9kM3ptzmKNw5tizSyYwMe+nGLTqMK9cO+0E+Bh6TsBxNAaHWEM8xwSsmA==
 
+chart.js@^4.4.3:
+  version "4.4.3"
+  resolved "https://registry.npmjs.org/chart.js/-/chart.js-4.4.3.tgz"
+  integrity sha512-qK1gkGSRYcJzqrrzdR6a+I0vQ4/R+SoODXyAjscQ/4mzuNzySaMCd+hyVxitSY1+L2fjPD1Gbn+ibNqRmwQeLw==
+  dependencies:
+    "@kurkle/color" "^0.3.0"
+
 chokidar@^3.5.3:
   version "3.6.0"
   resolved "https://registry.npmjs.org/chokidar/-/chokidar-3.6.0.tgz"
@@ -685,7 +697,7 @@ get-nonce@^1.0.0:
   resolved "https://registry.npmjs.org/get-nonce/-/get-nonce-1.0.1.tgz"
   integrity sha512-FJhYRoDaiatfEkUK8HKlicmu/3SGFD51q3itKDGoSTysQJBnfOcxU5GxnhE1E6soB76MbT0MBtnKJuXyAx+96Q==
 
-glob-parent@^5.1.2:
+glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"
   resolved "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz"
   integrity sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==
@@ -957,7 +969,12 @@ phoenix@1.6.16:
   resolved "https://registry.npmjs.org/phoenix/-/phoenix-1.6.16.tgz"
   integrity sha512-3vOfu5olbFg6eBNkF4pnwMzNm7unl/4vy24MW+zxKklVgjq1zLnO2EWq9wz6i6r4PbQ0CGxHGtqKJH2VSsnhaA==
 
-picocolors@^1, picocolors@^1.0.0:
+picocolors@^1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.0.1.tgz"
+  integrity sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==
+
+picocolors@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.0.0.tgz"
   integrity sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==
@@ -1057,6 +1074,11 @@ queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
+
+react-chartjs-2@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.npmjs.org/react-chartjs-2/-/react-chartjs-2-5.2.0.tgz"
+  integrity sha512-98iN5aguJyVSxp5U3CblRLH67J8gkfyGNbiK3c+l1QI/G4irHMPQw44aEPmjVag+YKTyQ260NcF82GTQ3bdscA==
 
 react-dom@^18:
   version "18.3.1"

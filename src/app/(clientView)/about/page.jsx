@@ -3,6 +3,8 @@ import arrowLeftImage from "../../../../public/images/arrow-left.png"
 import arrowRightImage from "../../../../public/images/arrow-right.png"
 import { AboutCardComponent } from "../_componenets/AboutCardComponent"
 import { TeamCardComponent } from "../_componenets/TeamCardComponent"
+import featureData from "../../../data/feature.json"
+import teamData from "../../../data/team.json"
 
 const Page = () => {
     return (
@@ -23,13 +25,12 @@ const Page = () => {
                 <div className="h-20"></div>
             </section>
             <section className="relative lg:-top-40">
-                <h2 className="text-4xl lg:text-6xl font-semibold text-center">Our Feature</h2>
-                <div className="grid grid-col-1 lg:grid-cols-2 gap-8 mt-6 relative">
-                    <AboutCardComponent />
-                    <AboutCardComponent />
-                    <AboutCardComponent />
-                    <AboutCardComponent />
-                    <div className="h-96 w-96 hidden lg:block bg-purple-text/50 rounded-full blur-3xl absolute left-1/3 top-1/4 z-10"></div>
+                <h2 className="text-4xl lg:text-6xl font-semibold text-center">Our Features</h2>
+                <div className="lg:px-16 grid grid-col-1 lg:grid-cols-2 gap-8 mt-6 relative">
+                    {featureData.payload.map((x, index) => (
+                        <AboutCardComponent key={index} title={x.title} detail={x.detail} logo={x.logo} />
+                    ))}
+                    <div className="h-96 w-96 hidden lg:block bg-purple-text/35 rounded-full blur-3xl absolute left-1/3 top-1/4 z-10"></div>
                 </div>
             </section>
             <section>
@@ -40,17 +41,10 @@ const Page = () => {
                         skills and innovative ideas.
                     </p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 mt-16">
-                    <TeamCardComponent />
-                    <TeamCardComponent />
-                    <TeamCardComponent />
-                    <TeamCardComponent />
-                    <TeamCardComponent />
-                    <TeamCardComponent />
-                    <TeamCardComponent />
-                    <TeamCardComponent />
-                    <TeamCardComponent />
-                    <TeamCardComponent />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 mt-16 place-items-center">
+                    {teamData.payload.map((x, index) => (
+                        <TeamCardComponent key={index} img={x.image} name={x.name} quote={x.quote} />
+                    ))}
                 </div>
             </section>
         </div>

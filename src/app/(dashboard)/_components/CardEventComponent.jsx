@@ -46,7 +46,7 @@ export default function CardEventComponent() {
                   }}
                   alt="Event Photo"
                 >
-                  <div className="w-full flex justify-between pt-2 pl-2">
+                  <div className="w-full flex justify-between pt-3 pl-3 pr-1 ">
 
                     <div className="text-sm  bg-white text-primary-text rounded-xl h-11 w-10 flex flex-col items-center justify-center ">
                       <span className="font-semibold">{day}</span>
