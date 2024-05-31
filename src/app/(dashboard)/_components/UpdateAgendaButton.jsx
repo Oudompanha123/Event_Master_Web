@@ -1,9 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { MdAddBox } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
-import { FaRegEdit } from "react-icons/fa";
 
 function UpdateAgenda({ inputList, setInputList }) {
   const handleAddClick = () => {
@@ -32,7 +30,7 @@ function UpdateAgenda({ inputList, setInputList }) {
         <div className="col-sm-12">
           {inputList.map((x, i) => (
             <div key={i} className="row">
-              <div className="mb-5 px-4 pt-4 pb-3 border bottom-1 bg-white rounded-2xl">
+              <div className="mb-5 px-4 pt-5 pb-5 border bottom-1 bg-white rounded-3xl ">
                 <div className="form-group justify-end flex h-5">
                   {inputList.length !== 1 && (
                     <button
@@ -149,7 +147,7 @@ function UpdateAgenda({ inputList, setInputList }) {
               <div className="form-group col-md-2">
                 {inputList.length - 1 === i && (
                   <button
-                    className="btn w-full mx-1 font-medium text-sm bg-blue-100 text-blue-700 rounded-3xl justify-start hover:bg-blue-200"
+                    className="btn w-full font-medium text-sm bg-blue-100 text-blue-700 rounded-3xl justify-start hover:bg-blue-200"
                     onClick={handleAddClick}
                   >
                     <IoIosAddCircleOutline size={24} />
@@ -183,24 +181,24 @@ export function UpdateAgendaButton() {
         className="btn  rounded-xl flex  border bg-green-700 hover:bg-green-800 w-32  "
         onClick={() => document.getElementById("my_modal_4").showModal()}
       >
-        <FaRegEdit size={24} color="white" />
+        <img src="edit.svg" alt="" />
         <p className="text-white">Edit</p>
       </button>
       <dialog id="my_modal_4" className="modal ">
-        <div className="modal-box w-11/12 max-w-5xl  bg-[#F7F9FB]">
+        <div className="modal-box w-11/12 max-w-5xl rounded-3xl  bg-[#F7F9FB]">
           <UpdateAgenda inputList={inputList} setInputList={setInputList} />
-          <div className="modal-action gap-2">
+          <div className="modal-action gap-2 pr-4 ">
             <button
-              className="h-10 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white"
+              className="h-11 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white"
               onClick={() => document.getElementById("my_modal_4").close()}
             >
               Cancel
             </button>
             <button
-              className="h-10  rounded-xl flex items-center justify-center gap-2  border bg-green-700  w-32  hover:bg-green-800"
+              className="h-11  rounded-xl flex items-center justify-center gap-2  border bg-green-700  w-32  hover:bg-green-800"
               onClick={handleSubmit}
             >
-              <FaRegEdit size={20} color="white" />
+              <img src="edit.svg" alt="" />
               <p className="text-white">Update</p>
             </button>
           </div>

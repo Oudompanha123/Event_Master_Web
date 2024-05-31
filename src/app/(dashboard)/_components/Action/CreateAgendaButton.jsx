@@ -31,7 +31,7 @@ function AddmoreInput({ inputList, setInputList }) {
         <div className="col-sm-12">
           {inputList.map((x, i) => (
             <div key={i} className="row">
-              <div className="mb-5 px-4 pt-4 pb-3 border bottom-1 bg-white rounded-2xl">
+              <div className="mb-5 px-4 pt-4 pb-3  bottom-1 bg-white rounded-3xl border-1px border-greyUi">
                 <div className="form-group justify-end flex h-5">
                   {inputList.length !== 1 && (
                     <button
