@@ -4,7 +4,6 @@ import { IoEllipsisHorizontal } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-
 import Image from "next/image";
 import mockEventService from "../mockEventService";
 
@@ -30,58 +29,66 @@ export default function CardEventComponent() {
   }, []);
 
   return (
-    <div className=" grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className=" grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-5 md:gap-2 w-sm ">
       {events.map((data, index) => {
         const { day, month } = formatDate(data.startDate);
-
         return (
-          <div key={index} >
-            <div className="flex px-1 py-4 ">
-              <div className=" rounded-3xl overflow-hidden shadow-lg">
-                <div className="relative">
-                  <img
-                    className="w-96 h-64 "
-                    src={
-                      data.poster ||
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBBGllWt0n1yYrdtFMm8fqhRj0qLgefOQ7o03nqyMr-SQG4Z6AvPgn8y2_svqIGGKEBVQ&usqp=CAU"
-                    }
-                    alt="Event Photo"
-                  />
-                  <div className="text-sm absolute top-0 bg-white text-primary-text rounded-xl h-11 w-10 flex flex-col items-center justify-center mt-3 ml-3">
-                    <span className="font-semibold">{day}</span>
-                    <small className="text-red-500 font-semibold">
-                      {month}
-                    </small>
-                  </div>
+          <div key={index}>
+          
+              <div className=" rounded-2xl overflow-hidden shadow-lg">
+                <div
+                  className="w-auto h-60 bg-cover bg-center"
+                  style={{
+                    backgroundImage:
+                      `url(${data.poster})` ||
+                      `url(https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg)`,
+                    height: "256px",
+                  }}
+                  alt="Event Photo"
+                >
+                  <div className="w-full flex justify-between pt-2 pl-2">
 
-                  <div className="dropdown dropdown-end absolute top-3 right-3 rounded-full bg-white w-8 h-8 text-center align-middle">
-                    <div tabIndex={0} role="button">
-                      <IoEllipsisHorizontal className="m-auto w-4 h-8" />
+                    <div className="text-sm  bg-white text-primary-text rounded-xl h-11 w-10 flex flex-col items-center justify-center ">
+                      <span className="font-semibold">{day}</span>
+                      <small className="text-red-500 font-semibold">
+                        {month}
+                      </small>
                     </div>
 
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content z-[1] menu p-1 mt-1 shadow bg-base-100 rounded-box w-40"
-                    >
-                      <li>
-                        <a>
-                          <FaRegEdit size={17} color="green" className="mr-2" />
-                          <p>Update</p>
-                        </a>
-                      </li>
-                      <hr />
-                      <li>
-                        <a>
-                          <RiDeleteBinLine
-                            size={17}
-                            color="red"
-                            className="mr-2"
-                          />
-                          <p>Delete</p>
-                        </a>
-                      </li>
-                    </ul>
+                    <div className="dropdown dropdown-end  right-3 rounded-full bg-white w-8 h-8 text-center align-middle z-3">
+                      <div tabIndex={0} role="button">
+                        <IoEllipsisHorizontal className="m-auto w-4 h-8" />
+                      </div>
+
+                      <ul
+                        tabIndex={0}
+                        className="dropdown-content z-[0] menu p-1 mt-1 shadow bg-base-100 rounded-box w-40"
+                      >
+                        <li>
+                          <a>
+                            <FaRegEdit
+                              size={17}
+                              color="green"
+                              className="mr-2"
+                            />
+                            <p>Update</p>
+                          </a>
+                        </li>
+                        <hr />
+                        <li>
+                          <a>
+                            <RiDeleteBinLine
+                              size={17}
+                              color="red"
+                              className="mr-2"
+                            />
+                            <p>Delete</p>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
+                
                 </div>
 
                 <div className="px-3 w-full">
@@ -103,26 +110,25 @@ export default function CardEventComponent() {
 
                   <p className="text-gray-700 text-sm px-1 mt-3 flex gap-2">
                     <Image
-                      className="relative"
+                      className=""
                       src="/location.svg"
                       alt="Location"
                       width={17}
                       height={10}
                       priority
                     />
-                    <span className="mt-2">{data.address}</span>
+                    <span className="mt-2  line-clamp-1 ">{data.address}</span>
                   </p>
                 </div>
-                <div className="flex gap-4 px-5 pt-5 pb-7 mt-6">
-                  <button className="flex-1 rounded-full border-purple-text border-[1px] text-purple-text antialiased py-1 text-sm">
+                <div className="flex lg:gap-4 md:gap-2 px-4 pt-4 pb-7 mt-6">
+                  <button className="flex-1 rounded-full border-purple-text border-[1px] text-purple-text antialiased py-2 text-sm">
                     View all attendees
                   </button>
-                  <button className="flex-1 rounded-full bg-purple-text text-white py-2 text-sm">
+                  <button className="flex-1 rounded-full bg-purple-text text-white antialiased py-2 text-sm">
                     View event detail
                   </button>
                 </div>
               </div>
-            </div>
           </div>
         );
       })}

@@ -3,14 +3,13 @@ import { IoIosAdd } from "react-icons/io";
 export const AssetPopupComponent = () => {
   return (
     <div>
-      {" "}
       <div
-        className="button border w-[192px] h-[57px] flex rounded-md"
+        className="button border w-40 h-10 flex rounded-[100px] justify-center items-center"
         onClick={() => document.getElementById("my_modal_3").showModal()}
       >
-        <div className="icon flex items-center ml-[18px] ">
-          <div className="border bg-purple-text rounded-md w-7 h-7 flex justify-center items-center">
-            <IoIosAdd size={28} color="white" />
+        <div className="icon flex items-center ">
+          <div className="border bg-purple-text rounded-md w-5 h-5 flex justify-center items-center">
+            <IoIosAdd size={22} color="white" />
           </div>
           <div className="button text-purple-text ml-3">
             <input
@@ -24,7 +23,6 @@ export const AssetPopupComponent = () => {
       <dialog id="my_modal_3" className="modal w-[820px] h-[452px] m-auto">
         <div className="modal-box">
           <form method="dialog">
-            {/* if there is a button in form, it will close the modal */}
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               ✕
             </button>
@@ -58,7 +56,7 @@ export const AssetPopupComponent = () => {
               </div>
               <div className="text2">
                 <label className="font-semibold text-base" htmlFor="">
-                 Unit
+                  Unit
                 </label>
                 <input
                   className="border h-14 mt-2 rounded-lg p-3"
@@ -70,12 +68,19 @@ export const AssetPopupComponent = () => {
               </div>
             </div>
             <div className="buttons flex justify-end mt-11  gap-3">
-              <input className="border cancle w-36 h-12 rounded-2xl text-greyUi font-semibold text-sm" type="button" value="Cancle" />
+              <input
+                className="border cancle w-36 h-12 rounded-2xl text-greyUi font-semibold text-sm"
+                type="button"
+                value="Cancle"
+              />
               <div className="save bg-blueUi flex justify-center items-center p-2">
-                    <IoIosAdd size={28} className=" bg-white"/>
-                    <input className=" cancle h-12 text-white font-semibold text-sm" type="button" value="Save" />
+                <IoIosAdd size={28} className=" bg-white" />
+                <input
+                  className=" cancle h-12 text-white font-semibold text-sm"
+                  type="button"
+                  value="Save"
+                />
               </div>
-              
             </div>
           </div>
         </div>
