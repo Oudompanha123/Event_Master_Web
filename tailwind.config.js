@@ -23,7 +23,8 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "pattern": "url('/images/pattern.jpg')"
+        "pattern": "url('/images/pattern.jpg')",
+        "noice": "url('/images/noice-bg.jpg')"
       },
       borderWidth: {
         '1px': '1px',
@@ -33,6 +34,7 @@ module.exports = {
         'radius64': '64px'
       },
       colors: {
+        "purple":"#7A44FF",
         "purple-text": "#7939EF",
         "primary-text": "#344054",
         "blueUi": "#551FFF",
@@ -43,7 +45,7 @@ module.exports = {
         "backgroundUi" : "#F7F9FB",
         "softGreenUi": "#E3F4DB",
         "softRedUi": "#FFECEB",
-        "borderUi": "#D9D9D9"
+        "tableBg":"#F0F1F3"
       }
     },
   },

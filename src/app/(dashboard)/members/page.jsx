@@ -1,51 +1,174 @@
-import Image from "next/image"
-import userData from "../../../data/member.json"
-import ski from "../../../../public/images/ski.jpg"
-import { MemberActionBtn } from "../_components/MemberActionBtn"
-import { MemberDeleteBtn } from "../_components/MemberDeleteBtn"
+"use client";
+import { Plus_Jakarta_Sans } from "next/font/google";
+import React, { useState } from "react";
+import { IoSearchOutline } from "react-icons/io5";
+import { DeleteMemberComponent } from "../_components/DeleteMemberComponent";
+const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
+const memberData = [
+  {
+    id: 1,
+    name: "Morng Many",
+    gender: "Female",
+    email: "many@gmail.com",
+    address: "Phnom Penh",
+    role: "admin",
+    image: "images/Avatar.png",
+  },
+  {
+    id: 2,
+    name: "Ly Nita",
+    gender: "Female",
+    email: "nita@gmail.com",
+    address: "Prey Veng",
+    role: "user",
+    image: "images/member profile9.svg",
+  },
+  {
+    id: 3,
+    name: "Ra Dalin",
+    gender: "Female",
+    email: "dalin@gmail.com",
+    address: "Prey Veng",
+    role: "sub admin",
+    image: "images/member profile2.svg",
+  },
+  {
+    id: 4,
+    name: "Ny Daro",
+    gender: "Male",
+    email: "daro@gmail.com",
+    address: "Kampot",
+    role: "user",
+    image: "images/member profile7.svg",
+  },
+  {
+    id: 5,
+    name: "Sok Bora",
+    gender: "Male",
+    email: "bora@gmail.com",
+    address: "Siem Reap",
+    role: "user",
+    image: "images/member profile11.svg",
+  },
+  {
+    id: 6,
+    name: "Pheak Nary",
+    gender: "Female",
+    email: "nary@gmail.com",
+    address: "Phnom Penh",
+    role: "sub admin",
+    image: "images/member profile5.svg",
+  },
+  {
+    id: 7,
+    name: "Pok Hengly",
+    gender: "Female",
+    email: "hengly@gmail.com",
+    address: "Banteay Meanchey",
+    role: "user",
+    image: "images/member profile8.svg",
+  },
+];
+const getRoleColor = (role) => {
+  switch (role) {
+    case "admin":
+      return "#7A44FF";
+    case "user":
+      return "#457EFF";
+    case "sub admin":
+      return "#088A4C";
+  }
+};
+const MemberPage = () => {
+  const [members, setMembers] = useState(memberData);
 
-const Page = () => {
-    return (
-        <>
-            <div className="space-y-8 rounded-3xl p-6 border-2 border-slate-100 bg-white">
-                <h2 className="md:text-lg xl:text-xl font-semibold">Show All User Request</h2>
-                <div className="space-y-3">
-                    <div className="text-xs xl:text-sm grid grid-cols-7 px-6 py-4 rounded-2xl border-1px border-borderUi">
-                        <span>No</span>
-                        <span>Name</span>
-                        <span>Gender</span>
-                        <span>Email</span>
-                        <span>Address</span>
-                        <span>Role</span>
-                        <span>Action</span>
-                    </div>
-                    {userData.data.map((x, index) => (
-                        <div key={index} className={`text-xs xl:text-sm grid grid-cols-7 px-6 py-4 rounded-2xl border-1px border-slate-100 even:bg-softwhiteUi odd:bg-white odd:border-borderUi`}>
-                            <span className="flex items-center">{index + 1}</span>
-                            <span className="flex items-center space-x-3">
-                                <Image
-                                    src={ski}
-                                    width={48}
-                                    height={48}
-                                    className="h-12 rounded-full object-cover"
-                                />
-                                <p>{x.name}</p>
-                            </span>
-                            <span className="flex items-center">{x.gender}</span>
-                            <span className="flex items-center">{x.gender}</span>
-                            <span className="flex items-center">{x.tel}</span>
-                            <span className="flex items-center">
-                                <MemberActionBtn />
-                            </span>
-                            <div className="flex items-center">
-                                <MemberDeleteBtn />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </>
-    )
-}
+  const handleRoleChange = (id, newRole) => {
+    const updateMember = members.map((member) =>
+      member.id === id ? { ...member, role: newRole } : member
+    );
+    setMembers(updateMember);
+  };
+  return (
+    <div className="main bg-white h-auto p-6 rounded-3xl">
+      <div className="flex w-full justify-between mt-2">
+        <div className="w-[650px]">
+          <a className="font-semibold text-2xl">Show All Members</a>
+        </div>
+        <div className="w-full flex justify-end">
+          <div>
+            <input
+              type="text"
+              placeholder="Search by name"
+              className="font-medium text-base focus:outline-none focus:border-purple-text w-[680px] h-11 border rounded-3xl pl-10"
+            />
+            <IoSearchOutline className="w-[24px] h-[24px] -mt-8 ml-3" />
+          </div>
+        </div>
+      </div>
+      <table className="table w-full mt-5 border-separate border-spacing-y-3">
+        <thead className="text-greyUi h-14 drop-shadow rounded-radiusUi bg-[#FFFFFF]">
+          <tr>
+            <th className="px-5 py-2 rounded-l-radiusUi">ID</th>
+            <th className="px-5 py-2 pl-14">NAME</th>
+            <th className="px-5 py-2">GENDER</th>
+            <th className="px-5 py-2">EMAIL</th>
+            <th className="px-5 py-2">ADDRESS</th>
+            <th className="px-5 py-2 pl-16">ROLE</th>
+            <th className="px-5 py-2 rounded-r-radiusUi">ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          {members.map((member, index) => (
+            <tr
+              key={member.id}
+              className={`text-greyUi t h-12 drop-shadow rounded-radiusUi ${
+                index % 2 === 0 ? "bg-[#F4F4F4]" : "bg-[#FFFFFF]"
+              }`}
+            >
+              <td className="px-5 py-2 text-xs xl:text-sm rounded-l-radiusUi">
+                {member.id}
+              </td>
+              <td className="font-medium text-xs flex items-center px-5 py-2">
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className=" mr-4  rounded-full w-10 h-10"
+                />
+                {member.name}
+              </td>
+              <td className="px-5 py-2 text-xs xl:text-sm">{member.gender}</td>
+              <td className="px-5 py-2 text-xs xl:text-sm">{member.email}</td>
+              <td className="px-5 py-2 text-xs xl:text-sm">{member.address}</td>
+              <td className="px-5 py-2 text-xs xl:text-sm">
+                <select
+                  value={member.role}
+                  onChange={(e) => handleRoleChange(member.id, e.target.value)}
+                  className="select select-sm h-9 font-medium w-[125px] pl-4 border rounded-radiusUi drop-shadow focus:outline-none"
+                  style={{
+                    color: getRoleColor(member.role),
+                    borderColor: getRoleColor(member.role),
+                  }}
+                >
+                  <option value="admin" className=" text-primary-text">
+                    Admin
+                  </option>
+                  <option value="user" className=" text-primary-text">
+                    User
+                  </option>
+                  <option value="sub admin" className=" text-primary-text">
+                    Sub Admin
+                  </option>
+                </select>
+              </td>
+              <td className="px-5 py-2 text-xs xl:text-sm rounded-r-radiusUi">
+                {member.role !== "admin" && <DeleteMemberComponent />}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
-export default Page
+export default MemberPage;

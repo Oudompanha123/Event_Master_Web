@@ -21,7 +21,7 @@ export const SidebarComponent = ({ className }) => {
             <div className="w-full flex xl:block flex-col items-center xl:items-start justify-center">
                 {data?.data?.map((x, index) => (
                     <Link onClick={() => setClick(false)} href={x.link} key={index}>
-                        <div className={`space-x-3 px-3  lg:px-4 py-3 flex justify-center xl:justify-start rounded-radiusUi w-fit xl:!w-full items-center ${pathname === x.link && "text-white bg-purple-text"}`}>
+                        <div className={`space-x-3 px-3 lg:px-4 py-3 flex justify-center xl:justify-start rounded-radiusUi w-fit xl:!w-full items-center ${pathname === x.link && "text-white bg-purple-text"}`}>
                             {x.icon == 'overview' ? <Layer size="20" color={`${pathname === "/overview" ? "#FFFFFF" : '#344054'}`} variant="Bulk" />
                                 : x.icon == "members" ? <People size="20" color={`${pathname === "/members" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                     : x.icon == 'assets' ? <I3Dcube size="20" color={`${pathname === "/assets" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
