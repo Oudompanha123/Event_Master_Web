@@ -3,34 +3,39 @@ import { IoIosAdd } from "react-icons/io";
 export const AssetPopupComponent = () => {
   return (
     <div>
-      <div
-        className="button border w-40 h-10 flex rounded-[100px] justify-center items-center"
-        onClick={() => document.getElementById("my_modal_3").showModal()}
+      <button
+        className=" button border w-40 h-10 flex rounded-[100px] justify-center items-center"
+        onClick={() => document.getElementById("my_modal_new").showModal()}
       >
-        <div className="icon flex items-center ">
+        <div className="icon flex items-center">
           <div className="border bg-purple-text rounded-md w-5 h-5 flex justify-center items-center">
             <IoIosAdd size={22} color="white" />
           </div>
-          <div className="button text-purple-text ml-3">
+          <div className="button text-purple-text ml-3 cursor-pointer">
             <input
-              className="font-semibold text-sm py-7"
+              className="font-semibold text-sm py-7 cursor-pointer"
               type="button"
               value="New Asset"
             />
           </div>
         </div>
-      </div>
-      <dialog id="my_modal_3" className="modal w-[820px] h-[452px] m-auto">
-        <div className="modal-box">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-              ✕
-            </button>
-          </form>
-          <div className="content">
+      </button>
+      <dialog id="my_modal_new" className="modal mt-0 w-[820px] m-auto">
+        <div className="modal-box w-11/12 max-w-5xl mt-0 ">
+          <div className="modal-action mt-0">
+            <form method="dialog">
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
+            </form>
+          </div>
+          <div className="content px-10 mt-4">
             <div className="title font-semibold text-2xl">Create Asset</div>
             <div className="content mt-12 flex flex-col">
-              <label className="font-semibold text-base" htmlFor="">
+              <label
+                className="font-semibold text-base cursor-pointer"
+                htmlFor=""
+              >
                 Asset Name <span className=" text-redUi">*</span>
               </label>
               <input
@@ -41,40 +46,47 @@ export const AssetPopupComponent = () => {
                 placeholder="Enter asset name"
               />
             </div>
-            <div className="mt-8 grid grid-cols-2 gap-4">
-              <div className="text1">
-                <label className="font-semibold text-base" htmlFor="">
-                  Quantity
+            <div className="content2 grid grid-cols-2 gap-12 mt-5">
+              <div className="text1 flex flex-col">
+                <label
+                  className="font-semibold text-base cursor-pointer"
+                  htmlFor=""
+                >
+                  Quantity <span className=" text-redUi">*</span>
                 </label>
                 <input
                   className="border h-14 mt-2 rounded-lg p-3"
                   type="text"
                   name=""
                   id=""
-                  placeholder="Enter quantity"
+                  placeholder="Enter asset name"
                 />
               </div>
-              <div className="text2">
-                <label className="font-semibold text-base" htmlFor="">
-                  Unit
+              <div className="text1 flex flex-col">
+                <label
+                  className="font-semibold text-base cursor-pointer"
+                  htmlFor=""
+                >
+                  Unit <span className=" text-redUi">*</span>
                 </label>
                 <input
                   className="border h-14 mt-2 rounded-lg p-3"
                   type="text"
                   name=""
                   id=""
-                  placeholder="Enter unit"
+                  placeholder="Enter asset name"
                 />
               </div>
             </div>
-            <div className="buttons flex justify-end mt-11  gap-3">
+
+            <div className="buttons flex justify-end mt-9  gap-2">
               <input
-                className="border cancle w-36 h-12 rounded-2xl text-greyUi font-semibold text-sm"
+                className="border cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm"
                 type="button"
                 value="Cancle"
               />
-              <div className="save bg-blueUi flex justify-center items-center p-2">
-                <IoIosAdd size={28} className=" bg-white" />
+              <div className="save border rounded-2xl bg-blueUi flex justify-center items-center px-4 gap-3">
+                <IoIosAdd size={20} className=" bg-white rounded-md w-5 h-5 " />
                 <input
                   className=" cancle h-12 text-white font-semibold text-sm"
                   type="button"
