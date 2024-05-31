@@ -1,10 +1,10 @@
 import Link from "next/link"
 import { OverviewCardComponent } from "../_components/OverviewCardComponent"
-import userData from "../../../data/member.json"
-import { AddSquare } from "iconsax-react"
+import categoryData from "../../../data/category.json"
 import { BarChartComponent } from "../_components/BarChartComponent"
 import statusData from "../../../data/overview.json"
 import Image from "next/image"
+import CreateCategoryButton from "../_components/Action/CreateCategoryButton"
 
 const Page = () => {
     return (
@@ -40,41 +40,42 @@ const Page = () => {
                         <button className="bg-white rounded-full px-8 py-3 font-bold mt-4 lg:mt-8 text-sm absolute z-20">Get Start</button>
                     </Link>
                     <button className="bg-white rounded-full px-8 py-3 font-bold mt-4 lg:mt-8 text-sm opacity-0">Get Start</button>
-                    <div className="absolute -bottom-32 rotate-[13.5deg] right-0 h-80 w-80 bg-[#AD9CFF] rounded-radius64 z-0"></div>
-                    <div className="absolute -bottom-48 rotate-[13.5deg] -right-24 h-80 w-80 bg-[#9782FF] rounded-radius64 z-0"></div>
+                    <div className="absolute -bottom-56 rotate-[13.5deg] right-0 h-80 w-80 bg-[#AD9CFF] rounded-radius64 z-0"></div>
+                    <div className="absolute -bottom-72 rotate-[13.5deg] -right-12 h-80 w-80 bg-[#9782FF] rounded-radius64 z-0"></div>
                 </div>
             </section>
             <section>
                 <div className="space-y-8 rounded-3xl p-6 border-2 border-slate-100 bg-white">
                     <div className="flex justify-between items-center">
                         <h2 className="md:text-lg xl:text-xl font-semibold">Event Category</h2>
-                        <Link href={'#'}>
-                            <button className="border-1px border-purple-text text-purple-text rounded-full px-4 py-2.5 flex items-center space-x-3">
-                                <AddSquare size="20" color="#8C59FE" variant="Bold" />
-                                <p className="text-xs">New Category</p>
-                            </button>
-                        </Link>
+                        <CreateCategoryButton />
                     </div>
-                    <div className="overflow-x-auto space-y-3 w-full">
-                        <div className="text-xs xl:text-sm grid grid-cols-5 px-6 py-4 rounded-2xl border-1px border-[#D9D9D9]">
-                            <span>No</span>
-                            <span>Name</span>
-                            <span>Created At</span>
-                            <span>Created By</span>
-                            <span>Action</span>
+                    <div className="w-full overflow-x-auto space-y-3">
+                        <div className="w-full text-xs xl:text-sm grid grid-cols-5 px-6 py-4 rounded-2xl border-1px border-[#D9D9D9]">
+                            <span className="whitespace-nowrap">No</span>
+                            <span className="whitespace-nowrap">Name</span>
+                            <span className="whitespace-nowrap">Created At</span>
+                            <span className="whitespace-nowrap">Created By</span>
+                            <span className="whitespace-nowrap">Action</span>
                         </div>
-                        {userData.data.map((x, index) => (
-                            <div key={index} className={`text-xs xl:text-sm grid grid-cols-5 px-6 py-4 rounded-2xl border-1px border-slate-100 even:bg-softwhiteUi odd:bg-white odd:border-borderUi`}>
-                                <span className="flex items-center">{index + 1}</span>
-                                <span className="flex items-center">{x.name}</span>
-                                <span className="flex items-center">{x.gender}</span>
-                                <span className="flex items-center">{x.tel}</span>
-                                <span className="flex items-center space-x-4">
-                                    <Image src="/icons/trash.svg" width={20} height={20} />
-                                    <Image src="/icons/edit.svg" width={20} height={20} />
-                                </span>
-                            </div>
-                        ))}
+                        {categoryData.payload.map((x, index) => {
+                            const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                            const inputDate = x.created_at;
+                            const formattedDate = formatDate(inputDate);
+                            const formated = formattedDate;
+                            return (
+                                <div key={index} className={`w-full text-xs xl:text-sm grid grid-cols-5 px-6 py-4 rounded-2xl border-1px border-slate-100 even:bg-softwhiteUi odd:bg-white odd:border-borderUi/50`}>
+                                    <span className="flex items-center whitespace-nowrap">{index + 1}</span>
+                                    <span className="flex items-center whitespace-nowrap">{x.name}</span>
+                                    <span className="flex items-center whitespace-nowrap">{formated}</span>
+                                    <span className="flex items-center whitespace-nowrap">{x.created_by}</span>
+                                    <span className="flex items-center space-x-4 whitespace-nowrap">
+                                        <Image src="/icons/trash.svg" width={20} height={20} />
+                                        <Image src="/icons/edit.svg" width={20} height={20} />
+                                    </span>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </section>

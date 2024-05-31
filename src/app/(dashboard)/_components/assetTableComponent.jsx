@@ -1,7 +1,7 @@
 import React from "react";
 import data from "../../../data/asset.json";
-import { EditAssetComponent } from "./EditAssetComponent";
-import { DeleteAssetComponent } from "./DeleteAssetComponent";
+import { EditAssetComponent } from "./Action/EditAssetComponent";
+import { DeleteAssetComponent } from "./Action/DeleteAssetComponent";
 export const AsseTable = () => {
   return (
     <div className="ss">

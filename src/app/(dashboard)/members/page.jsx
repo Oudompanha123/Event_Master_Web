@@ -20,14 +20,14 @@ const Page = () => {
                         <span>Action</span>
                     </div>
                     {userData.data.map((x, index) => (
-                        <div key={index} className={`text-xs xl:text-sm grid grid-cols-7 px-6 py-4 rounded-2xl border-1px border-slate-100 even:bg-softwhiteUi odd:bg-white odd:border-borderUi`}>
+                        <div key={index} className={`text-xs xl:text-sm grid grid-cols-7 px-6 py-2 rounded-2xl border-1px border-slate-100 even:bg-softwhiteUi odd:bg-white odd:border-borderUi/50`}>
                             <span className="flex items-center">{index + 1}</span>
                             <span className="flex items-center space-x-3">
                                 <Image
                                     src={ski}
-                                    width={48}
-                                    height={48}
-                                    className="h-12 rounded-full object-cover"
+                                    width={40}
+                                    height={40}
+                                    className="h-10 w-10 rounded-full object-cover"
                                 />
                                 <p>{x.name}</p>
                             </span>

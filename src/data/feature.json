@@ -8,17 +8,17 @@
         {
             "logo": "two",
             "title": "Real-Time Notification",
-            "detail": "Instant alerts for organizers when new registrations come in or when attendance register into the event. Moreover, push notifications and in-app alerts to inform attendees about schedule changes, session updates, speaker updates, etc."
+            "detail": "Organizers receive immediate alerts upon new registrations or when attendees check into the event. Additionally, attendees are notified through push notifications and in-app alerts regarding any schedule modifications, session updates, speaker changes, and more."
         },
         {
             "logo": "three",
             "title": "Tracking and Managing Resource",
-            "detail": "Centralized attendee database to store registration details, contact information, and attendance history. For event organizers, allow organizers to check availability, reserve spaces, and manage venue-related details."
+            "detail": "Create a central hub for attendee information, storing registration details, contact info, and attendance history. This platform will empower event organizers to easily check availability, reserve spaces, and manage venue-related details, making their tasks smoother and more efficient."
         },
         {
             "logo": "four",
             "title": "Agenda and Schedule Management",
-            "detail": "Agenda and schedule management in event software enables seamless session planning, speaker coordination, and personalized attendee itineraries for a streamlined event experience."
+            "detail": "Incorporating agenda and schedule management functionalities within event software streamlines session planning, speaker coordination, and custom attendee itineraries, fostering a cohesive and personalized event experience."
         }
     ]
 }

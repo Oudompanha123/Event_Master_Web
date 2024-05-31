@@ -1,7 +1,7 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
 import React from "react";
 import { FiSearch } from "react-icons/fi";
-import { DeleteComponent } from "../_components/DeleteAttendeeComponent";
+import { DeleteComponent } from "../_components/Action/DeleteAttendeeComponent";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 const AttendeePage = () => {
   return (

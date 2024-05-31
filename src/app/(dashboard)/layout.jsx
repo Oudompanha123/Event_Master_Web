@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
                     <SidebarComponent className={`w-[13%] xl:w-[19%] 2xl:w-[18%]`} />
                     <div className="w-[87%] xl:w-[81%] 2xl:w-[82%]">
                         <NavbarComponent />
-                        <div className="p-6 lg:px-14 bg-backgroundUi">
+                        <div className="p-6 lg:px-14 bg-backgroundUi overflow-scroll">
                             {children}
                         </div>
                     </div>

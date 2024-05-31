@@ -23,7 +23,8 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "pattern": "url('/images/pattern.jpg')"
+        "pattern": "url('/images/pattern.jpg')",
+        "noice": "url('/images/noice-bg.jpg')"
       },
       borderWidth: {
         '1px': '1px',

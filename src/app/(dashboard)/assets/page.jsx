@@ -1,5 +1,5 @@
 import { CiSearch } from "react-icons/ci";
-import { AssetPopupComponent } from "../_components/CreateNewAssetComponent";
+import { AssetPopupComponent } from "../_components/Action/CreateNewAssetComponent";
 import { AsseTable } from "../_components/AssetTableComponent";
 export default function asset_page() {
   return (
