@@ -1,5 +1,5 @@
 import { DeleteAssetComponent } from "../_components/Action/DeleteAssetComponent"
-import { EditAssetComponent } from "../_components/Action/EditAssetComponent"
+import { EditAssetComponent } from "../_components/EditAssetComponent"
 
 const Page = () => {
     return (

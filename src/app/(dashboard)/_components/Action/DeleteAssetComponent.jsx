@@ -3,7 +3,7 @@ import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 export const DeleteAssetComponent = () => {
   return (
-    <div className="delete">
+    <div className="delete cursor-pointer">
       <RiDeleteBin6Line
         color="red"
         onClick={() => document.getElementById("my_modal_5").showModal()}

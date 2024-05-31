@@ -45,7 +45,7 @@ module.exports = {
         "backgroundUi" : "#F7F9FB",
         "softGreenUi": "#E3F4DB",
         "softRedUi": "#FFECEB",
-        "borderUi": "#D9D9D9"
+        "tableBg":"#F0F1F3"
       }
     },
   },
