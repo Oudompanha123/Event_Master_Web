@@ -1,8 +1,7 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
 import React from "react";
-import { FiSearch } from "react-icons/fi";
-import { DeleteComponent } from "../_components/DeleteAttendeeComponent";
-
+import { IoSearchOutline } from "react-icons/io5";
+import { DeleteAttendeeComponent, DeleteComponent } from "../_components/DeleteAttendeeComponent";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 const attendees = [
@@ -54,13 +53,22 @@ const attendees = [
     address: "Phnom Penh",
     phone: "0123065987",
   },
+  {
+    id: 7,
+    name: "Pok Hengly",
+    gender: "Female",
+    email: "hengly@gmail.com",
+    address: "Banteay Meanchey",
+    phone: "095367159",
+  },
+  
 ];
 
 const AttendeePage = () => {
   return (
-    <div className="border w-[100%] h-[600px] rounded-radiusUi">
-      <div className=" flex justify-between m-5">
-        <div className="w-[650px] ">
+    <div className="main bg-white h-auto p-6 rounded-3xl">
+      <div className="flex w-full justify-between mt-2">
+        <div className="w-[650px]">
           <a className="font-semibold text-2xl">
             Show All Attendees in Sport Event
           </a>
@@ -70,42 +78,57 @@ const AttendeePage = () => {
             <input
               type="text"
               placeholder="Search by name"
-              className="font-medium text-lg w-[440px] h-10 border rounded-3xl pl-10"
+              className="font-medium text-base focus:outline-none focus:border-purple-text w-[680px] h-11 border rounded-3xl pl-10"
             />
-            <FiSearch className="w-[24px] h-[24px] -mt-8 ml-2" />
+            <IoSearchOutline className="w-[24px] h-[24px] -mt-8 ml-3" />
           </div>
         </div>
       </div>
-      <div className="table ">
-        <div className="head w-[97%] h-[62px] m-auto bg-[#FFFFFF] border grid grid-cols-7 rounded-2xl gap-4 p-5">
-          <span className="font-semibold text-base">ID</span>
-          <span className="font-semibold text-base">NAME</span>
-          <span className="font-semibold text-base">GENDER</span>
-          <span className="font-semibold text-base">EMAIL</span>
-          <span className="font-semibold text-base">ADDRESS</span>
-          <span className="font-semibold text-base">PHONE NUMBER</span>
-          <span className="font-semibold text-base">ACTION</span>
-        </div>
-        {attendees.map((attendee, index) => (
-          <div
-            key={attendee.id}
-            className={`body w-[97%] h-[62px] m-auto border grid grid-cols-7 rounded-lg gap-4 p-5 mt-3 ${
-              index % 2 === 0 ? "bg-[#F4F4F4]" : "bg-[#FFFFFF]"
-            }`}
-          >
-            <span className="font-medium text-base">{attendee.id}</span>
-            <span className="font-medium text-base">{attendee.name}</span>
-            <span className="font-medium text-base">{attendee.gender}</span>
-            <span className="font-medium text-base">{attendee.email}</span>
-            <span className="font-medium text-base">{attendee.address}</span>
-            <span className="font-medium text-base">{attendee.phone}</span>
-            <span className="font-medium text-base">
-              <DeleteComponent />
-            </span>
-          </div>
-        ))}
-      </div>
+      <table className="table w-full mt-5 border-separate border-spacing-y-3">
+        <thead className="text-greyUi h-14 drop-shadow rounded-radiusUi bg-[#FFFFFF]">
+          <tr>
+            <th className=" px-5 py-2 rounded-l-radiusUi">ID</th>
+            <th className=" px-5 py-2">NAME</th>
+            <th className=" px-5 py-2">GENDER</th>
+            <th className=" px-5 py-2">EMAIL</th>
+            <th className=" px-5 py-2">ADDRESS</th>
+            <th className=" px-5 py-2">PHONE NUMBER</th>
+            <th className=" px-5 py-2 rounded-r-radiusUi">ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          {attendees.map((attendee, index) => (
+            <tr
+              key={attendee.id}
+              className={`tex-greyUi h-14 drop-shadow rounded-radiusUi ${
+                index % 2 === 0 ? "bg-[#F4F4F4]" : "bg-[#FFFFFF]"
+              } `}
+            >
+              <td className=" px-5 py-2 text-xs xl:text-sm rounded-l-radiusUi">
+                {attendee.id}
+              </td>
+              <td className=" px-5 py-2 text-xs xl:text-sm">{attendee.name}</td>
+              <td className=" px-5 py-2 text-xs xl:text-sm">
+                {attendee.gender}
+              </td>
+              <td className=" px-5 py-2 text-xs xl:text-sm">
+                {attendee.email}
+              </td>
+              <td className=" px-5 py-2 text-xs xl:text-sm">
+                {attendee.address}
+              </td>
+              <td className=" px-5 py-2 text-xs xl:text-sm">
+                {attendee.phone}
+              </td>
+              <td className=" px-5 py-2 text-xs xl:text-sm rounded-r-radiusUi">
+              <DeleteAttendeeComponent/>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
+
 export default AttendeePage;

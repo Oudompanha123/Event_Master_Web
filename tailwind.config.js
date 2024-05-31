@@ -33,6 +33,7 @@ module.exports = {
         'radius64': '64px'
       },
       colors: {
+        "purple":"#7A44FF",
         "purple-text": "#7939EF",
         "primary-text": "#344054",
         "blueUi": "#551FFF",

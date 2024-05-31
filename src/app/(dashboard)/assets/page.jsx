@@ -24,7 +24,6 @@ export default function asset_page() {
             <AssetPopupComponent />
           </div>
         </div>
-
         <div className="tables">
           <div className="head w-full bg-gray-200 grid grid-cols-7 space-x-5 rounded-lg gap-7 p-5 ">
             <span className=" font-semibold text-xs">NO</span>
@@ -35,7 +34,6 @@ export default function asset_page() {
             <span className=" font-semibold text-xs ">STATUS</span>
             <span className=" font-semibold text-xs ">ACTION</span>
           </div>
-
           {data.data.map((data, index) => (
             <div className="body w-full border grid grid-cols-7 rounded-lg gap-10 p-4  mt-3 space-x-5">
               <span>{index + 1}</span>
@@ -54,7 +52,6 @@ export default function asset_page() {
               <span className="w-36 h-10 bg-softwhiteUi rounded-lg px-6 py-3 text-xs flex justify-center items-center">
                 {data.status}
               </span>
-
               <div className="action flex  items-center justify-center space-x-5">
                 <DeleteAssetComponent />
                 <EditAssetComponent />
