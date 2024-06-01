@@ -92,7 +92,7 @@ const MemberPage = () => {
     <div className="main bg-white h-auto p-6 rounded-3xl">
       <div className="flex w-full justify-between mt-2">
         <div className="w-[650px]">
-          <a className="font-semibold text-2xl">Show All Members</a>
+          <a className="font-semibold text-xl">Show All Members</a>
         </div>
         <div className="w-full flex justify-end">
           <div>

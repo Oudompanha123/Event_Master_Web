@@ -14,7 +14,7 @@ export const SidebarComponent = ({ className }) => {
 
     return (
         <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-5 border-r-1px sticky top-0 h-screen`}>
-            <div className="p-2">
+            <div className="p-2 lg:p-2">
                 <Image src={logo} height={75} width={75} />
             </div>
             <hr />
@@ -29,31 +29,33 @@ export const SidebarComponent = ({ className }) => {
                                             : x.icon == "request" ? <Notification size="20" color={`${pathname === "/user-request" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                                 : x.icon == "setting" ? <Setting2 size="20" color={`${pathname === "/account-setting" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                                     : x.icon == "logout" ? <LogoutCurve size="20" color="#344054" variant="Bulk" /> : <LogoutCurve size="24" color="#344054" variant="Bulk" />}
-                            <p className="hidden xl:block text-sm 2xl:text-lg">{x.name}</p>
+                            <p className="hidden xl:block text-base 2xl:text-lg">{x.name}</p>
                         </div>
                     </Link>
                 ))}
                 {/* dropdown sidebar  */}
-                <ul className={`menu p-0 w-ful cursor-pointer rounded-radiusUi hidden xl:block`}>
+                <ul className={`w-full p-0 w-ful cursor-pointer rounded-radiusUi hidden xl:block`}>
                     {/* <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-center xl:justify-start items-center gap-3 rounded-radiusUi px-4 py-3 ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`}> */}
-                    <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-center xl:justify-start items-center gap-3 rounded-radiusUi px-4 py-3`}>
-                        <Setting2 size="20" color={`${pathname === "/organization-profile" || pathname === "/user-profile" ? '#344054' : '#344054'}`} variant="Bulk" />
-                        <div className="flex items-center space-x-2">
-                            <p className={`text-sm 2xl:text-lg hidden xl:block font-normal ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-primary-text" : 'text-primary-text'}`}>
-                                Account Setting
-                            </p>
-                            <ArrowDown2 className={`${click && 'rotate-180 duration-300'} duration-300`} size="20" color="#344054" variant="Outline" />
+                    <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-between xl:justify-between items-center gap-3 rounded-radiusUi px-4 py-3`}>
+                        <div className="flex items-center space-x-3">
+                            <Setting2 size="20" color={`${pathname === "/organization-profile" || pathname === "/user-profile" ? '#344054' : '#344054'}`} variant="Bulk" />
+                            <div className="flex items-center justify-between">
+                                <p className={`text-base 2xl:text-lg hidden xl:block font-normal ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-primary-text" : 'text-primary-text'}`}>
+                                    Account Setting
+                                </p>
+                            </div>
                         </div>
+                        <ArrowDown2 className={`${click && 'rotate-180 duration-300'} duration-300`} size="20" color="#344054" variant="Outline" />
                     </h2>
                     <ul className={`${!click && 'hidden'}`}>
-                        <li>
-                            <Link className={`hover:!bg-none pl-10 py-3 ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
+                        <li className="flex">
+                            <Link className={`rounded-radiusUi w-full flex gap-3 pl-10 py-3 !text-sm ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
                                 <Buildings2 size="20" color={`${pathname === "/organization-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                 Organization Profile
                             </Link>
                         </li>
-                        <li>
-                            <Link className={`hover:!bg-none pl-10 py-3 ${pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`} href={'/user-profile'}>
+                        <li className="flex">
+                            <Link className={`rounded-radiusUi w-full flex gap-3 hover:!bg-none pl-10 py-3 !text-sm ${pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`} href={'/user-profile'}>
                                 <Personalcard size="20" color={`${pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                 User Profile
                             </Link>
@@ -76,7 +78,7 @@ export const SidebarComponent = ({ className }) => {
                 <Link onClick={() => setClick(false)} href={'/logout'}>
                     <div className={`space-x-3 px-4 py-4 flex justify-center xl:justify-start rounded-radiusUi w-full items-center`}>
                         <LogoutCurve size="20" color="#344054" variant="Bulk" />
-                        <p className="hidden xl:block text-sm 2xl:text-lg">Logout</p>
+                        <p className="hidden xl:block text-base 2xl:text-lg">Logout</p>
                     </div>
                 </Link>
             </div>
