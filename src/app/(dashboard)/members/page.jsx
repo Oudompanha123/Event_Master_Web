@@ -122,7 +122,7 @@ const MemberPage = () => {
             {members.map((member, index) => (
               <tr
                 key={member.id}
-                className={`text-primary-text t h-12 drop-shadow rounded-radiusUi ${index % 2 === 0 ? "bg-[#F4F4F4]" : "bg-[#FFFFFF]"
+                className={`text-primary-text odd:bg-softwhiteUi even:bg-white h-12 drop-shadow rounded-radiusUi "
                   }`}
               >
                 <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">

@@ -82,7 +82,7 @@ export const CreateEventButton = () => {
                                         </label>
                                     </h3>
                                 </div>
-                                <img src="" className="mt-4 mx-auto h-full w-full hidden" id="preview" alt="Preview" />
+                                <img src="" className="mt-4 mx-auto h-80 w-full hidden object-cover" id="preview" alt="Preview" />
                             </div>
 
                             {/* input field  */}
