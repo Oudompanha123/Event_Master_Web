@@ -1,13 +1,11 @@
 "use client";
+import Image from "next/image";
 import React from "react";
-import { RiDeleteBin6Line } from "react-icons/ri";
+
 export const DeleteAssetComponent = () => {
   return (
     <div className="delete">
-      <RiDeleteBin6Line
-        color="red"
-        onClick={() => document.getElementById("my_modal_5").showModal()}
-      />
+      <Image src={"/icons/trash.svg"} width={20} height={20}  onClick={() => document.getElementById("my_modal_5").showModal()}/>
       <dialog id="my_modal_5" className="modal w-[320px] h-[450px] m-auto">
         <div className="modal-box">
           <form method="dialog">
@@ -36,11 +34,6 @@ export const DeleteAssetComponent = () => {
                   No
                 </button>
               </form>
-              {/* <input
-                className=" border w-28 h-9 rounded-full bg-greyUi text-white font-bold text-sm cursor-pointer"
-                type="button"
-                value="No"
-              /> */}
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 "use client";
 import { IoIosAdd } from "react-icons/io";
+// import { DeleteAssetComponent } from "./Action/DeleteAssetComponent";
 export const AssetPopupComponent = () => {
   return (
     <div>
@@ -76,13 +77,6 @@ export const AssetPopupComponent = () => {
                   Cancle
                 </button>
               </form>
-              {/* <form method="dialog">
-                <input
-                  className="border-2 cancle   px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm btn btn-ghost"
-                  type="button"
-                  value="Cancle"
-                />
-              </form> */}
               <div className="save border rounded-2xl bg-blueUi flex justify-center items-center px-4 gap-3 ">
                 <IoIosAdd size={20} className=" bg-white rounded-md w-5 h-5 " />
                 <input

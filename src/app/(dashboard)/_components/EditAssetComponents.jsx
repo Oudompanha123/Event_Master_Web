@@ -1,15 +1,16 @@
 "use client";
+import Image from "next/image";
 import React from "react";
 import { TbEdit } from "react-icons/tb";
 export const EditAssetComponents = () => {
   return (
     <div>
-      <div
-        className="edit cursor-pointer"
+      <Image
+        src={"/icons/edit.svg"}
+        width={20}
+        height={20}
         onClick={() => document.getElementById("my_modal_edit").showModal()}
-      >
-        <TbEdit size={20} color="green" />
-      </div>
+      />
       <dialog id="my_modal_edit" className="modal mt-0 w-[820px] m-auto">
         <div className="modal-box w-11/12 max-w-5xl mt-0 ">
           <div className="modal-action mt-0">
@@ -24,10 +25,7 @@ export const EditAssetComponents = () => {
               Update Asset
             </div>
             <div className="content mt-12 flex flex-col items-start">
-              <label
-                className="font-semibold text-base"
-                htmlFor=""
-              >
+              <label className="font-semibold text-base" htmlFor="">
                 Asset Name
               </label>
               <input
@@ -55,10 +53,7 @@ export const EditAssetComponents = () => {
                 />
               </div>
               <div className="text1 flex flex-col ">
-                <label
-                  className="font-semibold text-base"
-                  htmlFor=""
-                >
+                <label className="font-semibold text-base" htmlFor="">
                   Unit
                 </label>
                 <input
@@ -71,15 +66,15 @@ export const EditAssetComponents = () => {
               </div>
             </div>
             <div className="buttons flex justify-end mt-9  gap-2 ">
-               <div className="modal-action mt-0">
-            <form method="dialog">
-              <button className="btn btn-sm  border px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm cursor-pointer">
-                Cancle
-              </button>
-            </form>
-          </div>
+              <div className="modal-action mt-0">
+                <form method="dialog">
+                  <button className="btn btn-sm  border px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm cursor-pointer">
+                    Cancle
+                  </button>
+                </form>
+              </div>
               <div className="save border rounded-2xl bg-greenUi flex justify-center items-center px-4 gap-3 cursor-pointer">
-                <TbEdit size={20} color="white" className=""/>
+                <TbEdit size={20} color="white" className="" />
                 <input
                   className=" cancle h-12 text-white font-semibold text-sm cursor-pointer"
                   type="button"
