@@ -90,83 +90,84 @@ const MemberPage = () => {
   };
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
-      <div className="flex w-full justify-between mt-2">
-        <div className="w-[650px]">
-          <a className="font-semibold text-2xl">Show All Members</a>
+      <div className="flex flex-col lg:flex-row w-full justify-between mt-2">
+        <div className="lg:w-[650px]">
+          <a className="font-semibold md:text-lg xl:text-xl">Show All Members</a>
         </div>
-        <div className="w-full flex justify-end">
-          <div>
+        <div className="w-full flex justify-end mt-6 lg:mt-0">
+          <div className="w-full lg:w-fit">
             <input
               type="text"
               placeholder="Search by name"
-              className="font-medium text-base focus:outline-none focus:border-purple-text w-[680px] h-11 border rounded-3xl pl-10"
+              className="font-medium text-base focus:outline-none focus:border-purple-text w-full lg:w-[680px] h-11 border rounded-3xl pl-10"
             />
             <IoSearchOutline className="w-[24px] h-[24px] -mt-8 ml-3" />
           </div>
         </div>
       </div>
-      <table className="table w-full mt-5 border-separate border-spacing-y-3">
-        <thead className="text-greyUi h-14 drop-shadow rounded-radiusUi bg-[#FFFFFF]">
-          <tr>
-            <th className="px-5 py-2 rounded-l-radiusUi">ID</th>
-            <th className="px-5 py-2 pl-14">NAME</th>
-            <th className="px-5 py-2">GENDER</th>
-            <th className="px-5 py-2">EMAIL</th>
-            <th className="px-5 py-2">ADDRESS</th>
-            <th className="px-5 py-2 pl-16">ROLE</th>
-            <th className="px-5 py-2 rounded-r-radiusUi">ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-          {members.map((member, index) => (
-            <tr
-              key={member.id}
-              className={`text-greyUi t h-12 drop-shadow rounded-radiusUi ${
-                index % 2 === 0 ? "bg-[#F4F4F4]" : "bg-[#FFFFFF]"
-              }`}
-            >
-              <td className="px-5 py-2 text-xs xl:text-sm rounded-l-radiusUi">
-                {member.id}
-              </td>
-              <td className="font-medium text-xs flex items-center px-5 py-2">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className=" mr-4  rounded-full w-10 h-10"
-                />
-                {member.name}
-              </td>
-              <td className="px-5 py-2 text-xs xl:text-sm">{member.gender}</td>
-              <td className="px-5 py-2 text-xs xl:text-sm">{member.email}</td>
-              <td className="px-5 py-2 text-xs xl:text-sm">{member.address}</td>
-              <td className="px-5 py-2 text-xs xl:text-sm">
-                <select
-                  value={member.role}
-                  onChange={(e) => handleRoleChange(member.id, e.target.value)}
-                  className="select select-sm h-9 font-medium w-[125px] pl-4 border rounded-radiusUi drop-shadow focus:outline-none"
-                  style={{
-                    color: getRoleColor(member.role),
-                    borderColor: getRoleColor(member.role),
-                  }}
-                >
-                  <option value="admin" className=" text-primary-text">
-                    Admin
-                  </option>
-                  <option value="user" className=" text-primary-text">
-                    User
-                  </option>
-                  <option value="sub admin" className=" text-primary-text">
-                    Sub Admin
-                  </option>
-                </select>
-              </td>
-              <td className="px-5 py-2 text-xs xl:text-sm rounded-r-radiusUi">
-                {member.role !== "admin" && <DeleteMemberComponent />}
-              </td>
+      <div className="overflow-x-scroll">
+        <table className="table w-full mt-5 border-separate border-spacing-y-3">
+          <thead className="text-primary-text h-14 drop-shadow rounded-radiusUi bg-[#FFFFFF]">
+            <tr className="text-xs lg:text-base">
+              <th className="px-5 py-2 font-medium rounded-l-radiusUi">ID</th>
+              <th className="px-5 py-2 font-medium pl-14">NAME</th>
+              <th className="px-5 py-2 font-medium">GENDER</th>
+              <th className="px-5 py-2 font-medium">EMAIL</th>
+              <th className="px-5 py-2 font-medium">ADDRESS</th>
+              <th className="px-5 py-2 font-medium pl-16">ROLE</th>
+              <th className="px-5 py-2 font-medium rounded-r-radiusUi">ACTION</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {members.map((member, index) => (
+              <tr
+                key={member.id}
+                className={`text-primary-text odd:bg-softwhiteUi even:bg-white h-12 drop-shadow rounded-radiusUi "
+                  }`}
+              >
+                <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">
+                  {member.id}
+                </td>
+                <td className="text-xs xl:text-base flex items-center px-5 py-2">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className=" mr-4  rounded-full w-10 h-10"
+                  />
+                  {member.name}
+                </td>
+                <td className="px-5 py-2 text-xs xl:text-base">{member.gender}</td>
+                <td className="px-5 py-2 text-xs xl:text-base">{member.email}</td>
+                <td className="px-5 py-2 text-xs xl:text-base">{member.address}</td>
+                <td className="px-5 py-2 text-xs xl:text-base">
+                  <select
+                    value={member.role}
+                    onChange={(e) => handleRoleChange(member.id, e.target.value)}
+                    className="select select-sm h-9 font-medium w-[125px] pl-4 border rounded-radiusUi drop-shadow focus:outline-none"
+                    style={{
+                      color: getRoleColor(member.role),
+                      borderColor: getRoleColor(member.role),
+                    }}
+                  >
+                    <option value="admin" className=" text-primary-text">
+                      Admin
+                    </option>
+                    <option value="user" className=" text-primary-text">
+                      User
+                    </option>
+                    <option value="sub admin" className=" text-primary-text">
+                      Sub Admin
+                    </option>
+                  </select>
+                </td>
+                <td className="px-5 py-2 text-xs xl:text-sm rounded-r-radiusUi">
+                  {member.role !== "admin" && <DeleteMemberComponent />}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

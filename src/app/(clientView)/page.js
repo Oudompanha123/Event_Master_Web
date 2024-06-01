@@ -10,6 +10,7 @@ import { TitleComponent } from "./_componenets/TitleComponent";
 import { CTAComponent } from "./_componenets/CTAComponent";
 import eventData from "../../data/event.json";
 import { EventList } from "./_componenets/EventList";
+import { SearchBar } from "./_componenets/SearchBar";
 
 export default function Home() {
   return (
@@ -51,14 +52,21 @@ export default function Home() {
         </div>
         <CategoryCardListComponent />
       </section>
+
+      <section className="mb-16">
+        <div className="mb-8">
+          <TitleComponent title={"Search Your Favorite Event"} />
+        </div>
+        <SearchBar />
+      </section>
       {/* event section */}
       <section id="content" className="space-y-16">
         {/* {eventData.payload.map((x, index) => (
           <EventList title={x.conference}  />
         ))} */}
-        <EventList title={"Conference"} data={eventData.conference}  />
-        <EventList title={"Race & Sport"} data={eventData.sport}  />
-        <EventList title={"Festival"} data={eventData.festival}  />
+        <EventList title={"Conference"} data={eventData.conference} />
+        <EventList title={"Race & Sport"} data={eventData.sport} />
+        <EventList title={"Festival"} data={eventData.festival} />
       </section>
       {/* cta section */}
       <section>

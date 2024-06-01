@@ -1,7 +1,7 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
 import React from "react";
 import { IoSearchOutline } from "react-icons/io5";
-import { DeleteAttendeeComponent, DeleteComponent } from "../_components/DeleteAttendeeComponent";
+import { DeleteAttendeeComponent } from "../_components/Action/DeleteAttendeeComponent";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 const attendees = [
@@ -121,7 +121,7 @@ const AttendeePage = () => {
                 {attendee.phone}
               </td>
               <td className=" px-5 py-2 text-xs xl:text-sm rounded-r-radiusUi">
-              <DeleteAttendeeComponent/>
+              <DeleteAttendeeComponent />
               </td>
             </tr>
           ))}

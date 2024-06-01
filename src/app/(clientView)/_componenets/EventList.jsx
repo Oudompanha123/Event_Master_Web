@@ -19,7 +19,7 @@ export const EventList = ({ title, data }) => {
                     />
                 ))}
             </div>
-            <Link href={'/#'}>
+            <Link href={'/sports'}>
                 <button className={`${data.length > 6 ? "block" : "hidden"} mx-auto mt-8 text-sm rounded-full bg-purple-text text-white px-6 py-3 border-1px border-purple-text`}>See more</button>
             </Link>
         </div>
