@@ -6,7 +6,7 @@ export default function assetPage() {
     <>
       <div className="contain bg-white rounded-3xl box-border">
         <div className="head flex justify-between items-center pl-4 mx-3 pt-6">
-          <div className="title font-semibold text-base">Asset Management</div>
+          <div className="title font-semibold text-xl">Asset Management</div>
           <div className="search_bar flex items-center gap-7 w-3/4 justify-center">
             <div className="search border h-10 rounded-[100px] flex align-middle w-3/4 p-5">
               <div className="icon flex justify-center items-center">
