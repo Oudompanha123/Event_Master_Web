@@ -52,13 +52,13 @@ const Page = () => {
                     </div>
                     <div className="overflow-scroll">
                         <table className="table w-full border-separate border-spacing-y-3">
-                            <thead className="h-14 drop-shadow rounded-radiusUi bg-[#FFFFFF] uppercase">
+                            <thead className="h-14 drop-shadow text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
                                 <tr className="text-xs lg:text-base">
-                                    <th className="px-5 py-2 rounded-l-radiusUi">No</th>
-                                    <th className="px-5 py-2">Name</th>
-                                    <th className="px-5 py-2">Created At</th>
-                                    <th className="px-5 py-2">Created By</th>
-                                    <th className="px-5 py-2 rounded-r-radiusUi">Action</th>
+                                    <th className="px-5 py-2 font-medium rounded-l-radiusUi">No</th>
+                                    <th className="px-5 py-2 font-medium">Name</th>
+                                    <th className="px-5 py-2 font-medium">Created At</th>
+                                    <th className="px-5 py-2 font-medium">Created By</th>
+                                    <th className="px-5 py-2 font-medium rounded-r-radiusUi">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
