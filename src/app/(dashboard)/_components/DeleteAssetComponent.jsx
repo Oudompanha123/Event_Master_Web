@@ -11,7 +11,6 @@ export const DeleteAssetComponent = () => {
       <dialog id="my_modal_5" className="modal w-[320px] h-[450px] m-auto">
         <div className="modal-box">
           <form method="dialog">
-            {/* if there is a button in form, it will close the modal */}
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               ✕
             </button>
@@ -22,7 +21,9 @@ export const DeleteAssetComponent = () => {
             </div>
             <div className=" align-middle flex justify-center items-center font-bold text-sm">
               {" "}
-              <p className="text-center">Are you sure,you want to <br /> remove this asset?</p>
+              <p className="text-center">
+                Are you sure,you want to <br /> remove this asset?
+              </p>
             </div>
             <div className="button flex justify-center items-center gap-4 mt-10 pb-4">
               <input
@@ -30,11 +31,16 @@ export const DeleteAssetComponent = () => {
                 type="button"
                 value="Yes"
               />
-              <input
+              <form method="dialog">
+                <button className="btn btn-sm border w-28 h-9 rounded-full bg-greyUi text-white font-bold text-sm cursor-pointer">
+                  No
+                </button>
+              </form>
+              {/* <input
                 className=" border w-28 h-9 rounded-full bg-greyUi text-white font-bold text-sm cursor-pointer"
                 type="button"
                 value="No"
-              />
+              /> */}
             </div>
           </div>
         </div>

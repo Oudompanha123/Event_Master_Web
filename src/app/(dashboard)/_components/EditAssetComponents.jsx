@@ -71,11 +71,13 @@ export const EditAssetComponents = () => {
               </div>
             </div>
             <div className="buttons flex justify-end mt-9  gap-2 ">
-              <input
-                className="border cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm cursor-pointer"
-                type="button"
-                value="Cancle"
-              />
+               <div className="modal-action mt-0">
+            <form method="dialog">
+              <button className="btn btn-sm  border px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm cursor-pointer">
+                Cancle
+              </button>
+            </form>
+          </div>
               <div className="save border rounded-2xl bg-greenUi flex justify-center items-center px-4 gap-3 cursor-pointer">
                 <TbEdit size={20} color="white" className=""/>
                 <input

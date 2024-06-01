@@ -4,7 +4,7 @@ export const AssetPopupComponent = () => {
   return (
     <div>
       <button
-        className="bg-slate-600 button border w-40 h-10 flex rounded-[100px] justify-center items-center"
+        className="button border w-40 h-10 flex rounded-[100px] justify-center items-center"
         onClick={() => document.getElementById("my_modal_new").showModal()}
       >
         <div className="icon flex items-center cursor-pointer">
@@ -32,10 +32,7 @@ export const AssetPopupComponent = () => {
           <div className="content px-10 mt-4">
             <div className="title font-semibold text-2xl">Create Asset</div>
             <div className="content mt-12 flex flex-col">
-              <label
-                className="font-semibold text-base "
-                htmlFor=""
-              >
+              <label className="font-semibold text-base " htmlFor="">
                 Asset Name <span className=" text-redUi">*</span>
               </label>
               <input
@@ -48,10 +45,7 @@ export const AssetPopupComponent = () => {
             </div>
             <div className="content2 grid grid-cols-2 gap-12 mt-5">
               <div className="text1 flex flex-col">
-                <label
-                  className="font-semibold text-base"
-                  htmlFor=""
-                >
+                <label className="font-semibold text-base" htmlFor="">
                   Quantity <span className=" text-redUi">*</span>
                 </label>
                 <input
@@ -63,10 +57,7 @@ export const AssetPopupComponent = () => {
                 />
               </div>
               <div className="text1 flex flex-col">
-                <label
-                  className="font-semibold text-base"
-                  htmlFor=""
-                >
+                <label className="font-semibold text-base" htmlFor="">
                   Unit <span className=" text-redUi">*</span>
                 </label>
                 <input
@@ -79,12 +70,19 @@ export const AssetPopupComponent = () => {
               </div>
             </div>
 
-            <div className="buttons flex justify-end mt-9  gap-2">
-              <input
-                className="border cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm "
-                type="button"
-                value="Cancle"
-              />
+            <div className="buttons flex justify-end mt-9  gap-2 modal-action">
+              <form method="dialog">
+                <button className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm">
+                  Cancle
+                </button>
+              </form>
+              {/* <form method="dialog">
+                <input
+                  className="border-2 cancle   px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm btn btn-ghost"
+                  type="button"
+                  value="Cancle"
+                />
+              </form> */}
               <div className="save border rounded-2xl bg-blueUi flex justify-center items-center px-4 gap-3 ">
                 <IoIosAdd size={20} className=" bg-white rounded-md w-5 h-5 " />
                 <input
