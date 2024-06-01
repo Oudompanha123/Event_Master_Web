@@ -1,7 +1,7 @@
 import { CiSearch } from "react-icons/ci";
 import { AssetPopupComponent } from "../_components/CreateNewAssetComponent";
-import { AsseTable } from "../_components/AssetTableComponent";
-export default function asset_page() {
+import { AssetTable } from "../_components/AssetTableComponent";
+export default function assetPage() {
   return (
     <>
       <div className="contain bg-white rounded-3xl box-border">
@@ -16,13 +16,13 @@ export default function asset_page() {
                 <input className="p-1 ml-3 w-full focus:outline-none  font-medium text-lg text-greyUi border-none" type="text" name="" id="" placeholder="Angkor"/>
               </div>
             </div>
-            <div className="button_new rounded-[100px] cursor-pointer">
+            <div className="button_new rounded-[100px]">
               <AssetPopupComponent />
             </div>
           </div>
         </div>
         <div className="tables box-border">
-          <AsseTable />
+          <AssetTable />
         </div> 
         <div className="pagination">
           <page/>

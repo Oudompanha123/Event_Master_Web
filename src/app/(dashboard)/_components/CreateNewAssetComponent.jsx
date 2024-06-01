@@ -4,14 +4,14 @@ export const AssetPopupComponent = () => {
   return (
     <div>
       <button
-        className=" button border w-40 h-10 flex rounded-[100px] justify-center items-center"
+        className="bg-slate-600 button border w-40 h-10 flex rounded-[100px] justify-center items-center"
         onClick={() => document.getElementById("my_modal_new").showModal()}
       >
-        <div className="icon flex items-center">
+        <div className="icon flex items-center cursor-pointer">
           <div className="border bg-purple-text rounded-md w-5 h-5 flex justify-center items-center">
             <IoIosAdd size={22} color="white" />
           </div>
-          <div className="button text-purple-text ml-3 cursor-pointer">
+          <div className="button text-purple-text ml-3">
             <input
               className="font-semibold text-sm py-7 cursor-pointer"
               type="button"
@@ -33,7 +33,7 @@ export const AssetPopupComponent = () => {
             <div className="title font-semibold text-2xl">Create Asset</div>
             <div className="content mt-12 flex flex-col">
               <label
-                className="font-semibold text-base cursor-pointer"
+                className="font-semibold text-base "
                 htmlFor=""
               >
                 Asset Name <span className=" text-redUi">*</span>
@@ -49,7 +49,7 @@ export const AssetPopupComponent = () => {
             <div className="content2 grid grid-cols-2 gap-12 mt-5">
               <div className="text1 flex flex-col">
                 <label
-                  className="font-semibold text-base cursor-pointer"
+                  className="font-semibold text-base"
                   htmlFor=""
                 >
                   Quantity <span className=" text-redUi">*</span>
@@ -64,7 +64,7 @@ export const AssetPopupComponent = () => {
               </div>
               <div className="text1 flex flex-col">
                 <label
-                  className="font-semibold text-base cursor-pointer"
+                  className="font-semibold text-base"
                   htmlFor=""
                 >
                   Unit <span className=" text-redUi">*</span>
@@ -81,11 +81,11 @@ export const AssetPopupComponent = () => {
 
             <div className="buttons flex justify-end mt-9  gap-2">
               <input
-                className="border cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm"
+                className="border cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm "
                 type="button"
                 value="Cancle"
               />
-              <div className="save border rounded-2xl bg-blueUi flex justify-center items-center px-4 gap-3">
+              <div className="save border rounded-2xl bg-blueUi flex justify-center items-center px-4 gap-3 ">
                 <IoIosAdd size={20} className=" bg-white rounded-md w-5 h-5 " />
                 <input
                   className=" cancle h-12 text-white font-semibold text-sm"

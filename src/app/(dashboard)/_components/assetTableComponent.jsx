@@ -1,8 +1,8 @@
 import React from "react";
 import data from "../../../data/asset.json";
-import { EditAssetComponent } from "./EditAssetComponent";
+import { EditAssetComponents } from "./EditAssetComponents";
 import { DeleteAssetComponent } from "./DeleteAssetComponent";
-export const AsseTable = () => {
+export const AssetTable = () => {
   return (
     <div className="">
       <table className="w-full border-separate border-spacing-y-3 px-6 mt-0">
@@ -54,8 +54,10 @@ export const AsseTable = () => {
               </td>
               <td className="rounded-r-radiusUi ">
                 <div className="flex justify-center items-center gap-3">
-                  <DeleteAssetComponent/>
-                  <EditAssetComponent />
+                <div className="cursor-pointer"><DeleteAssetComponent/></div>
+                <div className="cursor-pointer"> <EditAssetComponents/></div>
+                  
+                 
                 </div>
               </td>
             </tr>
