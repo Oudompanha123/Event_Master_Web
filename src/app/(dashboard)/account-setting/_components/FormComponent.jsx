@@ -31,7 +31,7 @@ function FormComponent() {
                         </div>
                         <div className="w-full mb-2 group">
                             <label htmlFor="gender" className='block mb-2 text-sm font-semibold text-gray-900 dark:text-white'>Gender <span className='text-red-500'>*</span></label>
-                            <select className="border py-3 pe-2 input-bordered max-w-[600px] border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id='gender'>
+                            <select className="border  py-3 pe-2 input-bordered max-w-[600px] border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id='gender'>
                                 <option value="female">Female</option>
                                 <option value="male">Male</option>
                                 <option value="other" selected>Other</option>
@@ -75,7 +75,7 @@ function FormComponent() {
                                     <path d="M9 13.875C10.0355 13.875 10.875 13.0355 10.875 12C10.875 10.9645 10.0355 10.125 9 10.125C7.96447 10.125 7.125 10.9645 7.125 12C7.125 13.0355 7.96447 13.875 9 13.875Z" stroke="#98A2B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </div> */}
-                            <input type="password" placeholder="Enter your current password" className="border input input-bordered max-w-full border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id='current-password' required readOnly={isLock}/>   
+                            <input type="password" placeholder="Enter your current password" className="border input input-bordered max-w-full border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id='current-password' required disabled={isLock}/>   
                         </div>
                     </div>
                     <div className="w-full mb-5 group flex flex-col">
@@ -88,7 +88,7 @@ function FormComponent() {
                                     <path d="M9 13.875C10.0355 13.875 10.875 13.0355 10.875 12C10.875 10.9645 10.0355 10.125 9 10.125C7.96447 10.125 7.125 10.9645 7.125 12C7.125 13.0355 7.96447 13.875 9 13.875Z" stroke="#98A2B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </div> */}
-                            <input type="password" placeholder="Enter your new password" className="border input input-bordered max-w-full border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id='new-password' required readOnly={isLock}/>
+                            <input type="password" placeholder="Enter your new password" className="border input input-bordered max-w-full border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id='new-password' required disabled={isLock}/>
                         </div>
                     </div>
                     <div className="w-full md:mb-10 group flex flex-col">
@@ -101,7 +101,7 @@ function FormComponent() {
                                     <path d="M9 13.875C10.0355 13.875 10.875 13.0355 10.875 12C10.875 10.9645 10.0355 10.125 9 10.125C7.96447 10.125 7.125 10.9645 7.125 12C7.125 13.0355 7.96447 13.875 9 13.875Z" stroke="#98A2B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </div> */}
-                            <input type="password" placeholder="Confirm your new password" className="border input input-bordered max-w-full border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id='confirm-password'required readOnly={isLock}/>
+                            <input type="password" placeholder="Confirm your new password" className="border input input-bordered max-w-full border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id='confirm-password'required disabled={isLock}/>
                         </div>
                     </div>
                     <div className='flex justify-end my-3 w-full'>
