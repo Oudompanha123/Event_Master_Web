@@ -21,7 +21,7 @@ export const AssetTable = () => {
             </th>
           </tr>
         </thead>
-        <tbody className="border rounded-radiusUi w-full drop-shadow bg-white">
+        <tbody className="border rounded-radiusUi w-full drop-shadow-soft bg-white">
           {data.data.map((asset, index) => (
             <tr className="text-center mx-5">
               <td className="py-3 rounded-l-radiusUi items-center text-base">

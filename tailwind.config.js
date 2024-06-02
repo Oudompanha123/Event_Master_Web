@@ -18,6 +18,9 @@ module.exports = {
           xl: '1380px'
         }
       },
+      dropShadow: {
+        'soft': '0 0 1px rgba(0, 0, 0, .25)',
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

@@ -20,10 +20,14 @@ export const NavbarComponent = ({ className }) => {
                         'Member' :
                         pathname === '/assets' ?
                             'Assets' :
-                            pathname === '/events' ?
+                            pathname === '/events' || pathname === "/attendees" ?
                                 'Events' :
                                 pathname === '/user-request' ?
                                     'Notification' :
+                                    pathname === '/organization-profile' ?
+                                    "Organization Profile" :
+                                    pathname === '/user-profile' ?
+                                    "User Profile" :
                                     pathname === '/account-setting' ?
                                         'Account Setting' :
                                         'Default'}
@@ -35,9 +39,9 @@ export const NavbarComponent = ({ className }) => {
                 </div>
                 <NotificationCard />
                 <CreateEventButton />
-                <div className="flex lg:hidden items-center bg-[#F7F9FB] gap-2 py-3 px-3 lg:px-6 rounded-full">
+                {/* <div className="flex lg:hidden items-center bg-[#F7F9FB] gap-2 py-3 px-3 lg:px-6 rounded-full">
                     <AddSquare size="20" color="#344054" variant="Bold" />
-                </div>
+                </div> */}
                 <div className="flex items-center gap-4">
                     <div className="hidden lg:block">
                         <p className="font-medium text-sm">Thomas Brown</p>
