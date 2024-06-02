@@ -2,6 +2,7 @@
 
 import {useState} from "react";
 import {useForm} from "react-hook-form";
+import Image from "next/image";
 
 const SignupComponent = () => {
 
@@ -11,7 +12,6 @@ const SignupComponent = () => {
         password: "",
         confirmPassword: "",
         phoneNumber: "",
-        userPhoneNumber: "",
         organizationCode: ""
     };
 
@@ -76,7 +76,7 @@ const SignupComponent = () => {
                             <input
                                 type="text"
                                 id="name"
-                                className="shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                                className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                 placeholder="Enter your full name"
                                 {...register("name", {
                                     required: "Full Name is required"
@@ -87,12 +87,12 @@ const SignupComponent = () => {
 
                         <div className="col-span-6 sm:col-span-3">
                             <label htmlFor="email" className="text-sm font-medium primary-text block mb-2">
-                                Email <span className="text-red-600">*</span>
+                                Email <span className="text-red-600 text-sm">*</span>
                             </label>
                             <input
                                 type="text"
                                 id="email"
-                                className="shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                                className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                 placeholder="Enter your email"
                                 {...register("email", {
                                     required: "Email is required",
@@ -109,27 +109,25 @@ const SignupComponent = () => {
                             <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
                                 Password <span className="text-red-600">*</span>
                             </label>
-                            <input
-                                type={isLocked ? "password" : "text"}
-                                id="password"
-                                className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
-                                placeholder="Enter your password"
-                                {...register("password", {
-                                    required: "Password is required",
-                                    minLength: {
-                                        value: 8,
-                                        message: "Password requires at least 8 characters"
-                                    }
-                                })}
-                            />
-                            <div
-                                className="flex justify-end -mt-[34px] mr-5 cursor-pointer mb-3.5"
-                                onClick={handleLockClick}
-                            >
-                                <img
-                                    src={isLocked ? "/lock-slash.svg" : "/unlock.svg"}
-                                    alt={isLocked ? "lock icon" : "unlock icon"}
+                            <div className={"relative"}>
+                                <input
+                                    type={isLocked ? "password" : "text"}
+                                    id="password"
+                                    className={`${errors.password ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                    placeholder="Enter your password"
+                                    {...register("password", {
+                                        required: "Password is required",
+                                        minLength: {
+                                            value: 8,
+                                            message: "Password requires at least 8 characters"
+                                        }
+                                    })}
                                 />
+                                <div className={"absolute top-4 right-3 cursor-pointer"} onClick={handleLockClick}>
+                                    <Image src={`${isLocked ? "/lock-slash.svg" : "/unlock.svg"}`} width={20}
+                                           height={20}
+                                           alt={isLocked ? "lock icon" : "unlock icon"}/>
+                                </div>
                             </div>
                             {errors.password && <span className="text-red-600 text-sm">{errors.password.message}</span>}
                         </div>
@@ -138,24 +136,22 @@ const SignupComponent = () => {
                             <label htmlFor="confirm-password" className="text-sm font-medium primary-text block mb-2">
                                 Confirm Password <span className="text-red-600">*</span>
                             </label>
-                            <input
-                                type={isKeyLocked ? "password" : "text"}
-                                id="confirm-password"
-                                className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
-                                placeholder="Enter your confirm password"
-                                {...register("confirmPassword", {
-                                    required: "Confirm Password is required",
-                                    validate: value => value === watch('password') || "Passwords do not match"
-                                })}
-                            />
-                            <div
-                                className="flex justify-end -mt-[34px] mr-5 cursor-pointer mb-3.5"
-                                onClick={handleKeyLockClick}
-                            >
-                                <img
-                                    src={isKeyLocked ? "/lock-slash.svg" : "/unlock.svg"}
-                                    alt={isKeyLocked ? "lock icon" : "unlock icon"}
+                            <div className={"relative"}>
+                                <input
+                                    type={isKeyLocked ? "password" : "text"}
+                                    id="confirm-password"
+                                    className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                    placeholder="Enter your confirm password"
+                                    {...register("confirmPassword", {
+                                        required: "Confirm Password is required",
+                                        validate: value => value === watch('password') || "Passwords do not match"
+                                    })}
                                 />
+                                <div className={"absolute top-4 right-3 cursor-pointer"} onClick={handleKeyLockClick}>
+                                    <Image src={`${isKeyLocked ? "/lock-slash.svg" : "/unlock.svg"}`} width={20}
+                                           height={20}
+                                           alt={isKeyLocked ? "lock icon" : "unlock icon"}/>
+                                </div>
                             </div>
                             {errors.confirmPassword &&
                                 <span className="text-red-600 text-sm">{errors.confirmPassword.message}</span>}
@@ -169,12 +165,28 @@ const SignupComponent = () => {
                                 <input
                                     type="text"
                                     id="phone-number"
-                                    className="shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                                    className={`${errors.phoneNumber ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                     placeholder="Enter your phone number"
                                     {...register("phoneNumber", {
-                                        required: "Phone Number is required"
+                                        required: "Phone Number is required",
+                                        pattern: {
+                                            value: /^0\d{8,}$/,
+                                            message: "phone number must be number, start with 0, more than 8 digits"
+                                        }
+                                        // validate: value => {
+                                        //     const numberPattern = /^-?\d*\.?\d+$/;
+                                        //     const pattern2 =  /[a-z]/;
+                                        //     if(numberPattern.test(value)){
+                                        //         return "Please Input number"
+                                        //     }
+                                        //     if(pattern2.test(value)){
+                                        //         return  "Pattern ti 2 jorb validate"
+                                        //     }
+                                        //     return true;
+                                        // }
                                     })}
                                 />
+
                                 {errors.phoneNumber &&
                                     <span className="text-red-600 text-sm">{errors.phoneNumber.message}</span>}
                             </div>
@@ -183,31 +195,32 @@ const SignupComponent = () => {
                         {!isAdminSelected && (
                             <div className="col-span-6 flex space-x-4">
                                 <div className="flex-1">
-                                    <label htmlFor="user-phone-number"
+                                    <label htmlFor="phone-number"
                                            className="text-sm font-medium primary-text block mb-2">
                                         Phone Number <span className="text-red-600 text-sm">*</span>
                                     </label>
                                     <input
                                         type="text"
-                                        id="user-phone-number"
-                                        className="shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                                        id="phone-number"
+                                        className={`${errors.phoneNumber ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                         placeholder="Enter your phone number"
-                                        {...register("userPhoneNumber", {
+                                        {...register("phoneNumber", {
                                             required: "Phone Number is required"
                                         })}
                                     />
-                                    {errors.userPhoneNumber &&
-                                        <span className="text-red-600 text-sm">{errors.userPhoneNumber.message}</span>}
+                                    {errors.phoneNumber &&
+                                        <span className="text-red-600 text-sm">{errors.phoneNumber.message}</span>}
                                 </div>
+
                                 <div className="flex-1">
                                     <label htmlFor="organization-code"
                                            className="text-sm font-medium primary-text block mb-2">
-                                        Organization Code <span className="text-red-600">*</span>
+                                        Organization Code <span className="text-red-600 text-sm">*</span>
                                     </label>
                                     <input
                                         type="password"
                                         id="organization-code"
-                                        className="shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                                        className={`${errors.organizationCode ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                         placeholder="Enter your organization code"
                                         {...register("organizationCode", {
                                             required: "Organization Code is required"
