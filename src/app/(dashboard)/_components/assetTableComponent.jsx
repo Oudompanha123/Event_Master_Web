@@ -7,16 +7,16 @@ export const AssetTable = () => {
     <div className="">
       <table className="w-full border-separate border-spacing-y-3 px-6 mt-0">
         <thead className="bg-tableBg rounded-radiusUi w-full px-1">
-          <tr className="w-full">
-            <th className="py-3 px-2 rounded-l-radiusUi  text-base">
+          <tr className="w-full overflow-auto">
+            <th className="py-3 px-2 rounded-l-radiusUi text-xs">
               NO
             </th>
-            <th className="py-3 font-semibold text-sm">ASSET NAME</th>
-            <th className=" font-semibold text-sm">QTY</th>
-            <th className=" font-semibold text-sm">UNIT</th>
-            <th className=" font-semibold text-sm">CREATED BY</th>
-            <th className=" font-semibold text-sm">STATUS</th>
-            <th className=" rounded-r-radiusUi px-3 font-semibold text-sm">
+            <th className="py-3 text text-sm ">ASSET NAME</th>
+            <th className="">QTY</th>
+            <th className="">UNIT</th>
+            <th className="">CREATED BY</th>
+            <th className="  ">STATUS</th>
+            <th className=" rounded-r-radiusUi px-3  ">
               ACTION
             </th>
           </tr>
@@ -24,7 +24,7 @@ export const AssetTable = () => {
         <tbody className="border rounded-radiusUi w-full drop-shadow bg-white">
           {data.data.map((asset, index) => (
             <tr className="text-center mx-5">
-              <td className="py-3 rounded-l-radiusUi items-center text-base">
+              <td className="py-3 rounded-l-radiusUi items-center text-sm">
                 {index + 1}
               </td>
               <td className=" w-[250px]">
