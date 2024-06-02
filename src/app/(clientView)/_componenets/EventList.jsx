@@ -6,7 +6,7 @@ export const EventList = ({ title, data }) => {
     return (
         <div>
             <TitleComponent title={title} />
-            <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 mt-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
                 {data?.slice(0, 6).map((x, index) => (
                     <EventCardComponent
                         key={index}

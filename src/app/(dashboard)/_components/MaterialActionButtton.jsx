@@ -2,9 +2,8 @@
 
 export function MaterialActionButton() {
   return (
-    <>
     <div>
-      <div className="dropdown dropdown-end">
+      <div className="dropdown dropdown-top dropdown-end">
         <div tabIndex={0} role="button" className="">
           <svg
             width="24"
@@ -59,6 +58,7 @@ export function MaterialActionButton() {
           </li>
         </ul>
       </div>
+      
       <dialog id="detail" className="modal">
         <div className="modal-box w-11/12 max-w-xl  ">
           <form method="dialog">
@@ -175,6 +175,6 @@ export function MaterialActionButton() {
         </div>
       </dialog>
     </div>    
-    </>
+    
   );
 }

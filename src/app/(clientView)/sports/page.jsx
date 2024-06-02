@@ -6,7 +6,7 @@ const Page = () => {
     return (
         <div className="container">
             <RedirectBackComponent link={'/'} />
-            <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 mt-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
                 {data?.sport.map((x, index) => (
                     <EventCardComponent
                         key={index}

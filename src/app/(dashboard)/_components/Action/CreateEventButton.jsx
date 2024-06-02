@@ -1,64 +1,69 @@
-'use client'
+"use client";
 
-import { AddSquare, Watch } from "iconsax-react"
+import { AddSquare } from "iconsax-react"
 import Image from "next/image";
 import { ToogleBtn } from "./ToogleBtn";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 export const CreateEventButton = () => {
-    const [hide, setHide] = useState(false);
+  const [hide, setHide] = useState(false);
 
-    const handleDragOver = (e) => {
-        e.preventDefault();
-        e.currentTarget.classList.add('border-indigo-600');
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.add("border-indigo-600");
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove("border-indigo-600");
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove("border-indigo-600");
+    const file = e.dataTransfer.files[0];
+    displayPreview(file);
+    setHide(true);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    displayPreview(file);
+    setHide(true);
+  };
+
+  const displayPreview = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const preview = document.getElementById("preview");
+      preview.src = reader.result;
+      preview.classList.remove("hidden");
     };
+  };
 
-    const handleDragLeave = (e) => {
-        e.preventDefault();
-        e.currentTarget.classList.remove('border-indigo-600');
-    };
+  const {
+    watch,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    const handleDrop = (e) => {
-        e.preventDefault();
-        e.currentTarget.classList.remove('border-indigo-600');
-        const file = e.dataTransfer.files[0];
-        displayPreview(file);
-        setHide(true);
-    };
+  const start = watch("startDate");
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        displayPreview(file);
-        setHide(true);
-    };
-
-    const displayPreview = (file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            const preview = document.getElementById('preview');
-            preview.src = reader.result;
-            preview.classList.remove('hidden');
-        };
-    };
-
-    const { watch, register, handleSubmit, formState: { errors } } = useForm();
-
-    const start = watch('startDate');
-
-    const onSubmit = (data) => {
-        console.log(data)
-    }
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
     return (
         <>
-            <div onClick={() => document.getElementById('my_modal_event').showModal()} className="hidden lg:flex items-center bg-[#F7F9FB] gap-2 py-3 px-3 lg:px-6 rounded-full">
+            <div onClick={() => document.getElementById('my_modal_event').showModal()} className="cursor-pointer lg:flex items-center bg-[#F7F9FB] gap-2 py-3 px-3 lg:px-6 rounded-full">
                 <AddSquare size="24" color="#344054" variant="Bold" />
                 <p className="text-sm hidden lg:block">New Event</p>
             </div>
-            <dialog id="my_modal_event" className="modal">
-                <div className="modal-box w-1/2 max-w-5xl p-8">
+            <dialog id="my_modal_event" className="modal !m-0">
+                <div className="modal-box w-11/12 lg:w-1/2 lg:max-w-5xl p-8">
                     <div className="flex justify-between">
                         <h3 className="font-bold text-xl">Create Event</h3>
                         <form method="dialog">
@@ -86,7 +91,7 @@ export const CreateEventButton = () => {
                             </div>
 
                             {/* input field  */}
-                            <div className="flex gap-8">
+                            <div className="flex flex-col md:flex-row gap-8">
                                 <div className="w-full">
                                     <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
                                         Event Name <span className="text-red-600">*</span>
@@ -118,7 +123,7 @@ export const CreateEventButton = () => {
                                     </select>
                                 </div>
                             </div>
-                            <div className="flex gap-8">
+                            <div className="flex flex-col md:flex-row gap-8">
                                 <div className="w-full">
                                     <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
                                         Start Date Time <span className="text-red-600">*</span>
@@ -159,7 +164,7 @@ export const CreateEventButton = () => {
                                     {errors.endDate && <div className="text-red-600 text-sm">{errors.endDate.message}</div>}
                                 </div>
                             </div>
-                            <div className="flex gap-8">
+                            <div className="flex flex-col md:flex-row gap-8">
                                 <div className="w-full">
                                     <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
                                         Duration <span className="text-red-600">*</span>

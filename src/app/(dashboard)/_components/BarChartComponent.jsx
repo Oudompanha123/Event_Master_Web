@@ -54,7 +54,10 @@ export const BarChartComponent = () => {
             <div className="hidden 2xl:block">
                 <Line data={chartData} options={chartOptions} height={"100%"} />
             </div>
-            <div className="2xl:hidden">
+            <div className="md:hidden">
+                <Line data={chartData} options={chartOptions} height={"300%"} />
+            </div>
+            <div className="hidden md:block 2xl:hidden">
                 <Line data={chartData} options={chartOptions} />
             </div>
         </div >
