@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { AddSquare } from "iconsax-react"
 import Image from "next/image";
@@ -7,49 +7,54 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 export const CreateEventButton = () => {
-    const [hide, setHide] = useState(false);
+  const [hide, setHide] = useState(false);
 
-    const handleDragOver = (e) => {
-        e.preventDefault();
-        e.currentTarget.classList.add('border-indigo-600');
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.add("border-indigo-600");
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove("border-indigo-600");
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove("border-indigo-600");
+    const file = e.dataTransfer.files[0];
+    displayPreview(file);
+    setHide(true);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    displayPreview(file);
+    setHide(true);
+  };
+
+  const displayPreview = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const preview = document.getElementById("preview");
+      preview.src = reader.result;
+      preview.classList.remove("hidden");
     };
+  };
 
-    const handleDragLeave = (e) => {
-        e.preventDefault();
-        e.currentTarget.classList.remove('border-indigo-600');
-    };
+  const {
+    watch,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    const handleDrop = (e) => {
-        e.preventDefault();
-        e.currentTarget.classList.remove('border-indigo-600');
-        const file = e.dataTransfer.files[0];
-        displayPreview(file);
-        setHide(true);
-    };
+  const start = watch("startDate");
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        displayPreview(file);
-        setHide(true);
-    };
-
-    const displayPreview = (file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            const preview = document.getElementById('preview');
-            preview.src = reader.result;
-            preview.classList.remove('hidden');
-        };
-    };
-
-    const { watch, register, handleSubmit, formState: { errors } } = useForm();
-
-    const start = watch('startDate');
-
-    const onSubmit = (data) => {
-        console.log(data)
-    }
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
     return (
         <>
