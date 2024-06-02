@@ -20,7 +20,7 @@ export const NavbarComponent = ({ className }) => {
                         'Member' :
                         pathname === '/assets' ?
                             'Assets' :
-                            pathname === '/events' || pathname === "/attendees" ?
+                            pathname === '/events' || pathname == "/event-detail" || pathname === "/attendees" ?
                                 'Events' :
                                 pathname === '/user-request' ?
                                     'Notification' :
