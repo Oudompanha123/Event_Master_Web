@@ -129,7 +129,7 @@ const MemberPage = () => {
               <th className="px-5 py-2 font-medium">GENDER</th>
               <th className="px-5 py-2 font-medium">EMAIL</th>
               <th className="px-5 py-2 font-medium">ADDRESS</th>
-              <th className="px-5 py-2 font-medium pl-16">ROLE</th>
+              <th className="px-5 py-2 font-medium">ROLE</th>
               <th className="px-5 py-2 font-medium rounded-r-radiusUi">ACTION</th>
             </tr>
           </thead>
