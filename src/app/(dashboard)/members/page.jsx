@@ -2,8 +2,12 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
 import React, { useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
+import { FaAngleDown } from "react-icons/fa";
+import Image from "next/image";
 import { DeleteMemberComponent } from "../_components/DeleteMemberComponent";
+
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
+
 const memberData = [
   {
     id: 1,
@@ -12,7 +16,7 @@ const memberData = [
     email: "many@gmail.com",
     address: "Phnom Penh",
     role: "admin",
-    image: "images/Avatar.png",
+    image: "/images/Avatar.png",
   },
   {
     id: 2,
@@ -21,7 +25,7 @@ const memberData = [
     email: "nita@gmail.com",
     address: "Prey Veng",
     role: "user",
-    image: "images/member profile9.svg",
+    image: "/images/member profile9.svg",
   },
   {
     id: 3,
@@ -30,7 +34,7 @@ const memberData = [
     email: "dalin@gmail.com",
     address: "Prey Veng",
     role: "sub admin",
-    image: "images/member profile2.svg",
+    image: "/images/member profile2.svg",
   },
   {
     id: 4,
@@ -39,7 +43,7 @@ const memberData = [
     email: "daro@gmail.com",
     address: "Kampot",
     role: "user",
-    image: "images/member profile7.svg",
+    image: "/images/member profile7.svg",
   },
   {
     id: 5,
@@ -48,7 +52,7 @@ const memberData = [
     email: "bora@gmail.com",
     address: "Siem Reap",
     role: "user",
-    image: "images/member profile11.svg",
+    image: "/images/member profile11.svg",
   },
   {
     id: 6,
@@ -57,7 +61,7 @@ const memberData = [
     email: "nary@gmail.com",
     address: "Phnom Penh",
     role: "sub admin",
-    image: "images/member profile5.svg",
+    image: "/images/member profile5.svg",
   },
   {
     id: 7,
@@ -66,9 +70,10 @@ const memberData = [
     email: "hengly@gmail.com",
     address: "Banteay Meanchey",
     role: "user",
-    image: "images/member profile8.svg",
+    image: "/images/member profile8.svg",
   },
 ];
+
 const getRoleColor = (role) => {
   switch (role) {
     case "admin":
@@ -77,39 +82,50 @@ const getRoleColor = (role) => {
       return "#457EFF";
     case "sub admin":
       return "#088A4C";
+    default:
+      return "#000";
   }
 };
+
 const MemberPage = () => {
   const [members, setMembers] = useState(memberData);
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   const handleRoleChange = (id, newRole) => {
     const updateMember = members.map((member) =>
       member.id === id ? { ...member, role: newRole } : member
     );
     setMembers(updateMember);
+    setActiveDropdown(null);
   };
+
+  const toggleDropdown = (id) => {
+    setActiveDropdown(activeDropdown === id ? null : id);
+  };
+
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
-      <div className="flex w-full justify-between mt-2">
-        <div className="w-[650px]">
-          <a className="font-semibold text-2xl">Show All Members</a>
+      <div className="flex flex-col lg:flex-row w-full justify-between mt-2 px-[3px]">
+        <div className="lg:w-[650px] md:w-full">
+          <a className="font-semibold lg:text-lg md:text-2xl xl:text-xl">Show All Members</a>
         </div>
-        <div className="w-full flex justify-end">
-          <div>
+        <div className="w-full flex justify-end mt-6 lg:mt-0">
+          <div className=" w-full lg:w-[730px]">
             <input
               type="text"
               placeholder="Search by name"
-              className="font-medium text-base focus:outline-none focus:border-purple-text w-[680px] h-11 border rounded-3xl pl-10"
+              className="font-medium text-base focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
             />
             <IoSearchOutline className="w-[24px] h-[24px] -mt-8 ml-3" />
           </div>
         </div>
       </div>
-      <table className="table w-full mt-5 border-separate border-spacing-y-3">
-        <thead className="text-greyUi h-14 drop-shadow rounded-radiusUi bg-[#FFFFFF]">
+      <div className=" relative overflow-x-auto px-[3px]">
+      <table className="table w-full mt-5 border-separate border-spacing-y-3 ">
+        <thead className="font-semibold text-base text-greyUi h-14 drop-shadow rounded-radiusUi bg-[#FFFFFF]">
           <tr>
             <th className="px-5 py-2 rounded-l-radiusUi">ID</th>
-            <th className="px-5 py-2 pl-14">NAME</th>
+            <th className="px-5 py-2 ">NAME</th>
             <th className="px-5 py-2">GENDER</th>
             <th className="px-5 py-2">EMAIL</th>
             <th className="px-5 py-2">ADDRESS</th>
@@ -121,54 +137,111 @@ const MemberPage = () => {
           {members.map((member, index) => (
             <tr
               key={member.id}
-              className={`text-greyUi t h-12 drop-shadow rounded-radiusUi ${
+              className={` font-semibold text-greyUi h-12 shadow rounded-radiusUi lg:font-semibold lg:text-base md:text-xs md:font-semibold sm:text-xs sm:font-semibold ${
                 index % 2 === 0 ? "bg-[#F4F4F4]" : "bg-[#FFFFFF]"
               }`}
             >
-              <td className="px-5 py-2 text-xs xl:text-sm rounded-l-radiusUi">
+              <td className="px-5 py-2  rounded-l-radiusUi">
                 {member.id}
               </td>
-              <td className="font-medium text-xs flex items-center px-5 py-2">
-                <img
+              <td className="flex items-center px-5 py-2 rounded-l-radiusUi">
+                <Image
                   src={member.image}
                   alt={member.name}
-                  className=" mr-4  rounded-full w-10 h-10"
+                  width={40}
+                  height={40}
+                  className="mr-4 rounded-full"
                 />
                 {member.name}
               </td>
-              <td className="px-5 py-2 text-xs xl:text-sm">{member.gender}</td>
-              <td className="px-5 py-2 text-xs xl:text-sm">{member.email}</td>
-              <td className="px-5 py-2 text-xs xl:text-sm">{member.address}</td>
-              <td className="px-5 py-2 text-xs xl:text-sm">
-                <select
-                  value={member.role}
-                  onChange={(e) => handleRoleChange(member.id, e.target.value)}
-                  className="select select-sm h-9 font-medium w-[125px] pl-4 border rounded-radiusUi drop-shadow focus:outline-none"
-                  style={{
-                    color: getRoleColor(member.role),
-                    borderColor: getRoleColor(member.role),
-                  }}
-                >
-                  <option value="admin" className=" text-primary-text">
-                    Admin
-                  </option>
-                  <option value="user" className=" text-primary-text">
-                    User
-                  </option>
-                  <option value="sub admin" className=" text-primary-text">
-                    Sub Admin
-                  </option>
-                </select>
+              <td className="px-5 py-2 ">{member.gender}</td>
+              <td className="px-5 py-2 ">{member.email}</td>
+              <td className="px-5 py-2 ">{member.address}</td>
+              <td className="px-5 py-2 ">
+                <div className="dropdown dropdown-bottom dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    onClick={() => toggleDropdown(member.id)}
+                    className="btn btn-sm border rounded-radiusUi w-[120px] h-8"
+                    style={{
+                      color: getRoleColor(member.role),
+                      borderColor: getRoleColor(member.role),
+                    }}
+                  >
+                    {member.role}
+                    <FaAngleDown />
+                  </div>
+                  {activeDropdown === member.id && (
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content menu shadow bg-base-100 rounded-radiusUi w-48 z-20 lg:font-semibold lg:text-lg md:text-xs md:font-semibold sm:text-xs sm:font-semibold"
+                    >
+                      <li>
+                        <a
+                          href="#"
+                          onClick={() => handleRoleChange(member.id, "admin")}
+                          className=" hover:text-[#7A44FF]"
+                        >
+                          <Image
+                            src="/images/admin.svg"
+                            alt="Admin"
+                            width={20}
+                            height={20}
+                            className="inline mr-3"
+                          />
+                          Admin
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          onClick={() => handleRoleChange(member.id, "user")}
+                          className=" hover:text-[#457EFF]"
+                        >
+                          <Image
+                            src="/images/user.svg"
+                            alt="User"
+                            width={20}
+                            height={20}
+                            className="inline mr-3"
+                          />
+                          User
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          onClick={() =>
+                            handleRoleChange(member.id, "sub admin")
+                          }
+                          className="hover:text-[#088A4C]"
+                        >
+                          <Image
+                            src="/images/sub admin.svg"
+                            alt="Sub Admin"
+                            width={20}
+                            height={20}
+                            className="inline mr-3 "
+                          />
+                          Sub Admin
+                        </a>
+                      </li>
+                    </ul>
+                  )}
+                </div>
               </td>
-              <td className="px-5 py-2 text-xs xl:text-sm rounded-r-radiusUi">
+              <td className="px-5 py-2 xl:text-sm rounded-r-radiusUi">
                 {member.role !== "admin" && <DeleteMemberComponent />}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 };
 
 export default MemberPage;
+

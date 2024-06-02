@@ -11,7 +11,7 @@ export function DeleteAttendeeComponent() {
         <img src="/images/deleteicon.svg" alt="" className="  w-8 h-8 ml-2" />
       </button>
       <dialog id="delete" className="modal">
-        <div className="modal-box w-[310px] justity-center  ">
+        <div className="modal-box w-[270px] justity-center  ">
           <form method="dialog" className="justify-end flex">
             {/* if there is a button, it will close the modal */}
             <button>
@@ -26,7 +26,7 @@ export function DeleteAttendeeComponent() {
             />
           </div>
           <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
-            Are you sure,you want to
+            Are you sure you want to
           </p>
           <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
             remove this attendee?
@@ -34,14 +34,14 @@ export function DeleteAttendeeComponent() {
           <div className="modal-action ">
             <form
               method="dialog"
-              className=" flex justify-around w-full mb-4 mt-3 px-3"
+              className=" flex justify-between w-full mb-4 mt-3 "
             >
               {/* if there is a button, it will close the modal */}
               <button
                 className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700"
                 value="yes"
               >
-                <p className="text-white font-semibold">yes</p>
+                <p className="text-white font-semibold">Yes</p>
               </button>
               <button
                 className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500"
