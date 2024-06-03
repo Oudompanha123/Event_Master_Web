@@ -25,7 +25,7 @@ const VerifyOTPComponent = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mt-5">
                     <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
-                        Verify OTP Code
+                        Enter 4 Digits Code
                     </h2>
                     <p className="flex justify-center greyUi mt-6">Enter the 4 digits code that received your email.</p>
                 </div>
