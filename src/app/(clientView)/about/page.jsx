@@ -41,7 +41,8 @@ const Page = () => {
                         skills and innovative ideas.
                     </p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 mt-16 place-items-center">
+                <div className="flex flex-wrap items-start gap-16 mt-16 justify-center">
+                    {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 mt-16 flex-wrap items-center justify-center"> */}
                     {teamData.payload.map((x, index) => (
                         <TeamCardComponent key={index} img={x.image} name={x.name} quote={x.quote} />
                     ))}

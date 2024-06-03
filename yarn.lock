@@ -1440,7 +1440,7 @@ react-fast-compare@^3.0.1:
 
 react-hook-form@^7.51.5:
   version "7.51.5"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.51.5.tgz#4afbfb819312db9fea23e8237a3a0d097e128b43"
+  resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.51.5.tgz"
   integrity sha512-J2ILT5gWx1XUIJRETiA7M19iXHlG74+6O3KApzvqB/w8S5NQR7AbU8HVZrMALdmDgWpRPYiZJl0zx8Z4L2mP6Q==
 
 react-icons@^5.2.1:
@@ -1452,6 +1452,11 @@ react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-multi-select-component@^4.3.4:
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/react-multi-select-component/-/react-multi-select-component-4.3.4.tgz#4f4b354bfa1f0353fa9c3bccf8178c87c9780450"
+  integrity sha512-Ui/bzCbROF4WfKq3OKWyQJHmy/bd1mW7CQM+L83TfiltuVvHElhKEyPM3JzO9urIcWplBUKv+kyxqmEnd9jPcA==
 
 react-popper-tooltip@^4.4.2:
   version "4.4.2"
@@ -1522,6 +1527,11 @@ react-transition-group@^4.3.0:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react18-input-otp@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npmjs.org/react18-input-otp/-/react18-input-otp-1.1.4.tgz"
+  integrity sha512-35xvmTeuPWIxd0Z0Opx4z3OoMaTmKN4ubirQCx1YMZiNoe+2h1hsOSUco4aKPlGXWZCtXrfOFieAh46vqiK9mA==
 
 react@^18:
   version "18.3.1"

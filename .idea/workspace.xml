@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5bb10668-d538-439b-a9c9-fc8168843371" name="Changes" comment="add new code">
+      <change afterPath="$PROJECT_DIR$/public/images/verify-otp-bg.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/style.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(auth)/_components/SignupComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/_components/SignupComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyRegisterComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyRegisterComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/verify-register/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/verify-register/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="JSX File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/indev" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
+    {
+      &quot;state&quot;: &quot;OPEN&quot;
+    }
+  ],
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: [
+    {
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDOL4mqMs5wwMEy&quot;,
+        &quot;number&quot;: 18
+      },
+      &quot;lastSeen&quot;: 1716994257397
+    },
+    {
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDOL4mqMs5w_ZA5&quot;,
+        &quot;number&quot;: 27
+      },
+      &quot;lastSeen&quot;: 1717064129314
+    },
+    {
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDOL4mqMs5xG3xW&quot;,
+        &quot;number&quot;: 31
+      },
+      &quot;lastSeen&quot;: 1717150430473
+    }
+  ]
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ksga-12th-generation-basic-course/gatherly-ui.git&quot;,
+    &quot;accountId&quot;: &quot;252509a7-0dc2-4f9e-9d91-35b683a74a1f&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;ksga-12th-generation-basic-course&quot;,
+    &quot;repository&quot;: &quot;gatherly-ui&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2glGofcApwFm4lYSJf5Ozt3vlS7" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Node.js.LoginComponent.jsx.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "#38 on pok-hengly",
+    "last_opened_file_path": "D:/HRD-school/fiinal-pp/public/images",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "npm.dev.executor": "Run",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Color Scheme Font",
+    "ts.external.directory.path": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
+        <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
+        <entry key="com.intellij.reactbuddy.storybook" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\HRD-school\fiinal-pp\public\images" />
+      <recent name="D:\HRD-school\fiinal-pp\public\icons" />
+      <recent name="D:\HRD-school\fiinal-pp\public" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\HRD-school\fiinal-pp\src\app\(reset-password)" />
+      <recent name="D:\HRD-school\fiinal-pp\src\app\(reset-password)\_components" />
+      <recent name="D:\HRD-school\fiinal-pp\src\app\(auth)\_components" />
+      <recent name="D:\HRD-school\fiinal-pp\public" />
+      <recent name="D:\HRD-school\fiinal-pp\public\images" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="LoginComponent.jsx" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/app/(auth)/_components/LoginComponent.jsx" working-dir="$PROJECT_DIR$/src/app/(auth)/_components">
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+        <item itemvalue="Node.js.LoginComponent.jsx" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.17011.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5bb10668-d538-439b-a9c9-fc8168843371" name="Changes" comment="" />
+      <created>1716264926209</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716264926209</updated>
+      <workItem from="1716264927309" duration="2084000" />
+      <workItem from="1716742207260" duration="2058000" />
+      <workItem from="1716771984640" duration="6181000" />
+      <workItem from="1716782940823" duration="3186000" />
+      <workItem from="1716792326035" duration="649000" />
+      <workItem from="1716816363925" duration="8329000" />
+      <workItem from="1716858452275" duration="22080000" />
+      <workItem from="1716893320981" duration="2270000" />
+      <workItem from="1716914554331" duration="761000" />
+      <workItem from="1716957648285" duration="2420000" />
+      <workItem from="1716965532998" duration="3352000" />
+      <workItem from="1716970651276" duration="7396000" />
+      <workItem from="1716993385409" duration="5637000" />
+      <workItem from="1717031247748" duration="6034000" />
+      <workItem from="1717041548591" duration="4240000" />
+      <workItem from="1717050729970" duration="15050000" />
+      <workItem from="1717118077178" duration="28024000" />
+      <workItem from="1717150914052" duration="1793000" />
+      <workItem from="1717165325846" duration="18954000" />
+      <workItem from="1717297541420" duration="714000" />
+      <workItem from="1717299081236" duration="6901000" />
+      <workItem from="1717309177356" duration="4278000" />
+      <workItem from="1717313678862" duration="7750000" />
+      <workItem from="1717322212575" duration="2983000" />
+      <workItem from="1717337566304" duration="1666000" />
+      <workItem from="1717342388731" duration="4654000" />
+      <workItem from="1717385103857" duration="5777000" />
+      <workItem from="1717407718957" duration="5252000" />
+    </task>
+    <task id="LOCAL-00001" summary="add new code">
+      <option name="closed" value="true" />
+      <created>1716977816991</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716977816991</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add new code">
+      <option name="closed" value="true" />
+      <created>1716977851150</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716977851150</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add new code">
+      <option name="closed" value="true" />
+      <created>1717149661871</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717149661871</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add new code">
+      <option name="closed" value="true" />
+      <created>1717166207416</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1717166207416</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add new code">
+      <option name="closed" value="true" />
+      <created>1717341554683</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1717341554683</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add new code" />
+    <option name="LAST_COMMIT_MESSAGE" value="add new code" />
+  </component>
+</project>

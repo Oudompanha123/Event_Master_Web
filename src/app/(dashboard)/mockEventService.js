@@ -4,7 +4,7 @@ const mockEventService = async () => {
       payload: [
         {
           eventId: 2,
-          eventName: "Comedy is comedy xfgcjfjh xfgdfhdfgd",
+          eventName: "Comedy is comedy ",
           description: "Hello event",
           startDate: "2024-05-24T09:12:49.818",
           endDate: "2024-05-24T19:12:49.818",
@@ -29,7 +29,7 @@ const mockEventService = async () => {
             endDate: "2025-07-20T19:12:49.818",
             duration: "10h",
             address: "Songkat kombol,khan kandal ,PP",
-            poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvtbsipAai7fAKxmDxz0b_yh1aD1gTBXIaA&s",
+            poster: "https://www.eventbrite.com/blog/wp-content/uploads/2023/02/Frame-1-3-min-1-3.png",
             isOpen: false,
             isPost: false,
             maxAttendee: 100,
@@ -60,7 +60,7 @@ const mockEventService = async () => {
             ],
           },
           {
-            eventId: 7,
+            eventId: 5,
             eventName: "Event managaement in the cambodia",
             description: "Hello event",
             startDate: "2024-12-08T09:12:49.818",
@@ -79,14 +79,14 @@ const mockEventService = async () => {
             ],
           },
           {
-            eventId: 7,
+            eventId: 6,
             eventName: "Comedy is comedy xfgcjfjh xfgdfhdfgd",
             description: "Hello event",
             startDate: "2024-05-24T09:12:49.818",
             endDate: "2024-05-24T19:12:49.818",
             duration: "10h",
             address: "phnom penh",
-            poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAgM_2NHCymlnMBj64LoPxP73YY-CKb2pQ568AWkqWGjXbbLTWXbA_7KvxENG2JQnQn8w&usqp=CAU",
+            poster: "https://www.loghicconnect.com.au/wp-content/uploads/2020/05/Untitled-design-2023-03-16T112342.403.jpg",
             isOpen: true,
             isPost: false,
             maxAttendee: 100,
@@ -97,7 +97,7 @@ const mockEventService = async () => {
               },
             ],
           }, {
-            eventId: 7,
+            eventId: 8,
             eventName: "Comedy is comedy xfgcjfjh xfgdfhdfgd",
             description: "Hello event",
             startDate: "2024-05-24T09:12:49.818",
