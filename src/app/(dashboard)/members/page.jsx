@@ -105,41 +105,48 @@ const MemberPage = () => {
 
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
-      <div className="flex flex-col 2xl:flex-row w-full justify-between mt-2 px-[3px]">
-        <div className="lg:w-[650px] md:w-full">
-          <a className="md:text-lg xl:text-xl font-semibold text-primary-text">Show All Members</a>
+      <div className="flex flex-col lg:flex-row w-full justify-between mt-2 px-[3px]">
+        <div className="lg:w-[650px] md:w-full w-full">
+          <a className="font-semibold md:text-lg xl:text-xl mt-3 text-primary-text block py-3 lg:py-0">
+            Show All Members
+          </a>
         </div>
-        <div className="w-full flex justify-end mt-6 lg:mt-0">
-          <div className=" w-full lg:w-[730px]">
+        <div className="w-full flex justify-end lg:mt-0 mt-3">
+          <div className="relative w-full lg:w-[450px]">
             <input
               type="text"
               placeholder="Search by name"
               className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
             />
-            <IoSearchOutline className="w-[24px] h-[24px] -mt-8 ml-3" />
+            <IoSearchOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
           </div>
         </div>
       </div>
-      <div className=" relative overflow-x-auto px-[3px]">
-        <table className="table w-full mt-5 border-separate border-spacing-y-3 ">
+      <div className="relative overflow-x-auto px-[3px]">
+        <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
           <thead className="h-14 drop-shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
-          <tr className="text-xs lg:text-base">
+            <tr className="text-xs lg:text-base">
               <th className="px-5 py-2 font-medium rounded-l-radiusUi">ID</th>
               <th className="px-5 py-2 font-medium">NAME</th>
               <th className="px-5 py-2 font-medium">GENDER</th>
               <th className="px-5 py-2 font-medium">EMAIL</th>
               <th className="px-5 py-2 font-medium">ADDRESS</th>
               <th className="px-5 py-2 font-medium">ROLE</th>
-              <th className="px-5 py-2 font-medium rounded-r-radiusUi">ACTION</th>
+              <th className="px-5 py-2 font-medium rounded-r-radiusUi">
+                ACTION
+              </th>
             </tr>
           </thead>
           <tbody>
             {members.map((member, index) => (
-              <tr key={member.id} className={`h-14 shadow rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}>
-                <td className="px-5 py-2 text-xs lg:text-base  rounded-l-radiusUi">
+              <tr
+                key={member.id}
+                className={`h-14 shadow-sm rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}
+              >
+                <td className="px-5 py-2 text-xs lg:text-base rounded-l-radiusUi border border-r-0 border-member-border">
                   {member.id}
                 </td>
-                <td className="flex items-center text-xs lg:text-base px-5 py-2 rounded-l-radiusUi">
+                <td className="flex items-center text-xs lg:text-base px-5 py-2 border border-x-0 border-member-border">
                   <Image
                     src={member.image}
                     alt={member.name}
@@ -149,10 +156,16 @@ const MemberPage = () => {
                   />
                   {member.name}
                 </td>
-                <td className="px-5 py-2 text-xs lg:text-base ">{member.gender}</td>
-                <td className="px-5 py-2 text-xs lg:text-base">{member.email}</td>
-                <td className="px-5 py-2 text-xs lg:text-base">{member.address}</td>
-                <td className="px-5 py-2 text-xs lg:text-base">
+                <td className="px-5 py-2 text-xs lg:text-base border border-x-0 border-member-border">
+                  {member.gender}
+                </td>
+                <td className="px-5 py-2 text-xs lg:text-base border border-x-0 border-member-border">
+                  {member.email}
+                </td>
+                <td className="px-5 py-2 text-xs lg:text-base border border-x-0 border-member-border">
+                  {member.address}
+                </td>
+                <td className="px-5 py-2 text-xs lg:text-base border border-x-0 border-member-border">
                   <div className="dropdown dropdown-bottom dropdown-end">
                     <div
                       tabIndex={0}
@@ -170,7 +183,7 @@ const MemberPage = () => {
                     {activeDropdown === member.id && (
                       <ul
                         tabIndex={0}
-                        className="dropdown-content menu shadow bg-base-100 rounded-radiusUi w-48 z-20 lg:font-semibold lg:text-lg md:text-xs md:font-semibold sm:text-xs sm:font-semibold"
+                        className="overflow-hidden dropdown-content menu bg-base-100 lg:text-primary-text lg:text-base rounded-radiusUi w-48 z-50 order-5"
                       >
                         <li>
                           <a
@@ -179,7 +192,7 @@ const MemberPage = () => {
                             className=" hover:text-[#7A44FF]"
                           >
                             <Image
-                              src="/images/admin.svg"
+                              src="/icons/admin.svg"
                               alt="Admin"
                               width={20}
                               height={20}
@@ -195,7 +208,7 @@ const MemberPage = () => {
                             className=" hover:text-[#457EFF]"
                           >
                             <Image
-                              src="/images/user.svg"
+                              src="/icons/user.svg"
                               alt="User"
                               width={20}
                               height={20}
@@ -213,7 +226,7 @@ const MemberPage = () => {
                             className="hover:text-[#088A4C]"
                           >
                             <Image
-                              src="/images/sub admin.svg"
+                              src="/icons/sub admin.svg"
                               alt="Sub Admin"
                               width={20}
                               height={20}
@@ -226,7 +239,7 @@ const MemberPage = () => {
                     )}
                   </div>
                 </td>
-                <td className="px-5 py-2 xl:text-sm rounded-r-radiusUi">
+                <td className="px-5 py-2 xl:text-sm rounded-r-radiusUi border border-l-0 border-member-border">
                   {member.role !== "admin" && <DeleteMemberComponent />}
                 </td>
               </tr>
@@ -239,4 +252,3 @@ const MemberPage = () => {
 };
 
 export default MemberPage;
-
