@@ -181,7 +181,7 @@ export function UpdateAgendaButton() {
         className="btn  rounded-xl flex  border bg-green-700 hover:bg-green-800 w-32  "
         onClick={() => document.getElementById("my_modal_4").showModal()}
       >
-        <img src="edit.svg" alt="" />
+        <img src="icons/edit.svg" alt="" />
         <p className="text-white">Edit</p>
       </button>
       <dialog id="my_modal_4" className="modal ">
@@ -198,7 +198,7 @@ export function UpdateAgendaButton() {
               className="h-11  rounded-xl flex items-center justify-center gap-2  border bg-green-700  w-32  hover:bg-green-800"
               onClick={handleSubmit}
             >
-              <img src="edit.svg" alt="" />
+              <img src="icons/edit.svg" alt="" />
               <p className="text-white">Update</p>
             </button>
           </div>
