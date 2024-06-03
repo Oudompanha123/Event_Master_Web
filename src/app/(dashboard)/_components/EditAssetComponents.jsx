@@ -26,12 +26,15 @@ export const EditAssetComponents = () => {
         className="modal mt-0 w-[450px] lg:w-4/6 xl:w-3/5 2xl:w-3/6 m-auto"
       >
         <div className="modal-box w-11/12 max-w-5xl mt-0">
-          <div className="font-semibold text-2xl text-start lg:px-10">Update Asset</div>
+          <div className="font-semibold text-2xl text-start lg:px-10">
+            Update Asset
+          </div>
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
           </form>
           <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
-
             <div className="content lg:px-10 mt-4 text-left">
               <div className="content mt-12 flex flex-col">
                 <label className="" htmlFor="">
@@ -97,9 +100,14 @@ export const EditAssetComponents = () => {
               </div>
 
               <div className="buttons flex justify-end mt-9  gap-2 modal-action">
-                <button onClick={()=>document.getElementById('my_modal_edit').close()} className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm">
+                <div
+                  onClick={() =>
+                    document.getElementById("my_modal_edit").close()
+                  }
+                  className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm"
+                >
                   Cancle
-                </button>
+                </div>
                 <button
                   type="submit"
                   className="save border rounded-2xl bg-greenUi flex justify-center text-center items-center px-4 gap-3 "

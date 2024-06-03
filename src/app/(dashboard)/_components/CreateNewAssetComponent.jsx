@@ -95,9 +95,9 @@ export const AssetPopupComponent = () => {
                 </div>
               </div>
               <div className="flex justify-end mt-9 gap-2 modal-action">
-                <button onClick={()=>document.getElementById('my_modal_new').close()} className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm">
+                <div onClick={()=>document.getElementById('my_modal_new').close()} className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm">
                   Cancle
-                </button>
+                </div>
 
                 <button
                   type="submit"
