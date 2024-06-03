@@ -254,7 +254,7 @@ export const CreateEventButton = () => {
                                 </div>
                             </div>
                             <div className="flex justify-end space-x-3">
-                                <button onClick={() => document.getElementById('my_modal_event').close()} className="px-6 py-3 rounded-2xl border-1px border-borderUi">Cancel</button>
+                                <div onClick={() => document.getElementById('my_modal_event').close()} className="cursor-pointer px-6 py-3 rounded-2xl border-1px border-borderUi">Cancel</div>
                                 <button type="submit" className="px-6 py-3 rounded-2xl border-1px border-borderUi flex space-x-2 bg-purple-text text-white">
                                     <AddSquare size="24" color="#FFFFFF" variant="Bold" />
                                     <p>Create</p>
