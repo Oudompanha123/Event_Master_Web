@@ -5,14 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5bb10668-d538-439b-a9c9-fc8168843371" name="Changes" comment="add new code">
-      <change afterPath="$PROJECT_DIR$/public/images/verify-otp-rg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/verify-success.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyRegisterComponent.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/(reset-password)/verify-register/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/_components/ForgotPasswordComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/_components/ForgotPasswordComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyOTPComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyOTPComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/verify/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/verify/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/verify-otp-bg.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/style.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(auth)/_components/SignupComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/_components/SignupComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyRegisterComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyRegisterComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/verify-register/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/verify-register/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +25,7 @@
       <list>
         <option value="JavaScript File" />
         <option value="JSX File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -97,23 +99,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Node.js.LoginComponent.jsx.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#37 on pok-hengly&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/HRD-school/fiinal-pp/public/images&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Color Scheme Font&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Administrator\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Node.js.LoginComponent.jsx.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "#38 on pok-hengly",
+    "last_opened_file_path": "D:/HRD-school/fiinal-pp/public/images",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "npm.dev.executor": "Run",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Color Scheme Font",
+    "ts.external.directory.path": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -199,7 +202,8 @@
       <workItem from="1717322212575" duration="2983000" />
       <workItem from="1717337566304" duration="1666000" />
       <workItem from="1717342388731" duration="4654000" />
-      <workItem from="1717385103857" duration="4856000" />
+      <workItem from="1717385103857" duration="5777000" />
+      <workItem from="1717407718957" duration="5252000" />
     </task>
     <task id="LOCAL-00001" summary="add new code">
       <option name="closed" value="true" />

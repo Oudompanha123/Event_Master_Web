@@ -1,20 +1,32 @@
 'use client'
 
 import Link from "next/link";
+import {useState} from "react";
+import OtpInput from 'react18-input-otp';
+import styles from './style.module.css';
+
 
 const VerifyRegisterComponent = () => {
+
+    const [otp, setOtp] = useState('');
+    const handleChange = (enteredOtp) => {
+        setOtp(enteredOtp);
+    };
 
     return (
         <div className="absolute mx-[29%] mt-[18%] left-[10%]">
             <form>
-                <div className="mt-5 bg-pink-200">
+                <div className="mt-5">
                     <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
-                        Verify your  OTP Code
+                        Verify your OTP Code
                     </h2>
                     <p className="flex justify-center greyUi mt-6">Enter the 4 digits code that received your email.</p>
                 </div>
 
-                <div className="bg-pink-200">
+                <OtpInput className={styles.inputStyle} value={otp} onChange={handleChange} numInputs={4} separator={<span>-</span>}/>
+
+
+                <div>
                     <Link href={`/login`}>
                         <div className="flex justify-center mt-10">
                             <button type="sign Up" id="sign-up"

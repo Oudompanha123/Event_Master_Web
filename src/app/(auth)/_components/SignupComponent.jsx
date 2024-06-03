@@ -3,6 +3,7 @@
 import {useState} from "react";
 import {useForm} from "react-hook-form";
 import Image from "next/image";
+import Link from "next/link";
 
 const SignupComponent = () => {
 
@@ -234,13 +235,14 @@ const SignupComponent = () => {
                     </div>
 
                     <div className="flex justify-center p-6 pb-16">
-                        <button
-                            type="submit"
-                            id="sign-up"
-                            className="bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400"
-                        >
-                            Sign Up
-                        </button>
+                        <Link href={`/verify-register`}>
+                            <button
+                                type="submit"
+                                id="sign-up"
+                                className="bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400">Sign
+                                Up
+                            </button>
+                        </Link>
                     </div>
                 </form>
             </div>
