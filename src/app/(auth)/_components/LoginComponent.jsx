@@ -83,7 +83,7 @@ const LoginComponent = callback => {
                                     })}
                                 />
                                 <div className={"absolute top-4 right-3 cursor-pointer"} onClick={handleLockClick}>
-                                    <Image src={`${isLocked ? "/lock-slash.svg" : "/unlock.svg"}`} width={20}
+                                    <Image src={`${isLocked ? "/icons/lock-slash.svg" : "/icons/unlock.svg"}`} width={20}
                                            height={20}
                                            alt={isLocked ? "lock icon" : "unlock icon"}/>
                                 </div>
