@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import { TbEdit } from "react-icons/tb";
 export const EditAssetComponents = () => {
-
   const {
     register,
     handleSubmit,
@@ -27,15 +26,18 @@ export const EditAssetComponents = () => {
         className="modal mt-0 w-[450px] lg:w-4/6 xl:w-3/5 2xl:w-3/6 m-auto"
       >
         <div className="modal-box w-11/12 max-w-5xl mt-0">
-          <div className="font-semibold text-2xl text-start px-10">Create Asset</div>
+          <div className="font-semibold text-2xl text-start lg:px-10">
+            Update Asset
+          </div>
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
           </form>
           <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
-
-            <div className="content px-10 mt-4 text-left">
+            <div className="content lg:px-10 mt-4 text-left">
               <div className="content mt-12 flex flex-col">
-                <label className="font-semibold text-base " htmlFor="">
+                <label className="" htmlFor="">
                   Asset Name
                 </label>
                 <input
@@ -56,7 +58,7 @@ export const EditAssetComponents = () => {
               </div>
               <div className="content2 grid grid-cols-2 gap-12 mt-5">
                 <div className="text1 flex flex-col">
-                  <label className="font-semibold text-base" htmlFor="">
+                  <label className="" htmlFor="">
                     Quantity
                   </label>
                   <input
@@ -76,7 +78,7 @@ export const EditAssetComponents = () => {
                   )}
                 </div>
                 <div className="text1 flex flex-col">
-                  <label className="font-semibold text-base" htmlFor="">
+                  <label className="" htmlFor="">
                     Unit
                   </label>
                   <input
@@ -98,9 +100,14 @@ export const EditAssetComponents = () => {
               </div>
 
               <div className="buttons flex justify-end mt-9  gap-2 modal-action">
-                <button className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm">
+                <div
+                  onClick={() =>
+                    document.getElementById("my_modal_edit").close()
+                  }
+                  className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm"
+                >
                   Cancle
-                </button>
+                </div>
                 <button
                   type="submit"
                   className="save border rounded-2xl bg-greenUi flex justify-center text-center items-center px-4 gap-3 "
@@ -113,65 +120,6 @@ export const EditAssetComponents = () => {
               </div>
             </div>
           </form>
-          {/* <div className="titles font-semibold text-2xl text-left">
-              Update Asset
-            </div>
-            <div className="content mt-12 flex flex-col items-start">
-              <label className="font-semibold text-base" htmlFor="">
-                Asset Name
-              </label>
-              <input
-                type="text"
-                id="email"
-                className="shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
-                placeholder="Enter asset name"
-              />
-            </div>
-            <div className="content2 grid grid-cols-2 gap-12 mt-5 text-start">
-              <div className="text1 flex flex-col">
-                <label
-                  className="font-semibold text-base items-start"
-                  htmlFor=""
-                >
-                  Quantity
-                </label>
-                <input
-                  type="text"
-                  id="email"
-                  className="shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
-                  placeholder="Enter quantity"
-                />
-              </div>
-              <div className="text1 flex flex-col ">
-                <label className="font-semibold text-base" htmlFor="">
-                  
-                </label>
-                <input
-                  type="text"
-                  id="email"
-                  className="shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
-                  placeholder="Enter unit"
-                />
-              </div>
-            </div>
-            <div className="buttons flex justify-end mt-9  gap-2 ">
-              <div className="modal-action mt-0">
-                <form method="dialog">
-                  <button className="btn btn-sm  border px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm cursor-pointer">
-                    Cancle
-                  </button>
-                </form>
-              </div>
-              <div className="save border rounded-2xl bg-greenUi flex justify-center items-center px-4 gap-3 cursor-pointer">
-                <TbEdit size={20} color="white" className="" />
-                <input
-                  className=" cancle h-12 text-white font-semibold text-sm cursor-pointer"
-                  type="button"
-                  value="Update"
-                />
-              </div>
-            </div> */}
-          {/* </div> */}
         </div>
       </dialog>
     </div>
