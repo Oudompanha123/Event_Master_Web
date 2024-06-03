@@ -8,10 +8,12 @@ const Page = async ({ params: { id } }) => {
   return (
     <main>
       <div className=" rounded-2xl bg-white shadow-md z-0 pt-[2%] px-[2%]">
-        <EventDetail/>
-        <p  className="text-primary-text font-semibold text-2xl my-7">Registratioin form</p>
-        <RegisterFormConferrence/>
-        <MaterialComponent/>
+        <EventDetail />
+        <p className="text-primary-text font-semibold text-2xl my-7">
+          Registratioin form
+        </p>
+        <RegisterFormConferrence />
+        <MaterialComponent />
         <AgendaComponent />
       </div>
     </main>

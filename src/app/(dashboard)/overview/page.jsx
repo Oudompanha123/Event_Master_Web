@@ -3,8 +3,9 @@ import { OverviewCardComponent } from "../_components/OverviewCardComponent"
 import categoryData from "../../../data/category.json"
 import { BarChartComponent } from "../_components/BarChartComponent"
 import statusData from "../../../data/overview.json"
-import Image from "next/image"
 import CreateCategoryButton from "../_components/Action/CreateCategoryButton"
+import { CategoryDeleteAction } from "../_components/Action/CategoryDeleteAction"
+import { CategoryEditAction } from "../_components/Action/CategoryEditAction"
 
 const Page = () => {
     return (
@@ -17,7 +18,7 @@ const Page = () => {
             {/* second row */}
             <section className="flex flex-col xl:flex-row gap-4 xl:gap-8 w-full">
                 <div className=" bg-white w-full xl:w-1/2 h-auto p-6 rounded-3xl space-y-6">
-                    <h2 className="md:text-lg xl:text-xl font-semibold">Total Event By Category</h2>
+                    <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Total Event By Category</h2>
                     <div className="rounded-3xl w-full">
                         <BarChartComponent />
                     </div>
@@ -47,12 +48,12 @@ const Page = () => {
             <section className="w-full">
                 <div className="space-y-8 rounded-3xl p-6 border-2 border-slate-100 bg-white">
                     <div className="flex justify-between items-center">
-                        <h2 className="md:text-lg xl:text-xl font-semibold">Event Category</h2>
+                        <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Event Category</h2>
                         <CreateCategoryButton />
                     </div>
-                    <div className="overflow-scroll">
-                        <table className="table w-full border-separate border-spacing-y-3">
-                            <thead className="h-14 drop-shadow text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
+                    <div className="w-full overflow-scroll">
+                        <table className="table w-full px-1 border-separate border-spacing-y-3">
+                            <thead className="h-14 drop-shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
                                 <tr className="text-xs lg:text-base">
                                     <th className="px-5 py-2 font-medium rounded-l-radiusUi">No</th>
                                     <th className="px-5 py-2 font-medium">Name</th>
@@ -68,15 +69,15 @@ const Page = () => {
                                     const formattedDate = formatDate(inputDate);
                                     const formated = formattedDate;
                                     return (
-                                        <tr className={`h-14 drop-shadow rounded-radiusUi even:bg-softwhiteUi odd:bg-white`}>
+                                        <tr className={`h-14 drop-shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}>
                                             <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{index + 1}</td>
                                             <td className="px-5 py-2 text-xs xl:text-base">{x.name}</td>
                                             <td className="px-5 py-2 text-xs xl:text-base">{formated}</td>
                                             <td className="px-5 py-2 text-xs xl:text-base">{x.created_by}</td>
                                             <td className="px-5 py-2 text-xs xl:text-base rounded-r-radiusUi">
-                                                <div className="flex space-x-2 lg:space-x-4">
-                                                    <Image src="/icons/trash.svg" width={20} height={20} />
-                                                    <Image src="/icons/edit.svg" width={20} height={20} />
+                                                <div className="flex items-center  gap-2 lg:gap-4">
+                                                    <CategoryDeleteAction />
+                                                    <CategoryEditAction />
                                                 </div>
                                             </td>
                                         </tr>

@@ -18,6 +18,9 @@ module.exports = {
           xl: '1380px'
         }
       },
+      dropShadow: {
+        'soft': '0 0 1px rgba(0, 0, 0, .25)',
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -34,6 +37,8 @@ module.exports = {
       },
       colors: {
         "purple":"#7A44FF",
+        "purple-text-head": "#4C179B",
+        "primary-purple": "#ECE8FF",
         "purple-text": "#7939EF",
         "primary-text": "#344054",
         "blueUi": "#551FFF",
@@ -53,5 +58,7 @@ module.exports = {
   },
   plugins: [
     require('daisyui'),
+    
   ],
+  
 };

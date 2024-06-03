@@ -26,16 +26,15 @@ export const EditAssetComponents = () => {
         className="modal mt-0 w-[450px] lg:w-4/6 xl:w-3/5 2xl:w-3/6 m-auto"
       >
         <div className="modal-box w-11/12 max-w-5xl mt-0">
-          <form action="" method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-              ✕
-            </button>
+          <div className="font-semibold text-2xl text-start lg:px-10">Update Asset</div>
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
           </form>
           <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
+
             <div className="content px-10 mt-4 text-left">
-              <div className="title font-semibold text-2xl">Create Asset</div>
               <div className="content mt-12 flex flex-col">
-                <label className="font-semibold text-base " htmlFor="">
+                <label className="" htmlFor="">
                   Asset Name
                 </label>
                 <input
@@ -56,7 +55,7 @@ export const EditAssetComponents = () => {
               </div>
               <div className="content2 grid grid-cols-2 gap-12 mt-5">
                 <div className="text1 flex flex-col">
-                  <label className="font-semibold text-base" htmlFor="">
+                  <label className="" htmlFor="">
                     Quantity
                   </label>
                   <input
@@ -76,7 +75,7 @@ export const EditAssetComponents = () => {
                   )}
                 </div>
                 <div className="text1 flex flex-col">
-                  <label className="font-semibold text-base" htmlFor="">
+                  <label className="" htmlFor="">
                     Unit
                   </label>
                   <input
