@@ -105,7 +105,7 @@ const MemberPage = () => {
 
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
-      <div className="flex flex-col lg:flex-row w-full justify-between mt-2 px-[3px]">
+      <div className="flex flex-col 2xl:flex-row w-full justify-between mt-2 px-[3px]">
         <div className="lg:w-[650px] md:w-full">
           <a className="md:text-lg xl:text-xl font-semibold text-primary-text">Show All Members</a>
         </div>
@@ -135,7 +135,7 @@ const MemberPage = () => {
           </thead>
           <tbody>
             {members.map((member, index) => (
-              <tr key={member.id} className={`h-14 drop-shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}>
+              <tr key={member.id} className={`h-14 shadow rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}>
                 <td className="px-5 py-2 text-xs lg:text-base  rounded-l-radiusUi">
                   {member.id}
                 </td>

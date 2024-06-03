@@ -7,54 +7,54 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 export const CreateEventButton = () => {
-  const [hide, setHide] = useState(false);
+    const [hide, setHide] = useState(false);
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.currentTarget.classList.add("border-indigo-600");
-  };
-
-  const handleDragLeave = (e) => {
-    e.preventDefault();
-    e.currentTarget.classList.remove("border-indigo-600");
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.currentTarget.classList.remove("border-indigo-600");
-    const file = e.dataTransfer.files[0];
-    displayPreview(file);
-    setHide(true);
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    displayPreview(file);
-    setHide(true);
-  };
-
-  const displayPreview = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const preview = document.getElementById("preview");
-      preview.src = reader.result;
-      preview.classList.remove("hidden");
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        e.currentTarget.classList.add("border-indigo-600");
     };
-  };
 
-  const {
-    watch,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+    const handleDragLeave = (e) => {
+        e.preventDefault();
+        e.currentTarget.classList.remove("border-indigo-600");
+    };
 
-  const start = watch("startDate");
+    const handleDrop = (e) => {
+        e.preventDefault();
+        e.currentTarget.classList.remove("border-indigo-600");
+        const file = e.dataTransfer.files[0];
+        displayPreview(file);
+        setHide(true);
+    };
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        displayPreview(file);
+        setHide(true);
+    };
+
+    const displayPreview = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const preview = document.getElementById("preview");
+            preview.src = reader.result;
+            preview.classList.remove("hidden");
+        };
+    };
+
+    const {
+        watch,
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    const start = watch("startDate");
+
+    const onSubmit = (data) => {
+        console.log(data);
+    };
 
     return (
         <>
@@ -103,7 +103,7 @@ export const CreateEventButton = () => {
                                         type="text"
                                         name="name"
                                         id="name"
-                                        className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
+                                        className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter event name"
                                     />
                                     {errors.name && <div className="text-red-600 text-sm">{errors.name.message}</div>}
@@ -135,7 +135,7 @@ export const CreateEventButton = () => {
                                         type="datetime-local"
                                         name="startDate"
                                         id="startdate"
-                                        className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
+                                        className={`${errors.startDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         required=""
                                     />
@@ -157,7 +157,7 @@ export const CreateEventButton = () => {
                                         type="datetime-local"
                                         name="endDate"
                                         id="enddate"
-                                        className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
+                                        className={`${errors.endDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         required=""
                                     />
@@ -176,7 +176,7 @@ export const CreateEventButton = () => {
                                         type="number"
                                         name="duration"
                                         id="duration"
-                                        className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
+                                        className={`${errors.duration ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter duration"
                                         required=""
                                     />
@@ -193,7 +193,7 @@ export const CreateEventButton = () => {
                                         type="number"
                                         name="maxAttendee"
                                         id="max"
-                                        className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
+                                        className={`${errors.maxAttendee ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter maximum attendee"
                                         required=""
                                     />
@@ -212,7 +212,7 @@ export const CreateEventButton = () => {
                                         type="test"
                                         name="address"
                                         id="address"
-                                        className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
+                                        className={`${errors.address ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter address"
                                         required=""
                                     />
@@ -232,7 +232,7 @@ export const CreateEventButton = () => {
                                         type="text"
                                         name="description"
                                         id="description"
-                                        className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
+                                        className={`${errors.description ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter description..."
                                         required=""
                                     />
