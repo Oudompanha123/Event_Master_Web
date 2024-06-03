@@ -6,7 +6,7 @@ import Image from "next/image"
 export const CategoryEditAction = () => {
     return (
         <>
-            <Image onClick={() => document.getElementById('update_category').showModal()} src="/icons/edit.svg" width={20} height={20} />   
+            <Image onClick={() => document.getElementById('update_category').showModal()} src="/icons/edit.svg" width={20} height={20} />
             <dialog id="update_category" className="modal">
                 <div className="modal-box w-11/12 md:w-1/2 max-w-5xl space-y-8">
                     <div className="flex flex-row items-center text-primary-text">
@@ -23,7 +23,7 @@ export const CategoryEditAction = () => {
                         placeholder="Category" required=""
                     />
                     <div className="flex justify-end space-x-3">
-                        <button className="px-6 py-3 rounded-2xl border-1px border-borderUi">Cancel</button>
+                        <button onClick={() => document.getElementById('update_category').close()} className="px-6 py-3 rounded-2xl border-1px border-borderUi">Cancel</button>
                         <button className="px-6 py-3 rounded-2xl border-1px border-borderUi flex items-center space-x-2 bg-greenUi text-white">
                             <Edit size="24" color="#ffffff" />
                             <p>Update</p>

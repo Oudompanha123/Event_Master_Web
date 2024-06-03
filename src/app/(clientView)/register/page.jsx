@@ -41,10 +41,10 @@ const Page = () => {
                         </div>
                         <div className="flex flex-col w-full gap-2">
                             <label className="font-semibold" htmlFor="">Gender</label>
-                            <select className="shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5" name="gender" id="" {...register("gender", {
+                            <select className={`${errors.gender && "border-red-500"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} name="gender" id="" {...register("gender", {
                                 required: "gender is required", validate: (v) => {
-                                    if (v == 0) {
-                                        return "please select your gender";
+                                    if (v === "0") {
+                                        return "Please select your gender";
                                     }
                                 }
                             })}>

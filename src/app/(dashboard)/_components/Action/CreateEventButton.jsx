@@ -113,14 +113,22 @@ export const CreateEventButton = () => {
                                         Event Category <span className="text-red-600">*</span>
                                     </label>
                                     <select
-                                        name="cars" id="cars"
-                                        className="classic shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
+                                        name="category" id="category"
+                                        className={`${errors.category && "border-red-700 focus:border-red-600"} classic shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        {...register("category", {
+                                            required: "category is required", validate: (v) => {
+                                                if (v === "0") {
+                                                    return "please select category";
+                                                }
+                                            }
+                                        })}
                                     >
-                                        <option value="volvo">Choose event category</option>
-                                        <option value="saab">Conference</option>
-                                        <option value="mercedes">Social Event</option>
-                                        <option value="audi">Sport</option>
+                                        <option value="0">Choose event category</option>
+                                        <option value="1">Conference</option>
+                                        <option value="2">Social Event</option>
+                                        <option value="3">Sport</option>
                                     </select>
+                                    {errors.category && <span className="text-red-600 text-sm">{errors.category.message}</span>}
                                 </div>
                             </div>
                             <div className="flex flex-col md:flex-row gap-8">
@@ -246,7 +254,7 @@ export const CreateEventButton = () => {
                                 </div>
                             </div>
                             <div className="flex justify-end space-x-3">
-                                <button className="px-6 py-3 rounded-2xl border-1px border-borderUi">Cancel</button>
+                                <button onClick={() => document.getElementById('my_modal_event').close()} className="px-6 py-3 rounded-2xl border-1px border-borderUi">Cancel</button>
                                 <button type="submit" className="px-6 py-3 rounded-2xl border-1px border-borderUi flex space-x-2 bg-purple-text text-white">
                                     <AddSquare size="24" color="#FFFFFF" variant="Bold" />
                                     <p>Create</p>
@@ -254,8 +262,8 @@ export const CreateEventButton = () => {
                             </div>
                         </form>
                     </div>
-                </div>
-            </dialog>
+                </div >
+            </dialog >
         </>
     )
 }

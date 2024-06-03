@@ -15,10 +15,12 @@ export const SidebarComponent = ({ className }) => {
 
     return (
         <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-5 border-r-1px sticky top-0 h-screen`}>
-            <div className="p-2 lg:p-2 flex items-center gap-4">
-                <Image src={logo} height={75} width={75} />
-                <h2 className="hidden xl:block text-xl font-semibold">EventMaster</h2>
-            </div>
+            <Link href={'/overview'}>
+                <div className="p-2 lg:p-2 flex items-center gap-4">
+                    <Image src={logo} height={75} width={75} />
+                    <h2 className="hidden xl:block text-xl font-semibold">EventMaster</h2>
+                </div>
+            </Link>
             <hr />
             <div className="w-full flex xl:block flex-col items-center xl:items-start justify-center">
                 {data?.data?.map((x, index) => (
