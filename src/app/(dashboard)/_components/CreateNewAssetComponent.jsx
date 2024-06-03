@@ -27,8 +27,8 @@ export const AssetPopupComponent = () => {
         id="my_modal_new"
         className="modal mt-0 w-[450px] lg:w-4/6 xl:w-3/5 2xl:w-3/6 m-auto"
       >
-        <div className="modal-box w-11/12 max-w-5xl mt-0">
-          <div className="title font-semibold text-2xl  lg:px-10">
+        <div className="modal-box w-11/12 max-w-5xl mt-0 ">
+          <div className="title font-semibold text-2xl  lg:px-10 ">
             Create Asset
           </div>
           <form method="dialog">
@@ -95,12 +95,10 @@ export const AssetPopupComponent = () => {
                 </div>
               </div>
               <div className="flex justify-end mt-9 gap-2 modal-action">
-                {/* <button onClick={className="btn"} className="btn btn-sm btn-ghost cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm">
-              Cancel
-            </button> */}
-                <button className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm">
+                <button onClick={()=>document.getElementById('my_modal_new').close()} className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm">
                   Cancle
                 </button>
+
                 <button
                   type="submit"
                   className="save border rounded-2xl bg-blueUi flex justify-center text-center items-center px-4 gap-3 "

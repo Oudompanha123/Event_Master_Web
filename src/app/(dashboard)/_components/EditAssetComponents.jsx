@@ -32,7 +32,7 @@ export const EditAssetComponents = () => {
           </form>
           <form method="dialog" onSubmit={handleSubmit(onSubmit)}>
 
-            <div className="content px-10 mt-4 text-left">
+            <div className="content lg:px-10 mt-4 text-left">
               <div className="content mt-12 flex flex-col">
                 <label className="" htmlFor="">
                   Asset Name
@@ -97,7 +97,7 @@ export const EditAssetComponents = () => {
               </div>
 
               <div className="buttons flex justify-end mt-9  gap-2 modal-action">
-                <button className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm">
+                <button onClick={()=>document.getElementById('my_modal_edit').close()} className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm">
                   Cancle
                 </button>
                 <button
