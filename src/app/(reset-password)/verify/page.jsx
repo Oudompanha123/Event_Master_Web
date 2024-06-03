@@ -24,6 +24,10 @@ const VerifyPage = () => {
                         <p className="text-purple-text">Success</p>
                     </div>
                 </div>
+
+                <Image
+                    className="absolute mt-[23%] left-[29%]"
+                    src="/images/verify-success.gif" alt="image" width={400} height={200} property=""/>
             </div>
             {/*Verify component*/}
             <VerifyComponent/>
