@@ -1,9 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { MdAddBox } from "react-icons/md";
 import mockAgendaService from "../mockAgendaService";
-import { FaRegEdit } from "react-icons/fa";
+import { DeleteButton} from "./Action/DeleteButton";
+import CreateAgendaButton from "./Action/CreateAgendaButton";
+import { UpdateAgendaButton } from "./UpdateAgendaButton";
+
 
 const convertTo12HourFormat = (time) => {
   let [hours, minutes] = time.split(":");
@@ -37,13 +38,7 @@ export default function AgendaComponent() {
               Agenda Management
             </p>
           </div>
-          <button
-            className="btn rounded-3xl  border-blueUi border bg-white w-46 hover:border-blueUi hover:bg-white"
-            value="update"
-          >
-            <MdAddBox size={24} color="blue" />
-            <p className="text-blueUi">Create Agenda</p>
-          </button>
+          <CreateAgendaButton/>
         </div>
 
         <div className=" justify-center w-full content-center space-y-6 py-24">
@@ -75,28 +70,18 @@ export default function AgendaComponent() {
   }
 
   return (
-    <div className="space-y-4 p-5">
+    <div className="space-y-4 py-5">
       <div className="flex justify-between align-middle content-center mb-4">
         <div className="flex items-center justify-center">
           <p className="text-primary-text font-semibold text-2xl">
             Agenda Management
           </p>
         </div>
-        <div className="lg:space-x-4 sm:grid-cols-1 sm:space-x-0">
-          <button
-            className="btn rounded-2xl bg-red-600 w-32 hover:bg-red-700"
-            value="delete"
-          >
-            <RiDeleteBinLine size={24} color="white" />
-            <p className="text-white">Delete</p>
-          </button>
-          <button
-            className="btn rounded-2xl bg-green-600 w-32 hover:bg-green-700"
-            value="update"
-          >
-            <FaRegEdit size={24} color="white" />
-            <p className="text-white">Edit</p>
-          </button>
+        <div className="lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex">
+          <DeleteButton/>
+          <UpdateAgendaButton/>
+      
+         
         </div>
       </div>
       {agenda.map((data, index) => (

@@ -4,7 +4,7 @@ import sunglassEmoji from "../../../../public/images/sunglass-emoji.png"
 
 export const CTAComponent = () => {
     return (
-        <div className="relative py-10 w-full bg-purple-text rounded-3xl space-y-6 text-center text-white mt-32">
+        <div className="relative py-10 w-full bg-noice bg-cover rounded-3xl space-y-6 text-center text-white mt-32">
             <h2 className="font-semibold text-2xl lg:text-4xl">Get Ready To Manage Your Event</h2>
             <p className="lg:text-xl font-semibold">Join Free Today</p>
             <button className="bg-white text-primary-text px-8 py-4 rounded-full lg:text-lg font-semibold z-50">Register now</button>

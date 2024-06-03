@@ -3,7 +3,7 @@ import CardEventComponent from "../_components/CardEventComponent";
 export default function Event() {
   return (
     <main>
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <form>
           <div className="col-span-6 sm:col-span-3">
             <label
@@ -15,10 +15,10 @@ export default function Event() {
             <select
               id="status"
               name="status"
-              className=" border text-primary-text sm:text-sm rounded-3xl block w-full p-2.5 focus:outline-none"
+              className=" border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none "
               required
             >
-              <option value="">Choose event category</option>
+              <option selected>Choose event category</option>
               <option value="Social Event">Social Event</option>
               <option value="conference">Conference</option>
               <option value="Marathons">Marathons</option>
@@ -37,10 +37,10 @@ export default function Event() {
             <select
               id="status"
               name="status"
-              className=" border text-primary-text sm:text-sm rounded-3xl block w-full p-2.5 focus:outline-none"
+              className=" border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none"
               required
             >
-              <option value="">Choose status</option>
+              <option selected>Choose status</option>
               <option value="open Event">open</option>
               <option value="close">closed</option>
             </select>
@@ -82,18 +82,18 @@ export default function Event() {
         </form>
       </div>
 
-      <div className="relative">
+      <div className="relative z-3 mb-5">
         <div className="flex grid-cols-2 ">
           <input
-            className=" border-[1px] pl-10 text-primary-text rounded-full w-full py-2 px-3 "
-            id="search"
+            className=" input input-bordered border-[1px] pl-10 text-primary-text hover:border-gray-400  rounded-full w-full h-11 "
+            id="username"
             type="text"
-            placeholder="Search"
+            placeholder="Search..."
           />
           <div className="absolute left-0 inset-y-0 flex items-center ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 ml-4 text-gray-400"
+              className="h-6 w-6 ml-3 text-gray-400"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

@@ -1,12 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "false",
+  darkMode: "light",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: false,
   theme: {
     extend: {
       container: {
@@ -19,11 +18,15 @@ module.exports = {
           xl: '1380px'
         }
       },
+      dropShadow: {
+        'soft': '0 0 1px rgba(0, 0, 0, .25)',
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "pattern": "url('/images/pattern.jpg')"
+        "pattern": "url('/images/pattern.jpg')",
+        "noice": "url('/images/noice-bg.jpg')"
       },
       borderWidth: {
         '1px': '1px',
@@ -33,6 +36,9 @@ module.exports = {
         'radius64': '64px'
       },
       colors: {
+        "purple":"#7A44FF",
+        "purple-text-head": "#4C179B",
+        "primary-purple": "#ECE8FF",
         "purple-text": "#7939EF",
         "primary-text": "#344054",
         "blueUi": "#551FFF",
@@ -42,7 +48,8 @@ module.exports = {
         "softwhiteUi": "#f7f7f7",
         "backgroundUi" : "#F7F9FB",
         "softGreenUi": "#E3F4DB",
-        "softRedUi": "#FFECEB"
+        "softRedUi": "#FFECEB",
+        "tableBg":"#F0F1F3"
       }
     },
   },
@@ -51,5 +58,7 @@ module.exports = {
   },
   plugins: [
     require('daisyui'),
+    
   ],
+  
 };

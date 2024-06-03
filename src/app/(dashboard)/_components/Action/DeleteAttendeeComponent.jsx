@@ -1,0 +1,58 @@
+"use client";
+import { RxCross2 } from "react-icons/rx";
+export function DeleteAttendeeComponent() {
+  return (
+    <>
+      <button
+        className=" rounded-2xl "
+        value="delete"
+        onClick={() => document.getElementById("delete").showModal()}
+      >
+        <img src="/images/deleteicon.svg" alt="" className="  w-8 h-8 ml-2" />
+      </button>
+      <dialog id="delete" className="modal">
+        <div className="modal-box w-[270px] justity-center  ">
+          <form method="dialog" className="justify-end flex">
+            {/* if there is a button, it will close the modal */}
+            <button>
+              <RxCross2 className=" absolute right-[20px] top-[20px] w-6 h-6 " />
+            </button>
+          </form>
+          <div className="justify-center flex">
+            <img
+              src="images/delete.svg"
+              alt="delete"
+              className="w-[58%] mb-3 "
+            />
+          </div>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            Are you sure you want to
+          </p>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            remove this attendee?
+          </p>
+          <div className="modal-action ">
+            <form
+              method="dialog"
+              className=" flex justify-between w-full mb-4 mt-3 "
+            >
+              {/* if there is a button, it will close the modal */}
+              <button
+                className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700"
+                value="yes"
+              >
+                <p className="text-white font-semibold">Yes</p>
+              </button>
+              <button
+                className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500"
+                value="cancel"
+              >
+                <p className="text-white font-semibold">No</p>
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </>
+  );
+}

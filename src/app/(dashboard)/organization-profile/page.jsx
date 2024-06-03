@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { TbEdit } from "react-icons/tb";
 import { LiaUserEditSolid } from "react-icons/lia";
@@ -61,7 +62,7 @@ const Page = () => {
 
   return (
     <main className="px-4 max-h-full lg:h-[700px] lg:px-0">
-      <div className="bg-white drop-shadow-md w-full max-w-full rounded-2xl lg:h-full overflow-hidden">
+      <div className="bg-white drop-shadow-md w-full max-w-full rounded-2xl lg:h-full overflow-hidden relative">
         {/* Cover */}
         <div className="w-full h-40 bg-purple-300 rounded-t-2xl lg:h-28 sm:h-52"></div>
 
@@ -78,7 +79,7 @@ const Page = () => {
             <div className="w-8 h-8 rounded-full flex justify-center items-center mt-[-30px] ml-28 z-50">
               <label
                 htmlFor="image-upload"
-                className="w-full h-full bg-purple-200 rounded-full flex items-center justify-center hover:bg-gray-400 cursor-pointer"
+                className="w-full h-full bg-purple-200 rounded-full flex items-center justify-center bg-white duration-300 hover:bg-gray-200 cursor-pointer"
               >
                 <LiaUserEditSolid className="w-5 h-5 text-gray-700" />
                 <input
@@ -271,11 +272,11 @@ const Page = () => {
           </div>
         </div>
         <Image
-          src="/images/bg-1.png"
+          src="/images/Group 1000005619.png"
           alt="My Image"
           width={500}
           height={400}
-          className=" rounded-bl-2xl lg:mt-[-100px] lg:w-[250px]"
+          className="absolute bottom-0 rounded-bl-2xl lg:mt-[-100px] lg:w-[250px]"
         />
       </div>
     </main>

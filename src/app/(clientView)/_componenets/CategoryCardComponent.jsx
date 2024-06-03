@@ -3,7 +3,7 @@ import carImage from "../../../../public/images/racing-car.jpg"
 
 export const CategoryCardComponent = ({ url }) => {
     return (
-        <div className="w-full h-[450px] bg-slate-200 object-cover rounded-3xl relative">
+        <div className="w-full h-[350px] bg-slate-200 object-cover rounded-3xl relative">
             <Image className="bg-contain object-cover rounded-3xl w-full h-full brightness-75" src={carImage} height={525} width={450} alt="categoryListImage" />
             <h2 className="absolute top-0 p-6 text-2xl lg:text-2xl font-bold text-white">Marathons & Races</h2>
             <div className="absolute bottom-0 p-6 space-y-4">

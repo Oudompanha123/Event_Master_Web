@@ -21,8 +21,8 @@ export const BarChartComponent = () => {
             {
                 label: 'Event',
                 data: [5, 3, 9],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgb(53, 162, 235, 0.4)',
+                borderColor: '#7939EF',
+                backgroundColor: '#7939EF',
                 tension: 0.3
             }
         ]
@@ -46,11 +46,20 @@ export const BarChartComponent = () => {
                 display: false,
             },
         },
+
     }
 
     return (
         <div className="bg-white w-full" >
-            <Line data={chartData} options={chartOptions} />
+            <div className="hidden 2xl:block">
+                <Line data={chartData} options={chartOptions} height={"100%"} />
+            </div>
+            <div className="md:hidden">
+                <Line data={chartData} options={chartOptions} height={"300%"} />
+            </div>
+            <div className="hidden md:block 2xl:hidden">
+                <Line data={chartData} options={chartOptions} />
+            </div>
         </div >
     )
 }
