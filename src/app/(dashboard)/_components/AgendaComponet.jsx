@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import mockAgendaService from "../mockAgendaService";
-import { DeleteButton} from "./DeleteButton";
-import CreateAgendaButton from "./CreateAgendaButton";
+import { DeleteButton} from "./Action/DeleteButton";
+import CreateAgendaButton from "./Action/CreateAgendaButton";
 import { UpdateAgendaButton } from "./UpdateAgendaButton";
 
 

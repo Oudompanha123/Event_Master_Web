@@ -23,7 +23,9 @@ export const NavbarComponent = () => {
                         <span className={`py-3 ${pathname == "/about" && 'border-b-2'} border-purple-text font-medium`}>About</span>
                     </Link>
                 </div>
-                <button className="text-white bg-purple-text font-semibold px-10 py-2 rounded-full">Login</button>
+                <Link href={'/login'} className="text-white bg-purple-text font-semibold px-10 py-2 rounded-full">
+                    Login
+                </Link>
             </div>
             <button className="btn lg:hidden" onClick={() => document.getElementById('my_modal_2').showModal()}>
                 <HambergerMenu size="32" color="#344054" />
@@ -33,7 +35,9 @@ export const NavbarComponent = () => {
                     <div className="flex flex-col justify-center space-y-8 items-center">
                         <Link href={'/'}>Home</Link>
                         <Link href={'/about'}>About</Link>
-                        <button className="text-white bg-purple-text text-sm font-semibold px-14 py-3 rounded-full">Login</button>
+                        <Link href={'/signup'} className="text-white bg-purple-text text-sm font-semibold px-14 py-3 rounded-full">
+                            Login
+                        </Link>
                     </div>
                 </div>
                 <form method="dialog" className="modal-backdrop">

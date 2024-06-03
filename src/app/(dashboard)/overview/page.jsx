@@ -1,22 +1,24 @@
 import Link from "next/link"
 import { OverviewCardComponent } from "../_components/OverviewCardComponent"
-import userData from "../../../data/member.json"
-import { AddSquare } from "iconsax-react"
+import categoryData from "../../../data/category.json"
 import { BarChartComponent } from "../_components/BarChartComponent"
+import statusData from "../../../data/overview.json"
+import CreateCategoryButton from "../_components/Action/CreateCategoryButton"
+import { CategoryDeleteAction } from "../_components/Action/CategoryDeleteAction"
+import { CategoryEditAction } from "../_components/Action/CategoryEditAction"
 
 const Page = () => {
     return (
         <div className="space-y-4 xl:space-y-7">
             <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 xl:gap-6">
-                <OverviewCardComponent />
-                <OverviewCardComponent />
-                <OverviewCardComponent />
-                <OverviewCardComponent />
+                {statusData.payload.map((x, index) => (
+                    <OverviewCardComponent key={index} title={x.title} count={x.count} logo={x.logo} />
+                ))}
             </section>
             {/* second row */}
             <section className="flex flex-col xl:flex-row gap-4 xl:gap-8 w-full">
                 <div className=" bg-white w-full xl:w-1/2 h-auto p-6 rounded-3xl space-y-6">
-                    <h2 className="md:text-lg xl:text-xl font-semibold">Total Event By Category</h2>
+                    <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Total Event By Category</h2>
                     <div className="rounded-3xl w-full">
                         <BarChartComponent />
                     </div>
@@ -39,38 +41,50 @@ const Page = () => {
                         <button className="bg-white rounded-full px-8 py-3 font-bold mt-4 lg:mt-8 text-sm absolute z-20">Get Start</button>
                     </Link>
                     <button className="bg-white rounded-full px-8 py-3 font-bold mt-4 lg:mt-8 text-sm opacity-0">Get Start</button>
-                    <div className="absolute -bottom-32 rotate-[13.5deg] right-0 h-80 w-80 bg-[#AD9CFF] rounded-radius64 z-0"></div>
-                    <div className="absolute -bottom-48 rotate-[13.5deg] -right-24 h-80 w-80 bg-[#9782FF] rounded-radius64 z-0"></div>
+                    <div className="absolute -bottom-56 rotate-[13.5deg] right-0 h-80 w-80 bg-[#AD9CFF] rounded-radius64 z-0"></div>
+                    <div className="absolute -bottom-72 rotate-[13.5deg] -right-12 h-80 w-80 bg-[#9782FF] rounded-radius64 z-0"></div>
                 </div>
             </section>
-            <section>
+            <section className="w-full">
                 <div className="space-y-8 rounded-3xl p-6 border-2 border-slate-100 bg-white">
                     <div className="flex justify-between items-center">
-                        <h2 className="md:text-lg xl:text-xl font-semibold">Event Category</h2>
-                        <Link href={'#'}>
-                            <button className="border-1px border-purple-text text-purple-text rounded-full px-4 py-2.5 flex items-center space-x-3">
-                                <AddSquare size="20" color="#8C59FE" variant="Bold" />
-                                <p className="text-xs">New Category</p>
-                            </button>
-                        </Link>
+                        <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Event Category</h2>
+                        <CreateCategoryButton />
                     </div>
-                    <div className="overflow-x-auto space-y-3">
-                        <div className="text-xs xl:text-sm grid grid-cols-5 px-6 py-4 rounded-2xl border-1px border-[#D9D9D9]">
-                            <span>No</span>
-                            <span>Name</span>
-                            <span>Created At</span>
-                            <span>Created By</span>
-                            <span>Action</span>
-                        </div>
-                        {userData.data.map((x, index) => (
-                            <div key={index} className={`text-xs xl:text-sm grid grid-cols-5 px-6 py-4 rounded-2xl border-1px border-slate-100 even:bg-softwhiteUi odd:bg-white odd:border-borderUi`}>
-                                <span className="flex items-center">{index + 1}</span>
-                                <span className="flex items-center">{x.name}</span>
-                                <span className="flex items-center min-w-28">{x.gender}</span>
-                                <span className="flex items-center min-w-28">{x.tel}</span>
-                                <span className="flex items-center min-w-28">{x.email}</span>
-                            </div>
-                        ))}
+                    <div className="w-full overflow-scroll">
+                        <table className="table w-full px-1 border-separate border-spacing-y-3">
+                            <thead className="h-14 drop-shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
+                                <tr className="text-xs lg:text-base">
+                                    <th className="px-5 py-2 font-medium rounded-l-radiusUi">No</th>
+                                    <th className="px-5 py-2 font-medium">Name</th>
+                                    <th className="px-5 py-2 font-medium">Created At</th>
+                                    <th className="px-5 py-2 font-medium">Created By</th>
+                                    <th className="px-5 py-2 font-medium rounded-r-radiusUi">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {categoryData.payload.map((x, index) => {
+                                    const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                                    const inputDate = x.created_at;
+                                    const formattedDate = formatDate(inputDate);
+                                    const formated = formattedDate;
+                                    return (
+                                        <tr className={`h-14 drop-shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}>
+                                            <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{index + 1}</td>
+                                            <td className="px-5 py-2 text-xs xl:text-base">{x.name}</td>
+                                            <td className="px-5 py-2 text-xs xl:text-base">{formated}</td>
+                                            <td className="px-5 py-2 text-xs xl:text-base">{x.created_by}</td>
+                                            <td className="px-5 py-2 text-xs xl:text-base rounded-r-radiusUi">
+                                                <div className="flex items-center  gap-2 lg:gap-4">
+                                                    <CategoryDeleteAction />
+                                                    <CategoryEditAction />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>

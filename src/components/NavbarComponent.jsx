@@ -5,6 +5,9 @@ import logo from "../../public/images/event-master-logo.png"
 import { AddSquare } from "iconsax-react"
 import { usePathname } from "next/navigation"
 import { NotificationMenu } from "./NotificationMenu"
+import CreateCategoryButton from "@/app/(dashboard)/_components/Action/CreateCategoryButton"
+import { CreateEventButton } from "@/app/(dashboard)/_components/Action/CreateEventButton"
+import { NotificationCard } from "@/app/(dashboard)/_components/NotificationCard"
 
 export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
@@ -17,26 +20,28 @@ export const NavbarComponent = ({ className }) => {
                         'Member' :
                         pathname === '/assets' ?
                             'Assets' :
-                            pathname === '/events' ?
+                            pathname === '/events' || pathname == "/event-detail" || pathname === "/attendees" ?
                                 'Events' :
                                 pathname === '/user-request' ?
                                     'Notification' :
+                                    pathname === '/organization-profile' ?
+                                    "Organization Profile" :
+                                    pathname === '/user-profile' ?
+                                    "User Profile" :
                                     pathname === '/account-setting' ?
                                         'Account Setting' :
                                         'Default'}
             </h2>
             <div className="space-x-10 flex items-center">
-                <div className="bg-[#F7F9FB] p-2 rounded-full hidden lg:block">
-                    {/* <Notification size="24" color="#344054" variant="Bulk" /> */}
-                    <NotificationMenu />
+                <div className="bg-[#F7F9FB] p-2 rounded-full hidden cursor-pointer">
+                    {/* <NotificationMenu /> */}
+                    <Image src={'/icons/icon.svg'} width={24} height={24} />
                 </div>
-                <div className="hidden lg:flex items-center bg-[#F7F9FB] gap-2 py-3 px-3 lg:px-6 rounded-full">
-                    <AddSquare size="24" color="#344054" variant="Bold" />
-                    <p className="text-sm hidden lg:block">New Event</p>
-                </div>
-                <div className="flex lg:hidden items-center bg-[#F7F9FB] gap-2 py-3 px-3 lg:px-6 rounded-full">
+                <NotificationCard />
+                <CreateEventButton />
+                {/* <div className="flex lg:hidden items-center bg-[#F7F9FB] gap-2 py-3 px-3 lg:px-6 rounded-full">
                     <AddSquare size="20" color="#344054" variant="Bold" />
-                </div>
+                </div> */}
                 <div className="flex items-center gap-4">
                     <div className="hidden lg:block">
                         <p className="font-medium text-sm">Thomas Brown</p>
