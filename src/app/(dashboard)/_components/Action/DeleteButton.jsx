@@ -9,14 +9,14 @@ export function DeleteButton() {
         value="delete"
         onClick={() => document.getElementById("delete").showModal()}
       >
-        <img src="/delete.svg" alt="" />
+        <img src="icons/delete.svg" alt="" />
         <p className="text-white">Delete</p>
       </button>
       <dialog id="delete" className="modal">
         <div className="modal-box w-[300px] justity-center rounded-3xl ">
           <form method="dialog" className="justify-end flex">
             <button>
-              <img src="./cancel.svg" alt="" className="w-7 h-7" />
+              <img src="icons/cancel.svg" alt="" className="w-7 h-7" />
             </button>
           </form>
           <div className="justify-center flex">
@@ -34,7 +34,6 @@ export function DeleteButton() {
               method="dialog"
               className=" flex justify-around w-full mb-4 mt-3 px-3"
             >
-              {/* if there is a button, it will close the modal */}
               <button
                 className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700"
                 value="yes"

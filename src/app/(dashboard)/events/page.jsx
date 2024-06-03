@@ -65,17 +65,17 @@ export default function Event() {
         </form>
 
         <form>
-          <div className="mb-5">
+          <div class="mb-5">
             <label
               for="end date"
-              className="text-sm font-semibold text-primary-text block mb-2 "
+              class="text-sm font-semibold text-primary-text block mb-2 "
             >
               End Date
             </label>
             <input
               type="date"
               name="end date"
-              id="end date"
+              id="date"
               className="border text-primary-text sm:text-sm rounded-3xl block w-full p-2.5 focus:outline-none"
             />
           </div>
