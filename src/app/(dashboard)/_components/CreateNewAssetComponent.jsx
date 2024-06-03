@@ -4,17 +4,16 @@ import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 // import { Button } from "@knocklabs/react";
 
-
 export const AssetPopupComponent = () => {
-   const {
+  const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-// const { register, handleSubmit, formState: { errors } } = useForm();
-const onSubmit = (data) => {
-  console.log(data);
-}
+  // const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+  };
   //  const onSubmit = (data) => {
   //   console.log(data);
   // };
@@ -42,10 +41,12 @@ const onSubmit = (data) => {
         className="modal mt-0 w-[450px] lg:w-4/6 xl:w-3/5 2xl:w-3/6 m-auto"
       >
         <div className="modal-box w-11/12 max-w-5xl mt-0">
-          <form method="dialog w-full" onSubmit={handleSubmit(onSubmit)}>
+          <form action="" method="dialog w-full">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               ✕
             </button>
+          </form>
+          <form method="dialog w-full" onSubmit={handleSubmit(onSubmit)}>
             <div className="content px-10 mt-4">
               <div className="title font-semibold text-2xl">Create Asset</div>
               <div className="content mt-12 flex flex-col">
@@ -62,11 +63,11 @@ const onSubmit = (data) => {
                     required: "asset name is required",
                   })}
                 />
-                 {errors.assetname && (
-                    <div className="text-red-600 text-sm">
-                      {errors.assetname.message}
-                    </div>
-                  )}
+                {errors.assetname && (
+                  <div className="text-red-600 text-sm">
+                    {errors.assetname.message}
+                  </div>
+                )}
               </div>
               <div className="content2 grid grid-cols-2 gap-12 mt-5">
                 <div className="text1 flex flex-col">
@@ -83,7 +84,7 @@ const onSubmit = (data) => {
                       required: "quantity is required",
                     })}
                   />
-                   {errors.quantity && (
+                  {errors.quantity && (
                     <div className="text-red-600 text-sm">
                       {errors.quantity.message}
                     </div>
@@ -103,10 +104,8 @@ const onSubmit = (data) => {
                       required: "unit is required",
                     })}
                   />
-                   {errors.unit && (
-                    <div className="text-red-600 text-sm">
-                      {errors.unit}
-                    </div>
+                  {errors.unit && (
+                    <div className="text-red-600 text-sm">{errors.unit}</div>
                   )}
                 </div>
               </div>
@@ -115,7 +114,7 @@ const onSubmit = (data) => {
                   Cancle
                 </button>
                 <button
-                  type='submit'
+                  type="submit"
                   className="save border rounded-2xl bg-blueUi flex justify-center text-center items-center px-4 gap-3 "
                 >
                   <IoIosAdd
