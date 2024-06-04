@@ -2,7 +2,6 @@
 import { IoIosAdd } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { AddSquare } from "iconsax-react";
-
 export const AssetPopupComponent = () => {
   const {
     register,
@@ -18,9 +17,9 @@ export const AssetPopupComponent = () => {
     <div>
       <button
         onClick={() => document.getElementById("my_modal_new").showModal()}
-        className="border-1px border-purple-text h-11 w-11 justify-center text-purple-text rounded-3xl md:px-4 md:py-2.5 flex items-center space-x-3 md:w-40"
+        className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text h-11 w-11 justify-center text-purple-text rounded-3xl md:px-4 md:py-2.5 flex items-center space-x-3 md:w-40"
       >
-        <AddSquare size="20" color="#8C59FE" variant="Bold" />
+        <AddSquare size="20" variant="Bold" className="" />
         <p className="text-xs lg:text-base hidden md:block">New Assset</p>
       </button>
       <dialog
@@ -95,7 +94,12 @@ export const AssetPopupComponent = () => {
                 </div>
               </div>
               <div className="flex justify-end mt-9 gap-2 modal-action">
-                <div onClick={()=>document.getElementById('my_modal_new').close()} className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm">
+                <div
+                  onClick={() =>
+                    document.getElementById("my_modal_new").close()
+                  }
+                  className="btn btn-sm border-2 cancle px-7 h-12 rounded-2xl text-greyUi font-semibold text-sm"
+                >
                   Cancle
                 </div>
 

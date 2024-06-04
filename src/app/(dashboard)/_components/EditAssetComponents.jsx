@@ -56,7 +56,7 @@ export const EditAssetComponents = () => {
                   </div>
                 )}
               </div>
-              <div className="content2 grid grid-cols-2 gap-12 mt-5">
+              <div className="content2 grid grid-cols-2 gap-6 mt-5">
                 <div className="text1 flex flex-col">
                   <label className="" htmlFor="">
                     Quantity
