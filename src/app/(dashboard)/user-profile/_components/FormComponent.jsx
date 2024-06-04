@@ -151,7 +151,7 @@ function FormComponent() {
                         </div>
                     </div>
                     <div className='block mb-5 mt-4'>
-                        <button type='button' className='btn bg-purple-600 text-white rounded-3xl' onClick={handleUpdateClick}>
+                        <button type='button' className='btn bg-purple-text text-white rounded-3xl' onClick={handleUpdateClick}>
                             Change Password
                         </button> 
                     </div>
@@ -199,7 +199,7 @@ function FormComponent() {
                     <div className='flex justify-end my-3 w-full'>
                         {isLock ? (
                             <>
-                                <button type='submit' className=' btn sm:text-sm bg-green-700 text-lg w-40 lg:w-32 lg:text-base flex items-center text-white rounded-2xl' onClick={handleUpdateClick}><FiEdit/>Update</button>
+                                <button type='submit' className=' btn sm:text-sm btn-success text-lg w-40 lg:w-32 lg:text-base flex items-center text-white rounded-2xl' onClick={handleUpdateClick}><FiEdit/>Update</button>
                             </>
                         ) : (
                             <>
