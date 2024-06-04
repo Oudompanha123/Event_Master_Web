@@ -10,7 +10,7 @@ function page() {
   return (
     <>
     <div className='p-2 rounded-2xl'>
-        <div className='w-full bg-white sm:w-auto sm:h-auto rounded-2xl md:flex justify-between'>
+        <div className='w-full bg-white sm:w-auto sm:h-auto rounded-2xl md:flex justify-between shadow-md'>
             <div className='relative md:w-[30%] h-auto'>
                 <ProfileComponent/>
                 <PictureComponent/>
