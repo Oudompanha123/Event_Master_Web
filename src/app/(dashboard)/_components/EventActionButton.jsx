@@ -3,31 +3,40 @@ import React, { useState } from "react";
 import Image from "next/image";
 
 export function EventActionButton() {
-    const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
-    const handleCheckboxChange = () => {
-      setIsChecked(!isChecked);
-    };
-    const [inputList, setInputList] = useState([
-      { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
-    ]);
-  
-    const handleSubmit = () => {
-      // Handle form submission logic here
-      console.log("Form Submitted", inputList);
-      // Close the modal after submission
-      document.getElementById("updateEventCard").close();
-    };
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+  const [inputList, setInputList] = useState([
+    { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
+  ]);
+
+  const handleSubmit = () => {
+    // Handle form submission logic here
+    console.log("Form Submitted", inputList);
+    // Close the modal after submission
+    document.getElementById("updateEventCard").close();
+  };
   return (
     <div>
       <div className="dropdown  dropdown-end ">
-        <div tabIndex={0} role="button" className=" bg-white rounded-full bg-opacity-80 right-5 w-8 h-8 items-center  flex flex-row justify-center">
-        <svg width="18" height="4" viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="2" cy="2" r="2" fill="#101828"/>
-<circle cx="9" cy="2" r="2" fill="#101828"/>
-<circle cx="16" cy="2" r="2" fill="#101828"/>
-</svg>
-
+        <div
+          tabIndex={0}
+          role="button"
+          className=" bg-white rounded-full bg-opacity-80 right-5 w-8 h-8 items-center  flex flex-row justify-center"
+        >
+          <svg
+            width="18"
+            height="4"
+            viewBox="0 0 18 4"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="2" cy="2" r="2" fill="#101828" />
+            <circle cx="9" cy="2" r="2" fill="#101828" />
+            <circle cx="16" cy="2" r="2" fill="#101828" />
+          </svg>
         </div>
         <ul
           tabIndex={0}
@@ -36,7 +45,9 @@ export function EventActionButton() {
           <li>
             <a
               className="gap-4 flex"
-              onClick={() => document.getElementById("updateEventCard").showModal()}
+              onClick={() =>
+                document.getElementById("updateEventCard").showModal()
+              }
             >
               <img src="icons/edit-blue.svg" alt="" />
               <p className="text-primary-text  text-base font-semibold ">
@@ -287,7 +298,7 @@ export function EventActionButton() {
               className=" flex justify-end w-full mb-4 mt-3 gap-2"
             >
               <button
-                className="h-11 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white"
+                className="h-11 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white "
                 onClick={() => document.getElementById("updateEventCard")}
               >
                 Cancel
