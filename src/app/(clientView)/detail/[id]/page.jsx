@@ -3,6 +3,7 @@ import Image from "next/image"
 import demoImage from "../../../../../public/images/sea-chill.jpg"
 import { AgendaComponent } from "@/app/(clientView)/_componenets/AgendaComponent"
 import Link from "next/link"
+import data from "../../../../data/agenda.json"
 
 const Page = () => {
     return (
@@ -26,7 +27,16 @@ const Page = () => {
             </section>
             <section className="py-8 space-y-6">
                 <h2 className="text-xl lg:text-2xl font-semibold">Agenda Management</h2>
-                <AgendaComponent />
+                {data.payload.map((x, index) => (
+                    <AgendaComponent
+                        key={index}
+                        no={index + 1}
+                        time={x?.time}
+                        title={x?.title}
+                        description={x?.description}
+                        speaker={x?.speaker}
+                    />
+                ))}
                 <div className="w-full text-end pt-8">
                     <Link href={'/register'} className="text-sm lg:text-base px-9 font-bold py-4 rounded-full bg-purple-text text-white">Join Event</Link>
                 </div>
