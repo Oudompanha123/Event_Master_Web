@@ -28,14 +28,14 @@ export default function CardEventComponent() {
   }, []);
 
   return (
-    <div className=" grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-5 md:gap-2 w-sm ">
+    <div className=" grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2">
       {events.map((data, index) => {
         const { day, month } = formatDate(data.startDate);
         return (
           <div key={index}>
             <div className=" rounded-2xl overflow-hidden shadow-lg">
               <div
-                className="w-auto h-60 bg-cover bg-center"
+                className="w-auto h-60 bg-cover bg-center  transition duration-300 ease-in-out hover:scale-[103%]"
                 style={{
                   backgroundImage:
                     `url(${data.poster})` ||
@@ -44,7 +44,7 @@ export default function CardEventComponent() {
                 }}
                 alt="Event Photo"
               >
-                <div className="w-full flex justify-between pt-3 pl-3 pr-1 ">
+                <div className="w-full flex justify-between pt-3 pl-3 pr-3 ">
                   <div className="text-sm  bg-white text-primary-text rounded-xl h-11 w-10 flex flex-col items-center justify-center ">
                     <span className="font-semibold">{day}</span>
                     <small className="text-red-500 font-semibold">
@@ -84,16 +84,16 @@ export default function CardEventComponent() {
                   <span className="mt-2  line-clamp-1 ">{data.address}</span>
                 </p>
               </div>
-              <div className="flex lg:gap-4 md:gap-2 px-4 pt-4 pb-7 mt-6">
+              <div className="flex lg:gap-4 md:gap-2 px-4 pt-4 pb-7 mt-6 sm:gap-2">
                 <Link
                   href="/attendees"
-                  className="flex-1 flex items-center justify-center rounded-full border-purple-text border-[1px] text-purple-text antialiased py-2 text-sm"
+                  className="flex-1 flex items-center justify-center rounded-full border-purple-text border-[1px] text-purple-text antialiased py-2 text-sm transition duration-300 ease-in-out hover:scale-[102%]"
                 >
                   <button className="mx-auto">View all attendees</button>
                 </Link>
                 <Link
                   href="/event-detail"
-                  className="flex items-center justify-center flex-1 rounded-full bg-purple-text text-white antialiased py-2 text-sm"
+                  className="flex hover:bg-violet-700 active:bg-violet-800 focus:outline-none focus:ring focus:ring-violet-500 items-center justify-center flex-1 rounded-full bg-[#7939EF] text-white antialiased py-2 text-sm transition duration-300 ease-in-out hover:scale-[102%]"
                 >
                   <button className="mx-auto">View event detail</button>
                 </Link>

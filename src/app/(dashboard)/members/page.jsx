@@ -105,9 +105,9 @@ const MemberPage = () => {
 
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
-      <div className="flex flex-col lg:flex-row w-full justify-between mt-2 px-[3px]">
+      <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
         <div className="lg:w-[650px] md:w-full w-full">
-          <a className="font-semibold md:text-lg xl:text-xl mt-3 text-primary-text block py-3 lg:py-0">
+          <a className="font-semibold md:text-lg xl:text-xl text-primary-text block py-3 lg:py-0">
             Show All Members
           </a>
         </div>

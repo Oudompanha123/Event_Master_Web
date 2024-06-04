@@ -1,19 +1,19 @@
-export const AgendaComponent = ({ time, title, description }) => {
+export const AgendaComponent = ({ no, time, title, description, speaker }) => {
     return (
-        <div className="flex rounded-3xl border-1px p-5 odd:bg-softwhiteUi even:bg-white">
+        <div className="flex rounded-3xl border-1px py-5 odd:bg-softwhiteUi even:bg-white">
             <div className="px-4">
-                <div className="w-1 bg-green-500 h-full"></div>
+                <div className={`w-[2.4px] ${no % 2 !== 0 ? "bg-green-500" : "bg-purple-text"} h-full`}></div>
             </div>
             <div className="space-y-4 w-full">
-                <p className="font-light text-sm lg:text-base">3:00 PM - 4:00 PM</p>
-                <p className="font-medium lg:text-xl">Guest Registeration</p>
+                <p className="font-light text-sm lg:text-base">{time}</p>
+                <p className="font-medium lg:text-xl">{title}</p>
                 {description &&
                     <div>
                         <hr />
-                        <p className="w-2/3 font-light text-sm lg:text-base">
-                            Fun game & activity booths all around,food & drinks on offer,live Dj,test rides,Vespa club
-                            Cambodia signup & Card collection
+                        <p className="w-2/3 font-light text-sm lg:text-base mt-4">
+                            {description}
                         </p>
+                        <p className={`${speaker ? "block" : "hidden"} mt-2`}><span className="font-medium">Speaker : </span>{speaker}</p>
                     </div>
                 }
             </div>

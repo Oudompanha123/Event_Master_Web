@@ -10,7 +10,7 @@ export const NavbarComponent = () => {
     const pathname = usePathname();
     return (
         <div className="flex justify-between py-4 container items-center sticky top-0 z-50 bg-white">
-            <Link className="flex items-center gap-6" href={'/'}>
+            <Link className="flex items-center gap-4" href={'/'}>
                 <Image src={image} height={54} width={54} alt="logoImage" />
                 <h2 className="text-xl hidden lg:block font-bold">EventMaster</h2>
             </Link>

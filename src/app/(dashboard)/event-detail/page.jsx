@@ -3,6 +3,7 @@ import AgendaComponent from "../_components/AgendaComponet";
 import { RegisterFormConferrence } from "../_components/RegisterFormConferrenceComponent";
 import { EventDetail } from "../_components/EventDetailComponent";
 import MaterialComponent from "../_components/MaterialComponent";
+import { CreateDynamicForm } from "../_components/CreateDynamicFormComponent";
 
 const Page = async ({ params: { id } }) => {
   return (
@@ -12,7 +13,8 @@ const Page = async ({ params: { id } }) => {
         <p className="text-primary-text font-semibold text-2xl my-7">
           Registratioin form
         </p>
-        <RegisterFormConferrence />
+        <CreateDynamicForm/>
+        {/* <RegisterFormConferrence /> */}
         <MaterialComponent />
         <AgendaComponent />
       </div>

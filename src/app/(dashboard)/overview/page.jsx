@@ -6,6 +6,7 @@ import statusData from "../../../data/overview.json"
 import CreateCategoryButton from "../_components/Action/CreateCategoryButton"
 import { CategoryDeleteAction } from "../_components/Action/CategoryDeleteAction"
 import { CategoryEditAction } from "../_components/Action/CategoryEditAction"
+import { Pagination } from "../_components/Pagination"
 
 const Page = () => {
     return (
@@ -85,6 +86,9 @@ const Page = () => {
                                 })}
                             </tbody>
                         </table>
+                        <div className="w-full flex justify-end mt-8">
+                            <Pagination />
+                        </div>
                     </div>
                 </div>
             </section>

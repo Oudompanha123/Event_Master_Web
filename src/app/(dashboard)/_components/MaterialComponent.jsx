@@ -7,6 +7,8 @@ import SelectedItem from "./SelectedItem";
 import { MaterialActionButton } from "./MaterialActionButtton";
 import { HiOutlineSwatch } from "react-icons/hi2";
 import { TiFlashOutline } from "react-icons/ti";
+import { IoSearchOutline } from "react-icons/io5";
+
 
 const options = [
   {
@@ -117,7 +119,7 @@ export default function MaterialComponent() {
         Material Management
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 ">
-        <div className="w-auto bg-white rounded-3xl drop-shadow flex px-3.5 py-1">
+        <div className="w-auto bg-white rounded-3xl drop-shadow flex px-3.5 py-1 transition duration-300 ease-in-out hover:scale-[103%]">
           <div className="flex items-center">
             <div className="bg-[#624F9D] p-2.5 rounded-full">
               <Image
@@ -140,7 +142,7 @@ export default function MaterialComponent() {
           </div>
         </div>
 
-        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5">
+        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
           <div className="flex items-center">
             <div className="bg-[#FBBC04] p-2.5 rounded-full ">
               <HiOutlineSwatch size="30" color="#ffffff" />
@@ -156,7 +158,7 @@ export default function MaterialComponent() {
           </div>
         </div>
 
-        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5">
+        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
           <div className="flex items-center">
             <div className="bg-[#551FFF] p-2.5 rounded-full">
               <TiFlashOutline size="32" color="#ffffff" />
@@ -172,7 +174,7 @@ export default function MaterialComponent() {
           </div>
         </div>
 
-        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5">
+        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
           <div className="flex items-center">
             <div className=" bg-[#038446] p-2.5 rounded-full">
               <Image
@@ -195,7 +197,7 @@ export default function MaterialComponent() {
           </div>
         </div>
 
-        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5">
+        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
           <div className="flex items-center">
             <div className=" bg-[#D72222] p-2.5 rounded-full">
               <Image
@@ -219,48 +221,32 @@ export default function MaterialComponent() {
         </div>
       </div>
       {/* <div className="relative"> */}
-        <div className="flex justify-between mt-8 h-14 w-full">
-          <div className="relative w-[50%]">
+      <div className="flex justify-between mt-8 h-14 w-full">
+        <div className=" w-full lg:w-[730px]">
             <input
-              className="input input-bordered border-[1px] pl-10 text-primary-text hover:border-gray-400 rounded-full w-full h-12"
-              id="username"
               type="text"
-              placeholder="Search..."
+              placeholder="Search by name"
+              className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-12 border rounded-3xl pl-10"
             />
-            <div className="absolute left-3 top-[40%] transform -translate-y-1/2 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
+            <IoSearchOutline className="w-[24px] h-[24px] -mt-9 ml-3" />
           </div>
-          <div
-  className="flex items-center border border-purple-text w-[165px] gap-3 rounded-full justify-center h-12 cursor-pointer"
-  onClick={addNewRow}
->
-  <Image
-    className=""
-    src="/icons/create-new.svg"
-    alt="Create New Icon"
-    width={25}
-    height={25}
-    priority
-  />
-  <p className="text-purple-text">New Material</p>
-</div>
-
+      
+        <div
+          className="flex items-center border active:bg-violet-200 focus:outline-none focus:ring focus:ring-violet-500 border-purple-text w-[165px] gap-3 rounded-full justify-center h-12 px-1"
+          onClick={addNewRow}
+        >
+          <Image
+            className=""
+            src="/icons/create-new.svg"
+            alt="Create New Icon"
+            width={25}
+            height={25}
+            priority
+          />
+          <p className="text-purple-text w-[100px]">New Material</p>
         </div>
-      {/* </div> */}
+      </div>
+    
 
       {/* Material table */}
       <div className="relative px-1 overflow-auto">
@@ -279,34 +265,34 @@ export default function MaterialComponent() {
                   </label>
                 </div>
               </th>
-              <th scope="col" className="px-6 py-5 text-primary-text">
+              <th scope="col" className="px-3 py-5 text-primary-text">
                 NO
               </th>
-              <th scope="col" className="px-4 py-3 text-primary-text">
+              <th scope="col" className="px-3 py-3 text-primary-text">
                 ITEM NAME
               </th>
-              <th scope="col" className="px-4 py-3 text-primary-text">
+              <th scope="col" className="px-3 py-3 text-primary-text">
                 QTY
               </th>
-              <th scope="col" className="px-4 py-3 text-primary-text">
+              <th scope="col" className="px-3 py-3 text-primary-text">
                 UNIT
               </th>
-              <th scope="col" className="px-4 py-3 text-primary-text">
+              <th scope="col" className="px-3 py-3 text-primary-text">
                 DUE DATE
               </th>
-              <th scope="col" className="px-4 py-3 text-primary-text">
+              <th scope="col" className="px-3 py-3 text-primary-text">
                 HANDLER
               </th>
-              <th scope="col" className="px-4 py-3 text-primary-text">
+              <th scope="col" className="px-3 py-3 text-primary-text">
                 SUPPORTERS
               </th>
-              <th scope="col" className="px-4 py-3 text-primary-text">
+              <th scope="col" className="px-2 py-3 text-primary-text">
                 STATUS
               </th>
-              <th scope="col" className="px-4 py-3 text-primary-text">
+              <th scope="col" className="px-0 py-3 text-primary-text">
                 NOTE
               </th>
-              <th scope="col" className="py-3 text-primary-text rounded-r-2xl">
+              <th scope="col" className="py-3 px-0 text-primary-text rounded-r-2xl">
                 ACTION
               </th>
             </tr>
@@ -332,14 +318,14 @@ export default function MaterialComponent() {
                     </label>
                   </div>
                 </td>
-                <th className="text-base px-6 text-primary-text">
+                <th className="text-base px-4 text-primary-text">
                   {index + 1}
                 </th>
                 <td className="text-sm font-normal text-primary-text">
                   <input
                     type="text"
                     name="itemName"
-                    className="border text-primary-text text-base px-2 w-36 h-10 rounded-xl font-normal focus:outline-none"
+                    className="border text-primary-text text-base px-1 w-32 h-10 rounded-xl font-normal focus:outline-none"
                     value={row.itemName}
                     onChange={(e) => {
                       const newRows = [...rows];
@@ -458,11 +444,11 @@ export default function MaterialComponent() {
                   </div>
                 </td>
 
-                <td className="sm:text-sm font-normal text-base text-primary-text">
+                <td className="sm:text-sm font-normal px-0 text-base text-primary-text">
                   <input
                     type="text"
                     name="note"
-                    className="border text-primary-text text-base sm:text-sm px-2 w-36 h-10 rounded-xl font-normal focus:outline-none"
+                    className="border text-primary-text text-base sm:text-sm px-0 w-36 h-10 rounded-xl font-normal focus:outline-none"
                     value={row.note}
                     onChange={(e) => {
                       const newRows = [...rows];
@@ -471,7 +457,7 @@ export default function MaterialComponent() {
                     }}
                   />
                 </td>
-                <td className="pl-12 rounded-r-2xl">
+                <td className="pl-10 rounded-r-2xl">
                   <MaterialActionButton />
                 </td>
               </tr>

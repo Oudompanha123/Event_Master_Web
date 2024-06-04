@@ -16,20 +16,24 @@ export const FooterComponent = () => {
             <div className="flex justify-between">
                 <p className="font-medium text-sm md:text-base">@Copyright 2024 EventMaster</p>
                 <div className="flex gap-4">
-                    <Image
-                        src={facebookIcon}
-                        className="p-1 rounded-full border-1px border-greyUi"
-                        width={32}
-                        height={32}
-                        alt="facebook-icon"
-                    />
-                    <Image
-                        src={googleIcon}
-                        className="p-1 rounded-full border-1px border-greyUi"
-                        width={32}
-                        height={32}
-                        alt="google-icon"
-                    />
+                    <a href="https://www.facebook.com/ksignhrd" target="_blank">
+                        <Image
+                            src={facebookIcon}
+                            className="p-1 rounded-full border-1px border-greyUi"
+                            width={32}
+                            height={32}
+                            alt="facebook-icon"
+                        />
+                    </a>
+                    <a href="https://maps.app.goo.gl/pSM8FKj1BayJ7uph7" target="_blank">
+                        <Image
+                            src={googleIcon}
+                            className="p-1 rounded-full border-1px border-greyUi"
+                            width={32}
+                            height={32}
+                            alt="google-icon"
+                        />
+                    </a>
                 </div>
             </div>
         </footer>
