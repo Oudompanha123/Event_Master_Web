@@ -7,7 +7,7 @@ const LoginPage = () => {
     return (
         <div className="w-full relative h-screen">
             <Image className="absolute object-cover -mt-[70px] bg-cover"
-                   src="/login.svg" alt="image" width={1920} height={100} property=""/>
+                   src="/icons/login.svg" alt="image" width={1920} height={100} property=""/>
 
             <Link href={`/`} className="absolute top-5 left-8 flex text-white text-xl gap-1">
                 <MdKeyboardArrowLeft size={30} className="bg-red-40 flex"/>
