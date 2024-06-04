@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import data from "../data/sidebar.json"
 import { useState } from "react";
+import { LogoutAction } from "@/app/(dashboard)/_components/Action/LogoutAction";
 
 export const SidebarComponent = ({ className }) => {
     const pathname = usePathname();
@@ -14,9 +15,12 @@ export const SidebarComponent = ({ className }) => {
 
     return (
         <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-5 border-r-1px sticky top-0 h-screen`}>
-            <div className="p-2 lg:p-2">
-                <Image src={logo} height={75} width={75} />
-            </div>
+            <Link href={'/overview'}>
+                <div className="p-2 lg:p-2 flex items-center gap-4">
+                    <Image src={logo} height={75} width={75} />
+                    <h2 className="hidden xl:block text-xl font-semibold">EventMaster</h2>
+                </div>
+            </Link>
             <hr />
             <div className="w-full flex xl:block flex-col items-center xl:items-start justify-center">
                 {data?.data?.map((x, index) => (
@@ -79,12 +83,11 @@ export const SidebarComponent = ({ className }) => {
                         </div>
                     </Link>
                 </div>
-                <Link onClick={() => setClick(false)} href={'/logout'}>
-                    <div className={`space-x-3 px-4 py-4 flex justify-center xl:justify-start rounded-radiusUi w-full items-center`}>
+                {/* <div className={`space-x-3 px-4 py-4 flex justify-center xl:justify-start rounded-radiusUi w-full items-center`}>
                         <LogoutCurve size="20" color="#344054" variant="Bulk" />
                         <p className="hidden xl:block text-base 2xl:text-lg">Logout</p>
-                    </div>
-                </Link>
+                    </div> */}
+                <LogoutAction />
             </div>
         </div>
     )

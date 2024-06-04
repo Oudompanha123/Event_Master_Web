@@ -27,7 +27,7 @@ export const RegisterActionComponent = () => {
                         <div className="modal-action flex justify-center">
                             <div className="flex space-x-6 justify-center mb-4 mt-3">
                                 <Link className="bg-greenUi h-9 text-white w-[100px] font-semibold rounded-full py-2 px-9" href={'#'}>Yes</Link>
-                                <Link className="bg-redUi h-9 text-white w-[100px] font-semibold rounded-full py-2 px-9" href={'#'}>No</Link>
+                                <button onClick={() => document.getElementById('my_modal_3').close()} className="bg-redUi h-9 text-white w-[100px] font-semibold rounded-full py-2 px-9">No</button>
                             </div>
                         </div>
                     </div>

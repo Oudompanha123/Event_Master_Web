@@ -54,9 +54,9 @@ export default function Home() {
       </section>
 
       <section className="mb-16">
-        <div className="mb-8">
+        {/* <div className="mb-8">
           <TitleComponent title={"Search Your Favorite Event"} />
-        </div>
+        </div> */}
         <SearchBar />
       </section>
       {/* event section */}

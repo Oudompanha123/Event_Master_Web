@@ -13,7 +13,7 @@ const Page = () => {
                 <div className="space-y-6 mt-6">
                     <div className="flex justify-between items-center">
                         <h2 className="text-xl lg:text-2xl font-semibold">Design Skill & Tech Session</h2>
-                        <button className="text-sm lg:text-base bg-blue-200 text-blue-800 px-6 py-2 lg:py-4 rounded-full">Open</button>
+                        <button className="text-sm lg:text-base bg-blue-200 text-blue-800 px-6 py-2 rounded-full">Open</button>
                     </div>
                     <p className="text-sm lg:text-base w-full lg:w-2/3 font-light">
                         Join us for an engaging and insightful session where creativity meets technology! Our Design Skill & Tech Session is tailored for professionals and enthusiasts looking to enhance their design capabilities with cutting-edge technological tools.
@@ -21,7 +21,7 @@ const Page = () => {
                     <p>
                         <span className="text-sm lg:text-base font-semibold">Location:</span>   Street 128, Toul Kok, Phnom Penh
                     </p>
-                    <button className="bg-blue-200 text-blue-800 text-sm lg:text-base px-6 py-2 lg:py-4 rounded-full">02 August 2023</button>
+                    <button className="bg-blue-200 text-blue-800 text-sm lg:text-base px-6 py-2 rounded-full">02 August 2023</button>
                 </div>
             </section>
             <section className="py-8 space-y-6">

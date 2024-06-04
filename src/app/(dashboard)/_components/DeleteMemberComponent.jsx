@@ -8,7 +8,7 @@ export function DeleteMemberComponent() {
         value="delete"
         onClick={() => document.getElementById("delete").showModal()}
       >
-        <img src="/images/deleteicon.svg" alt="" className="  w-8 h-8 ml-2" />
+        <img src="icons/deleteicon.svg" alt="" className="  w-8 h-8 ml-3 mt-1" />
       </button>
       <dialog id="delete" className="modal">
         <div className="modal-box w-[270px] justity-center  ">

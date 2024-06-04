@@ -1,19 +1,39 @@
-
 "use client";
 import React, { useState } from "react";
+import { MultiSelect } from "react-multi-select-component";
 import { FaAngleDown } from "react-icons/fa";
 import Image from "next/image";
+import SelectedItem from "./SelectedItem";
 import { MaterialActionButton } from "./MaterialActionButtton";
+import { HiOutlineSwatch } from "react-icons/hi2";
+import { TiFlashOutline } from "react-icons/ti";
+
+const options = [
+  {
+    label: "Nita",
+    value: 1,
+    icon: "https://i.pinimg.com/564x/72/c5/e9/72c5e9561b6551fe42f0716271275089.jpg",
+  },
+  { label: "Hengly", value: 2 },
+  { label: "Phalleng", value: 3 },
+  { label: "Davin", value: 4 },
+  { label: "Bros", value: 5 },
+  { label: "Panha", value: 6 },
+  { label: "Ratha", value: 7 },
+  { label: "Menglim", value: 8 },
+  { label: "Chaiteth", value: 9 },
+  { label: "Kim Chhun", value: 10 },
+];
 
 const getStatusColor = (status) => {
   switch (status) {
-    case "pending":
+    case "Pending":
       return "#FBBC04";
-    case "on-going":
+    case "On Going":
       return "#551FFF";
-    case "done":
+    case "Done":
       return "#038446";
-    case "issue":
+    case "Issue":
       return "#D72222";
     default:
       return "#000000";
@@ -30,32 +50,24 @@ export default function MaterialComponent() {
       dueDate: "",
       handler: "menglim",
       supporters: "nyta",
-      status: "pending",
-      note: "",
-    },
-    {
-      id: 2,
-      itemName: "",
-      qty: "",
-      unit: "",
-      dueDate: "",
-      handler: "menglim",
-      supporters: "nyta",
-      status: "done",
-      note: "",
-    },
-    {
-      id: 3,
-      itemName: "",
-      qty: "",
-      unit: "",
-      dueDate: "",
-      handler: "menglim",
-      supporters: "nyta",
-      status: "pending",
+      status: "Pending",
       note: "",
     },
   ]);
+
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
+  const handleStatusChange = (id, newStatus) => {
+    const newRows = rows.map((row) =>
+      row.id === id ? { ...row, status: newStatus } : row
+    );
+    setRows(newRows);
+    setActiveDropdown(null);
+  };
+
+  const toggleDropdown = (id) => {
+    setActiveDropdown(activeDropdown === id ? null : id);
+  };
 
   const addNewRow = () => {
     const newRow = {
@@ -66,68 +78,194 @@ export default function MaterialComponent() {
       dueDate: "",
       handler: "",
       supporters: "",
-      status: "pending",
+      status: "Pending",
       note: "",
     };
     setRows([...rows, newRow]);
   };
 
-  const handleStatusChange = (index, newStatus) => {
-    const newRows = [...rows];
-    newRows[index].status = newStatus;
-    setRows(newRows);
+  const [selected, setSelected] = useState([]);
+
+  const customValueRenderer = (selected, _options) => {
+    return (
+      <div className="flex gap-2">
+        {selected.map((item) => (
+          <SelectedItem
+            key={item.value}
+            item={item}
+            removeItem={handleRemove}
+          />
+        ))}
+      </div>
+    );
   };
 
-  const [activeDropdown, setActiveDropdown] = useState(null);
+  const handleRemove = (item) => {
+    setSelected(selected.filter((i) => i.value !== item.value));
+  };
 
-  const toggleDropdown = (id) => {
-    setActiveDropdown(activeDropdown === id ? null : id);
+  const handleChange = (selectedItems) => {
+    if (selectedItems.length <= 2) {
+      setSelected(selectedItems);
+    }
   };
 
   return (
     <div>
-      <div className="text-primary-text md:text-lg font-semibold text-2xl mt-8">
+      {/* Material */}
+      <div className="text-primary-text font-semibold text-2xl py-10">
         Material Management
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-        {/* Existing Cards */}
-      </div>
-      <div className="relative">
-        <div className="flex justify-between mt-10">
-          <input
-            className="border-[1px] pl-10 text-primary-text rounded-full w-[50%] input input-bordered hover:border-gray-400"
-            id="username"
-            type="text"
-            placeholder="Search..."
-          />
-          <div className="absolute left-0 inset-y-0 flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 ml-3 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 ">
+        <div className="w-auto bg-white rounded-3xl drop-shadow flex px-3.5 py-1">
+          <div className="flex items-center">
+            <div className="bg-[#624F9D] p-2.5 rounded-full">
+              <Image
+                className=""
+                src="icons/ranking.svg"
+                alt="Next.js Logo"
+                width={30}
+                height={10}
+                priority
               />
-            </svg>
+            </div>
+            <div className="pl-3 ">
+              <p className="text-primary-text text-xs lg:text-sm font-medium">
+                Total Material
+              </p>
+              <p className="text-primary-text text-xs lg:text-sm font-bold">
+                40
+              </p>
+            </div>
           </div>
-          <div
-            className="flex border border-[#8C59FE] w-[165px] gap-3 p-2.5 rounded-full cursor-pointer"
-            onClick={addNewRow}
-          >
-            <img src="/create-new.svg" alt="" />
-            <p className="text-purple-text">New Material</p>
+        </div>
+
+        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5">
+          <div className="flex items-center">
+            <div className="bg-[#FBBC04] p-2.5 rounded-full ">
+              <HiOutlineSwatch size="30" color="#ffffff" />
+            </div>
+            <div className=" pl-3">
+              <p className=" text-primary-text text-xs lg:text-sm font-medium">
+                Pending Material
+              </p>
+              <p className=" text-primary-text text-xs lg:text-sm font-bold">
+                20
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5">
+          <div className="flex items-center">
+            <div className="bg-[#551FFF] p-2.5 rounded-full">
+              <TiFlashOutline size="32" color="#ffffff" />
+            </div>
+            <div className="pl-3">
+              <p className=" text-primary-text text-xs lg:text-sm font-medium">
+                On Going Material
+              </p>
+              <p className=" text-primary-text text-xs lg:text-sm font-bold">
+                10
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5">
+          <div className="flex items-center">
+            <div className=" bg-[#038446] p-2.5 rounded-full">
+              <Image
+                className=""
+                src="icons/clipboard.svg"
+                alt="Next.js Logo"
+                width={30}
+                height={10}
+                priority
+              />
+            </div>
+            <div className="pl-3">
+              <p className=" text-primary-text text-xs lg:text-sm font-medium">
+                Done Material
+              </p>
+              <p className=" text-primary-text text-xs lg:text-sm font-bold">
+                8
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5">
+          <div className="flex items-center">
+            <div className=" bg-[#D72222] p-2.5 rounded-full">
+              <Image
+                className=""
+                src="icons/warning-2.svg"
+                alt="Next.js Logo"
+                width={32}
+                height={10}
+                priority
+              />
+            </div>
+            <div className="pl-3">
+              <p className=" text-primary-text text-xs lg:text-sm font-medium">
+                Issue Material
+              </p>
+              <p className=" text-primary-text text-xs lg:text-sm font-bold">
+                2
+              </p>
+            </div>
           </div>
         </div>
       </div>
-      <div className="relative overflow-x-auto px-1">
+      {/* <div className="relative"> */}
+        <div className="flex justify-between mt-8 h-14 w-full">
+          <div className="relative w-[50%]">
+            <input
+              className="input input-bordered border-[1px] pl-10 text-primary-text hover:border-gray-400 rounded-full w-full h-12"
+              id="username"
+              type="text"
+              placeholder="Search..."
+            />
+            <div className="absolute left-3 top-[40%] transform -translate-y-1/2 flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+  className="flex items-center border border-purple-text w-[165px] gap-3 rounded-full justify-center h-12 cursor-pointer"
+  onClick={addNewRow}
+>
+  <Image
+    className=""
+    src="/icons/create-new.svg"
+    alt="Create New Icon"
+    width={25}
+    height={25}
+    priority
+  />
+  <p className="text-purple-text">New Material</p>
+</div>
+
+        </div>
+      {/* </div> */}
+
+      {/* Material table */}
+      <div className="relative px-1 overflow-auto">
         <table className="overflow-x-auto w-full text-sm text-left rtl:text-right text-gray-500 border-separate dark:text-gray-400 border-spacing-y-3 table mt-3">
-          <thead className="uppercase dark:bg-gray-700 dark:text-gray-400 text-sm font-normal h-10 drop-shadow text-primary-text bg-[#F0F1F3]">
+          <thead className="uppercase dark:text-gray-400 text-sm font-normal h-10 drop-shadow text-primary-text bg-[#F0F1F3]">
             <tr className="text-[14px] font-semibold rounded-2xl">
               <th scope="col" className="p-4 rounded-l-2xl">
                 <div className="flex items-center">
@@ -177,7 +315,7 @@ export default function MaterialComponent() {
             {rows.map((row, index) => (
               <tr
                 key={index}
-                className="bg-white border-b dark:bg-gray-800 font-medium text-base dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 h-8 border border-black"
+                className="bg-white border-b  font-medium text-base  hover:bg-gray-50 h-8 border border-black"
               >
                 <td className="w-4 p-4 rounded-l-2xl">
                   <div className="flex items-center">
@@ -214,7 +352,7 @@ export default function MaterialComponent() {
                   <input
                     type="text"
                     name="qty"
-                    className="border text-primary-text text-base px-1 w-20 h-10 rounded-xl font-normal focus:outline-none"
+                    className="border text-primary-text text-base px-2 w-20 h-10 rounded-xl font-normal focus:outline-none"
                     value={row.qty}
                     onChange={(e) => {
                       const newRows = [...rows];
@@ -240,7 +378,7 @@ export default function MaterialComponent() {
                   <input
                     type="date"
                     name="dueDate"
-                    className="border text-primary-text sm:text-sm rounded-xl block w-26 p-2.5 focus:outline-none"
+                    className="border text-primary-text sm:text-sm rounded-xl block w-26 p-2 focus:outline-none"
                     value={row.dueDate}
                     onChange={(e) => {
                       const newRows = [...rows];
@@ -261,92 +399,65 @@ export default function MaterialComponent() {
                       setRows(newRows);
                     }}
                   >
-                    <option value="" disabled hidden></option>
+                    <option value="" selected disabled hidden></option>
                     <option value="menglim">Menglim</option>
                     <option value="chhun">Kim Chhun</option>
                     <option value="Ntya">Nyta</option>
                     <option value="Bros">Bros</option>
                   </select>
                 </td>
-                <td className="px-1">
-                  <select
-                    id="supporters"
-                    name="supporters"
-                    className="border text-black text-base sm:text-sm rounded-xl block w-28 p-2.5 focus:outline-none"
-                    value={row.supporters}
-                    onChange={(e) => {
-                      const newRows = [...rows];
-                      newRows[index].supporters = e.target.value;
-                      setRows(newRows);
-                    }}
-                  >
-                    <option value="" disabled hidden></option>
-                    <option value="menglim">Menglim</option>
-                    <option value="chhun">Kim Chhun</option>
-                    <option value="Ntya">Nyta</option>
-                    <option value="Bros">Bros</option>
-                  </select>
+                <td>
+                  <MultiSelect
+                    options={options}
+                    value={selected}
+                    onChange={handleChange}
+                    labelledBy="Select Users"
+                    valueRenderer={customValueRenderer}
+                    className=" text-black"
+                    disableSearch={true}
+                    hasSelectAll={false}
+                  />
                 </td>
-                <td className="px-1">
-                  <div className="dropdown dropdown-bottom dropdown-end">
+                <td className="px-4 w-36">
+                  <div className="relative  bg-white p-[7px] border rounded-xl ">
                     <div
-                      tabIndex={0}
-                      role="button"
+                      className="cursor-pointer flex items-center"
                       onClick={() => toggleDropdown(row.id)}
-                      className="btn btn-sm border rounded-radiusUi w-[120px] h-8 flex justify-between items-center"
-                      style={{
-                        color: getStatusColor(row.status),
-                        borderColor: getStatusColor(row.status),
-                      }}
                     >
-                      {row.status}
-                      <FaAngleDown />
+                      <span
+                        className="flex px-1 py-1 w-20 text-xs font-semibold justify-center  rounded-full"
+                        style={{
+                          backgroundColor: getStatusColor(row.status),
+                          color: "white",
+                        }}
+                      >
+                        {row.status}
+                      </span>
+                      <FaAngleDown className="ml-2" />
                     </div>
                     {activeDropdown === row.id && (
-                      <ul
-                        tabIndex={0}
-                        className="dropdown-content text-base menu shadow bg-base-100 rounded-radiusUi w-44 z-20"
+                      <div
+                        className="absolute z-10 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg"
+                        style={{ width: "150px" }} // Fixed width set here
                       >
-                        <li>
-                          <a
-                            href="#"
-                            onClick={() => handleStatusChange(index, "pending")}
-                            className="hover:text-[#FBBC04]"
-                          >
-                            pending
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            onClick={() => handleStatusChange(index, "on-going")}
-                            className="hover:text-[#7A44FF]"
-                          >
-                            on-going
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            onClick={() => handleStatusChange(index, "done")}
-                            className="hover:text-[#038446]"
-                          >
-                            done
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            onClick={() => handleStatusChange(index, "issue")}
-                            className="hover:text-[#D72222]"
-                          >
-                            issue
-                          </a>
-                        </li>
-                      </ul>
+                        {["Pending", "On Going", "Done", "Issue"].map(
+                          (statusOption) => (
+                            <div
+                              key={statusOption}
+                              className="px-4 py-3 cursor-pointer hover:bg-gray-200"
+                              onClick={() =>
+                                handleStatusChange(row.id, statusOption)
+                              }
+                            >
+                              {statusOption}
+                            </div>
+                          )
+                        )}
+                      </div>
                     )}
                   </div>
                 </td>
+
                 <td className="sm:text-sm font-normal text-base text-primary-text">
                   <input
                     type="text"
