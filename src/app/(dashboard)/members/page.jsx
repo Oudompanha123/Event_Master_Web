@@ -5,6 +5,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { FaAngleDown } from "react-icons/fa";
 import Image from "next/image";
 import { DeleteMemberComponent } from "../_components/DeleteMemberComponent";
+import { Pagination } from "../_components/Pagination";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -246,6 +247,9 @@ const MemberPage = () => {
             ))}
           </tbody>
         </table>
+        <div className="w-full flex justify-end mt-8">
+          <Pagination />
+        </div>
       </div>
     </div>
   );

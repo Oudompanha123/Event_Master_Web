@@ -1,4 +1,5 @@
 import userData from "../../../data/member.json"
+import { Pagination } from "../_components/Pagination"
 import { RegisterActionComponent } from "../_components/RegisterActionComponent"
 
 const Page = () => {
@@ -34,6 +35,9 @@ const Page = () => {
                             )}
                         </tbody>
                     </table>
+                    <div className="w-full flex justify-end mt-8">
+                        <Pagination />
+                    </div>
                 </div>
             </div>
         </>

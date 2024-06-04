@@ -234,7 +234,7 @@ const SignupComponent = () => {
                         )}
                     </div>
 
-                    <div className="flex justify-center p-6 pb-16">
+                    <div className="flex justify-center p-6 pb-6 pt-12">
                         <Link href={`/verify-register`}>
                             <button
                                 type="submit"

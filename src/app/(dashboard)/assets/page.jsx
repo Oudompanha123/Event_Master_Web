@@ -27,7 +27,7 @@ export default function assetPage() {
         <div className="tables box-border mt-0">
           <AssetTableComponent />
         </div>
-        <div className="pagination flex justify-end px-8 mt-1">
+        <div className="pagination flex justify-end px-8 pb-8 mt-8">
           <Pagination/>
         </div>
       </div>
