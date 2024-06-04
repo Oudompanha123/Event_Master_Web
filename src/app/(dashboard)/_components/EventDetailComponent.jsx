@@ -47,15 +47,16 @@ export const EventDetail = () => {
         <div className="text-primary-text font-semibold text-2xl w-[70%] text-wrap">
           {event.eventName}
         </div>
-        <span
-          className={`inline-block rounded-full px-4 py-1 text-sm font-semibold h-8 ${
-            event.isOpen
-              ? "bg-blue-100 text-blue-700"
-              : "bg-red-100 text-red-700"
-          }`}
-        >
-          {event.isOpen ? "Open" : "Closed"}
-        </span>
+        <div className="flex justify-center items-center ">
+  <span
+    className={`inline-block rounded-full px-4 py-1 text-sm font-semibold ${
+      event.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
+    }`}
+  >
+    {event.isOpen ? "Open" : "Closed"}
+  </span>
+</div>
+
       </div>
       <div className="ml-5 text-primary-text font-regular text-base w-[90%] ">
         {event.description}

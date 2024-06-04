@@ -30,7 +30,7 @@ function UpdateAgenda({ inputList, setInputList }) {
         <div className="col-sm-12">
           {inputList.map((x, i) => (
             <div key={i} className="row">
-              <div className="mb-5 px-4 pt-5 pb-5 border bottom-1 bg-white rounded-3xl ">
+              <div className="mb-5 mt-4 px-4 pt-5 pb-5 border bottom-1 bg-white rounded-3xl ">
                 <div className="form-group justify-end flex h-5">
                   {inputList.length !== 1 && (
                     <button
@@ -181,13 +181,13 @@ export function UpdateAgendaButton() {
         className="btn  rounded-xl flex  border bg-green-700 hover:bg-green-800 w-32  "
         onClick={() => document.getElementById("my_modal_4").showModal()}
       >
-        <img src="icons/edit.svg" alt="" />
+        <img src="icons/edit.svg" alt="" className="" />
         <p className="text-white">Edit</p>
       </button>
       <dialog id="my_modal_4" className="modal ">
         <div className="modal-box w-11/12 max-w-5xl rounded-3xl  bg-[#F7F9FB]">
           <UpdateAgenda inputList={inputList} setInputList={setInputList} />
-          <div className="modal-action gap-2 pr-4 ">
+          <div className="modal-action gap-2 pr-4  mb-4">
             <button
               className="h-11 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white"
               onClick={() => document.getElementById("my_modal_4").close()}
@@ -198,7 +198,7 @@ export function UpdateAgendaButton() {
               className="h-11  rounded-xl flex items-center justify-center gap-2  border bg-green-700  w-32  hover:bg-green-800"
               onClick={handleSubmit}
             >
-              <img src="icons/edit.svg" alt="" />
+              <img src="icons/edit.svg" alt="" className="h-5 w-5" />
               <p className="text-white">Update</p>
             </button>
           </div>
