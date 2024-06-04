@@ -1,44 +1,58 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-
+import { RxCross2 } from "react-icons/rx"
 export const DeleteAssetComponent = () => {
   return (
-    <div className="delete">
-      <Image src={"/icons/trash.svg"} width={20} height={20}  onClick={() => document.getElementById("my_modal_5").showModal()}/>
-      <dialog id="my_modal_5" className="modal w-[320px] h-[450px] m-auto">
-        <div className="modal-box">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-              ✕
+    <div>
+      <Image
+        className="cursor-pointer"
+        onClick={() => document.getElementById("category_action").showModal()}
+        src="/icons/trash.svg"
+        width={20}
+        height={20}
+      />
+      <dialog id="category_action" className="modal">
+        <div className="modal-box w-[310px] justity-center  ">
+          <form method="dialog" className="justify-end flex">
+            <button type="submit">
+              <RxCross2 className="absolute right-[20px] top-[20px] w-6 h-6 " />
             </button>
           </form>
-          <div className="content">
-            <div className="image flex justify-center items-center">
-              <img src="/images/reject.svg" alt="" />
-            </div>
-            <div className=" align-middle flex justify-center items-center font-bold text-sm">
-              {" "}
-              <p className="text-center">
-                Are you sure,you want to <br /> remove this asset?
-              </p>
-            </div>
-            <div className="button flex justify-center items-center gap-4 mt-10 pb-4">
-              <input
-                className=" border w-28 h-9 rounded-full bg-redUi text-white font-bold text-sm cursor-pointer"
-                type="button"
-                value="Yes"
-              />
-              <form method="dialog">
-                <button className="btn btn-sm border w-28 h-9 rounded-full bg-greyUi text-white font-bold text-sm cursor-pointer">
-                  No
-                </button>
-              </form>
-            </div>
+          <div className="justify-center flex">
+            <img
+              src="images/delete.svg"
+              alt="delete"
+              className="w-[58%] mb-3"
+            />
+          </div>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            Are you sure,you want to
+          </p>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            remove this asset?
+          </p>
+          <div className="modal-action ">
+            <form
+              method="dialog"
+              className=" flex justify-around w-full mb-4 mt-3 px-3"
+            >
+              <button
+                className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700"
+                value="yes"
+              >
+                <p className="text-white font-semibold">yes</p>
+              </button>
+              <button
+                className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500"
+                value="cancel"
+              >
+                <p className="text-white font-semibold">No</p>
+              </button>
+            </form>
           </div>
         </div>
       </dialog>
-      <p className="hidden">sdfds</p>
     </div>
   );
 };

@@ -2,7 +2,8 @@
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
-import { TbEdit } from "react-icons/tb";
+// import { TbEdit } from "react-icons/tb";
+// import { colors } from "react-select/dist/declarations/src/theme";
 export const EditAssetComponents = () => {
   const {
     register,
@@ -16,7 +17,7 @@ export const EditAssetComponents = () => {
   return (
     <div>
       <Image
-        src={"/icons/edit.svg"}
+        src={"/icons/edit-blue.svg"}
         width={20}
         height={20}
         onClick={() => document.getElementById("my_modal_edit").showModal()}
@@ -56,7 +57,7 @@ export const EditAssetComponents = () => {
                   </div>
                 )}
               </div>
-              <div className="content2 grid grid-cols-2 gap-12 mt-5">
+              <div className="content2 grid grid-cols-2 gap-6 mt-5">
                 <div className="text1 flex flex-col">
                   <label className="" htmlFor="">
                     Quantity
@@ -110,9 +111,15 @@ export const EditAssetComponents = () => {
                 </div>
                 <button
                   type="submit"
-                  className="save border rounded-2xl bg-greenUi flex justify-center text-center items-center px-4 gap-3 "
+                  className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
                 >
-                  <TbEdit size={20} color="white" className="" />
+                    <Image
+                      src={"/icons/edit.svg"}
+                      width={20}
+                      height={20}
+                      // color:white
+                    />
+                  {/* <TbEdit size={20} color="white" className="" /> */}
                   <span className=" cancle h-12 text-white font-semibold text-sm flex justify-center items-center">
                     Update
                   </span>

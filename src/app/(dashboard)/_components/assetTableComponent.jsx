@@ -8,17 +8,13 @@ export const AssetTable = () => {
       <table className="w-full border-separate border-spacing-y-3 px-6 mt-0">
         <thead className="h-14 drop-shadow-soft text-primary-text rounded-radiusUi bg-tableBg uppercase">
           <tr className="w-full overflow-auto text-xs lg:text-base">
-            <th className="py-3 font-medium px-2 rounded-l-radiusUi">
-              NO
-            </th>
+            <th className="py-3 font-medium px-2 rounded-l-radiusUi">NO</th>
             <th className="py-3 font-medium">ASSET NAME</th>
             <th className="font-medium">QTY</th>
             <th className="font-medium">UNIT</th>
             <th className="font-medium">CREATED BY</th>
             <th className="font-medium">STATUS</th>
-            <th className="font-medium rounded-r-radiusUi px-3  ">
-              ACTION
-            </th>
+            <th className="font-medium rounded-r-radiusUi px-3  ">ACTION</th>
           </tr>
         </thead>
         <tbody className="border rounded-radiusUi w-full drop-shadow-soft bg-white">
@@ -54,8 +50,12 @@ export const AssetTable = () => {
               </td>
               <td className="rounded-r-radiusUi ">
                 <div className="flex justify-center items-center gap-3">
-                  <div className="cursor-pointer"><DeleteAssetComponent /></div>
-                  <div className="cursor-pointer"> <EditAssetComponents /></div>
+                  <div className="cursor-pointer">
+                    <DeleteAssetComponent />
+                  </div>
+                  <div className="cursor-pointer">
+                    <EditAssetComponents />
+                  </div>
                 </div>
               </td>
             </tr>
