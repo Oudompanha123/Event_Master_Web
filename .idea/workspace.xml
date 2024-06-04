@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5bb10668-d538-439b-a9c9-fc8168843371" name="Changes" comment="add new code">
-      <change afterPath="$PROJECT_DIR$/public/images/verify-otp-bg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/style.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(auth)/_components/SignupComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/_components/SignupComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyOTPComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyOTPComponent.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyRegisterComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyRegisterComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/verify-register/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/verify-register/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/style.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/style.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +98,7 @@
   "keyToString": {
     "Node.js.LoginComponent.jsx.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "#38 on pok-hengly",
+    "git-widget-placeholder": "pok-hengly",
     "last_opened_file_path": "D:/HRD-school/fiinal-pp/public/images",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -134,10 +129,10 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\HRD-school\fiinal-pp\src\app\(reset-password)" />
+      <recent name="D:\HRD-school\fiinal-pp\src\app\(reset-password)\verify-register" />
       <recent name="D:\HRD-school\fiinal-pp\src\app\(reset-password)\_components" />
       <recent name="D:\HRD-school\fiinal-pp\src\app\(auth)\_components" />
       <recent name="D:\HRD-school\fiinal-pp\public" />
-      <recent name="D:\HRD-school\fiinal-pp\public\images" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">
@@ -204,6 +199,8 @@
       <workItem from="1717342388731" duration="4654000" />
       <workItem from="1717385103857" duration="5777000" />
       <workItem from="1717407718957" duration="5252000" />
+      <workItem from="1717421669869" duration="267000" />
+      <workItem from="1717463302761" duration="11222000" />
     </task>
     <task id="LOCAL-00001" summary="add new code">
       <option name="closed" value="true" />
@@ -245,7 +242,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717341554683</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add new code">
+      <option name="closed" value="true" />
+      <created>1717421763704</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1717421763704</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
