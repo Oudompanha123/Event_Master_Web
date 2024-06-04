@@ -2,7 +2,7 @@ import React from "react";
 import data from "../../../data/asset.json";
 import { EditAssetComponents } from "./EditAssetComponents";
 import { DeleteAssetComponent } from "./DeleteAssetComponent";
-export const AssetTable = () => {
+export const AssetTableComponent = () => {
   return (
     <div className="">
       <table className="w-full border-separate border-spacing-y-3 px-6 mt-0">
