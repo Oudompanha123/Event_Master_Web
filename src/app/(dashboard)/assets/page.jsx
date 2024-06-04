@@ -6,7 +6,7 @@ export default function assetPage() {
   return (
     <>
       <div className="contain bg-white w-fit lg:w-full rounded-3xl box-border">
-        <div className="head flex flex-col gap-2 lg:flex-row lg:justify-between lg:items-center p-6 ">
+        <div className="head flex flex-col gap-2 lg:flex-row lg:justify-between p-6 ">
           <div className="md:text-lg xl:text-xl font-semibold text-primary-text">
             Asset Management
           </div>
