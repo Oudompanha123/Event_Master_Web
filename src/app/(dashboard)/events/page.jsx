@@ -1,4 +1,5 @@
 import CardEventComponent from "../_components/CardEventComponent";
+import { IoSearchOutline } from "react-icons/io5";
 
 export default function Event() {
   return (
@@ -10,7 +11,7 @@ export default function Event() {
               for="category"
               className="text-sm font-semibold text-primary-text block mb-2"
             >
-              Status
+              Event Category
             </label>
             <select
               id="status"
@@ -82,31 +83,15 @@ export default function Event() {
         </form>
       </div>
 
-      <div className="relative z-3 mb-5">
-        <div className="flex grid-cols-2 ">
-          <input
-            className=" input input-bordered border-[1px] pl-10 text-primary-text hover:border-gray-400  rounded-full w-full h-11 "
-            id="username"
-            type="text"
-            placeholder="Search..."
-          />
-          <div className="absolute left-0 inset-y-0 flex items-center ">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 ml-3 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
+      <div className="relative z-3 mb-8">
+         <div className=" w-full ">
+            <input
+              type="text"
+              placeholder="Search by name"
+              className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-12 border rounded-3xl pl-10"
+            />
+            <IoSearchOutline className="w-[24px] h-[24px] -mt-9 ml-3" />
           </div>
-        </div>
       </div>
 
       <CardEventComponent />
