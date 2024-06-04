@@ -17,9 +17,9 @@ export default function Home() {
     <div className="container">
       {/* hero section */}
       <section className="bg-pattern bg-cover md:bg-contain relative lg:-top-20">
-        <div className="text-center space-y-12 mt-16 lg:mt-0 lg:relative lg:top-24">
+        <div className="text-center space-y-8 mt-16 lg:mt-0 lg:relative lg:top-24">
           <div className="space-y-8">
-            <h1 className="!leading-tight font-bold text-5xl md:text-6xl lg:text-7xl w-full lg:w-3/4 2xl:w-1/2 mx-auto">Bringing everyone all together</h1>
+            <h1 className="!leading-snug font-bold text-5xl md:text-6xl lg:text-[64px] w-full lg:w-3/4 2xl:w-1/2 mx-auto">Bringing everyone <br className="hidden lg:block"></br>all together</h1>
             <p className="text-sm md:text-base w-full md:w-3/4 lg:w-1/3 xl:w-1/3 mx-auto font-medium">Unite, Celebrate, Create: Bringing Everyone Together
               for Unforgettable Events, Perfectly Realized with Seamless
               Planning and Exquisite Execution.
@@ -65,7 +65,7 @@ export default function Home() {
           <EventList title={x.conference}  />
         ))} */}
         <EventList title={"Conference"} data={eventData.conference} />
-        <EventList title={"Race & Sport"} data={eventData.sport} />
+        <EventList title={"Marathons and Races"} data={eventData.sport} />
         <EventList title={"Festival"} data={eventData.festival} />
       </section>
       {/* cta section */}
