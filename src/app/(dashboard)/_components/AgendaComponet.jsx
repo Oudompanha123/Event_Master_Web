@@ -97,9 +97,7 @@ export default function AgendaComponent() {
               }`}
             ></div>
             <div className="h-auto w-full space-y-2">
-              <p className="text-base font-medium text-primary-text">{`${convertTo12HourFormat(
-                data.startTime
-              )} - ${convertTo12HourFormat(data.endTime)}`}</p>
+              <p className="text-base font-medium text-primary-text">{`${convertTo12HourFormat(data.startTime)} - ${convertTo12HourFormat(data.endTime)}`}</p>
               <p className="text-xl font-semibold text-primary-text">
                 {data.topic}
               </p>
