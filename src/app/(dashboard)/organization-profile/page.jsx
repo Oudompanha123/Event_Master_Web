@@ -15,6 +15,7 @@ const Page = () => {
   const [profileImage, setProfileImage] = useState(
     "/images/event-master-logo.png"
   );
+  const [organizationCode] = useState("123456");
 
   const ref = useRef();
 
@@ -60,14 +61,14 @@ const Page = () => {
   };
 
   // copy text
-  const [text, setText] = useState('');
+  
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(text)
+    navigator.clipboard.writeText(organizationCode)
       .then(() => setCopied(true))
       .catch(error => console.error('Error copying text: ', error));
-    
+
     setTimeout(() => {
       setCopied(false);
     }, 1000);
@@ -119,11 +120,11 @@ const Page = () => {
             </div>
             <div className="relative flex justify-between items-center">
               <div className="w-full bg-gray-100 flex ps-3 rounded-lg items-center text-gray-500 border-gray-300 bg-none mt-3 lg:h-12">
-                12345
+                {organizationCode}
               </div>
               <button
                 onClick={handleCopy}
-                className="absolute inset-y-0 pl-3 flex items-center pointer-events-none cursor-pointer"
+                className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800 cursor-pointer`}
               >
                 <svg
                   width="18"
