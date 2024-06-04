@@ -111,15 +111,14 @@ export const EditAssetComponents = () => {
                 </div>
                 <button
                   type="submit"
-                  className="save border rounded-2xl bg-greenUi flex justify-center text-center items-center px-4 gap-3 "
+                  className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
                 >
-                  <span className="text-white">
                     <Image
-                      src={"/icons/edit-blue.svg"}
+                      src={"/icons/edit.svg"}
                       width={20}
                       height={20}
+                      // color:white
                     />
-                  </span>
                   {/* <TbEdit size={20} color="white" className="" /> */}
                   <span className=" cancle h-12 text-white font-semibold text-sm flex justify-center items-center">
                     Update
