@@ -66,9 +66,26 @@ const attendees = [
 const AttendeePage = () => {
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
-      <div className="flex flex-col lg:flex-row w-full justify-between mt-2 px-[3px]">
+      {/* <div className="flex flex-col lg:flex-row w-full justify-between mt-2 px-[3px]">
         <div className="lg:w-[650px] md:w-full w-full">
           <a className="font-semibold md:text-lg xl:text-xl mt-3 text-primary-text block py-3 lg:py-0">
+            Show All Attendees in Sport Event
+          </a>
+        </div>
+        <div className="w-full flex justify-end lg:mt-0 mt-3">
+          <div className="relative w-full lg:w-[450px]">
+            <input
+              type="text"
+              placeholder="Search by name or phone number"
+              className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
+            />
+            <IoSearchOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
+          </div>
+        </div>
+      </div> */}
+      <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
+        <div className="lg:w-[650px] md:w-full w-full">
+          <a className="font-semibold md:text-lg xl:text-xl text-primary-text block py-3 lg:py-0">
             Show All Attendees in Sport Event
           </a>
         </div>
