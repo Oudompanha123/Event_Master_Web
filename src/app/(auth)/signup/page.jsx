@@ -8,15 +8,17 @@ const SignUpPage = () => {
         <div className="w-full relative h-screen">
             <Image className="absolute object-cover -mt-[70px] bg-cover"
                    src="/icons/signup.svg" alt="image" width={1920} height={100} property=""/>
-            <Link href={`/login`} className="absolute top-5 left-8 flex text-white text-2xl gap-1 ">
-                <MdKeyboardArrowLeft size={35} className="bg-red-40 flex "/>
+
+            <Link href={`/login`} className="absolute top-5 left-8 flex text-white text-xl gap-1">
+                <MdKeyboardArrowLeft size={30} className="bg-red-40 flex"/>
                 Back
             </Link>
+
             <Image className="absolute left-[200px] top-[62%] transform translate-y-[-50%]"
                    src="/icons/signup-amico.svg" alt="img" width={472} height={300}/>
             <div className="absolute top-32 left-36 text-white text-2xl">
-                <h1 className="text-[62px] font-medium">Register New Account</h1>
-                <p className="pt-10 text-md">Create a new account to access our application.</p>
+                <h1 className="text-[58px] font-medium">Register New Account</h1>
+                <p className="pt-10 text-xl line-clamp-2">Create a new account to access our application.</p>
             </div>
 
             {/*Sign Up Component*/}

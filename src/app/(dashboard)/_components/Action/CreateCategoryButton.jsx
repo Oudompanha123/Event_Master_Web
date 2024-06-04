@@ -7,9 +7,9 @@ const CreateCategoryButton = () => {
         <>
             <button
                 onClick={() => document.getElementById('my_modal_category').showModal()}
-                className="border-1px border-purple-text text-purple-text rounded-full p-2 md:px-4 md:py-2.5 flex items-center space-x-3"
+                className="hover:bg-purple-text hover:text-white duration-300 transition-all border-1px border-purple-text text-purple-text rounded-full p-2 md:px-4 md:py-2.5 flex items-center space-x-3"
             >
-                <AddSquare size="20" color="#8C59FE" variant="Bold" />
+                <AddSquare size="20" variant="Bold" />
                 <p className="text-xs lg:text-base hidden md:block">New Category</p>
             </button>
             <dialog id="my_modal_category" className="modal">

@@ -1,5 +1,4 @@
 'use client';
-
 import {useState} from "react";
 import {useForm} from "react-hook-form";
 import Image from "next/image";
@@ -234,7 +233,7 @@ const SignupComponent = () => {
                         )}
                     </div>
 
-                    <div className="flex justify-center p-6 pb-16">
+                    <div className="flex justify-center p-6 pb-6 pt-12">
                         <Link href={`/verify-register`}>
                             <button
                                 type="submit"

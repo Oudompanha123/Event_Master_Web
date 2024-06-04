@@ -98,7 +98,7 @@ export const CreateEventButton = () => {
                                     </label>
                                     <input
                                         {...register("name", {
-                                            required: "name is require",
+                                            required: "name is required",
                                         })}
                                         type="text"
                                         name="name"
@@ -106,7 +106,7 @@ export const CreateEventButton = () => {
                                         className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter event name"
                                     />
-                                    {errors.name && <div className="text-red-600 text-sm">{errors.name.message}</div>}
+                                    {errors.name && <div className="text-red-600 text-sm mt-2">{errors.name.message}</div>}
                                 </div>
                                 <div className="w-full">
                                     <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
@@ -114,7 +114,7 @@ export const CreateEventButton = () => {
                                     </label>
                                     <select
                                         name="category" id="category"
-                                        className={`${errors.category && "border-red-700 focus:border-red-600"} classic shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        className={`${errors.category && "border-red-700 focus:border-red-600"} mb-2 classic shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         {...register("category", {
                                             required: "category is required", validate: (v) => {
                                                 if (v === "0") {
@@ -138,7 +138,7 @@ export const CreateEventButton = () => {
                                     </label>
                                     <input
                                         {...register("startDate", {
-                                            required: "start date is require",
+                                            required: "start date is required",
                                         })}
                                         type="datetime-local"
                                         name="startDate"
@@ -147,7 +147,7 @@ export const CreateEventButton = () => {
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         required=""
                                     />
-                                    {errors.startDate && <div className="text-red-600 text-sm">{errors.startDate.message}</div>}
+                                    {errors.startDate && <div className="text-red-600 text-sm mt-2">{errors.startDate.message}</div>}
                                 </div>
                                 <div className="w-full">
                                     <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
@@ -155,7 +155,7 @@ export const CreateEventButton = () => {
                                     </label>
                                     <input
                                         {...register("endDate", {
-                                            required: "end date is require",
+                                            required: "end date is required",
                                             validate: (v) => {
                                                 if (v < start) {
                                                     return "end date isn't valid to create event";
@@ -169,7 +169,7 @@ export const CreateEventButton = () => {
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         required=""
                                     />
-                                    {errors.endDate && <div className="text-red-600 text-sm">{errors.endDate.message}</div>}
+                                    {errors.endDate && <div className="text-red-600 text-sm mt-2">{errors.endDate.message}</div>}
                                 </div>
                             </div>
                             <div className="flex flex-col md:flex-row gap-8">
@@ -179,7 +179,7 @@ export const CreateEventButton = () => {
                                     </label>
                                     <input
                                         {...register("duration", {
-                                            required: "duration is require",
+                                            required: "duration is required",
                                         })}
                                         type="number"
                                         name="duration"
@@ -188,7 +188,7 @@ export const CreateEventButton = () => {
                                         placeholder="Enter duration"
                                         required=""
                                     />
-                                    {errors.duration && <div className="text-red-600 text-sm">{errors.duration.message}</div>}
+                                    {errors.duration && <div className="text-red-600 text-sm mt-2">{errors.duration.message}</div>}
                                 </div>
                                 <div className="w-full">
                                     <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
@@ -196,7 +196,7 @@ export const CreateEventButton = () => {
                                     </label>
                                     <input
                                         {...register("maxAttendee", {
-                                            required: "maximum attendees is require",
+                                            required: "maximum attendees is required",
                                         })}
                                         type="number"
                                         name="maxAttendee"
@@ -205,7 +205,7 @@ export const CreateEventButton = () => {
                                         placeholder="Enter maximum attendee"
                                         required=""
                                     />
-                                    {errors.maxAttendee && <div className="text-red-600 text-sm">{errors.maxAttendee.message}</div>}
+                                    {errors.maxAttendee && <div className="text-red-600 text-sm mt-2">{errors.maxAttendee.message}</div>}
                                 </div>
                             </div>
                             <div className="flex gap-8">
@@ -215,7 +215,7 @@ export const CreateEventButton = () => {
                                     </label>
                                     <input
                                         {...register("address", {
-                                            required: "address is require",
+                                            required: "address is required",
                                         })}
                                         type="test"
                                         name="address"
@@ -224,7 +224,7 @@ export const CreateEventButton = () => {
                                         placeholder="Enter address"
                                         required=""
                                     />
-                                    {errors.address && <div className="text-red-600 text-sm">{errors.address.message}</div>}
+                                    {errors.address && <div className="text-red-600 text-sm mt-2">{errors.address.message}</div>}
                                 </div>
                             </div>
                             <div className="flex gap-8">
@@ -234,7 +234,7 @@ export const CreateEventButton = () => {
                                     </label>
                                     <textarea
                                         {...register("description", {
-                                            required: "description is require",
+                                            required: "description is required",
                                         })}
                                         rows={5}
                                         type="text"
@@ -244,7 +244,7 @@ export const CreateEventButton = () => {
                                         placeholder="Enter description..."
                                         required=""
                                     />
-                                    {errors.description && <div className="text-red-600 text-sm">{errors.description.message}</div>}
+                                    {errors.description && <div className="text-red-600 text-sm mt-2">{errors.description.message}</div>}
                                 </div>
                             </div>
                             <div className="flex items-center gap-5">

@@ -8,7 +8,7 @@ import { MaterialActionButton } from "./MaterialActionButtton";
 import { HiOutlineSwatch } from "react-icons/hi2";
 import { TiFlashOutline } from "react-icons/ti";
 import { IoSearchOutline } from "react-icons/io5";
-
+import { AddSquare } from "iconsax-react";
 
 const options = [
   {
@@ -118,7 +118,7 @@ export default function MaterialComponent() {
       <div className="text-primary-text font-semibold text-2xl py-10">
         Material Management
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 ">
+      <div className="grid grid-cols-1 py-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 ">
         <div className="w-auto bg-white rounded-3xl drop-shadow flex px-3.5 py-1 transition duration-300 ease-in-out hover:scale-[103%]">
           <div className="flex items-center">
             <div className="bg-[#624F9D] p-2.5 rounded-full">
@@ -142,7 +142,7 @@ export default function MaterialComponent() {
           </div>
         </div>
 
-        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
+        <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
           <div className="flex items-center">
             <div className="bg-[#FBBC04] p-2.5 rounded-full ">
               <HiOutlineSwatch size="30" color="#ffffff" />
@@ -158,7 +158,7 @@ export default function MaterialComponent() {
           </div>
         </div>
 
-        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
+        <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
           <div className="flex items-center">
             <div className="bg-[#551FFF] p-2.5 rounded-full">
               <TiFlashOutline size="32" color="#ffffff" />
@@ -174,7 +174,7 @@ export default function MaterialComponent() {
           </div>
         </div>
 
-        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
+        <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
           <div className="flex items-center">
             <div className=" bg-[#038446] p-2.5 rounded-full">
               <Image
@@ -197,7 +197,7 @@ export default function MaterialComponent() {
           </div>
         </div>
 
-        <div className="w-auto py-1 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
+        <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
           <div className="flex items-center">
             <div className=" bg-[#D72222] p-2.5 rounded-full">
               <Image
@@ -221,35 +221,28 @@ export default function MaterialComponent() {
         </div>
       </div>
       {/* <div className="relative"> */}
-      <div className="flex justify-between mt-8 h-14 w-full">
+      <div className="flex justify-between mt-8 h-14 w-full gap-1">
         <div className=" w-full lg:w-[730px]">
-            <input
-              type="text"
-              placeholder="Search by name"
-              className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-12 border rounded-3xl pl-10"
-            />
-            <IoSearchOutline className="w-[24px] h-[24px] -mt-9 ml-3" />
-          </div>
-      
-        <div
-          className="flex items-center border active:bg-violet-200 focus:outline-none focus:ring focus:ring-violet-500 border-purple-text w-[165px] gap-3 rounded-full justify-center h-12 px-1"
-          onClick={addNewRow}
-        >
-          <Image
-            className=""
-            src="/icons/create-new.svg"
-            alt="Create New Icon"
-            width={25}
-            height={25}
-            priority
+          <input
+            type="text"
+            placeholder="Search by name"
+            className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-12 border rounded-3xl pl-10"
           />
-          <p className="text-purple-text w-[100px]">New Material</p>
+          <IoSearchOutline className="w-[24px] h-[24px] -mt-9 ml-3" />
         </div>
+
+        <button
+          onClick={addNewRow}
+          className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-11 justify-center text-purple-text rounded-3xl  md:py-2.5 flex items-center gap-1"
+        >
+          <AddSquare size="24" variant="Bold" className="" />
+          <p className="text-base w-[100px]">New Material</p>
+        </button>
+
       </div>
-    
 
       {/* Material table */}
-      <div className="relative px-1 overflow-auto">
+      <div className=" px-1 overflow-auto ">
         <table className="overflow-x-auto w-full text-sm text-left rtl:text-right text-gray-500 border-separate dark:text-gray-400 border-spacing-y-3 table mt-3">
           <thead className="uppercase dark:text-gray-400 text-sm font-normal h-10 drop-shadow text-primary-text bg-[#F0F1F3]">
             <tr className="text-[14px] font-semibold rounded-2xl">
@@ -265,34 +258,35 @@ export default function MaterialComponent() {
                   </label>
                 </div>
               </th>
-              <th scope="col" className="px-3 py-5 text-primary-text">
+              <th scope="col" className="px-1 py-5 text-primary-text">
                 NO
               </th>
-              <th scope="col" className="px-3 py-3 text-primary-text">
+              <th scope="col" className=" py-3 text-primary-text">
                 ITEM NAME
               </th>
-              <th scope="col" className="px-3 py-3 text-primary-text">
+              <th scope="col" className=" py-3 text-primary-text">
                 QTY
               </th>
-              <th scope="col" className="px-3 py-3 text-primary-text">
+              <th scope="col" className=" py-3 text-primary-text">
                 UNIT
               </th>
-              <th scope="col" className="px-3 py-3 text-primary-text">
-                DUE DATE
-              </th>
-              <th scope="col" className="px-3 py-3 text-primary-text">
+              <th className=" py-3 text-primary-text">DUE DATE</th>
+              <th scope="col" className=" py-3 text-primary-text">
                 HANDLER
               </th>
-              <th scope="col" className="px-3 py-3 text-primary-text">
+              <th scope="col" className=" py-3 text-primary-text">
                 SUPPORTERS
               </th>
-              <th scope="col" className="px-2 py-3 text-primary-text">
+              <th scope="col" className="px-4 py-3 text-primary-text">
                 STATUS
               </th>
               <th scope="col" className="px-0 py-3 text-primary-text">
                 NOTE
               </th>
-              <th scope="col" className="py-3 px-0 text-primary-text rounded-r-2xl">
+              <th
+                scope="col"
+                className="py-3 px-0 text-primary-text rounded-r-2xl"
+              >
                 ACTION
               </th>
             </tr>
@@ -304,11 +298,11 @@ export default function MaterialComponent() {
                 className="bg-white border-b  font-medium text-base  hover:bg-gray-50 h-8 border border-black"
               >
                 <td className="w-4 p-4 rounded-l-2xl">
-                  <div className="flex items-center">
+                  <div className="flex items-center ">
                     <input
                       id={`checkbox-table-${index + 1}`}
                       type="checkbox"
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label
                       htmlFor={`checkbox-table-${index + 1}`}
@@ -325,7 +319,7 @@ export default function MaterialComponent() {
                   <input
                     type="text"
                     name="itemName"
-                    className="border text-primary-text text-base px-1 w-32 h-10 rounded-xl font-normal focus:outline-none"
+                    className="border text-primary-text text-base px-2 w-32 h-10 rounded-xl font-normal focus:outline-none"
                     value={row.itemName}
                     onChange={(e) => {
                       const newRows = [...rows];
@@ -334,7 +328,7 @@ export default function MaterialComponent() {
                     }}
                   />
                 </td>
-                <td className="text-sm font-normal text-primary-text px-1">
+                <td className="text-sm font-normal text-primary-text ">
                   <input
                     type="text"
                     name="qty"
@@ -347,7 +341,7 @@ export default function MaterialComponent() {
                     }}
                   />
                 </td>
-                <td className="text-sm font-normal text-primary-text px-1">
+                <td className="text-sm font-normal text-primary-text ">
                   <input
                     type="text"
                     name="unit"
@@ -360,11 +354,12 @@ export default function MaterialComponent() {
                     }}
                   />
                 </td>
-                <td className="px-1">
+                <td className="">
                   <input
                     type="date"
                     name="dueDate"
-                    className="border text-primary-text sm:text-sm rounded-xl block w-26 p-2 focus:outline-none"
+                    className="border text-gray-900 sm:text-sm rounded-xl block w-22 p-2 focus:outline-none placeholder:text-opacity-50"
+                    placeholder="dd/mm/yyyy"
                     value={row.dueDate}
                     onChange={(e) => {
                       const newRows = [...rows];
@@ -373,7 +368,7 @@ export default function MaterialComponent() {
                     }}
                   />
                 </td>
-                <td className="px-1">
+                <td className="">
                   <select
                     id="handler"
                     name="handler"
@@ -457,7 +452,7 @@ export default function MaterialComponent() {
                     }}
                   />
                 </td>
-                <td className="pl-10 rounded-r-2xl">
+                <td className="pl-10 rounded-r-2xl ">
                   <MaterialActionButton />
                 </td>
               </tr>
