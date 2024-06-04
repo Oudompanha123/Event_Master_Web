@@ -1,6 +1,7 @@
 import { AssetPopupComponent } from "../_components/CreateNewAssetComponent";
 import { AssetTable } from "../_components/AssetTableComponent";
 import { IoSearchOutline } from "react-icons/io5";
+import { Pagination } from "../_components/Pagination";
 export default function assetPage() {
   return (
     <>
@@ -26,9 +27,9 @@ export default function assetPage() {
         <div className="tables box-border mt-0">
           <AssetTable />
         </div>
-        {/* <div className="pagination">
-          <page/>
-        </div> */}
+        <div className="pagination flex justify-end px-8 mt-1">
+          <Pagination/>
+        </div>
       </div>
     </>
   );
