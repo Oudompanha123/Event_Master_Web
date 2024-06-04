@@ -5,10 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5bb10668-d538-439b-a9c9-fc8168843371" name="Changes" comment="add new code">
+      <change afterPath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyOrganizationProfileComponent.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/(reset-password)/verify-organization/page.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyOTPComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyOTPComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyRegisterComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/_components/VerifyRegisterComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/style.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/style.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(auth)/_components/LoginComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/_components/LoginComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(auth)/_components/SignupComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/_components/SignupComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(auth)/login/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/login/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(auth)/signup/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/signup/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/forgot-password/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/forgot-password/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/set-new-password/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/set-new-password/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/verify-otp/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/verify-otp/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(reset-password)/verify/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(reset-password)/verify/page.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +26,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
-        <option value="JSX File" />
         <option value="CSS File" />
+        <option value="JSX File" />
       </list>
     </option>
   </component>
@@ -94,24 +101,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Node.js.LoginComponent.jsx.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "pok-hengly",
-    "last_opened_file_path": "D:/HRD-school/fiinal-pp/public/images",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "npm.dev.executor": "Run",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Color Scheme Font",
-    "ts.external.directory.path": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.LoginComponent.jsx.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;pok-hengly&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/HRD-school/fiinal-pp/public/images&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Color Scheme Font&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Administrator\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -200,7 +207,8 @@
       <workItem from="1717385103857" duration="5777000" />
       <workItem from="1717407718957" duration="5252000" />
       <workItem from="1717421669869" duration="267000" />
-      <workItem from="1717463302761" duration="11222000" />
+      <workItem from="1717463302761" duration="11421000" />
+      <workItem from="1717482736465" duration="11932000" />
     </task>
     <task id="LOCAL-00001" summary="add new code">
       <option name="closed" value="true" />
@@ -250,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717421763704</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="add new code">
+      <option name="closed" value="true" />
+      <created>1717477475517</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1717477475517</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

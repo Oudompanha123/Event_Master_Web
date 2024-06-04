@@ -7,7 +7,7 @@ const VerifyPage = () => {
     return (
         <div className="bg-primary-purple w-[100%] h-screen relative">
             <div className="absolute w-[49%] h-[83%] mt-20 left-[25%]">
-                <Image className="absolute object-cover"
+                <Image className="object-cover drop-shadow-lg"
                        src="/images/bg-forgotpw.svg" alt="image" width={934} height={746} property=""/>
 
                 <Link href={`/set-new-password`} className="absolute top-10 left-10  hover:bg-purple-text-head hover:rounded-full">

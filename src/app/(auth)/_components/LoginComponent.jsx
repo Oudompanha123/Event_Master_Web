@@ -33,15 +33,15 @@ const LoginComponent = callback => {
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-white py-8 w-[110%] px-4 shadow sm:rounded-[40px] sm:px-12">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="mb-20 -mt-5">
-                            <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold greyUi flex justify-center">
+                        <div className="mb-12 -mt-3">
+                            <h2 className="mt-6 text-center text-4xl font-bold greyUi flex justify-center">
                                 Login
                             </h2>
                             <p className="mt-5 flex justify-center greyUi">Welcome back! Please enter your
                                 information</p>
                         </div>
 
-                        <div className="col-span-6 sm:col-span-3 -mt-6">
+                        <div className="col-span-6 sm:col-span-3">
                             <label htmlFor="userEmail" className="text-sm font-medium primary-text block mb-2">
                                 Email <span className="text-red-600 text-sm">*</span>
                             </label>
@@ -101,15 +101,15 @@ const LoginComponent = callback => {
                             </div>
                         </div>
 
-                        <div className="flex justify-center p-6 mt-5">
+                        <div className="flex justify-center p-6 mt-3">
                             <button type="submit" id="login"
                                     className="bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400">
                                 Login
                             </button>
                         </div>
 
-                        <p className="flex justify-center primary-text mb-5 mt-2">Don't have an account?
-                            <Link href={`/signup`} className="text-purple-text font-bold"> Sign Up</Link>
+                        <p className="flex justify-center primary-text mb-3">Don't have an account?<b>&nbsp;</b>
+                            <Link href={`/signup`} className="text-purple-text font-bold">Sign Up</Link>
                         </p>
                     </form>
 
