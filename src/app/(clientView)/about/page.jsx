@@ -11,7 +11,7 @@ const Page = () => {
         <div className="container">
             <section className="bg-pattern bg-cover text-center mt-24">
                 <h1 className="text-4xl lg:text-6xl font-semibold">About Event Master</h1>
-                <p className="text-sm lg:text-xl font-light mt-10 w-full lg:w-1/2 mx-auto">Created by KPS students with expert mentors,
+                <p className="text-sm text-slate-500 lg:text-xl font-light mt-10 w-full lg:w-1/2 mx-auto">Created by KPS students with expert mentors,
                     our Event Management System simplifies managing
                     events like weddings, sports, and conferences. Users
                     can join events without an account, while admins
@@ -26,7 +26,7 @@ const Page = () => {
             </section>
             <section className="relative lg:-top-40">
                 <h2 className="text-4xl lg:text-6xl font-semibold text-center">Our Features</h2>
-                <div className="lg:px-16 grid grid-col-1 lg:grid-cols-2 gap-8 mt-6 relative">
+                <div className="lg:px-16 grid grid-col-1 lg:grid-cols-2 gap-8 mt-8 relative">
                     {featureData.payload.map((x, index) => (
                         <AboutCardComponent key={index} title={x.title} detail={x.detail} logo={x.logo} />
                     ))}
