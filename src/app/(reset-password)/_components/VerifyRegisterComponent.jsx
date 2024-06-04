@@ -3,11 +3,7 @@
 import Link from "next/link";
 import {useState} from "react";
 import OtpInput from 'react18-input-otp';
-<<<<<<< HEAD
 import styles from '../../style.module.css';
-=======
-import styles from '../style.module.css';
->>>>>>> origin/pok-hengly
 
 
 const VerifyRegisterComponent = () => {
