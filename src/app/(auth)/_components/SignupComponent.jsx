@@ -391,7 +391,7 @@ const SignupComponent = () => {
                             href={`/verify-register`}
                             className="text-white font-semibold "
                           >
-                            Comform
+                            Comfirm
                           </Link>
                         </button>
                       </div>

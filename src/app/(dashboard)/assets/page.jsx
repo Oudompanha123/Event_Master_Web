@@ -1,7 +1,7 @@
 import { AssetPopupComponent } from "../_components/CreateNewAssetComponent";
 import { IoSearchOutline } from "react-icons/io5";
 import { Pagination } from "../_components/Pagination";
-import { AssetTableComponent } from "../_components/AssetTableComponent";
+import { AssetTableComponent } from "../_components/assetTableComponent";
 export default function assetPage() {
   return (
     <>
