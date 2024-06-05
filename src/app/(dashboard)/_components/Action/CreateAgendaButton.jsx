@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import Image from "next/image";
 
 function AddmoreInput({ inputList, setInputList }) {
   const handleAddClick = () => {
@@ -28,10 +29,10 @@ function AddmoreInput({ inputList, setInputList }) {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-sm-12">
+        <div className="col-sm-12 ">
           {inputList.map((x, i) => (
-            <div key={i} className="row">
-              <div className="mb-5 px-4 pt-4 pb-3  bottom-1 bg-white rounded-3xl border-1px border-greyUi">
+            <div key={i} className="row ">
+              <div className="mb-5 mt-4 px-4 pt-4 pb-3  bottom-1 bg-white rounded-3xl border-1px  ">
                 <div className="form-group justify-end flex h-5">
                   {inputList.length !== 1 && (
                     <button
@@ -179,16 +180,23 @@ export function CreateAgendaButton() {
   return (
     <>
       <button
-        className="btn rounded-3xl  border-blueUi border bg-white w-46 hover:border-blueUi hover:bg-white"
+        className="btn rounded-3xl  border-purple-text border h-1 bg-white w-46 hover:border-purple-text hover:bg-white"
         onClick={() => document.getElementById("my_modal_4").showModal()}
       >
-        <MdAddBox size={24} color="blue" />
-        <p className="text-blueUi">Create Agenda</p>
+         <Image
+                className=""
+                src="/icons/create-new.svg"
+                alt="Create New Icon"
+                width={25}
+                height={25}
+                priority
+              />
+        <p className="text-purple-text text-base font-regular">Create Agenda</p>
       </button>
       <dialog id="my_modal_4" className="modal ">
         <div className="modal-box w-11/12 max-w-5xl  bg-[#F7F9FB]">
           <AddmoreInput inputList={inputList} setInputList={setInputList} />
-          <div className="modal-action gap-2">
+          <div className="modal-action gap-2 mb-4">
             <button
               className="h-10  rounded-xl flex items-center justify-center gap-3  border-blueUi border bg-blue-700  w-32 hover:border-blueUi hover:bg-blue-800"
               onClick={handleSubmit}

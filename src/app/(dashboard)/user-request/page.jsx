@@ -1,10 +1,11 @@
 import userData from "../../../data/member.json"
+import { Pagination } from "../_components/Pagination"
 import { RegisterActionComponent } from "../_components/RegisterActionComponent"
 
 const Page = () => {
     return (
         <>
-            <div className="space-y-8 rounded-3xl p-6 border-2 border-slate-100 bg-white">
+            <div className="space-y-8 rounded-3xl p-6 bg-white">
                 <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Show All User Request</h2>
                 <div className="overflow-scroll px-1">
                     <table className="table w-full border-separate border-spacing-y-3">
@@ -34,6 +35,9 @@ const Page = () => {
                             )}
                         </tbody>
                     </table>
+                    <div className="w-full flex justify-end mt-8">
+                        <Pagination />
+                    </div>
                 </div>
             </div>
         </>

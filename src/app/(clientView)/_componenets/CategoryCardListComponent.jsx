@@ -3,6 +3,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { CategoryCardComponent } from './CategoryCardComponent';
+import data from "../../../data/popular.json"
 
 export const CategoryCardListComponent = () => {
     return (
@@ -24,18 +25,11 @@ export const CategoryCardListComponent = () => {
                     }
                 }}
             >
-                <SwiperSlide>
-                    <CategoryCardComponent />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <CategoryCardComponent />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <CategoryCardComponent />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <CategoryCardComponent />
-                </SwiperSlide>
+                {data.payload.map((x, index) => (
+                    <SwiperSlide key={index} >
+                        <CategoryCardComponent title={x.title} content={x.content} img={x.image} />
+                    </SwiperSlide>
+                ))}
             </Swiper>
         </div>
     )

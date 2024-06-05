@@ -31,7 +31,7 @@ export default function AgendaComponent() {
 
   if (agenda.length === 0) {
     return (
-      <div className="p-5">
+      <div className="py-5 pl-1">
         <div className="flex justify-between align-middle content-center mb-4 ">
           <div className="flex items-center justify-center">
             <p className="text-primary-text font-semibold text-2xl">
@@ -85,18 +85,18 @@ export default function AgendaComponent() {
         </div>
       </div>
       {agenda.map((data, index) => (
-        <div key={index} className="space-y-4">
+        <div key={index} className="space-y-4 transition duration-200 ease-in-out hover:scale-[100.4%]">
           <div
             className={`border h-auto py-4 px-4 rounded-3xl flex gap-5 ${
               index % 2 === 1 ? "bg-blue-0" : "bg-gray-100"
             }`}
           >
             <div
-              className={`bg-red-100 h-auto border-l-[2.4px] ${
+              className={`bg-red-100 h-auto border-l-[2.6px] ${
                 index % 2 === 1 ? "border-blue-600" : "border-green-600"
               }`}
             ></div>
-            <div className="h-auto w-full space-y-2">
+            <div className="h-auto w-full space-y-2 ">
               <p className="text-base font-medium text-primary-text">{`${convertTo12HourFormat(
                 data.startTime
               )} - ${convertTo12HourFormat(data.endTime)}`}</p>
