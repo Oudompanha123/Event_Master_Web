@@ -113,7 +113,6 @@ export default function MaterialComponent() {
     );
   };
 
-
   const handleRemove = (item) => {
     setSelected(selected.filter((i) => i.value !== item.value));
   };
@@ -263,14 +262,14 @@ export default function MaterialComponent() {
               onClick={deleteSelectedRows}
               className="flex bg-red-600 hover:duration-300 transition-all text-white border w-28 h-11 rounded-2xl font-medium text-xs lg:text-base justify-center items-center gap-1"
             >
-             <Image
-                    className=""
-                    src="icons/delete.svg"
-                    alt="Location"
-                    width={25}
-                    height={25}
-                    priority
-                  />
+              <Image
+                className=""
+                src="icons/delete.svg"
+                alt="Location"
+                width={25}
+                height={25}
+                priority
+              />
               Delete
             </button>
           )}
@@ -289,20 +288,20 @@ export default function MaterialComponent() {
         <table className="overflow-x-auto w-full text-sm text-left rtl:text-right text-gray-500 border-separate dark:text-gray-400 border-spacing-y-3 table ">
           <thead className="uppercase dark:text-gray-400 text-sm font-normal h-10 drop-shadow text-primary-text bg-[#F0F1F3]">
             <tr className="text-[14px] font-semibold rounded-2xl">
-            <th className="w-4 p-4 rounded-l-2xl">
-  <div className="flex items-center">
-    <input
-      type="checkbox"
-      checked={selectAllChecked}
-      onChange={handleSelectAllChange}
-      id="select-all-checkbox"
-      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-    />
-    <label htmlFor="select-all-checkbox" className="sr-only">
-      Select all
-    </label>
-  </div>
-</th>
+              <th className="w-4 p-4 rounded-l-2xl">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={selectAllChecked}
+                    onChange={handleSelectAllChange}
+                    id="select-all-checkbox"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label htmlFor="select-all-checkbox" className="sr-only">
+                    Select all
+                  </label>
+                </div>
+              </th>
               <th scope="col" className=" py-5 text-primary-text px-0">
                 NO
               </th>
@@ -430,21 +429,17 @@ export default function MaterialComponent() {
                     }
                   />
                 </td>
-                <td className="px-2">
+                <td className="">
                   <select
                     id="handler"
                     name="handler"
                     className="border text-black text-base sm:text-sm rounded-xl block w-28 p-2.5 focus:outline-none"
                     value={row.handler}
-                    onChange={(e) =>
-                      setRows((prevRows) =>
-                        prevRows.map((r) =>
-                          r.id === row.id
-                            ? { ...r, dueDate: e.target.value }
-                            : r
-                        )
-                      )
-                    }
+                    onChange={(e) => {
+                      const newRows = [...rows];
+                      newRows[index].handler = e.target.value;
+                      setRows(newRows);
+                    }}
                   >
                     <option value="" selected disabled hidden></option>
                     <option value="menglim">Menglim</option>
