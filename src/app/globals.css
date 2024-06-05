@@ -7,6 +7,12 @@
   margin: 0;
 }
 
+@media (max-width: 640px) {
+  .hideOnPhone {
+    display: none;
+  }
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -25,6 +31,7 @@
   margin-bottom: 32px; /* Adjust this value to change the gap */
   display: block;
 }
+
 
 body {
   scroll-behavior: smooth;
