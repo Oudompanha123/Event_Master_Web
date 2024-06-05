@@ -16,8 +16,8 @@ const memberData = [
     gender: "Female",
     email: "many@gmail.com",
     address: "Phnom Penh",
-    role: "admin",
-    image: "/images/Avatar.png",
+    role: "ROLE_ADMIN",
+    image: "/images/member profiles.svg",
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ const memberData = [
     gender: "Female",
     email: "nita@gmail.com",
     address: "Prey Veng",
-    role: "user",
+    role: "ROLE_USER",
     image: "/images/member profile9.svg",
   },
   {
@@ -34,7 +34,7 @@ const memberData = [
     gender: "Female",
     email: "dalin@gmail.com",
     address: "Prey Veng",
-    role: "sub admin",
+    role: "ROLE_SUB_ADMIN",
     image: "/images/member profile2.svg",
   },
   {
@@ -43,7 +43,7 @@ const memberData = [
     gender: "Male",
     email: "daro@gmail.com",
     address: "Kampot",
-    role: "user",
+    role: "ROLE_USER",
     image: "/images/member profile7.svg",
   },
   {
@@ -52,7 +52,7 @@ const memberData = [
     gender: "Male",
     email: "bora@gmail.com",
     address: "Siem Reap",
-    role: "user",
+    role: "ROLE_USER",
     image: "/images/member profile11.svg",
   },
   {
@@ -61,7 +61,7 @@ const memberData = [
     gender: "Female",
     email: "nary@gmail.com",
     address: "Phnom Penh",
-    role: "sub admin",
+    role: "ROLE_SUB_ADMIN",
     image: "/images/member profile5.svg",
   },
   {
@@ -70,21 +70,30 @@ const memberData = [
     gender: "Female",
     email: "hengly@gmail.com",
     address: "Banteay Meanchey",
-    role: "user",
+    role: "ROLE_USER",
     image: "/images/member profile8.svg",
   },
 ];
 
 const getRoleColor = (role) => {
   switch (role) {
-    case "admin":
+    case "ROLE_ADMIN":
       return "#7A44FF";
-    case "user":
+    case "ROLE_USER":
       return "#457EFF";
-    case "sub admin":
+    case "ROLE_SUB_ADMIN":
       return "#088A4C";
-    default:
-      return "#000";
+  }
+};
+
+const getRoleDisplayName = (role) => {
+  switch (role) {
+    case "ROLE_ADMIN":
+      return "Admin";
+    case "ROLE_USER":
+      return "User";
+    case "ROLE_SUB_ADMIN":
+      return "Sub Admin";
   }
 };
 
@@ -119,15 +128,15 @@ const MemberPage = () => {
               placeholder="Search by name"
               className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
             />
-            <IoSearchOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
+            <IoSearchOutline className="w-[24px] h-[24px] -mt-8 ml-3" />
           </div>
         </div>
       </div>
-      <div className="relative overflow-x-auto px-[3px]">
-        <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
+      <div className="relative overflow-x-auto">
+        <table className="table w-full px-[1px] border-separate border-spacing-y-3 mt-5 ">
           <thead className="h-14 drop-shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
             <tr className="text-xs lg:text-base">
-              <th className="px-5 py-2 font-medium rounded-l-radiusUi">ID</th>
+              <th className="px-5 py-2 font-medium rounded-l-radiusUi">NO</th>
               <th className="px-5 py-2 font-medium">NAME</th>
               <th className="px-5 py-2 font-medium">GENDER</th>
               <th className="px-5 py-2 font-medium">EMAIL</th>
@@ -172,13 +181,13 @@ const MemberPage = () => {
                       tabIndex={0}
                       role="button"
                       onClick={() => toggleDropdown(member.id)}
-                      className="btn btn-sm border rounded-radiusUi w-[120px] h-8"
+                      className="btn btn-sm border rounded-radiusUi w-[122px] h-8"
                       style={{
                         color: getRoleColor(member.role),
                         borderColor: getRoleColor(member.role),
                       }}
                     >
-                      {member.role}
+                      {getRoleDisplayName(member.role)}
                       <FaAngleDown />
                     </div>
                     {activeDropdown === member.id && (
@@ -189,11 +198,11 @@ const MemberPage = () => {
                         <li>
                           <a
                             href="#"
-                            onClick={() => handleRoleChange(member.id, "admin")}
+                            onClick={() => handleRoleChange(member.id, "ROLE_ADMIN")}
                             className=" hover:text-[#7A44FF]"
                           >
                             <Image
-                              src="/icons/admin.svg"
+                              src="/icons/Admin.svg"
                               alt="Admin"
                               width={20}
                               height={20}
@@ -205,11 +214,11 @@ const MemberPage = () => {
                         <li>
                           <a
                             href="#"
-                            onClick={() => handleRoleChange(member.id, "user")}
+                            onClick={() => handleRoleChange(member.id, "ROLE_USER")}
                             className=" hover:text-[#457EFF]"
                           >
                             <Image
-                              src="/icons/user.svg"
+                              src="/icons/User.svg"
                               alt="User"
                               width={20}
                               height={20}
@@ -222,12 +231,12 @@ const MemberPage = () => {
                           <a
                             href="#"
                             onClick={() =>
-                              handleRoleChange(member.id, "sub admin")
+                              handleRoleChange(member.id, "ROLE_SUB_ADMIN")
                             }
                             className="hover:text-[#088A4C]"
                           >
                             <Image
-                              src="/icons/sub admin.svg"
+                              src="/icons/Sub Admin.svg"
                               alt="Sub Admin"
                               width={20}
                               height={20}
@@ -241,7 +250,7 @@ const MemberPage = () => {
                   </div>
                 </td>
                 <td className="px-5 py-2 xl:text-sm rounded-r-radiusUi border border-l-0 border-member-border">
-                  {member.role !== "admin" && <DeleteMemberComponent />}
+                  {member.role !== "ROLE_ADMIN" && <DeleteMemberComponent />}
                 </td>
               </tr>
             ))}

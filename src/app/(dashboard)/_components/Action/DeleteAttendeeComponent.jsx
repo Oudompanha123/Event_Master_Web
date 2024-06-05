@@ -1,5 +1,6 @@
 "use client";
 import { RxCross2 } from "react-icons/rx";
+import Image from "next/image";
 export function DeleteAttendeeComponent() {
   return (
     <>
@@ -8,7 +9,14 @@ export function DeleteAttendeeComponent() {
         value="delete"
         onClick={() => document.getElementById("delete").showModal()}
       >
-        <img src="icons/deleteicon.svg" alt="" className="  w-8 h-8 ml-3 mt-1" />
+        <Image
+          src="icons/deleteicon.svg"
+          alt=""
+          className="  w-8 h-8 ml-3 mt-1"
+          property=" "
+          width={0}
+          height={0}
+        />
       </button>
       <dialog id="delete" className="modal">
         <div className="modal-box w-[270px] justity-center  ">
@@ -19,10 +27,13 @@ export function DeleteAttendeeComponent() {
             </button>
           </form>
           <div className="justify-center flex">
-            <img
+            <Image
               src="images/delete.svg"
               alt="delete"
               className="w-[58%] mb-3 "
+              property=" "
+              width={0}
+              height={0}
             />
           </div>
           <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
