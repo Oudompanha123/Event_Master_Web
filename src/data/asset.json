@@ -5,56 +5,56 @@
             "qty":"22",
             "unit":"box",
             "createby":"koko",
-            "status":"instock"
+            "status":"In stock"
         },
           {
             "name":"water",
             "qty":"22",
             "unit":"bottom",
             "createby":"koko",
-            "status":"instock"
+            "status":"In stock"
         },
              {
             "name":"coca cola",
             "qty":"22",
             "unit":"box",
             "createby":"koko",
-            "status":"instock"
+            "status":"In stock"
         },
              {
             "name":"sting",
             "qty":"10",
             "unit":"box",
             "createby":"koko",
-            "status":"out of stock"
+            "status":"Out of Stock"
              } ,
                {
             "name":"Angkor",
             "qty":"22",
             "unit":"box",
             "createby":"koko",
-            "status":"instock"
+            "status":"In stock"
         },
           {
             "name":"water",
             "qty":"22",
             "unit":"bottom",
             "createby":"koko",
-            "status":"instock"
+            "status":"In stock"
         },
              {
             "name":"coca cola",
             "qty":"22",
             "unit":"box",
             "createby":"koko",
-            "status":"instock"
+            "status":"In Stock"
         },
              {
             "name":"sting",
             "qty":"10",
             "unit":"box",
             "createby":"koko",
-            "status":"out of stock"
+            "status":"Out of Stock"
              } 
     ]
 
