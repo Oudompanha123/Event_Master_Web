@@ -79,7 +79,7 @@ const AttendeePage = () => {
               placeholder="Search by name or phone number"
               className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
             />
-            <IoSearchOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
+            <IoSearchOutline className="w-[24px] h-[24px] -mt-8 ml-3" />
           </div>
         </div>
       </div>
@@ -87,7 +87,7 @@ const AttendeePage = () => {
         <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
           <thead className="h-14 drop-shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
             <tr className="text-xs lg:text-base">
-              <th className=" px-5 py-2 font-medium rounded-l-radiusUi">ID</th>
+              <th className=" px-5 py-2 font-medium rounded-l-radiusUi">NO</th>
               <th className=" px-5 py-2 font-medium">NAME</th>
               <th className=" px-5 py-2 font-medium">GENDER</th>
               <th className=" px-5 py-2 font-medium">EMAIL</th>
@@ -133,5 +133,4 @@ const AttendeePage = () => {
     </div>
   );
 };
-
 export default AttendeePage;
