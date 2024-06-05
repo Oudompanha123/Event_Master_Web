@@ -70,7 +70,7 @@ const Page = () => {
                                     const formattedDate = formatDate(inputDate);
                                     const formated = formattedDate;
                                     return (
-                                        <tr className={`h-14 drop-shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}>
+                                        <tr className={`h-14 drop-shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}>
                                             <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{index + 1}</td>
                                             <td className="px-5 py-2 text-xs xl:text-base">{x.name}</td>
                                             <td className="px-5 py-2 text-xs xl:text-base">{formated}</td>

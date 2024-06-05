@@ -1,11 +1,9 @@
 'use client'
 
 import Image from "next/image"
-import logo from "../../public/images/event-master-logo.png"
-import { AddSquare } from "iconsax-react"
+import logo from "../../public/images/gundam.jpg"
 import { usePathname } from "next/navigation"
 import { NotificationMenu } from "./NotificationMenu"
-import CreateCategoryButton from "@/app/(dashboard)/_components/Action/CreateCategoryButton"
 import { CreateEventButton } from "@/app/(dashboard)/_components/Action/CreateEventButton"
 import { NotificationCard } from "@/app/(dashboard)/_components/NotificationCard"
 
@@ -39,13 +37,10 @@ export const NavbarComponent = ({ className }) => {
                 </div>
                 <NotificationCard />
                 <CreateEventButton />
-                {/* <div className="flex lg:hidden items-center bg-[#F7F9FB] gap-2 py-3 px-3 lg:px-6 rounded-full">
-                    <AddSquare size="20" color="#344054" variant="Bold" />
-                </div> */}
                 <div className="flex items-center gap-4">
                     <div className="hidden lg:block">
-                        <p className="font-medium text-sm">Thomas Brown</p>
-                        <p className="text-xs">ThomasNikola@gmail.com</p>
+                        <p className="font-semibold text-end text-sm">Thomas Brown</p>
+                        <p className="text-xs text-greyUi">ThomasNikola@gmail.com</p>
                     </div>
                     <div className="w-[48px] h-48px] hidden lg:block">
                         <Image src={logo} height={48} width={48} />

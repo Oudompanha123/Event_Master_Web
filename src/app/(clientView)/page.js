@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div className="container">
       {/* hero section */}
-      <section className="bg-pattern bg-cover md:bg-contain relative lg:-top-20">
+      <section className="bg-pattern bg-cover md:bg-contain relative lg:top-0 xl:-top-20">
         <div className="text-center space-y-8 mt-16 lg:mt-0 lg:relative lg:top-24">
           <div className="space-y-8">
             <h1 className="!leading-snug font-bold text-5xl md:text-6xl lg:text-[64px] w-full lg:w-3/4 2xl:w-1/2 mx-auto">Bringing everyone <br className="hidden lg:block"></br>all together</h1>
@@ -47,7 +47,7 @@ export default function Home() {
       {/* category section */}
       <section className="space-y-12 py-32">
         <div className="text-center space-y-8">
-          <h2 className="text-4xl lg:text-5xl font-semibold w-full sm:w-2/3 lg:w-1/2 mx-auto">Find event base on category you love.</h2>
+          <h2 className="text-4xl lg:text-5xl font-semibold w-full sm:w-2/3 lg:w-1/2 mx-auto">Popular events you may like also.</h2>
           <p className="text-sm md:text-base font-medium">explore new thing by gathering with people.</p>
         </div>
         <CategoryCardListComponent />

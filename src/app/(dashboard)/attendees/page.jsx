@@ -77,7 +77,7 @@ const AttendeePage = () => {
             <input
               type="text"
               placeholder="Search by name or phone number"
-              className="font-medium text-xs lg:text-sm focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
+              className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
             />
             <IoSearchOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
           </div>
@@ -86,7 +86,7 @@ const AttendeePage = () => {
       <div className="relative overflow-x-auto px-[3px]">
         <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
           <thead className="h-14 drop-shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
-            <tr className="text-xs lg:text-sm">
+            <tr className="text-xs lg:text-base">
               <th className=" px-5 py-2 font-medium rounded-l-radiusUi">ID</th>
               <th className=" px-5 py-2 font-medium">NAME</th>
               <th className=" px-5 py-2 font-medium">GENDER</th>
@@ -102,27 +102,27 @@ const AttendeePage = () => {
             {attendees.map((attendee, index) => (
               <tr
                 key={attendee.id}
-                className={`h-14 drop-shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}
+                className={`h-14 drop-shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
               >
-                <td className=" px-5 py-2 text-xs lg:text-sm rounded-l-radiusUi">
+                <td className=" px-5 py-2 text-xs lg:text-base rounded-l-radiusUi">
                   {attendee.id}
                 </td>
-                <td className=" px-5 py-2 text-xs lg:text-sm">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.name}
                 </td>
-                <td className=" px-5 py-2 text-xs lg:text-sm">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.gender}
                 </td>
-                <td className=" px-5 py-2 text-xs lg:text-sm">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.email}
                 </td>
-                <td className=" px-5 py-2 text-xs lg:text-sm">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.address}
                 </td>
-                <td className=" px-5 py-2 text-xs lg:text-sm">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.phone}
                 </td>
-                <td className=" px-5 py-2 text-xs lg:text-sm rounded-r-radiusUi">
+                <td className=" px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
                   <DeleteAttendeeComponent />
                 </td>
               </tr>
