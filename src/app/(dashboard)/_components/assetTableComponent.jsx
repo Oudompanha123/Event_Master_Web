@@ -3,6 +3,7 @@ import data from "../../../data/asset.json";
 import { EditAssetComponents } from "./EditAssetComponents";
 import { DeleteAssetComponent } from "./DeleteAssetComponent";
 import { Pagination } from "./Pagination";
+
 export const AssetTableComponent = () => {
   return (
     <div className="">
