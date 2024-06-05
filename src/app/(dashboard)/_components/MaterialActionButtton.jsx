@@ -1,10 +1,46 @@
 "use client";
+import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import { useForm } from "react-hook-form";
+import { ToogleBtn } from "../_components/Action/ToogleBtn";
 
 export function MaterialActionButton() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null); // Reference for dropdown
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeDropdown = () => {
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeDropdown();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
   return (
     <div>
-      <div className="dropdown dropdown-top dropdown-end ">
-        <div tabIndex={0} role="button" className="">
+      <div className=" inline-block" ref={dropdownRef}>
+        <button
+          type="button"
+          className="right-5 w-8 h-8 items-center flex flex-row justify-center"
+          onClick={toggleDropdown}
+        >
           <svg
             width="24"
             height="24"
@@ -31,34 +67,47 @@ export function MaterialActionButton() {
               fill="#7A7A9D"
             />
           </svg>
-        </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content z-[1] bg-white menu  rounded-box w-52"
-        >
-          <li>
-            <a className="gap-4 flex">
-              <img src="icons/delete-red.svg" alt="" />{" "}
-              <p className="text-primary-text  text-base font-semibold ">
-                Delete
-              </p>
-            </a>
-          </li>
-          <li>
-            <a
-              className="gap-4 flex"
-              onClick={() => document.getElementById("detail").showModal()}
+        </button>
+
+        {isOpen && (
+          <div className="origin-top-right absolute right-0 w-44 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <ul
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="options-menu"
             >
-              {" "}
-              <img src="icons/detail.svg" alt="" className="h-5 w-5" />{" "}
-              <p className="text-primary-text  text-base font-semibold ">
-                View Detail
-              </p>{" "}
-            </a>
-          </li>
-        </ul>
+              <li>
+                <a
+                  className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg"
+                  role="menuitem"
+                  tabIndex="-1"
+                  onClick={() => document.getElementById("detail").showModal()}
+                >
+                  <Image src="icons/detail.svg" alt="" height={22} width={22} />
+                  <p className="text-primary-text text-base font-semibold ">
+                    View detail
+                  </p>
+                </a>
+              </li>
+              <hr />
+              <li>
+                <a className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg ">
+                  <Image
+                    src="icons/delete-red.svg"
+                    alt=""
+                    height={24}
+                    width={24}
+                  />{" "}
+                  <p className="text-primary-text text-base font-semibold ">
+                    Delete
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
-      
+
       <dialog id="detail" className="modal">
         <div className="modal-box w-11/12 max-w-xl  ">
           <form method="dialog">
@@ -174,7 +223,6 @@ export function MaterialActionButton() {
           </div>
         </div>
       </dialog>
-    </div>    
-    
+    </div>
   );
 }

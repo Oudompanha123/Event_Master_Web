@@ -19,7 +19,7 @@ export default function Event() {
               className=" border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none "
               required
             >
-              <option selected>Choose event category</option>
+              <option selected>Choose category</option>
               <option value="Social Event">Social Event</option>
               <option value="conference">Conference</option>
               <option value="Marathons">Marathons</option>

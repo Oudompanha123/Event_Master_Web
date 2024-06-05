@@ -66,23 +66,6 @@ const attendees = [
 const AttendeePage = () => {
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
-      {/* <div className="flex flex-col lg:flex-row w-full justify-between mt-2 px-[3px]">
-        <div className="lg:w-[650px] md:w-full w-full">
-          <a className="font-semibold md:text-lg xl:text-xl mt-3 text-primary-text block py-3 lg:py-0">
-            Show All Attendees in Sport Event
-          </a>
-        </div>
-        <div className="w-full flex justify-end lg:mt-0 mt-3">
-          <div className="relative w-full lg:w-[450px]">
-            <input
-              type="text"
-              placeholder="Search by name or phone number"
-              className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
-            />
-            <IoSearchOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
-          </div>
-        </div>
-      </div> */}
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
         <div className="lg:w-[650px] md:w-full w-full">
           <a className="font-semibold md:text-lg xl:text-xl text-primary-text block py-3 lg:py-0">
@@ -96,7 +79,7 @@ const AttendeePage = () => {
               placeholder="Search by name or phone number"
               className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
             />
-            <IoSearchOutline className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
+            <IoSearchOutline className="w-[24px] h-[24px] -mt-8 ml-3" />
           </div>
         </div>
       </div>
@@ -104,7 +87,7 @@ const AttendeePage = () => {
         <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
           <thead className="h-14 drop-shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
             <tr className="text-xs lg:text-base">
-              <th className=" px-5 py-2 font-medium rounded-l-radiusUi">ID</th>
+              <th className=" px-5 py-2 font-medium rounded-l-radiusUi">NO</th>
               <th className=" px-5 py-2 font-medium">NAME</th>
               <th className=" px-5 py-2 font-medium">GENDER</th>
               <th className=" px-5 py-2 font-medium">EMAIL</th>
@@ -119,27 +102,27 @@ const AttendeePage = () => {
             {attendees.map((attendee, index) => (
               <tr
                 key={attendee.id}
-                className={`h-14 drop-shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}
+                className={`h-14 drop-shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
               >
-                <td className=" px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">
+                <td className=" px-5 py-2 text-xs lg:text-base rounded-l-radiusUi">
                   {attendee.id}
                 </td>
-                <td className=" px-5 py-2 text-xs xl:text-base">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.name}
                 </td>
-                <td className=" px-5 py-2 text-xs xl:text-base">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.gender}
                 </td>
-                <td className=" px-5 py-2 text-xs xl:text-base">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.email}
                 </td>
-                <td className=" px-5 py-2 text-xs xl:text-base">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.address}
                 </td>
-                <td className=" px-5 py-2 text-xs xl:text-base">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.phone}
                 </td>
-                <td className=" px-5 py-2 text-xs xl:text-base rounded-r-radiusUi">
+                <td className=" px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
                   <DeleteAttendeeComponent />
                 </td>
               </tr>
@@ -150,5 +133,4 @@ const AttendeePage = () => {
     </div>
   );
 };
-
 export default AttendeePage;

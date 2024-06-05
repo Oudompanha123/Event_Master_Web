@@ -1,0 +1,12 @@
+@media (max-width: 640px) {
+    .hideOnPhone {
+        display: none;
+
+    }
+@media (min-width: 640px) {
+    .profile {
+        margin-top: 100px;
+    }
+}
+
+}

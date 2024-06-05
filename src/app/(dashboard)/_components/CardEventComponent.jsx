@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
 import Image from "next/image";
 import mockEventService from "../mockEventService";
 import { EventActionButton } from "./EventActionButton";
@@ -62,7 +61,7 @@ export default function CardEventComponent() {
                   </div>
 
                   <span
-                    className={`inline-block rounded-full px-4 py-1 text-sm font-semibold ${
+                    className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${
                       data.isOpen
                         ? "bg-blue-100 text-blue-700"
                         : "bg-red-100 text-red-700"
