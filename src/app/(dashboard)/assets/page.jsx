@@ -5,7 +5,7 @@ import { Pagination } from "../_components/Pagination";
 export default function assetPage() {
   return (
     <>
-      <div className="contain bg-white w-fit lg:w-full rounded-3xl box-border">
+      <div className="contain bg-white w-fit lg:w-full rounded-3xl box-border pb-2y">
         <div className="head flex flex-col gap-2 lg:flex-row lg:justify-between lg:items-center p-6 ">
           <div className="md:text-lg xl:text-xl font-semibold text-primary-text">
             Asset Management
@@ -27,7 +27,7 @@ export default function assetPage() {
         <div className="tables box-border mt-0">
           <AssetTable />
         </div>
-        <div className="pagination flex justify-end px-8 mt-1">
+        <div className="pagination flex justify-end px-8 mt-1 py-3">
           <Pagination/>
         </div>
       </div>

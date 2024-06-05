@@ -48,7 +48,8 @@ export const AssetTable = () => {
                   {asset.status}
                 </div>
               </td>
-              <td className="rounded-r-radiusUi ">
+              <td cla  
+              sName="rounded-r-radiusUi ">
                 <div className="flex justify-center items-center gap-3">
                   <div className="cursor-pointer">
                     <DeleteAssetComponent />
