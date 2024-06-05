@@ -30,17 +30,17 @@ export default function Home() {
           </button>
         </div>
         <div className="hidden lg:grid grid-cols-5 gap-6">
-          <Image width="auto" height="auto" src={festivalImage} className="rounded-3xl relative -top-32 h-[450px] object-cover" alt="festivalImage" />
+          <Image height={450} width="auto" src={festivalImage} placeholder='blur' className="rounded-3xl relative -top-32 h-[450px] object-cover" alt="festivalImage" />
           <div className="flex items-end">
-            <Image width="auto" height="auto" src={conferenceImage} className="rounded-3xl h-[350px] object-cover" alt="conferenceImage" />
+            <Image height={450} width="auto" src={conferenceImage} placeholder='blur' className="rounded-3xl h-[350px] object-cover" alt="conferenceImage" />
           </div>
           <div className="flex items-end">
-            <Image width="auto" height="auto" src={chillImage} className="rounded-3xl h-1/2 object-cover" alt="chillImage" />
+            <Image height={255} width="auto" src={chillImage} placeholder='blur' className="rounded-3xl h-1/2 object-cover" alt="chillImage" />
           </div>
           <div className="flex items-end">
-            <Image width="auto" height="auto" src={skiImage} className="rounded-3xl h-[350px] object-cover" alt="skiImage" />
+            <Image height={450} width="auto" src={skiImage} placeholder='blur' className="rounded-3xl h-[350px] object-cover" alt="skiImage" />
           </div>
-          <Image width="auto" height="auto" src={racingImage} className="rounded-3xl relative -top-32 h-[450px] object-cover" alt="racingImage" />
+          <Image height={450} width="auto" src={racingImage} placeholder='blur' className="rounded-3xl relative -top-32 h-[450px] object-cover" alt="racingImage" />
         </div>
         <div className="hidden lg:block bg-gradient-to-t from-white to-transparent h-[200px] w-full absolute -bottom-0 left-0"></div>
       </section>

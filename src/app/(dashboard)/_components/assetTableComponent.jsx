@@ -22,31 +22,31 @@ export const AssetTableComponent = () => {
         <tbody className="border rounded-radiusUi w-full drop-shadow-soft bg-white">
           {data.data.map((asset, index) => (
             <tr className="text-center mx-5 h-14 rounded-radiusUi">
-              <td className="py-3 rounded-l-radiusUi items-center text-xs xl:text-base">
+              <td className="py-3 rounded-l-radiusUi items-center text-xs lg:text-base">
                 {index + 1}
               </td>
               <td className="w-[250px]">
-                <div className="text-xs xl:text-base border rounded-radiusUi mx-5 py-1 w-auto">
+                <div className="text-xs lg:text-base border rounded-radiusUi mx-5 py-1 w-auto">
                   {asset.name}
                 </div>
               </td>
               <td className="w-13">
-                <div className="text-xs xl:text-base border rounded-radiusUi mx-5 py-1">
+                <div className="text-xs lg:text-base border rounded-radiusUi mx-5 py-1">
                   {asset.qty}
                 </div>
               </td>
               <td className="">
-                <div className="text-xs xl:text-base border rounded-radiusUi mx-3 py-1">
+                <div className="text-xs lg:text-base border rounded-radiusUi mx-3 py-1">
                   {asset.unit}
                 </div>
               </td>
               <td className=" w-[150px]">
-                <div className="text-xs xl:text-base border rounded-radiusUi mx-3 py-1">
+                <div className="text-xs lg:text-base border rounded-radiusUi mx-3 py-1">
                   {asset.createby}
                 </div>
               </td>
               <td className="">
-                <div className="text-xs xl:text-base border rounded-radiusUi  py-1">
+                <div className="text-xs lg:text-base border rounded-radiusUi  py-1">
                   {asset.status}
                 </div>
               </td>
