@@ -1,6 +1,7 @@
 'use client'
 
 import { Edit } from "iconsax-react"
+import Image from "next/image"
 
 export const CategoryEditAction = () => {
     return (
@@ -22,10 +23,14 @@ export const CategoryEditAction = () => {
                         placeholder="Category" required=""
                     />
                     <div className="flex justify-end space-x-3">
-                        <button onClick={() => document.getElementById('update_category').close()} className="px-6 py-3 rounded-2xl border-1px border-borderUi">Cancel</button>
-                        <button className="px-6 py-3 rounded-2xl border-1px border-borderUi flex items-center space-x-2 bg-greenUi text-white">
-                            <Edit size="24" color="#ffffff" />
-                            <p>Update</p>
+                        <div onClick={() => document.getElementById("update_category").close()} className="flex items-center px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
+                        <button type="submit" className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3">
+                            <Image
+                                src={"/icons/edit.svg"}
+                                width={20}
+                                height={20}
+                            />
+                            <span className="h-12 text-white flex justify-center items-center"> Update</span>
                         </button>
                     </div>
                 </div>

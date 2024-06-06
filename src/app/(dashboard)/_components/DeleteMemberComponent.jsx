@@ -32,7 +32,7 @@ export function DeleteMemberComponent() {
             Are you sure,you want to
           </p>
           <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
-            remove this category?
+            remove this member?
           </p>
           <div className="modal-action ">
             <form method="dialog" className=" flex justify-around w-full mb-4 mt-3 px-3">

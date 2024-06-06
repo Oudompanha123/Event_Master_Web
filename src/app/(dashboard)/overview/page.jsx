@@ -7,6 +7,7 @@ import CreateCategoryButton from "../_components/Action/CreateCategoryButton"
 import { CategoryDeleteAction } from "../_components/Action/CategoryDeleteAction"
 import { CategoryEditAction } from "../_components/Action/CategoryEditAction"
 import { Pagination } from "../_components/Pagination"
+import { Getstart } from "../_components/Action/GetstartBtn"
 
 const Page = () => {
     return (
@@ -38,10 +39,8 @@ const Page = () => {
                         Impeccable Execution, and the Ability to Craft Timeless
                         Experiences That Will Resonate Long After the Occasion.
                     </p>
-                    <Link href={'#'}>
-                        <button className="bg-white rounded-full px-8 py-3 font-bold mt-4 lg:mt-8 text-sm absolute z-20">Get Start</button>
-                    </Link>
-                    <button className="bg-white rounded-full px-8 py-3 font-bold mt-4 lg:mt-8 text-sm opacity-0">Get Start</button>
+                    <Getstart className={`absolute z-20`} />
+                    <Getstart className={`opacity-0`} />
                     <div className="absolute -bottom-56 rotate-[13.5deg] right-0 h-80 w-80 bg-[#AD9CFF] rounded-radius64 z-0"></div>
                     <div className="absolute -bottom-72 rotate-[13.5deg] -right-12 h-80 w-80 bg-[#9782FF] rounded-radius64 z-0"></div>
                 </div>
@@ -54,7 +53,7 @@ const Page = () => {
                     </div>
                     <div className="w-full overflow-scroll">
                         <table className="table w-full px-1 border-separate border-spacing-y-3">
-                            <thead className="h-14 drop-shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
+                            <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
                                 <tr className="text-xs lg:text-base">
                                     <th className="px-5 py-2 font-medium rounded-l-radiusUi">No</th>
                                     <th className="px-5 py-2 font-medium">Name</th>
@@ -70,13 +69,13 @@ const Page = () => {
                                     const formattedDate = formatDate(inputDate);
                                     const formated = formattedDate;
                                     return (
-                                        <tr className={`h-14 drop-shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}>
+                                        <tr className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}>
                                             <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{index + 1}</td>
                                             <td className="px-5 py-2 text-xs xl:text-base">{x.name}</td>
                                             <td className="px-5 py-2 text-xs xl:text-base">{formated}</td>
                                             <td className="px-5 py-2 text-xs xl:text-base">{x.created_by}</td>
                                             <td className="px-5 py-2 text-xs xl:text-base rounded-r-radiusUi">
-                                                <div className="flex items-center  gap-2 lg:gap-4">
+                                                <div className="flex items-center gap-2 lg:gap-4">
                                                     <CategoryDeleteAction />
                                                     <CategoryEditAction />
                                                 </div>

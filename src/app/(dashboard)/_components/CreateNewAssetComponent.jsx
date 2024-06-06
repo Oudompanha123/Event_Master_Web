@@ -26,7 +26,7 @@ export const AssetPopupComponent = () => {
         <div className="modal-box w-11/12 md:w-1/2 max-w-5xl space-y-8">
           <div className="flex flex-row items-center text-primary-text">
             <h2 className="text-lg lg:text-xl font-semibold">
-              Create Category
+              Create Asset
             </h2>
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -44,7 +44,7 @@ export const AssetPopupComponent = () => {
                   type="text"
                   id=""
                   name="assetname"
-                  className=" sm:w-full shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                  className="sm:w-full mt-2 shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
                   placeholder="Enter asset name"
                   {...register("assetname", {
                     required: "asset name is required",
@@ -64,7 +64,7 @@ export const AssetPopupComponent = () => {
                     type="number"
                     id=""
                     name="quantity"
-                    className="shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                    className="shadow-sm mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
                     placeholder="Enter quantity"
                     {...register("quantity", {
                       required: "quantity is required",
@@ -83,7 +83,7 @@ export const AssetPopupComponent = () => {
                     type="text"
                     id=""
                     name="unit"
-                    className="shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                    className="shadow-sm mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
                     placeholder="Enter unit"
                     {...register("unit", {
                       required: "unit is required",
