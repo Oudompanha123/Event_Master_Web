@@ -9,7 +9,13 @@ import {useRouter} from "next/navigation";
 const VerifyOTPComponent = () => {
 
     const [otp, setOtp] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
+
     const handleChange = (enteredOtp) => {
+        if (!/^\d+$/.test(enteredOtp)) {
+            setErrorMessage("Invalid OTP. Please enter only numbers.");
+            return;
+        }
         setOtp(enteredOtp);
     };
 
@@ -30,6 +36,8 @@ const VerifyOTPComponent = () => {
                           onChange={handleChange}
                           numInputs={4}
                 />
+
+                {errorMessage && <p className="text-red-600">{errorMessage}</p>}
 
                 <button
                     onClick={() => router.push('/set-new-password')}

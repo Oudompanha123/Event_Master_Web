@@ -4,25 +4,28 @@ import Link from "next/link";
 import {useState} from "react";
 import {useForm} from "react-hook-form";
 import Image from "next/image";
+import {useRouter} from "next/navigation";
 
-const LoginComponent = callback => {
+const LoginComponent = () => {
 
     const initialData = {
         userEmail: "",
         userPassword: ""
     };
 
+    const {
+        register,
+        handleSubmit,
+        formState: {errors, isValid},
+    } = useForm({
+        defaultValues: initialData,
+        mode: "onChange"
+    });
+
     const [isLocked, setIsLocked] = useState(true);
     const handleLockClick = () => setIsLocked(prevState => !prevState);
 
-    const {
-        register, handleSubmit,
-        formState: {errors, isValid},
-        watch,
-        reset
-    } = useForm({
-        defaultValues: initialData
-    });
+    const router = useRouter();
 
     const onSubmit = data => {
         console.log(data);
@@ -95,7 +98,8 @@ const LoginComponent = callback => {
                                     />
                                 </div>
                             </div>
-                            {errors.userPassword && <span className="text-red-600 text-sm">{errors.userPassword.message}</span>}
+                            {errors.userPassword &&
+                                <span className="text-red-600 text-sm">{errors.userPassword.message}</span>}
                         </div>
 
                         <div className="mt-3 flex items-center justify-end">

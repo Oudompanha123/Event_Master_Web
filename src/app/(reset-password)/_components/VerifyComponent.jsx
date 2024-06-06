@@ -16,3 +16,4 @@ const VerifyComponent = () => {
     )
 }
 export default VerifyComponent
+
