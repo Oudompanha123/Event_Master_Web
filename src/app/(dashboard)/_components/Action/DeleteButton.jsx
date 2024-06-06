@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 
 export function DeleteButton() {
   return (
@@ -9,21 +11,23 @@ export function DeleteButton() {
         value="delete"
         onClick={() => document.getElementById("delete").showModal()}
       >
-        <img src="icons/delete.svg" alt="" />
+        <Image src="/icons/delete.svg" alt="" width={24} height={24}/>
         <p className="text-white">Delete</p>
       </button>
       <dialog id="delete" className="modal">
         <div className="modal-box w-[300px] justity-center rounded-3xl ">
           <form method="dialog" className="justify-end flex">
             <button>
-              <img src="icons/cancel.svg" alt="" className="w-7 h-7" />
+              <Image src="/icons/cancel.svg" alt="" className="w-7 h-7" width={7} height={7} />
             </button>
           </form>
           <div className="justify-center flex">
-            <img
-              src="./images/delete.jpg"
+            <Image
+              src="/images/delete.jpg"
               alt="delete"
-              className="w-[58%] mb-3 mt-3"
+            //  className="w-[58%] mb-3 mt-3"
+              width={150}
+              height={180}
             />
           </div>
           <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center ">

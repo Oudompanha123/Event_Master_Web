@@ -83,7 +83,7 @@ export function MaterialActionButton() {
                   tabIndex="-1"
                   onClick={() => document.getElementById("detail").showModal()}
                 >
-                  <Image src="icons/detail.svg" alt="" height={22} width={22} />
+                  <Image src="/icons/detail.svg" alt="" height={22} width={22} />
                   <p className="text-primary-text text-base font-semibold ">
                     View detail
                   </p>
@@ -93,7 +93,7 @@ export function MaterialActionButton() {
               <li>
                 <a className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg ">
                   <Image
-                    src="icons/delete-red.svg"
+                    src="/icons/delete-red.svg"
                     alt=""
                     height={24}
                     width={24}
@@ -112,7 +112,7 @@ export function MaterialActionButton() {
         <div className="modal-box w-11/12 max-w-xl  ">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 mt-2 mr-2">
-              <img src="icons/cancel.svg" alt="" className="w-7 h-7" />
+              <Image src="/icons/cancel.svg" alt="" className="w-7 h-7" width={7} height={7} />
             </button>
           </form>
           <div>
@@ -123,7 +123,7 @@ export function MaterialActionButton() {
             <div className="">
               <div className="flex mb-3 gap-8">
                 <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
-                  <img src="icons/material.svg" alt="" className="h-5 w-5" />
+                  <Image src="/icons/material.svg" alt="" className="h-5 w-5" width={5} height={5} />
                   Material Name
                 </div>
                 <div className="text-larg font-bold text-primary-text">
@@ -132,7 +132,7 @@ export function MaterialActionButton() {
               </div>
               <div className="flex mb-3  gap-8">
                 <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
-                  <img src="icons/quantity.svg" alt="" className="h-5 w-5" />
+                  <Image src="/icons/quantity.svg" alt="" className="h-5 w-5" width={5} height={5} />
                   Quantity
                 </div>
                 <div className="text-larg font-bold text-primary-text">
@@ -141,7 +141,7 @@ export function MaterialActionButton() {
               </div>
               <div className="flex mb-3  gap-8">
                 <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
-                  <img src="icons/assign-date.svg" alt="" className="h-5 w-5" />
+                  <Image src="/icons/assign-date.svg" alt="" className="h-5 w-5" width={5} height={5} />
                   Assign Date
                 </div>
                 <div className="text-larg font-bold text-primary-text">
@@ -150,7 +150,7 @@ export function MaterialActionButton() {
               </div>
               <div className="flex mb-[2px]  gap-8">
                 <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
-                  <img src="icons/due-date.svg" alt="" className="h-5 w-5" />
+                  <Image src="/icons/due-date.svg" alt="" className="h-5 w-5" width={5} height={5} />
                   Due Date
                 </div>
                 <div className="text-larg font-bold text-primary-text">
@@ -159,14 +159,16 @@ export function MaterialActionButton() {
               </div>
               <div className="flex mb-1   gap-8">
                 <div className="flex gap-4 text-sm font-semibold text-primary-text  items-end w-[30%]">
-                  <img src="icons/handler.svg" alt="" className="h-5 w-5" />
+                  <Image src="/icons/handler.svg" alt="" className="h-5 w-5" width={5} height={5} />
                   Handler
                 </div>
                 <div class="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
-                  <img
-                    src="images/sok.png"
+                  <Image
+                    src="/images/sok.png"
                     alt="Neil image"
                     className="w-8 h-8 rounded-full"
+                    width={50}
+                    height={50}
                   />
                   <div class="ms-1">
                     <p class="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36	">
@@ -177,16 +179,18 @@ export function MaterialActionButton() {
               </div>
               <div className="flex mb-5 gap-8">
                 <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%] items-end">
-                  <img src="icons/supporter.svg" alt="" className="w-5 h-5" />
+                  <img src="/icons/supporter.svg" alt="" className="w-5 h-5" />
                   Supporter
                 </div>
 
                 <div className="gap-2 flex">
                   <div class="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
-                    <img
-                      src="images/sok.png"
+                    <Image
+                      src="/images/sok.png"
                       alt="Neil image"
                       className="w-8 h-8 rounded-full"
+                      width={50}
+                      height={50}
                     />
                     <div class="ms-1">
                       <p class="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36	">
@@ -196,10 +200,12 @@ export function MaterialActionButton() {
                   </div>
 
                   <div class="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
-                    <img
-                      src="images/sok.png"
+                    <Image
+                      src="/images/sok.png"
                       alt="Neil image"
                       className="w-8 h-8 rounded-full"
+                      width={50}
+                      height={50}
                     />
                     <div class="ms-1">
                       <p class="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36	">
@@ -212,7 +218,8 @@ export function MaterialActionButton() {
 
               <div className="flex  gap-8">
                 <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
-                  <img src="icons/note.svg" alt="" className="h-5 w-5" />
+                  <Image src="/icons/note.svg" alt="" className="h-5 w-5" width={5}
+                      height={5}/>
                   Noted
                 </div>
                 <div className="text-larg font-bold text-primary-text">
