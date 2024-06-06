@@ -22,11 +22,11 @@ const Page = () => {
                         <tbody>
                             {userData.data.map((x, index) => (
                                 <tr className={`h-14 drop-shadow-soft text-primary-text rounded-radiusUi even:bg-softwhiteUi odd:bg-white`}>
-                                    <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{index + 1}</td>
-                                    <td className="px-5 py-2 text-xs xl:text-base">{x.name}</td>
-                                    <td className="px-5 py-2 text-xs xl:text-base">{x.gender}</td>
-                                    <td className="px-5 py-2 text-xs xl:text-base">{x.tel}</td>
-                                    <td className="px-5 py-2 text-xs xl:text-base">{x.email}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base rounded-l-radiusUi">{index + 1}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base">{x.name}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base">{x.gender}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base">{x.tel}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base">{x.email}</td>
                                     <td className="rounded-r-radiusUi">
                                         <RegisterActionComponent />
                                     </td>

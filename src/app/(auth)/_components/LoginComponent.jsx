@@ -95,7 +95,7 @@ const LoginComponent = callback => {
                         <div className="mt-3 flex items-center justify-end">
                             <div className="text-sm leading-5">
                                 <Link href={`/forgot-password`}
-                                   className="font-medium purple-text hover:text-greyUi">
+                                   className="text-purple-text hover:text-violet-500 font-medium">
                                     Forgot password?
                                 </Link>
                             </div>
@@ -109,7 +109,7 @@ const LoginComponent = callback => {
                         </div>
 
                         <p className="flex justify-center primary-text mb-3">Don't have an account?<b>&nbsp;</b>
-                            <Link href={`/signup`} className="text-purple-text font-bold">Sign Up</Link>
+                            <Link href={`/signup`} className="text-purple-text hover:text-violet-500 font-medium">Sign Up</Link>
                         </p>
                     </form>
 

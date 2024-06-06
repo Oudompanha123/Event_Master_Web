@@ -2,10 +2,7 @@ import React from "react";
 import data from "../../../data/asset.json";
 import { EditAssetComponents } from "./EditAssetComponents";
 import { DeleteAssetComponent } from "./DeleteAssetComponent";
-import { Pagination } from "./Pagination";
-import { Status } from "iconsax-react";
 export const AssetTableComponent = () => {
-  //  const [isinstock, setIsinstock] = useState(false);
 
   return (
     <div className="">
