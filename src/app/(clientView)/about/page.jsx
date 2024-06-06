@@ -8,7 +8,7 @@ import teamData from "../../../data/team.json"
 
 const Page = () => {
     return (
-        <div className="container">
+        <div className="container overflow-hidden">
             <section className="bg-pattern bg-cover text-center mt-24">
                 <h1 className="text-4xl lg:text-6xl font-semibold">About Event Master</h1>
                 <p className="text-sm text-slate-500 lg:text-xl font-light mt-10 w-full lg:w-1/2 mx-auto">Created by KPS students with expert mentors,

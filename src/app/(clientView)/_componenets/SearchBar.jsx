@@ -2,7 +2,7 @@ export const SearchBar = () => {
     return (
         <div>
             <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div className="">
+                <div className="w-full">
                     <label
                         for="category"
                         className="text-sm font-semibold text-primary-text block mb-2"
@@ -22,7 +22,7 @@ export const SearchBar = () => {
                     </select>
                 </div>
 
-                <div className="">
+                <div className="w-full">
                     <label
                         for="category"
                         className="text-sm font-semibold text-primary-text block mb-2"
@@ -41,7 +41,7 @@ export const SearchBar = () => {
                     </select>
                 </div>
 
-                <div class="mb-5">
+                <div class="lg:mb-5 w-full">
                     <label
                         for="start date"
                         class="text-sm font-semibold text-primary-text block mb-2 "
@@ -72,7 +72,7 @@ export const SearchBar = () => {
                 </div>
             </div>
 
-            <div className="relative z-3 mb-5 flex justify-center w-full gap-5">
+            <div className="relative z-3 lg:mb-5 flex justify-center w-full gap-5">
                 <div className="flex grid-cols-2 w-4/5">
                     <input
                         className=" input input-bordered border-[1px] pl-10 text-primary-text hover:border-gray-400  rounded-full w-full h-11 "
