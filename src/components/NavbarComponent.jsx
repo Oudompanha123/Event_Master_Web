@@ -1,46 +1,57 @@
 'use client'
 
 import Image from "next/image"
-import logo from "../../public/images/event-master-logo.png"
-import { AddSquare, Notification } from "iconsax-react"
-import { usePathname } from "next/navigation"
+import logo from "../../public/images/gundam.jpg"
+import { redirect, usePathname } from "next/navigation"
+import { NotificationMenu } from "./NotificationMenu"
+import { CreateEventButton } from "@/app/(dashboard)/_components/Action/CreateEventButton"
+import { NotificationCard } from "@/app/(dashboard)/_components/NotificationCard"
+import Link from "next/link"
 
 export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
     return (
-        <div className={`${className} flex justify-between items-center py-6 px-14 border-b-[1px]`}>
-            <h2 className="text-2xl font-semibold">
+        <div className={`${className} sticky top-0 z-50 bg-white flex lg:justify-between justify-end items-center py-3 px-3 lg:px-14 border-b-[1px]`}>
+            <h2 className="text-xl font-semibold hidden lg:block">
                 {pathname === '/overview' ?
                     'Overview' :
                     pathname === '/members' ?
                         'Member' :
                         pathname === '/assets' ?
                             'Assets' :
-                            pathname === '/events' ?
+                            pathname === '/events' || pathname == "/event-detail" || pathname === "/attendees" ?
                                 'Events' :
                                 pathname === '/user-request' ?
-                                    'User Request' :
-                                    pathname === '/account-setting' ?
-                                        'Account Setting' :
-                                        'Default'}
+                                    'Notification' :
+                                    pathname === '/organization-profile' ?
+                                        "Organization Profile" :
+                                        pathname === '/user-profile' ?
+                                            "User Profile" :
+                                            pathname === '/account-setting' ?
+                                                'Account Setting' :
+                                                'Default'}
             </h2>
             <div className="space-x-10 flex items-center">
-                <div className="bg-[#F7F9FB] p-3.5 rounded-full">
-                    <Notification size="24" color="#344054" variant="Bulk" />
+                <div className="bg-[#F7F9FB] p-2 rounded-full hidden cursor-pointer">
+                    {/* <NotificationMenu /> */}
+                    <Image src={'/icons/icon.svg'} width={24} height={24} />
                 </div>
-                <div className="flex bg-[#F7F9FB] w-[157px] gap-2 p-4 rounded-full">
-                    <AddSquare size="24" color="#344054" variant="Bulk" />
-                    <p>New Event</p>
-                </div>
-                <div className="flex gap-4">
-                    <div>
-                        <p className="font-medium text-lg">Thomas Brown</p>
-                        <p>ThomasNikola@gmail.com</p>
+                <NotificationCard />
+                <CreateEventButton />
+                <Link href={'/user-profile'}>
+                    <div className="flex items-center gap-4">
+                        <div className="hidden lg:block">
+                            <p className="font-semibold text-end text-sm">Thomas Brown</p>
+                            <p className="text-xs text-greyUi">ThomasNikola@gmail.com</p>
+                        </div>
+                        <div className="w-[48px] h-48px] hidden lg:block">
+                            <Image src={logo} height={48} width={48} />
+                        </div>
+                        <div className="w-[32px] h-[32px] block lg:hidden">
+                            <Image src={logo} />
+                        </div>
                     </div>
-                    <div className="w-[48px] h-48px]">
-                        <Image src={logo} height={48} width={48} />
-                    </div>
-                </div>
+                    </Link>
             </div>
         </div>
     )
