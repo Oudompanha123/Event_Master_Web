@@ -18,8 +18,8 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body className={jakarta.className}>
                 <div className="flex">
-                    <SidebarComponent className={`w-[13%] xl:w-[19%] 2xl:w-[15%]`} />
-                    <div className="w-[87%] xl:w-[81%] 2xl:w-[85%]">
+                    <SidebarComponent className={`w-[13%] xl:w-[19%] 2xl:w-[17%]`} />
+                    <div className="w-[87%] xl:w-[81%] 2xl:w-[83%]">
                         <NavbarComponent />
                         <div data-theme="light" className="p-6 lg:px-14 bg-backgroundUi min-h-screen overflow-scroll">
                             {children}
