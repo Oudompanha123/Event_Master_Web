@@ -2,10 +2,11 @@
 
 import Image from "next/image"
 import logo from "../../public/images/gundam.jpg"
-import { usePathname } from "next/navigation"
+import { redirect, usePathname } from "next/navigation"
 import { NotificationMenu } from "./NotificationMenu"
 import { CreateEventButton } from "@/app/(dashboard)/_components/Action/CreateEventButton"
 import { NotificationCard } from "@/app/(dashboard)/_components/NotificationCard"
+import Link from "next/link"
 
 export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
@@ -23,12 +24,12 @@ export const NavbarComponent = ({ className }) => {
                                 pathname === '/user-request' ?
                                     'Notification' :
                                     pathname === '/organization-profile' ?
-                                    "Organization Profile" :
-                                    pathname === '/user-profile' ?
-                                    "User Profile" :
-                                    pathname === '/account-setting' ?
-                                        'Account Setting' :
-                                        'Default'}
+                                        "Organization Profile" :
+                                        pathname === '/user-profile' ?
+                                            "User Profile" :
+                                            pathname === '/account-setting' ?
+                                                'Account Setting' :
+                                                'Default'}
             </h2>
             <div className="space-x-10 flex items-center">
                 <div className="bg-[#F7F9FB] p-2 rounded-full hidden cursor-pointer">
@@ -37,18 +38,20 @@ export const NavbarComponent = ({ className }) => {
                 </div>
                 <NotificationCard />
                 <CreateEventButton />
-                <div className="flex items-center gap-4">
-                    <div className="hidden lg:block">
-                        <p className="font-semibold text-end text-sm">Thomas Brown</p>
-                        <p className="text-xs text-greyUi">ThomasNikola@gmail.com</p>
+                <Link href={'/user-profile'}>
+                    <div className="flex items-center gap-4">
+                        <div className="hidden lg:block">
+                            <p className="font-semibold text-end text-sm">Thomas Brown</p>
+                            <p className="text-xs text-greyUi">ThomasNikola@gmail.com</p>
+                        </div>
+                        <div className="w-[48px] h-48px] hidden lg:block">
+                            <Image src={logo} height={48} width={48} />
+                        </div>
+                        <div className="w-[32px] h-[32px] block lg:hidden">
+                            <Image src={logo} />
+                        </div>
                     </div>
-                    <div className="w-[48px] h-48px] hidden lg:block">
-                        <Image src={logo} height={48} width={48} />
-                    </div>
-                    <div className="w-[32px] h-[32px] block lg:hidden">
-                        <Image src={logo} />
-                    </div>
-                </div>
+                    </Link>
             </div>
         </div>
     )
