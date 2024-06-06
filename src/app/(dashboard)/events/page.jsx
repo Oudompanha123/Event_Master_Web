@@ -1,11 +1,13 @@
 import CardEventComponent from "../_components/CardEventComponent";
 import { IoSearchOutline } from "react-icons/io5";
+import { SelectDropdown } from "../_components/SelectDropdownComponent";
+import { SelectStatus } from "../_components/SelectStatusComponent";
 
 export default function Event() {
   return (
     <main>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        <form>
+        {/* <form>
           <div className="col-span-6 sm:col-span-3">
             <label
               for="category"
@@ -25,28 +27,9 @@ export default function Event() {
               <option value="Marathons">Marathons</option>
             </select>
           </div>
-        </form>
-
-        <form>
-          <div className="col-span-6 sm:col-span-3">
-            <label
-              for="category"
-              className="text-sm font-semibold text-primary-text block mb-2"
-            >
-              Status
-            </label>
-            <select
-              id="status"
-              name="status"
-              className=" border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none"
-              required
-            >
-              <option selected>Choose status</option>
-              <option value="open Event">open</option>
-              <option value="close">closed</option>
-            </select>
-          </div>
-        </form>
+        </form> */}
+        <SelectDropdown />
+        <SelectStatus />
 
         <form>
           <div class="mb-5">
@@ -84,14 +67,14 @@ export default function Event() {
       </div>
 
       <div className="relative z-3 mb-8">
-         <div className=" w-full ">
-            <input
-              type="text"
-              placeholder="Search by name"
-              className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-12 border rounded-3xl pl-10"
-            />
-            <IoSearchOutline className="w-[24px] h-[24px] -mt-9 ml-3" />
-          </div>
+        <div className=" w-full ">
+          <input
+            type="text"
+            placeholder="Search by name"
+            className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-12 border rounded-3xl pl-10"
+          />
+          <IoSearchOutline className="w-[24px] h-[24px] -mt-9 ml-3" />
+        </div>
       </div>
 
       <CardEventComponent />

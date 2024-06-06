@@ -91,7 +91,7 @@ export default function CardEventComponent() {
                   <button className="mx-auto">View all attendees</button>
                 </Link>
                 <Link
-                  href="/event-detail"
+                  href="/event-detail/1"
                   className="flex hover:bg-violet-700 active:bg-violet-800 focus:outline-none focus:ring focus:ring-violet-500 items-center justify-center flex-1 rounded-full bg-[#7939EF] text-white antialiased py-2 text-sm transition duration-300 ease-in-out hover:scale-[102%]"
                 >
                   <button className="mx-auto">View event detail</button>
