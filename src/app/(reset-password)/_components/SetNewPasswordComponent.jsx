@@ -1,9 +1,9 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import Link from "next/link";
 import Image from "next/image";
 import {useState} from "react";
+import {useRouter} from "next/navigation";
 
 const SetNewPasswordComponent = () => {
 
@@ -12,20 +12,23 @@ const SetNewPasswordComponent = () => {
         confirmPassword: "",
     };
 
-    const [isLocked, setIsLocked] = useState(true);
-    const [isKeyLocked, setIsKeyLocked] = useState(true);
-
     const {
         register, handleSubmit,
-        formState: {errors},
+        formState: {errors, isValid},
         watch,
         reset
     } = useForm({
+        mode: 'onChange', // Validate on change
         defaultValues: initialData
     });
 
+    const [isLocked, setIsLocked] = useState(true);
+    const [isKeyLocked, setIsKeyLocked] = useState(true);
+
     const handleLockClick = () => setIsLocked(prevState => !prevState);
     const handleKeyLockClick = () => setIsKeyLocked(prevState => !prevState);
+
+    const router = useRouter();
 
     const onSubmit = data => {
         console.log(data);
@@ -45,24 +48,33 @@ const SetNewPasswordComponent = () => {
                     <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
                         Password
                     </label>
-                    <div className={"relative"}>
+                    <div className="relative">
                         <input
                             type={isLocked ? "password" : "text"}
                             id="password"
-                            className={`${errors.password ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                            className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 ${
+                                errors.password ? "border-red-700 focus:border-red-600" : "border-gray-300"
+                            }`}
                             placeholder="Enter your password"
                             {...register("password", {
                                 required: "Password is required",
+                                pattern: {
+                                    value: /^[A-Za-z0-9]*$/,
+                                    message: "Password must contain only numbers and characters"
+                                },
                                 minLength: {
                                     value: 8,
                                     message: "Password requires at least 8 characters"
                                 }
                             })}
                         />
-                        <div className={"absolute top-4 right-3 cursor-pointer"} onClick={handleLockClick}>
-                            <Image src={`${isLocked ? "/icons/lock-slash.svg" : "/icons/unlock.svg"}`} width={20}
-                                   height={20}
-                                   alt={isLocked ? "lock icon" : "unlock icon"}/>
+                        <div className="absolute top-4 right-3 cursor-pointer" onClick={handleLockClick}>
+                            <Image
+                                src={isLocked ? "/icons/lock-slash.svg" : "/icons/unlock.svg"}
+                                width={20}
+                                height={20}
+                                alt={isLocked ? "lock icon" : "unlock icon"}
+                            />
                         </div>
                     </div>
                     {errors.password && <span className="text-red-600 text-sm">{errors.password.message}</span>}
@@ -72,40 +84,49 @@ const SetNewPasswordComponent = () => {
                     <label htmlFor="confirm-password" className="text-sm font-medium primary-text block mb-2">
                         Confirm Password
                     </label>
-                    <div className={"relative"}>
+
+                    <div className="relative">
                         <input
                             type={isKeyLocked ? "password" : "text"}
                             id="confirm-password"
-                            className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                            className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 ${
+                                errors.confirmPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"
+                            }`}
                             placeholder="Enter your confirm password"
                             {...register("confirmPassword", {
                                 required: "Confirm Password is required",
                                 validate: value => value === watch('password') || "Passwords do not match"
                             })}
                         />
-                        <div className={"absolute top-4 right-3 cursor-pointer"} onClick={handleKeyLockClick}>
-                            <Image src={`${isKeyLocked ? "/icons/lock-slash.svg" : "/icons/unlock.svg"}`} width={20}
-                                   height={20}
-                                   alt={isKeyLocked ? "lock icon" : "unlock icon"}/>
+                        <div className="absolute top-4 right-3 cursor-pointer" onClick={handleKeyLockClick}>
+                            <Image
+                                src={isKeyLocked ? "/icons/lock-slash.svg" : "/icons/unlock.svg"}
+                                width={20}
+                                height={20}
+                                alt={isKeyLocked ? "lock icon" : "unlock icon"}
+                            />
                         </div>
                     </div>
                     {errors.confirmPassword &&
                         <span className="text-red-600 text-sm">{errors.confirmPassword.message}</span>}
                 </div>
 
-
                 <div className="flex justify-center mt-10">
-                    <Link href={`/verify`}>
-                        <button type="sign Up" id="sign-up"
-                                className="bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400">
-                            Continue
-                        </button>
-                    </Link>
+                    <button
+                        onClick={() => router.push('/verify')}
+                        type="button"
+                        id="continue"
+                        className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 shadow-md shadow-violet-400 ${
+                            !isValid ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"
+                        }`}
+                        disabled={!isValid}
+                    >
+                        Continue
+                    </button>
                 </div>
             </form>
-
-
         </div>
-    )
-}
-export default SetNewPasswordComponent
+    );
+};
+
+export default SetNewPasswordComponent;

@@ -4,6 +4,7 @@ import Link from "next/link";
 import styles from "@/app/(reset-password)/style.module.css";
 import OtpInput from "react18-input-otp";
 import {useState} from "react";
+import {useRouter} from "next/navigation";
 
 const VerifyOTPComponent = () => {
 
@@ -11,6 +12,8 @@ const VerifyOTPComponent = () => {
     const handleChange = (enteredOtp) => {
         setOtp(enteredOtp);
     };
+
+    const router = useRouter();
 
     return (
         <div className="absolute mx-[29%] mt-[18%] left-[9.5%]">
@@ -22,20 +25,23 @@ const VerifyOTPComponent = () => {
                     <p className="flex justify-center greyUi mt-6">Enter the 4 digits code that received your email.</p>
                 </div>
 
-                <OtpInput className={styles.inputStyle}
+                <OtpInput inputStyle={styles.inputStyle}
                           value={otp}
                           onChange={handleChange}
                           numInputs={4}
                 />
 
-                <Link href={`/set-new-password`}>
-                    <div className="flex justify-center mt-12">
-                        <button type="sign Up" id="sign-up"
-                                className="bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400">
-                            Continue
-                        </button>
-                    </div>
-                </Link>
+                <button
+                    onClick={() => router.push('/set-new-password')}
+                    type="button"
+                    id="continue"
+                    className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 mt-12 shadow-md shadow-violet-400 ${otp.length !== 4 ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}
+                    disabled={otp.length !== 4}
+                >
+                    Continue
+                </button>
+
+
                 <Link href={`/verify-otp`}>
                     <p className="flex justify-end text-blueUi mt-5"><u>Resend Code</u>
                     </p>
