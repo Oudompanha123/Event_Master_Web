@@ -42,7 +42,7 @@ module.exports = {
         radius64: "64px",
       },
       colors: {
-        purple: "#7A44FF",
+        "purple": "#7A44FF",
         "purple-text-head": "#4C179B",
         "primary-purple": "#ECE8FF",
         "purple-text": "#7939EF",

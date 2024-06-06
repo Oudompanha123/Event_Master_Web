@@ -4,32 +4,35 @@ import Link from "next/link";
 import {useState} from "react";
 import {useForm} from "react-hook-form";
 import Image from "next/image";
+import {useRouter} from "next/navigation";
 
-const LoginComponent = callback => {
+const LoginComponent = () => {
 
     const initialData = {
         userEmail: "",
         userPassword: ""
     };
 
+    const {
+        register,
+        handleSubmit,
+        formState: {errors, isValid},
+    } = useForm({
+        defaultValues: initialData,
+        mode: "onChange"
+    });
+
     const [isLocked, setIsLocked] = useState(true);
     const handleLockClick = () => setIsLocked(prevState => !prevState);
 
-    const {
-        register, handleSubmit,
-        formState: {errors},
-        watch,
-        reset
-    } = useForm({
-        defaultValues: initialData
-    });
+    const router = useRouter();
 
     const onSubmit = data => {
         console.log(data);
     };
 
     return (
-        <div className="absolute top-44 left-[15%] flex flex-col justify-center sm:px-6 lg:px-8 px-6">
+        <div className="absolute top-56 left-[15%] flex flex-col justify-center sm:px-6 lg:px-8 px-6">
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-white py-8 w-[110%] px-4 shadow sm:rounded-[40px] sm:px-12">
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -42,16 +45,15 @@ const LoginComponent = callback => {
                         </div>
 
                         <div className="col-span-6 sm:col-span-3">
-                            <label htmlFor="userEmail" className="text-sm font-medium primary-text block mb-2">
-                                Email <span className="text-red-600 text-sm">*</span>
-                            </label>
+                            <label htmlFor="email" className="text-sm font-medium primary-text block mb-2">
+                                Email <span className="text-red-600">*</span></label>
                             <div>
                                 <input
                                     type="text"
-                                    id="userEmail"
-                                    className={`${errors.userEmail ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                    id="email"
+                                    className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                     placeholder="Enter your email"
-                                    {...register("userEmail", {
+                                    {...register("email", {
                                         required: "Email is required",
                                         pattern: {
                                             value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -60,8 +62,7 @@ const LoginComponent = callback => {
                                     })}
                                 />
                             </div>
-                            {errors.userEmail &&
-                                <span className="text-red-600 text-sm">{errors.userEmail.message}</span>}
+                            {errors.email && <span className="text-red-600 text-sm">{errors.email.message}</span>}
                         </div>
 
                         <div className="col-span-6 sm:col-span-3 mt-6">
@@ -70,22 +71,31 @@ const LoginComponent = callback => {
                             </label>
                             <div className={"relative"}>
                                 <input
-                                    type={isLocked ? "password" : "text"}
+                                    type={isLocked ? "Password" : "text"}
                                     id="password"
-                                    className={`${errors.userPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                    className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 ${
+                                        errors.userPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"
+                                    }`}
                                     placeholder="Enter your password"
                                     {...register("userPassword", {
                                         required: "Password is required",
+                                        pattern: {
+                                            value: /^[A-Za-z0-9]*$/,
+                                            message: "Password must contain only numbers and characters"
+                                        },
                                         minLength: {
                                             value: 8,
                                             message: "Password requires at least 8 characters"
                                         }
                                     })}
                                 />
-                                <div className={"absolute top-4 right-3 cursor-pointer"} onClick={handleLockClick}>
-                                    <Image src={`${isLocked ? "/icons/lock-slash.svg" : "/icons/unlock.svg"}`} width={20}
-                                           height={20}
-                                           alt={isLocked ? "lock icon" : "unlock icon"}/>
+                                <div className="absolute top-4 right-3 cursor-pointer" onClick={handleLockClick}>
+                                    <Image
+                                        src={isLocked ? "/icons/lock-slash.svg" : "/icons/unlock.svg"}
+                                        width={20}
+                                        height={20}
+                                        alt={isLocked ? "lock icon" : "unlock icon"}
+                                    />
                                 </div>
                             </div>
                             {errors.userPassword &&
@@ -95,21 +105,29 @@ const LoginComponent = callback => {
                         <div className="mt-3 flex items-center justify-end">
                             <div className="text-sm leading-5">
                                 <Link href={`/forgot-password`}
-                                   className="text-purple-text hover:text-violet-500 font-medium">
+                                      className="text-purple-text hover:text-violet-500 font-medium">
                                     Forgot password?
                                 </Link>
                             </div>
                         </div>
 
-                        <div className="flex justify-center p-6 mt-3">
-                            <button type="submit" id="login"
-                                    className="bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400">
+                        <div className="flex justify-center mt-8 mb-6">
+                            <button
+                                onClick={() => router.push('/overview')}
+                                type="button"
+                                id="login"
+                                className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 shadow-md shadow-violet-400 ${
+                                    !isValid ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"
+                                }`}
+                                disabled={!isValid}
+                            >
                                 Login
                             </button>
                         </div>
 
-                        <p className="flex justify-center primary-text mb-3">Don't have an account?<b>&nbsp;</b>
-                            <Link href={`/signup`} className="text-purple-text hover:text-violet-500 font-medium">Sign Up</Link>
+                        <p className="flex justify-center primary-text mb-4">Don't have an account?<b>&nbsp;</b>
+                            <Link href={`/signup`} className="text-purple-text hover:text-violet-500 font-medium">Sign
+                                Up</Link>
                         </p>
                     </form>
 

@@ -46,7 +46,7 @@ const SignupComponent = () => {
   };
 
   return (
-    <div className="mx-[42%] mt-48 w-[45%] bg-white rounded-[40px] shadow-md absolute">
+    <div className="mx-[42%] mt-56 w-[45%] bg-white rounded-[40px] shadow-md absolute">
       <div className="flex justify-start p-6 pt-12 mx-8 focus:outline-none">
         <button
           type="button"
@@ -322,7 +322,7 @@ const SignupComponent = () => {
             )}
           </div>
 
-          <div className="flex justify-center p-6 pb-6 pt-12">
+          <div className="flex justify-center p-6 pb-6 pt-12 mb-3">
             <div>
               <button
                 type="submit"
@@ -391,7 +391,7 @@ const SignupComponent = () => {
                             href={`/verify-register`}
                             className="text-white font-semibold "
                           >
-                            Comfirm
+                            Confirm
                           </Link>
                         </button>
                       </div>
