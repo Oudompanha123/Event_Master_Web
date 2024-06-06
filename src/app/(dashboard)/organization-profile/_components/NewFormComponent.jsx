@@ -23,7 +23,10 @@ function NewFormComponent() {
     const [address, setAddress] = useState("");
 
     const [isEditing, setIsEditing] = useState(false);
+    const [isCopy, setIsCopy] = useState(false)
     const [organizationCode] = useState("123456");
+
+    const [submitType, setSubmitType] = useState(null);
 
     const initialData = {
         name: "",
@@ -40,6 +43,9 @@ function NewFormComponent() {
     });
 
     const onSubmit = (data) => {
+        if (submitType === 'copy') {
+            return;
+        }
         console.log("Form submitted", data);
         reset();
     };
@@ -102,7 +108,7 @@ function NewFormComponent() {
                         <div className={`w-full bg-gray-100 flex justify-start ps-3 rounded-lg items-center text-gray-500 border-gray-300 bg-none mt-3 lg:h-12 ${styles.btnCopy}`}>
                             {organizationCode}
                         </div>
-                        <button onClick={handleCopy} className={`absolute top-4 left-5 text-gray-600 hover:text-gray-800 cursor-pointer ${styles.copy}`}>
+                        <button onClick={() => { handleCopy(); setSubmitType('copy'); }} className={`absolute top-4 left-5 text-gray-600 hover:text-gray-800 cursor-pointer ${styles.copy}`}>
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className="ml-[350px] mt-3">
                                 <path d="M11.5715 3.21484H3.85725C3.14717 3.21484 2.57153 3.79048 2.57153 4.50056V16.072C2.57153 16.7821 3.14717 17.3577 3.85725 17.3577H11.5715C12.2816 17.3577 12.8572 16.7821 12.8572 16.072V4.50056C12.8572 3.79048 12.2816 3.21484 11.5715 3.21484Z" stroke="#344054" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M5.14307 6.42773H10.2859" stroke="#344054" stroke-linecap="round" stroke-linejoin="round"/>
@@ -139,7 +145,7 @@ function NewFormComponent() {
 
                     {/* button  */}
                     <div className="flex justify-center w-[100%] mr-10 mt-12 lg:mt-9 lg:mr-10">
-                        {isEditing ? (
+                        {isCopy ? (
                                 <>
                                     <button className="btn btn-outline border-solid border-1 border-primary-text text-lg w-40 lg:w-32 lg:text-base" onClick={handleCancelChanges}>
                                         Cancel
