@@ -5,7 +5,7 @@ import { Edit } from "iconsax-react"
 export const CategoryEditAction = () => {
     return (
         <>
-            <Edit onClick={() => document.getElementById('update_category').showModal()} size="20" color="#16AE65" />
+            <Edit className="cursor-pointer" onClick={() => document.getElementById('update_category').showModal()} size="20" color="#16AE65" />
             <dialog id="update_category" className="modal">
                 <div className="modal-box w-11/12 md:w-1/2 max-w-5xl space-y-8">
                     <div className="flex flex-row items-center text-primary-text">
