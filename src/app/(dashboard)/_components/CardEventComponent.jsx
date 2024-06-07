@@ -27,7 +27,7 @@ export default function CardEventComponent() {
   }, []);
 
   return (
-    <div className=" grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2">
+    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2">
       {events.map((data, index) => {
         const { day, month } = formatDate(data.startDate);
         return (

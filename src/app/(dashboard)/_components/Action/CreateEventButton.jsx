@@ -5,9 +5,8 @@ import Image from "next/image";
 import { ToogleBtn } from "./ToogleBtn";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { SelectDropdown } from "../SelectDropdownComponent";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { SelectModify } from "./SelectModify";
 
 export const CreateEventButton = () => {
     const [hide, setHide] = useState(false);
@@ -135,7 +134,7 @@ export const CreateEventButton = () => {
                                         <option value="2">Social Event</option>
                                         <option value="3">Sport</option>
                                     </select> */}
-                                    <SelectDropdown
+                                    <SelectModify
                                         {...register("category")}
                                         label={`!font-medium`}
                                         height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}

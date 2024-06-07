@@ -1,12 +1,12 @@
 'use client'
 
-import Image from "next/image"
+import { Trash } from "iconsax-react"
 import { RxCross2 } from "react-icons/rx"
 
 export const CategoryDeleteAction = () => {
     return (
         <div>
-            <Image className="cursor-pointer" onClick={() => document.getElementById('category_action').showModal()} src="/icons/trash.svg" width={20} height={20} />
+            <Trash onClick={() => document.getElementById('category_action').showModal()} className="cursor-pointer" size="20" color="#F4485D" />
             <dialog id="category_action" className="modal">
                 <div className="modal-box w-[310px] justity-center  ">
                     <form method="dialog" className="justify-end flex">
