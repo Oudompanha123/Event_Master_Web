@@ -61,7 +61,7 @@ const SignupComponent = () => {
     };
 
   return (
-    <div className="w-full h-full p-8 mt-36 2xl:mx-[42%]  2xl:w-[45%] bg-white rounded-[40px] shadow-md absolute ">
+    <div className="w-[75%] h-auto p-8 mt-20 md:w-[55%] xl:left-6 xl:mt-32 xl:mx-[42%] 2xl:mt-[10%]  2xl:left-5 xl:w-[45%] bg-white rounded-[40px] shadow-md absolute ">
       {" "}
       {/*mt-56 */}
       <div className="flex justify-start p-6 pt-12 mx-8 focus:outline-none">
@@ -90,12 +90,12 @@ const SignupComponent = () => {
           USER
         </button>
       </div>
-      <div className=" w-full ">
+      <div className=" w-full h-full">
         {" "}
         {/*space-y-6 mx-8 p-6*/}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-6 gap-6 px-3">
-            <div className="col-span-6 sm:col-span-3 ">
+            <div className="col-span-6 md:col-span-3 ">
               <label
                 htmlFor="name"
                 className="text-sm font-medium primary-text block mb-2"
@@ -122,7 +122,7 @@ const SignupComponent = () => {
               )}
             </div>
 
-            <div className="col-span-6  ">
+            <div className="col-span-6 md:col-span-3">
               {" "}
               {/*sm:col-span-3*/}
               <label
@@ -155,7 +155,7 @@ const SignupComponent = () => {
               )}
             </div>
 
-            <div className="col-span-6">
+            <div className="col-span-6 md:col-span-3">
               {/* sm:col-span-3*/}
               <label
                 htmlFor="password"
@@ -202,7 +202,7 @@ const SignupComponent = () => {
               )}
             </div>
 
-            <div className="col-span-6 bg-yellow-100">
+            <div className="col-span-6 md:col-span-3">
               {" "}
               {/* sm:col-span-3*/}
               <label
@@ -251,7 +251,7 @@ const SignupComponent = () => {
             </div>
 
             {isAdminSelected && (
-              <div className="col-span-6 bg-slate-400">
+              <div className="col-span-6">
                 <label
                   htmlFor="phone-number"
                   className="text-sm font-medium primary-text block mb-2"
@@ -286,13 +286,13 @@ const SignupComponent = () => {
             )}
 
             {!isAdminSelected && (
-              <div className="col-span-6 flex flex-col  bg-red-500">
+              <div className="w-full col-span-6  flex flex-col h-full gap-6 md:flex-row md:flex-1 xl:justify-between ">
                 {" "}
                 {/*space-x-4*/}
-                <div className="flex-1 bg-red-950">
+                <div className="grid grid-rows-1 w-full">
                   <label
                     htmlFor="phone-number"
-                    className="text-sm font-medium primary-text block mb-2"
+                    className="text-sm font-medium primary-text block mb-2 "
                   >
                     Phone Number <span className="text-red-600 text-sm">*</span>
                   </label>
@@ -303,7 +303,7 @@ const SignupComponent = () => {
                       errors.phoneNumber
                         ? "border-red-700 focus:border-red-600"
                         : "border-gray-300"
-                    } shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                    } shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block xl:w-full p-3.5`}
                     placeholder="Enter your phone number"
                     {...register("phoneNumber", {
                       required: "Phone Number is required",
@@ -315,10 +315,10 @@ const SignupComponent = () => {
                     </span>
                   )}
                 </div>
-                <div className="flex-1 bg-redUi">
+                <div className="w-full">
                   <label
                     htmlFor="organization-code"
-                    className="text-sm font-medium primary-text block mb-2"
+                    className="text-sm font-medium primary-text block mb-2 xl:col-span-3"
                   >
                     Organization Code{" "}
                     <span className="text-red-600 text-sm">*</span>
@@ -351,7 +351,7 @@ const SignupComponent = () => {
               <button
                 type="submit"
                 id="sign-up"
-                className="bg-purple-text text-white font-medium text-sm rounded-3xl px-28 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400"
+                className="bg-purple-text text-white font-medium text-sm rounded-3xl px-32 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400"
                 onClick={() =>
                   document.getElementById("my_modal_5").showModal()
                 }
