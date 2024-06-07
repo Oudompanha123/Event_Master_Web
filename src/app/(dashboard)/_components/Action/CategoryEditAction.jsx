@@ -24,7 +24,7 @@ export const CategoryEditAction = () => {
                     />
                     <div className="flex justify-end space-x-3">
                         <div onClick={() => document.getElementById("update_category").close()} className="flex items-center px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
-                        <button type="submit" className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3">
+                        <button onClick={() => document.getElementById("update_category").close()} type="submit" className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3">
                             <Image
                                 src={"/icons/edit.svg"}
                                 width={20}
