@@ -32,9 +32,9 @@ const LoginComponent = () => {
     };
 
     return (
-        <div className="absolute top-56 left-[15%] flex flex-col justify-center sm:px-6 lg:px-8 px-6">
+        <div className="absolute top-52 left-[15%] flex flex-col justify-center sm:px-6 lg:px-8 px-6">
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-8 w-[110%] px-4 shadow sm:rounded-[40px] sm:px-12">
+                <div className="bg-white py-8 w-[110%] px-4  sm:rounded-[40px] sm:px-12 shadow-md">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="mb-12 -mt-3">
                             <h2 className="mt-6 text-center text-4xl font-bold greyUi flex justify-center">
