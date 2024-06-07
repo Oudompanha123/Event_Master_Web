@@ -401,17 +401,17 @@ export const UpdateEventButton = () => {
 
               <div className="flex justify-end space-x-3 w-full mb-4 gap-2">
                 <button
-                  className="h-11 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white"
+                  className="py-3 px-6 rounded-2xl border-1px border-borderUi   bg-white hover:border-gray-500 hover:bg-white"
                   onClick={() => document.getElementById("updateEvent").close()}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="h-11  rounded-xl flex items-center justify-center gap-2  border bg-green-700  w-32  hover:bg-green-800"
+                  className="py-3 px-6 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-2  bg-green-700  hover:bg-green-800"
                   onClick={handleSubmit}
                 >
-                  <img src="icons/edit.svg" alt="" />
+                  <Image src="/icons/edit.svg" alt="" width={24} height={24} />
                   <p className="text-white">Update</p>
                 </button>
               </div>

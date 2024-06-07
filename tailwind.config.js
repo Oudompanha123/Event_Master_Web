@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      width: {
+        'button-width': '127px'
+      },
       container: {
         center: true,
         padding: "1rem",
@@ -17,6 +20,9 @@ module.exports = {
           lg: "984px",
           xl: "1380px",
         },
+      },
+      boxShadow: {
+        'soft': '0 0 1px rgba(0, 0, 0, .4)',
       },
       dropShadow: {
         'soft': '0 0 1px rgba(0, 0, 0, .18)',
@@ -36,7 +42,7 @@ module.exports = {
         radius64: "64px",
       },
       colors: {
-        purple: "#7A44FF",
+        "purple": "#7A44FF",
         "purple-text-head": "#4C179B",
         "primary-purple": "#ECE8FF",
         "purple-text": "#7939EF",

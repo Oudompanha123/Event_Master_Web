@@ -44,17 +44,17 @@ const getStatusColor = (status) => {
 
 export default function MaterialComponent() {
   const [rows, setRows] = useState([
-    {
-      id: 1,
-      itemName: "",
-      qty: "",
-      unit: "",
-      dueDate: "",
-      handler: "menglim",
-      supporters: "nyta",
-      status: "Pending",
-      note: "",
-    },
+    // {
+    //   id: 1,
+    //   itemName: "",
+    //   qty: "",
+    //   unit: "",
+    //   dueDate: "",
+    //   handler: "menglim",
+    //   supporters: "nyta",
+    //   status: "Pending",
+    //   note: "",
+    // },
   ]);
 
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -148,7 +148,7 @@ export default function MaterialComponent() {
             <div className="bg-[#624F9D] p-2.5 rounded-full">
               <Image
                 className=""
-                src="icons/ranking.svg"
+                src="/icons/ranking.svg"
                 alt="Next.js Logo"
                 width={30}
                 height={10}
@@ -203,7 +203,7 @@ export default function MaterialComponent() {
             <div className=" bg-[#038446] p-2.5 rounded-full">
               <Image
                 className=""
-                src="icons/clipboard.svg"
+                src="/icons/clipboard.svg"
                 alt="Next.js Logo"
                 width={30}
                 height={10}
@@ -226,7 +226,7 @@ export default function MaterialComponent() {
             <div className=" bg-[#D72222] p-2.5 rounded-full">
               <Image
                 className=""
-                src="icons/warning-2.svg"
+                src="/icons/warning-2.svg"
                 alt="Next.js Logo"
                 width={32}
                 height={10}
@@ -264,7 +264,7 @@ export default function MaterialComponent() {
             >
               <Image
                 className=""
-                src="icons/delete.svg"
+                src="/icons/delete.svg"
                 alt="Location"
                 width={25}
                 height={25}
@@ -284,8 +284,8 @@ export default function MaterialComponent() {
         </div>
       </div>
 
-      <div className=" px-1 overflow-auto ">
-        <table className="overflow-x-auto w-full text-sm text-left rtl:text-right text-gray-500 border-separate dark:text-gray-400 border-spacing-y-3 table ">
+      <div className=" relative overflow-x-auto  sm:rounded-lg px-1 ">
+        <table className="overflow-x-auto  w-full text-sm text-left rtl:text-right text-gray-500 border-separate dark:text-gray-400 border-spacing-y-3 table ">
           <thead className="uppercase dark:text-gray-400 text-sm font-normal h-10 drop-shadow text-primary-text bg-[#F0F1F3]">
             <tr className="text-[14px] font-semibold rounded-2xl">
               <th className="w-4 p-4 rounded-l-2xl">
@@ -461,7 +461,7 @@ export default function MaterialComponent() {
                   />
                 </td>
                 <td className="px-4 w-36">
-                  <div className="relative  bg-white p-[7px] border rounded-xl ">
+                  <div className="relative bg-white p-[7px] border rounded-xl ">
                     <div
                       className="cursor-pointer flex items-center"
                       onClick={() => toggleDropdown(row.id)}
@@ -499,11 +499,12 @@ export default function MaterialComponent() {
                     )}
                   </div>
                 </td>
+
                 <td className="sm:text-sm font-normal px-0 text-base text-primary-text">
                   <input
                     type="text"
                     name="note"
-                    className="border text-primary-text text-base sm:text-sm px-0 w-28 h-10 rounded-xl font-normal focus:outline-none"
+                    className="border text-primary-text text-base sm:text-sm px-2 w-28 h-10 rounded-xl font-normal focus:outline-none"
                     value={row.note}
                     onChange={(e) =>
                       setRows((prevRows) =>
@@ -525,3 +526,5 @@ export default function MaterialComponent() {
     </div>
   );
 }
+
+

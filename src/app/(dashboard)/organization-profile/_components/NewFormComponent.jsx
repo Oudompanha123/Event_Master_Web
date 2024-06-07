@@ -75,7 +75,7 @@ function NewFormComponent() {
 
   return (
     <>
-        <form action="" ref={ref} className="drop-shadow-md rounded-2xl relative" method="post" onSubmit={handleSubmit(onSubmit)}>
+        <form action="" ref={ref} className="drop-shadow-md rounded-2xl relative h-auto mb-8" method="post" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col items-center mt-20 lg:-mt-20">
                 <div className="w-60 h-60 rounded-full lg:w-40 relative lg:h-40">
                     <Image src={profileImage} alt="My Image" width={250} height={250} className={`mt-2 rounded-full ${styles.profile}`}/>
@@ -93,7 +93,7 @@ function NewFormComponent() {
             
             {/* Input Fields */}
 
-            <div className={`h-[280px] w-full lg:h-auto px-6 lg:px-4 ${styles.inputContainer}`}>
+            <div className={`w-full lg:h-auto p-6 lg:px-4 ${styles.inputContainer}`}>
                 <div className="w-full max-w-full mx-auto mt-12 lg:mt-8 lg:max-w-[400px]">
                     <div className="mt-16 text-primary-text text-lg font-semibold lg:text-base lg:mt-7 flex">
                         Organization Code <p className="text-red-700">*</p>
@@ -138,7 +138,7 @@ function NewFormComponent() {
                     </div>
 
                     {/* button  */}
-                    <div className="flex justify-center w-[100%] mr-10 mt-12 lg:mt-9 lg:mr-10">
+                    <div className="flex justify-center w-[100%] mr-10 mt-8 lg:mt-9 lg:mr-10">
                         {isEditing ? (
                                 <>
                                     <button className="btn btn-outline border-solid border-1 border-primary-text text-lg w-40 lg:w-32 lg:text-base" onClick={handleCancelChanges}>

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
-import Image from "next/image";
+import { AddSquare } from "iconsax-react";
 
 function AddmoreInput({ inputList, setInputList }) {
   const handleAddClick = () => {
@@ -180,36 +180,30 @@ export function CreateAgendaButton() {
   return (
     <>
       <button
-        className="btn rounded-3xl  border-purple-text border h-1 bg-white w-46 hover:border-purple-text hover:bg-white"
+        className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-11 justify-center text-purple-text rounded-3xl  md:py-2.5 flex items-center gap-1"
         onClick={() => document.getElementById("my_modal_4").showModal()}
       >
-         <Image
-                className=""
-                src="/icons/create-new.svg"
-                alt="Create New Icon"
-                width={25}
-                height={25}
-                priority
-              />
-        <p className="text-purple-text text-base font-regular">Create Agenda</p>
+          <AddSquare size="24" variant="Bold" className="" />
+        <p className="text-base">Create Agenda</p>
       </button>
       <dialog id="my_modal_4" className="modal ">
         <div className="modal-box w-11/12 max-w-5xl  bg-[#F7F9FB]">
           <AddmoreInput inputList={inputList} setInputList={setInputList} />
           <div className="modal-action gap-2 mb-4">
+          <button
+              className="px-6 py-3 rounded-2xl border-1px border-borderUi bg-white  hover:border-gray-500 hover:bg-white"
+              onClick={() => document.getElementById("my_modal_4").close()}
+            >
+              Cancel
+            </button>
             <button
-              className="h-10  rounded-xl flex items-center justify-center gap-3  border-blueUi border bg-blue-700  w-32 hover:border-blueUi hover:bg-blue-800"
+              className="px-6 py-3 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-3  bg-blue-700  w-32 hover:border-blueUi hover:bg-blue-800"
               onClick={handleSubmit}
             >
               <MdAddBox size={24} color="white" />
               <p className="text-white">Save</p>
             </button>
-            <button
-              className="h-10 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white"
-              onClick={() => document.getElementById("my_modal_4").close()}
-            >
-              Cancel
-            </button>
+            
           </div>
         </div>
       </dialog>

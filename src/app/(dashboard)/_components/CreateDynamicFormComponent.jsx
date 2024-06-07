@@ -198,7 +198,7 @@ export const CreateDynamicForm = () => {
               className="flex items-center justify-center gap-2 rounded-xl w-32 bg-[#551FFF] text-white py-2"
             >
               <Image
-                src="icons/add.svg"
+                src="/icons/add.svg"
                 alt="Add Icon"
                 width={20}
                 height={20}
@@ -253,7 +253,7 @@ export const CreateDynamicForm = () => {
               className="px-4 py-2 flex items-center gap-2 rounded-xl bg-[#038446] duration-300 text-white"
             >
               <Image
-                src="icons/edit.svg"
+                src="/icons/edit.svg"
                 alt="Add Icon"
                 width={20}
                 height={20}

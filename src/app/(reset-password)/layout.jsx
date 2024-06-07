@@ -17,7 +17,6 @@ export default function RootLayout({ children }) {
         <html lang="en">
         <body className={jakarta.className}>
         <div className="bg-primary-purple w-[100%] h-screen relative">
-
             <ResetPasswordComponent/>
             {children}
         </div>

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import Image from "next/image";
 
 function UpdateAgenda({ inputList, setInputList }) {
   const handleAddClick = () => {
@@ -181,7 +182,7 @@ export function UpdateAgendaButton() {
         className="btn  rounded-xl flex  border bg-green-700 hover:bg-green-800 w-32  "
         onClick={() => document.getElementById("my_modal_4").showModal()}
       >
-        <img src="icons/edit.svg" alt="" className="" />
+        <Image src="/icons/edit.svg" alt="" className="" width={24} height={24}/>
         <p className="text-white">Edit</p>
       </button>
       <dialog id="my_modal_4" className="modal ">
@@ -189,16 +190,16 @@ export function UpdateAgendaButton() {
           <UpdateAgenda inputList={inputList} setInputList={setInputList} />
           <div className="modal-action gap-2 pr-4  mb-4">
             <button
-              className="h-11 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white"
+              className="py-3 px-6 rounded-2xl border-1px border-borderUi bg-white hover:border-gray-500 hover:bg-white"
               onClick={() => document.getElementById("my_modal_4").close()}
             >
               Cancel
             </button>
             <button
-              className="h-11  rounded-xl flex items-center justify-center gap-2  border bg-green-700  w-32  hover:bg-green-800"
+              className="py-3 px-6   rounded-2xl border-1px border-borderUi flex items-center justify-center gap-2  bg-green-700   hover:bg-green-800"
               onClick={handleSubmit}
             >
-              <img src="icons/edit.svg" alt="" className="h-5 w-5" />
+              <Image src="/icons/edit.svg" alt="" className="h-5 w-5" width={5} height={5}/>
               <p className="text-white">Update</p>
             </button>
           </div>

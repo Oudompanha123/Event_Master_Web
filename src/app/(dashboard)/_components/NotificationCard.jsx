@@ -9,7 +9,7 @@ export const NotificationCard = () => {
                 <Image src={'/icons/icon.svg'} width={24} height={24} />
             </div>
             {/* <div tabIndex={0} role="button" className="btn m-1">Click</div> */}
-            <ul tabIndex={0} className="dropdown-content z-[1] drop-shadow-2xl menu shadow bg-base-100 rounded-box w-96 p-0">
+            <ul tabIndex={0} className="dropdown-content z-[1] shadow-2xl menu bg-base-100 rounded-box w-96 p-0">
                 <div className="flex justify-between items-center px-4 py-6">
                     <h2 className="text-xl font-semibold">Notifications</h2>
                     <p className="text-purple-text cursor-pointer">Mark as read</p>
