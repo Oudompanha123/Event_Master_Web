@@ -10,7 +10,7 @@ const Page = () => {
         <div className="container">
             <RedirectBackComponent link={'/'} />
             <section className="p-6 rounded-3xl border-2 border-slate-100 drop-shadow-sm bg-white">
-                <Image src={demoImage} className="h-[350px] lg:h-[450px] object-cover rounded-2xl" alt="blog-image" />
+                <Image src={demoImage} placeholder="blur" className="h-[350px] lg:h-[450px] object-cover rounded-2xl" alt="blog-image" />
                 <div className="space-y-6 mt-6">
                     <div className="flex justify-between items-center">
                         <h2 className="text-xl lg:text-2xl font-semibold">Design Skill & Tech Session</h2>

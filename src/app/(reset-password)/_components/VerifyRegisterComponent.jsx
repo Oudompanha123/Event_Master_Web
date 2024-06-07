@@ -37,7 +37,7 @@ const VerifyRegisterComponent = () => {
                             </button>
                         </div>
                     </Link>
-                    <Link href={`/signup`}>
+                    <Link href={`/verify-register`}>
                         <p className="flex justify-end text-blueUi mt-5"><u>Resend Code</u>
                         </p>
                     </Link>

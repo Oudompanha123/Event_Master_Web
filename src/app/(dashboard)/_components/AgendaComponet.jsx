@@ -85,7 +85,7 @@ export default function AgendaComponent() {
         </div>
       </div>
       {agenda.map((data, index) => (
-        <div key={index} className="space-y-4 transition duration-200 ease-in-out hover:scale-[100.4%]">
+        <div key={index} className="space-y-4 ">
           <div
             className={`border h-auto py-4 px-4 rounded-3xl flex gap-5 ${
               index % 2 === 1 ? "bg-blue-0" : "bg-gray-100"
@@ -97,7 +97,7 @@ export default function AgendaComponent() {
               }`}
             ></div>
             <div className="h-auto w-full space-y-2 ">
-              <p className="text-base font-medium text-primary-text">{`${convertTo12HourFormat(
+              <p className="text-base font-regular text-primary-text">{`${convertTo12HourFormat(
                 data.startTime
               )} - ${convertTo12HourFormat(data.endTime)}`}</p>
               <p className="text-xl font-semibold text-primary-text">
@@ -108,7 +108,7 @@ export default function AgendaComponent() {
                 <hr className="h-[1px] w-full bg-gray-300" />
               )}
               {data.description && (
-                <p className="text-base font-medium text-primary-text">
+                <p className="text-base font-regular text-primary-text">
                   {data.description}
                 </p>
               )}

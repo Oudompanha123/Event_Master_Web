@@ -1,10 +1,41 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import { ToogleBtn } from "./Action/ToogleBtn";
+import { ToogleBtn } from "../_components/Action/ToogleBtn";
+import { RxCross2 } from "react-icons/rx";
+// import { ToogleBtn } from "./Action/ToogleBtn";
 
 export function EventActionButton() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null); // Reference for dropdown
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeDropdown = () => {
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeDropdown();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   const [hide, setHide] = useState(false);
   const [previewSrc, setPreviewSrc] = useState(""); // Added state for image preview source
 
@@ -52,13 +83,14 @@ export function EventActionButton() {
   const onSubmit = (data) => {
     console.log(data);
   };
+
   return (
-    <div>
-      <div className="dropdown  dropdown-end active:bg-none">
-        <div
-          tabIndex={0}
-          role="button"
-          className=" bg-white rounded-full bg-opacity-80 right-5 w-8 h-8 items-center  flex flex-row justify-center"
+    <div className="">
+      <div className="relative inline-block" ref={dropdownRef}>
+        <button
+          type="button"
+          className=" bg-white rounded-full bg-opacity-80 right-5 w-8 h-8 items-center flex flex-row justify-center"
+          onClick={toggleDropdown}
         >
           <svg
             width="18"
@@ -71,34 +103,59 @@ export function EventActionButton() {
             <circle cx="9" cy="2" r="2" fill="#101828" />
             <circle cx="16" cy="2" r="2" fill="#101828" />
           </svg>
-        </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content z-[1] bg-white menu  rounded-box w-52 active:bg-none"
-        >
-          <li classNam="active:bg-none">
-            <a
-            className="gap-4 flex text-gray-700 px-4 py-2 text-sm active:bg-none" role="menuitem" tabindex="-1"
-              // className="gap-4 flex"
-              onClick={() =>
-                document.getElementById("updateEventCard").showModal()
-              }
+        </button>
+
+        {isOpen && (
+          <div className="origin-top-right absolute right-0 mt-1 w-44 rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <ul
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="options-menu"
             >
-              <img src="icons/edit-blue.svg" alt="" />
-              <p className="text-primary-text text-base font-semibold ">
-                Update
-              </p>
-            </a>
-          </li>
-          <li >
-            <a className="gap-4 flex">
-              <img src="icons/delete-red.svg" alt="" />{" "}
-              <p className="text-primary-text  text-base font-semibold ">
-                Delete
-              </p>
-            </a>
-          </li>
-        </ul>
+              <li>
+                <a
+                  className="gap-5 flex px-5 py-3 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-xl"
+                  role="menuitem"
+                  tabIndex="-1"
+                  onClick={() =>
+                    document.getElementById("updateEventCard").showModal()
+                  }
+                >
+                  <Image
+                    src="icons/edit-blue.svg"
+                    alt=""
+                    height={24}
+                    width={24}
+                  />
+                  <p className="text-primary-text text-base font-semibold ">
+                    Update
+                  </p>
+                </a>
+              </li>
+              <hr />
+              <li>
+                <a
+                  className="gap-5 flex px-5 py-3 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-xl "
+                  role="menuitem"
+                  tabIndex="-1"
+                  onClick={() =>
+                    document.getElementById("delete-event").showModal()
+                  }
+                >
+                  <Image
+                    src="icons/delete-red.svg"
+                    alt=""
+                    height={24}
+                    width={24}
+                  />{" "}
+                  <p className="text-primary-text text-base font-semibold ">
+                    Delete
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
 
       <dialog id="updateEventCard" className="modal !m-0">
@@ -157,7 +214,7 @@ export function EventActionButton() {
                   </h3>
                 </div>
                 {previewSrc && ( // Conditionally render the image preview
-                  <img
+                  <Image
                     src={previewSrc}
                     className="mt-4 mx-auto h-80 w-full object-cover"
                     id="preview"
@@ -170,7 +227,7 @@ export function EventActionButton() {
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="name"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Event Name <span className="text-red-600">*</span>
@@ -197,7 +254,7 @@ export function EventActionButton() {
                 </div>
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="category"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Event Category <span className="text-red-600">*</span>
@@ -232,7 +289,7 @@ export function EventActionButton() {
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="startdate"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Start Date Time <span className="text-red-600">*</span>
@@ -260,7 +317,7 @@ export function EventActionButton() {
                 </div>
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="enddate"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     End Date Time <span className="text-red-600">*</span>
@@ -295,7 +352,7 @@ export function EventActionButton() {
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="duration"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Duration <span className="text-red-600">*</span>
@@ -323,7 +380,7 @@ export function EventActionButton() {
                 </div>
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="max"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Maximum Attendee <span className="text-red-600">*</span>
@@ -353,7 +410,7 @@ export function EventActionButton() {
               <div className="flex gap-8">
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="address"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Address <span className="text-red-600">*</span>
@@ -362,7 +419,7 @@ export function EventActionButton() {
                     {...register("address", {
                       required: "address is required",
                     })}
-                    type="test"
+                    type="text"
                     name="address"
                     id="address"
                     className={`${
@@ -383,7 +440,7 @@ export function EventActionButton() {
               <div className="flex gap-8">
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="description"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Description <span className="text-red-600">*</span>
@@ -414,26 +471,72 @@ export function EventActionButton() {
               <div className="flex items-center gap-5">
                 <p>Create this event as :</p>
                 <div>
+                  {/* <ToogleBtn /> */}
                   <ToogleBtn />
                 </div>
               </div>
 
               <div className="flex justify-end space-x-3 w-full mb-4 gap-2">
                 <button
-                  className="h-11 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white"
-                  onClick={() => document.getElementById("updateEvent").close()}
+                  className="py-3 px-6py-3 px-6 rounded-2xl border-1px border-borderUi  bg-white hover:border-gray-500 hover:bg-white"
+                  onClick={() =>
+                    document.getElementById("updateEventCard").close()
+                  }
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="h-11  rounded-xl flex items-center justify-center gap-2  border bg-green-700  w-32  hover:bg-green-800"
+                  className="py-3 px-6 rounded-2xl border-1px border-borderUi  flex items-center justify-center gap-2  bg-green-700 hover:bg-green-800"
                   onClick={handleSubmit}
                 >
-                  <img src="icons/edit.svg" alt="" />
+                  <Image src="icons/edit.svg" alt="" height={24} width={24} />
                   <p className="text-white">Update</p>
                 </button>
               </div>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog id="delete-event" className="modal">
+        <div className="modal-box w-[310px] justity-center  ">
+          <form method="dialog" className="justify-end flex">
+            <button type="submit">
+              <RxCross2 className="absolute right-[20px] top-[20px] w-6 h-6 " />
+            </button>
+          </form>
+          <div className="justify-center flex">
+            <img
+              src="images/delete.svg"
+              alt="delete"
+              className="w-[58%] mb-3"
+            />
+          </div>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            Are you sure,you want to
+          </p>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            remove this event?
+          </p>
+          <div className="modal-action ">
+            <form
+              method="dialog"
+              className=" flex justify-around w-full mb-4 mt-3 px-3"
+            >
+              <button
+                className="h-9 rounded-3xl bg-red-600 w-[100px] hover:bg-red-700 flex items-center justify-center"
+                value="yes"
+              >
+                <p className="text-white font-semibold al">yes</p>
+              </button>
+
+              <button
+                className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500 flex items-center justify-center"
+                value="cancel"
+              >
+                <p className="text-white font-semibold al">No</p>
+              </button>
             </form>
           </div>
         </div>

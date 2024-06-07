@@ -44,20 +44,33 @@ const getStatusColor = (status) => {
 
 export default function MaterialComponent() {
   const [rows, setRows] = useState([
-    {
-      id: 1,
-      itemName: "",
-      qty: "",
-      unit: "",
-      dueDate: "",
-      handler: "menglim",
-      supporters: "nyta",
-      status: "Pending",
-      note: "",
-    },
+    // {
+    //   id: 1,
+    //   itemName: "",
+    //   qty: "",
+    //   unit: "",
+    //   dueDate: "",
+    //   handler: "menglim",
+    //   supporters: "nyta",
+    //   status: "Pending",
+    //   note: "",
+    // },
   ]);
 
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [selected, setSelected] = useState([]);
+  const [checkedRows, setCheckedRows] = useState([]);
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
+
+  const handleSelectAllChange = (event) => {
+    setSelectAllChecked(event.target.checked);
+    if (event.target.checked) {
+      const allRowIds = rows.map((row) => row.id);
+      setCheckedRows(allRowIds);
+    } else {
+      setCheckedRows([]);
+    }
+  };
 
   const handleStatusChange = (id, newStatus) => {
     const newRows = rows.map((row) =>
@@ -86,8 +99,6 @@ export default function MaterialComponent() {
     setRows([...rows, newRow]);
   };
 
-  const [selected, setSelected] = useState([]);
-
   const customValueRenderer = (selected, _options) => {
     return (
       <div className="flex gap-2">
@@ -112,10 +123,23 @@ export default function MaterialComponent() {
     }
   };
 
+  const handleCheckboxChange = (id) => {
+    setCheckedRows((prevCheckedRows) =>
+      prevCheckedRows.includes(id)
+        ? prevCheckedRows.filter((rowId) => rowId !== id)
+        : [...prevCheckedRows, id]
+    );
+  };
+
+  const deleteSelectedRows = () => {
+    setRows(rows.filter((row) => !checkedRows.includes(row.id)));
+    setCheckedRows([]);
+  };
+
   return (
     <div>
       {/* Material */}
-      <div className="text-primary-text font-semibold text-2xl py-10">
+      <div className="text-primary-text font-semibold text-2xl py-5">
         Material Management
       </div>
       <div className="grid grid-cols-1 py-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 ">
@@ -124,7 +148,7 @@ export default function MaterialComponent() {
             <div className="bg-[#624F9D] p-2.5 rounded-full">
               <Image
                 className=""
-                src="icons/ranking.svg"
+                src="/icons/ranking.svg"
                 alt="Next.js Logo"
                 width={30}
                 height={10}
@@ -179,7 +203,7 @@ export default function MaterialComponent() {
             <div className=" bg-[#038446] p-2.5 rounded-full">
               <Image
                 className=""
-                src="icons/clipboard.svg"
+                src="/icons/clipboard.svg"
                 alt="Next.js Logo"
                 width={30}
                 height={10}
@@ -202,7 +226,7 @@ export default function MaterialComponent() {
             <div className=" bg-[#D72222] p-2.5 rounded-full">
               <Image
                 className=""
-                src="icons/warning-2.svg"
+                src="/icons/warning-2.svg"
                 alt="Next.js Logo"
                 width={32}
                 height={10}
@@ -220,57 +244,79 @@ export default function MaterialComponent() {
           </div>
         </div>
       </div>
+
       {/* <div className="relative"> */}
-      <div className="flex justify-between mt-8 h-14 w-full gap-1">
+      <div className="flex justify-between mt-5 h-14 w-full gap-1">
         <div className=" w-full lg:w-[730px]">
           <input
             type="text"
             placeholder="Search by name"
-            className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-12 border rounded-3xl pl-10"
+            className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-[52px] border rounded-3xl pl-10"
           />
           <IoSearchOutline className="w-[24px] h-[24px] -mt-9 ml-3" />
         </div>
 
-        <button
-          onClick={addNewRow}
-          className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-11 justify-center text-purple-text rounded-3xl  md:py-2.5 flex items-center gap-1"
-        >
-          <AddSquare size="24" variant="Bold" className="" />
-          <p className="text-base w-[100px]">New Material</p>
-        </button>
+        <div className="gap-2 flex">
+          {checkedRows.length > 0 && (
+            <button
+              onClick={deleteSelectedRows}
+              className="flex bg-red-600 hover:duration-300 transition-all text-white border w-28 h-11 rounded-2xl font-medium text-xs lg:text-base justify-center items-center gap-1"
+            >
+              <Image
+                className=""
+                src="/icons/delete.svg"
+                alt="Location"
+                width={25}
+                height={25}
+                priority
+              />
+              Delete
+            </button>
+          )}
 
+          <button
+            onClick={addNewRow}
+            className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-11 justify-center text-purple-text rounded-3xl  md:py-2.5 flex items-center gap-1"
+          >
+            <AddSquare size="24" variant="Bold" className="" />
+            <p className="text-base w-[100px]">New Material</p>
+          </button>
+        </div>
       </div>
 
-      {/* Material table */}
-      <div className=" px-1 overflow-auto ">
-        <table className="overflow-x-auto w-full text-sm text-left rtl:text-right text-gray-500 border-separate dark:text-gray-400 border-spacing-y-3 table mt-3">
+      <div className=" relative overflow-x-auto  sm:rounded-lg px-1 ">
+        <table className="overflow-x-auto  w-full text-sm text-left rtl:text-right text-gray-500 border-separate dark:text-gray-400 border-spacing-y-3 table ">
           <thead className="uppercase dark:text-gray-400 text-sm font-normal h-10 drop-shadow text-primary-text bg-[#F0F1F3]">
             <tr className="text-[14px] font-semibold rounded-2xl">
-              <th scope="col" className="p-4 rounded-l-2xl">
+              <th className="w-4 p-4 rounded-l-2xl">
                 <div className="flex items-center">
                   <input
-                    id="checkbox-all"
                     type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    checked={selectAllChecked}
+                    onChange={handleSelectAllChange}
+                    id="select-all-checkbox"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
-                  <label htmlFor="checkbox-all" className="sr-only">
-                    checkbox
+                  <label htmlFor="select-all-checkbox" className="sr-only">
+                    Select all
                   </label>
                 </div>
               </th>
-              <th scope="col" className="px-1 py-5 text-primary-text">
+              <th scope="col" className=" py-5 text-primary-text px-0">
                 NO
               </th>
-              <th scope="col" className=" py-3 text-primary-text">
+              <th scope="col" className=" py-3 text-primary-text px-6">
                 ITEM NAME
               </th>
-              <th scope="col" className=" py-3 text-primary-text">
+              <th scope="col" className=" py-3 text-primary-text px-2">
                 QTY
               </th>
-              <th scope="col" className=" py-3 text-primary-text">
+              <th scope="col" className=" py-3 text-primary-text px-2">
                 UNIT
               </th>
-              <th className=" py-3 text-primary-text">DUE DATE</th>
+              <th scope="col" className=" py-3 text-primary-text px-2">
+                DUE DATE
+              </th>
               <th scope="col" className=" py-3 text-primary-text">
                 HANDLER
               </th>
@@ -291,17 +337,20 @@ export default function MaterialComponent() {
               </th>
             </tr>
           </thead>
+
           <tbody className="drop-shadow rounded-radiusUi text-sm font-normal text-primary-text bg-[#ffffff]">
             {rows.map((row, index) => (
               <tr
-                key={index}
+                key={row.id}
                 className="bg-white border-b  font-medium text-base  hover:bg-gray-50 h-8 border border-black"
               >
                 <td className="w-4 p-4 rounded-l-2xl">
                   <div className="flex items-center ">
                     <input
-                      id={`checkbox-table-${index + 1}`}
                       type="checkbox"
+                      checked={checkedRows.includes(row.id)}
+                      onChange={() => handleCheckboxChange(row.id)}
+                      id={`checkbox-table-${index + 1}`}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label
@@ -312,60 +361,72 @@ export default function MaterialComponent() {
                     </label>
                   </div>
                 </td>
-                <th className="text-base px-4 text-primary-text">
+                <td className="text-base text-primary-text pl-1">
                   {index + 1}
-                </th>
+                </td>
                 <td className="text-sm font-normal text-primary-text">
                   <input
                     type="text"
                     name="itemName"
                     className="border text-primary-text text-base px-2 w-32 h-10 rounded-xl font-normal focus:outline-none"
                     value={row.itemName}
-                    onChange={(e) => {
-                      const newRows = [...rows];
-                      newRows[index].itemName = e.target.value;
-                      setRows(newRows);
-                    }}
+                    onChange={(e) =>
+                      setRows((prevRows) =>
+                        prevRows.map((r) =>
+                          r.id === row.id
+                            ? { ...r, itemName: e.target.value }
+                            : r
+                        )
+                      )
+                    }
                   />
                 </td>
-                <td className="text-sm font-normal text-primary-text ">
+                <td className="text-sm font-normal text-primary-text px-2 ">
                   <input
                     type="text"
                     name="qty"
-                    className="border text-primary-text text-base px-2 w-20 h-10 rounded-xl font-normal focus:outline-none"
+                    className="border text-primary-text text-base px-2 w-16 h-10 rounded-xl font-normal focus:outline-none"
                     value={row.qty}
-                    onChange={(e) => {
-                      const newRows = [...rows];
-                      newRows[index].qty = e.target.value;
-                      setRows(newRows);
-                    }}
+                    onChange={(e) =>
+                      setRows((prevRows) =>
+                        prevRows.map((r) =>
+                          r.id === row.id ? { ...r, qty: e.target.value } : r
+                        )
+                      )
+                    }
                   />
                 </td>
-                <td className="text-sm font-normal text-primary-text ">
+                <td className="text-sm font-normal text-primary-text px-2">
                   <input
                     type="text"
                     name="unit"
                     className="border text-primary-text text-base px-2 w-20 h-10 rounded-xl font-normal focus:outline-none"
                     value={row.unit}
-                    onChange={(e) => {
-                      const newRows = [...rows];
-                      newRows[index].unit = e.target.value;
-                      setRows(newRows);
-                    }}
+                    onChange={(e) =>
+                      setRows((prevRows) =>
+                        prevRows.map((r) =>
+                          r.id === row.id ? { ...r, unit: e.target.value } : r
+                        )
+                      )
+                    }
                   />
                 </td>
-                <td className="">
+                <td className="px-2">
                   <input
                     type="date"
                     name="dueDate"
                     className="border text-gray-900 sm:text-sm rounded-xl block w-22 p-2 focus:outline-none placeholder:text-opacity-50"
                     placeholder="dd/mm/yyyy"
                     value={row.dueDate}
-                    onChange={(e) => {
-                      const newRows = [...rows];
-                      newRows[index].dueDate = e.target.value;
-                      setRows(newRows);
-                    }}
+                    onChange={(e) =>
+                      setRows((prevRows) =>
+                        prevRows.map((r) =>
+                          r.id === row.id
+                            ? { ...r, dueDate: e.target.value }
+                            : r
+                        )
+                      )
+                    }
                   />
                 </td>
                 <td className="">
@@ -400,13 +461,13 @@ export default function MaterialComponent() {
                   />
                 </td>
                 <td className="px-4 w-36">
-                  <div className="relative  bg-white p-[7px] border rounded-xl ">
+                  <div className="relative bg-white p-[7px] border rounded-xl ">
                     <div
                       className="cursor-pointer flex items-center"
                       onClick={() => toggleDropdown(row.id)}
                     >
                       <span
-                        className="flex px-1 py-1 w-20 text-xs font-semibold justify-center  rounded-full"
+                        className="flex px-1 py-1 w-16 text-xs font-semibold justify-center  rounded-full"
                         style={{
                           backgroundColor: getStatusColor(row.status),
                           color: "white",
@@ -443,16 +504,18 @@ export default function MaterialComponent() {
                   <input
                     type="text"
                     name="note"
-                    className="border text-primary-text text-base sm:text-sm px-0 w-36 h-10 rounded-xl font-normal focus:outline-none"
+                    className="border text-primary-text text-base sm:text-sm px-2 w-28 h-10 rounded-xl font-normal focus:outline-none"
                     value={row.note}
-                    onChange={(e) => {
-                      const newRows = [...rows];
-                      newRows[index].note = e.target.value;
-                      setRows(newRows);
-                    }}
+                    onChange={(e) =>
+                      setRows((prevRows) =>
+                        prevRows.map((r) =>
+                          r.id === row.id ? { ...r, note: e.target.value } : r
+                        )
+                      )
+                    }
                   />
                 </td>
-                <td className="pl-10 rounded-r-2xl ">
+                <td className="pl-5 rounded-r-2xl ">
                   <MaterialActionButton />
                 </td>
               </tr>
@@ -463,3 +526,5 @@ export default function MaterialComponent() {
     </div>
   );
 }
+
+

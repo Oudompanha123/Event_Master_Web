@@ -10,7 +10,7 @@ export const LogoutAction = () => {
             {/* <Image className="cursor-pointer" onClick={() => document.getElementById('category_action').showModal()} src="/icons/trash.svg" width={20} height={20} /> */}
             <div onClick={() => document.getElementById('logout_action').showModal()} className={`cursor-pointer space-x-3 px-4 py-4 flex justify-center xl:justify-start rounded-radiusUi w-full items-center`}>
                 <LogoutCurve size="20" color="#344054" variant="Bulk" />
-                <p className="hidden xl:block text-base 2xl:text-lg">Logout</p>
+                <p className="hidden xl:block text-base">Logout</p>
             </div>
             <dialog id="logout_action" className="modal">
                 <div className="modal-box w-[310px] justity-center  ">

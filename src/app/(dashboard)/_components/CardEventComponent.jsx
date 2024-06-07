@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
 import Image from "next/image";
 import mockEventService from "../mockEventService";
 import { EventActionButton } from "./EventActionButton";
@@ -62,7 +61,7 @@ export default function CardEventComponent() {
                   </div>
 
                   <span
-                    className={`inline-block rounded-full px-4 py-1 text-sm font-semibold ${
+                    className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${
                       data.isOpen
                         ? "bg-blue-100 text-blue-700"
                         : "bg-red-100 text-red-700"
@@ -92,7 +91,7 @@ export default function CardEventComponent() {
                   <button className="mx-auto">View all attendees</button>
                 </Link>
                 <Link
-                  href="/event-detail"
+                  href="/event-detail/1"
                   className="flex hover:bg-violet-700 active:bg-violet-800 focus:outline-none focus:ring focus:ring-violet-500 items-center justify-center flex-1 rounded-full bg-[#7939EF] text-white antialiased py-2 text-sm transition duration-300 ease-in-out hover:scale-[102%]"
                 >
                   <button className="mx-auto">View event detail</button>

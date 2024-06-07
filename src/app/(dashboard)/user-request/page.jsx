@@ -9,7 +9,7 @@ const Page = () => {
                 <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Show All User Request</h2>
                 <div className="overflow-scroll px-1">
                     <table className="table w-full border-separate border-spacing-y-3">
-                        <thead className="h-14 drop-shadow-soft rounded-radiusUi text-primary-text bg-[#FFFFFF] uppercase">
+                        <thead className="h-14 shadow-soft rounded-radiusUi text-primary-text bg-[#FFFFFF] uppercase">
                             <tr className="text-xs lg:text-base">
                                 <th className="px-5 py-2 font-medium rounded-l-radiusUi">No</th>
                                 <th className="px-5 py-2 font-medium">Name</th>
@@ -21,12 +21,12 @@ const Page = () => {
                         </thead>
                         <tbody>
                             {userData.data.map((x, index) => (
-                                <tr className={`h-14 drop-shadow-soft text-primary-text rounded-radiusUi even:bg-softwhiteUi odd:bg-white`}>
-                                    <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{index + 1}</td>
-                                    <td className="px-5 py-2 text-xs xl:text-base">{x.name}</td>
-                                    <td className="px-5 py-2 text-xs xl:text-base">{x.gender}</td>
-                                    <td className="px-5 py-2 text-xs xl:text-base">{x.tel}</td>
-                                    <td className="px-5 py-2 text-xs xl:text-base">{x.email}</td>
+                                <tr className={`h-14 shadow-soft text-primary-text rounded-radiusUi even:bg-softwhiteUi odd:bg-white`}>
+                                    <td className="px-5 py-2 text-xs lg:text-base rounded-l-radiusUi">{index + 1}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base">{x.name}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base">{x.gender}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base">{x.tel}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base">{x.email}</td>
                                     <td className="rounded-r-radiusUi">
                                         <RegisterActionComponent />
                                     </td>

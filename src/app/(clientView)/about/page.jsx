@@ -8,7 +8,7 @@ import teamData from "../../../data/team.json"
 
 const Page = () => {
     return (
-        <div className="container">
+        <div className="container overflow-hidden">
             <section className="bg-pattern bg-cover text-center mt-24">
                 <h1 className="text-4xl lg:text-6xl font-semibold">About Event Master</h1>
                 <p className="text-sm text-slate-500 lg:text-xl font-light mt-10 w-full lg:w-1/2 mx-auto">Created by KPS students with expert mentors,
@@ -42,7 +42,6 @@ const Page = () => {
                     </p>
                 </div>
                 <div className="flex flex-wrap items-start gap-16 mt-16 justify-center">
-                    {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 mt-16 flex-wrap items-center justify-center"> */}
                     {teamData.payload.map((x, index) => (
                         <TeamCardComponent key={index} img={x.image} name={x.name} quote={x.quote} />
                     ))}

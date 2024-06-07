@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { MdAddBox } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
-import Image from "next/image";
+import { AddSquare } from "iconsax-react";
 
 function AddmoreInput({ inputList, setInputList }) {
   const handleAddClick = () => {
@@ -54,7 +54,7 @@ function AddmoreInput({ inputList, setInputList }) {
                   <input
                     type="text"
                     name="topic"
-                    className="appearance-none input input-bordered font-medium text-sm w-full rounded-xl"
+                    className="appearance-none input input-bordered font-medium text-sm w-full rounded-xl  focus:outline-none focus:border-purple-text"
                     placeholder="Enter the Topic"
                     value={x.topic}
                     onChange={(e) => handleInputChange(e, i)}
@@ -78,7 +78,7 @@ function AddmoreInput({ inputList, setInputList }) {
                         type="time"
                         id="start-time"
                         name="startTime"
-                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none "
                         min="09:00"
                         max="18:00"
                         value={x.startTime}
@@ -102,7 +102,7 @@ function AddmoreInput({ inputList, setInputList }) {
                         type="time"
                         id="end-time"
                         name="endTime"
-                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none "
                         min="09:00"
                         max="18:00"
                         value={x.endTime}
@@ -121,7 +121,7 @@ function AddmoreInput({ inputList, setInputList }) {
                     <input
                       type="text"
                       name="speaker"
-                      className="input input-bordered font-medium text-sm w-full rounded-xl"
+                      className="input input-bordered font-medium text-sm w-full rounded-xl focus:outline-none focus:border-purple-text"
                       placeholder="Enter the Speaker"
                       value={x.speaker}
                       onChange={(e) => handleInputChange(e, i)}
@@ -139,7 +139,7 @@ function AddmoreInput({ inputList, setInputList }) {
                   <textarea
                     type="text"
                     name="description"
-                    className="textarea textarea-bordered font-medium text-sm w-full rounded-xl h-20"
+                    className="textarea textarea-bordered font-medium text-sm w-full rounded-xl h-20 focus:outline-none focus:border-purple-text"
                     placeholder="Enter the description..."
                     value={x.description}
                     onChange={(e) => handleInputChange(e, i)}
@@ -180,36 +180,30 @@ export function CreateAgendaButton() {
   return (
     <>
       <button
-        className="btn rounded-3xl  border-purple-text border h-1 bg-white w-46 hover:border-purple-text hover:bg-white"
+        className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-11 justify-center text-purple-text rounded-3xl  md:py-2.5 flex items-center gap-1"
         onClick={() => document.getElementById("my_modal_4").showModal()}
       >
-         <Image
-                className=""
-                src="/icons/create-new.svg"
-                alt="Create New Icon"
-                width={25}
-                height={25}
-                priority
-              />
-        <p className="text-purple-text text-base font-regular">Create Agenda</p>
+          <AddSquare size="24" variant="Bold" className="" />
+        <p className="text-base">Create Agenda</p>
       </button>
       <dialog id="my_modal_4" className="modal ">
         <div className="modal-box w-11/12 max-w-5xl  bg-[#F7F9FB]">
           <AddmoreInput inputList={inputList} setInputList={setInputList} />
           <div className="modal-action gap-2 mb-4">
+          <button
+              className="px-6 py-3 rounded-2xl border-1px border-borderUi bg-white  hover:border-gray-500 hover:bg-white"
+              onClick={() => document.getElementById("my_modal_4").close()}
+            >
+              Cancel
+            </button>
             <button
-              className="h-10  rounded-xl flex items-center justify-center gap-3  border-blueUi border bg-blue-700  w-32 hover:border-blueUi hover:bg-blue-800"
+              className="px-6 py-3 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-3  bg-blue-700  w-32 hover:border-blueUi hover:bg-blue-800"
               onClick={handleSubmit}
             >
               <MdAddBox size={24} color="white" />
               <p className="text-white">Save</p>
             </button>
-            <button
-              className="h-10 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white"
-              onClick={() => document.getElementById("my_modal_4").close()}
-            >
-              Cancel
-            </button>
+            
           </div>
         </div>
       </dialog>
