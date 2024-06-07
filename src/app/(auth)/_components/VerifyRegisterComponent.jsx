@@ -12,6 +12,7 @@ const VerifyRegisterComponent = () => {
     const [errorMessage, setErrorMessage] = useState(null);
 
     const handleChange = (enteredOtp) => {
+        setRgotp('');
         if (!/^\d+$/.test(enteredOtp)) {
             setErrorMessage("Please enter only numbers.");
             return;

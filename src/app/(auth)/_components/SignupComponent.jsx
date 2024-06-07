@@ -3,7 +3,6 @@
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import Image from 'next/image';
-import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 
 const SignupComponent = () => {
@@ -27,7 +26,7 @@ const SignupComponent = () => {
         watch,
         reset,
     } = useForm({
-        mode: 'onChange', // Validate on change
+        mode: 'onChange',
         defaultValues: initialData,
     });
 
@@ -61,6 +60,7 @@ const SignupComponent = () => {
     };
 
     return (
+
         <div className="mx-[42%] mt-56 w-[45%] bg-white rounded-[40px] shadow-md absolute">
             <div className="flex justify-start p-6 pt-12 mx-8 focus:outline-none">
                 <button
@@ -312,7 +312,8 @@ const SignupComponent = () => {
                                         })}
                                     />
                                     {errors.organizationCode && (
-                                        <span className="text-red-600 text-sm">{errors.organizationCode.message}</span>
+                                        <span
+                                            className="text-red-600 text-sm">{errors.organizationCode.message}</span>
                                     )}
                                 </div>
                             </div>

@@ -12,7 +12,9 @@ const VerifyOTPComponent = () => {
     const [errorMessage, setErrorMessage] = useState(null);
 
     const handleChange = (enteredOtp) => {
+        console.log(enteredOtp)
         if (!/^\d+$/.test(enteredOtp)) {
+            setOtp('');
             setErrorMessage("Please enter only numbers.");
             return;
         }
