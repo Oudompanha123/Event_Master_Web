@@ -9,7 +9,7 @@ import styles from "./MyComponent.module.css"
 import React from 'react'
 
 function FormComponent() {
-    const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [organizationName, setOrganizationName] = useState("");
   const [address, setAddress] = useState("");
 

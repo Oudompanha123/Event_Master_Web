@@ -151,7 +151,7 @@ function FormComponent() {
                         </div>
                     </div>
                     <div className='block mb-5 mt-4'>
-                        <button type='button' className='btn bg-purple-text text-white rounded-3xl' onClick={handleUpdateClick}>
+                        <button type='button' className='btn bg-purple text-white rounded-3xl hover:bg-purple-text-head' onClick={handleUpdateClick}>
                             Change Password
                         </button> 
                     </div>
