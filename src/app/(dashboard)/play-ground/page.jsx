@@ -1,10 +1,12 @@
+'use client'
+
 import { MegaImage } from "@/components/MegaImage"
 import { ToogleBtn } from "../_components/Action/ToogleBtn"
 import { Pagination } from "../_components/Pagination"
 
 const Page = () => {
     return (
-        <div>
+        <div className="h-full w-full">
             <ToogleBtn />
             <Pagination />
             <div className="!w-[500px] !h-[300px] relative object-cover">
