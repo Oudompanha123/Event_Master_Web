@@ -31,14 +31,14 @@ const LoginComponent = () => {
   };
 
   return (
-    <div className="absolute flex flex-col h-full justify-center lg:px-8 w-full p-8 xl:mx-[42%] xl:mt-2 xl:w-[45%] xl:right-[10%]">
+    <div className="absolute flex mt-11 flex-col h-full justify-center lg:px-8 w-full p-8 xl:mx-[42%] xl:mt-2 xl:w-[45%] xl:right-[10%]">
       {" "}
       {/*sm:px-6 px-6 top-44 left-[15%]*/}
       <div className="mt-8 sm:mx-auto w-full sm:w-full sm:max-w-md flex justify-center ">
-        <div className="bg-white py-8 w-[110%] shadow rounded-[40px] px-12">
+        <div className="bg-white py-6 md:py-8 w-[110%] shadow rounded-[40px] px-3 md:px-12">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-12 -mt-3 rounded-radiusUi">
-              <h2 className="mt-6 text-center text-4xl font-bold flex justify-center">
+              <h2 className="mt-6 px-2 text-center text-3xl md:text-4xl font-bold flex justify-center">
                 Login
               </h2>
               <p className="mt-5 flex justify-center greyUi">
