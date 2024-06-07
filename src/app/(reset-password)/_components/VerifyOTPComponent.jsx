@@ -13,11 +13,24 @@ const VerifyOTPComponent = () => {
 
     const handleChange = (enteredOtp) => {
         if (!/^\d+$/.test(enteredOtp)) {
-            setErrorMessage("Invalid OTP. Please enter only numbers.");
+            setErrorMessage("Please enter only numbers.");
             return;
         }
         setOtp(enteredOtp);
+        setErrorMessage('');
     };
+
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Backspace') {
+            event.preventDefault();
+            setOtp(prev => prev.slice(0, -1));// Remove the last character
+            const prevInput = event.target.previousElementSibling;
+            if (prevInput) {
+                prevInput.focus();
+            }
+        }
+    }
 
     const router = useRouter();
 
@@ -34,16 +47,17 @@ const VerifyOTPComponent = () => {
                 <OtpInput inputStyle={styles.inputStyle}
                           value={otp}
                           onChange={handleChange}
+                          onKeyDown={handleKeyDown}
                           numInputs={4}
                 />
 
-                {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+                {errorMessage && <p className="text-red-600 mt-3 ml-4">{errorMessage}</p>}
 
                 <button
                     onClick={() => router.push('/set-new-password')}
                     type="button"
                     id="continue"
-                    className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 mt-12 shadow-md shadow-violet-400 ${otp.length !== 4 ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}
+                    className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 mt-10 ml-2 shadow-md shadow-violet-400 ${otp.length !== 4 ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}
                     disabled={otp.length !== 4}
                 >
                     Continue
