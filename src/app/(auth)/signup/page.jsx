@@ -5,7 +5,7 @@ import SignupComponent from "@/app/(auth)/_components/SignupComponent";
 
 const SignUpPage = () => {
     return (
-        <div className="w-full relative h-screen">
+        <div className="w-full relative h-screen flex jus">
             <Image className="absolute object-cover -mt-[70px] bg-cover"
                    src={`/icons/signup.svg`} alt={`image`} width={1920} height={100} property=""/>
 

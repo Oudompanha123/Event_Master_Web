@@ -6,7 +6,7 @@ export const AssetTableComponent = () => {
   return (
     <table className="w-full border-separate border-spacing-y-3 mt-0">
       <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-tableBg uppercase">
-        <tr className="w-full overflow-auto text-xs lg:text-base">
+        <tr className="w-full overflow-auto text-xs lg:text-base px-4">
           <th className="py-3 font-medium px-2 rounded-l-radiusUi">NO</th>
           <th className="py-3 font-medium">ASSET NAME</th>
           <th className="font-medium">QTY</th>
@@ -19,7 +19,7 @@ export const AssetTableComponent = () => {
       <tbody className="border rounded-radiusUi w-full bg-white ">
         {data.data.map((asset, index) => (
           <tr className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border">
-            <td className="py-3 rounded-l-radiusUi items-center text-xs xl:text-base w-20">
+            <td className="py-3 rounded-l-radiusUi items-center ml-1   text-xs xl:text-base w-20 bg-green-200">
               {index + 1}
             </td>
             <td className="w-28">
