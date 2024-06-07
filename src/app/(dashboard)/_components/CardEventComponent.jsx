@@ -27,24 +27,24 @@ export default function CardEventComponent() {
   }, []);
 
   return (
-    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2">
+    <div className="gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:gap-6 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2 2xl:grid-cols-4  ">
       {events.map((data, index) => {
         const { day, month } = formatDate(data.startDate);
         return (
           <div key={index}>
             <div className=" rounded-2xl overflow-hidden shadow-lg">
               <div
-                className="w-auto h-60 bg-cover bg-center  transition duration-300 ease-in-out hover:scale-[103%]"
+                className="w-auto h-60 bg-cover bg-center sm:h-[200px] md:h-[220px] lg:h-[220px] xl:h-[230px] 2xl:[250px] "
                 style={{
                   backgroundImage:
                     `url(${data.poster})` ||
                     `url(https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg)`,
-                  height: "256px",
+                  // height: "255px",
                 }}
                 alt="Event Photo"
               >
                 <div className="w-full flex justify-between pt-3 pl-3 pr-3 ">
-                  <div className="text-sm  bg-white text-primary-text rounded-xl h-11 w-10 flex flex-col items-center justify-center ">
+                  <div className="text-sm  bg-white text-primary-text rounded-xl h-11 w-10 py-2 flex flex-col items-center justify-center ">
                     <span className="font-semibold">{day}</span>
                     <small className="text-red-500 font-semibold">
                       {month}

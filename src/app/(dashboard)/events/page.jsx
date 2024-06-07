@@ -22,7 +22,7 @@ export default function Event() {
               type="date"
               name="start date"
               id="date"
-              className="border text-primary-text sm:text-sm rounded-3xl block w-full p-2.5 focus:outline-none"
+              className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none"
             />
           </div>
         </form>
@@ -39,7 +39,7 @@ export default function Event() {
               type="date"
               name="end date"
               id="date"
-              className="border text-primary-text sm:text-sm rounded-3xl block w-full p-2.5 focus:outline-none"
+              className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none"
             />
           </div>
         </form>

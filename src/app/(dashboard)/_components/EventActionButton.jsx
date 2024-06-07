@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { ToogleBtn } from "../_components/Action/ToogleBtn";
 import { RxCross2 } from "react-icons/rx";
+import { SelectDropdown } from "./SelectDropdownComponent";
+import { SelectModify } from "./Action/SelectModify";
 // import { ToogleBtn } from "./Action/ToogleBtn";
 
 export function EventActionButton() {
@@ -239,11 +241,10 @@ export function EventActionButton() {
                     type="text"
                     name="name"
                     id="name"
-                    className={`${
-                      errors.name
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.name
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter event name"
                   />
                   {errors.name && (
@@ -253,7 +254,17 @@ export function EventActionButton() {
                   )}
                 </div>
                 <div className="w-full">
-                  <label
+                  <SelectDropdown
+                    label={`!font-medium`}
+                    height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                  />
+                  {/* <SelectDropdown
+                    {...register("category")}
+                    label={`!font-medium`}
+                    height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                  /> */}
+
+                  {/* <label
                     htmlFor="category"
                     className="text-sm font-medium primary-text block mb-2"
                   >
@@ -283,7 +294,7 @@ export function EventActionButton() {
                     <span className="text-red-600 text-sm">
                       {errors.category.message}
                     </span>
-                  )}
+                  )} */}
                 </div>
               </div>
               <div className="flex flex-col md:flex-row gap-8">
@@ -301,11 +312,10 @@ export function EventActionButton() {
                     type="datetime-local"
                     name="startDate"
                     id="startdate"
-                    className={`${
-                      errors.startDate
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.startDate
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="MM/DD/YYYY 6:00 AM"
                     required=""
                   />
@@ -334,11 +344,10 @@ export function EventActionButton() {
                     type="datetime-local"
                     name="endDate"
                     id="enddate"
-                    className={`${
-                      errors.endDate
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.endDate
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="MM/DD/YYYY 6:00 AM"
                     required=""
                   />
@@ -364,11 +373,10 @@ export function EventActionButton() {
                     type="number"
                     name="duration"
                     id="duration"
-                    className={`${
-                      errors.duration
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.duration
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter duration"
                     required=""
                   />
@@ -392,11 +400,10 @@ export function EventActionButton() {
                     type="number"
                     name="maxAttendee"
                     id="max"
-                    className={`${
-                      errors.maxAttendee
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.maxAttendee
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter maximum attendee"
                     required=""
                   />
@@ -422,11 +429,10 @@ export function EventActionButton() {
                     type="text"
                     name="address"
                     id="address"
-                    className={`${
-                      errors.address
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.address
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter address"
                     required=""
                   />
@@ -453,11 +459,10 @@ export function EventActionButton() {
                     type="text"
                     name="description"
                     id="description"
-                    className={`${
-                      errors.description
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.description
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter description..."
                     required=""
                   />

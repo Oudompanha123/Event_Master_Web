@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { ToogleBtn } from "./Action/ToogleBtn";
+import { SelectDropdown } from "./SelectDropdownComponent";
 
 export const UpdateEventButton = () => {
   const [hide, setHide] = useState(false);
@@ -177,7 +178,13 @@ export const UpdateEventButton = () => {
                   )}
                 </div>
                 <div className="w-full">
-                  <label
+                  <SelectDropdown
+                    {...register("category")}
+                    label={`!font-medium`}
+                    height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                  />
+
+                  {/* <label
                     htmlFor="password"
                     className="text-sm font-medium primary-text block mb-2"
                   >
@@ -207,7 +214,7 @@ export const UpdateEventButton = () => {
                     <span className="text-red-600 text-sm">
                       {errors.category.message}
                     </span>
-                  )}
+                  )} */}
                 </div>
               </div>
               <div className="flex flex-col md:flex-row gap-8">

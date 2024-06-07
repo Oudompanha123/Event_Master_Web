@@ -34,7 +34,7 @@ export const SelectDropdown = ({height, label}) => {
               Event Category
             </Label>
             <Listbox.Button
-              className={`relative ${height} h-[42px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${
+              className={`relative ${height} h-[48px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${
                 !selected ? " text-gray-400" : "bg-white text-black"
               }`}
             >
