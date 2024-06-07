@@ -45,9 +45,10 @@ export const AssetTableComponent = () => {
             <td className="w-14">
               <div
                 className={`text-xs xl:text-base border rounded-radiusUi py-1
-                  ${asset.status == "Out of Stock"
-                    ? "bg-softRedUi"
-                    : "bg-softGreenUi"
+                  ${
+                    asset.status == "Out of Stock"
+                      ? "bg-softRedUi"
+                      : "bg-softGreenUi"
                   } `}
               >
                 {asset.status}
