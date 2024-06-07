@@ -10,6 +10,7 @@ import { TbEditCircle } from "react-icons/tb";
 import { FaRegCopy } from "react-icons/fa6";
 import { CgAdd } from "react-icons/cg";
 import { IoAddCircleOutline } from "react-icons/io5";
+import logo from "../../../../../public/images/event-master-logo.png"
 
 function NewFormComponent() {
   const [profileImage, setProfileImage] = useState(
@@ -107,7 +108,7 @@ function NewFormComponent() {
           <div className="w-full h-40 bg-purple rounded-t-2xl sm:mt-0"></div>
           <div className="w-300 h-300 rounded-full lg:-mt-20 sm:-mt-20 sm:w-40 sm:h-40 md:w-44 md:h-44 lg:w-44 relative lg:h-44">
             <Image
-              src={profileImage}
+              src={logo}
               alt="My Image"
               width={450}
               height={450}
@@ -159,7 +160,7 @@ function NewFormComponent() {
                 }}
                 className={`flex justify-end items-center sm:w-[500px] h-10 absolute right-0 top-0 text-gray-600 hover:text-gray-800 cursor-pointer ${styles.copy}`}
               >
-                <FaRegCopy className="w-7 h-7 lg:w-6 lg:h-6 mt-3 mr-4 sm:mr-8 md:mr-4"/>
+                <FaRegCopy className="w-7 h-7 lg:w-6 lg:h-6 mt-3 mr-4 sm:mr-8 md:mr-4" />
               </div>
               {copied && (
                 <div className="absolute top-0 right-0 -mt-8">
@@ -179,11 +180,10 @@ function NewFormComponent() {
             <input
               type="text"
               placeholder="Enter organization name"
-              className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 mt-3 ${
-                errors.name
-                  ? "border-red-700 focus:border-red-600"
-                  : "border-gray-300"
-              }`}
+              className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 mt-3 ${errors.name
+                ? "border-red-700 focus:border-red-600"
+                : "border-gray-300"
+                }`}
               value={organizationName}
               onChange={(e) => {
                 setOrganizationName(e.target.value);
@@ -204,11 +204,10 @@ function NewFormComponent() {
             <input
               type="text"
               placeholder="Enter address"
-              className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 mt-3 ${
-                errors.address
-                  ? "border-red-700 focus:border-red-600"
-                  : "border-gray-300"
-              }`}
+              className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 mt-3 ${errors.address
+                ? "border-red-700 focus:border-red-600"
+                : "border-gray-300"
+                }`}
               value={address}
               onChange={(e) => {
                 setAddress(e.target.value);
@@ -235,16 +234,15 @@ function NewFormComponent() {
                   Cancel
                 </button>
                 <button
-                className={`btn btn-primary text-white w-40 text-lg lg:w-32 lg:text-base ml-5 ${
-                  isFormValid ? "" : "opacity-50 cursor-not-allowed"
-                }`}
-                onClick={handleSaveChanges}
-                type="button"
-                disabled={!isFormValid || !organizationName || !address}
-              >
-                <CgAdd  className="w-7 h-7 lg:w-5 lg:h-5" />
-                Save
-              </button>
+                  className={`btn btn-primary text-white w-40 text-lg lg:w-32 lg:text-base ml-5 ${isFormValid ? "" : "opacity-50 cursor-not-allowed"
+                    }`}
+                  onClick={handleSaveChanges}
+                  type="button"
+                  disabled={!isFormValid || !organizationName || !address}
+                >
+                  <CgAdd className="w-7 h-7 lg:w-5 lg:h-5" />
+                  Save
+                </button>
               </>
             ) : (
               <button
@@ -273,7 +271,7 @@ function NewFormComponent() {
           className={`
       absolute bottom-0
       rounded-bl-2xl
-      w-[150px] sm:w-[150px] md:w-[200px] lg:w-[250px] xl:w-[300px] 2xl:w-[400px]
+      w-[150px] sm:w-[150px] md:w-[200px] lg:w-[250px] xl:w-[300px] 2xl:w-[200px]
       mt-0 lg:mt-[-100px]
     `}
         />
