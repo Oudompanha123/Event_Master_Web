@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const LoginPage = () => {
   return (
-    <div className="w-full relative h-screen flex items-center">
+    <div className="w-full relative h-screen flex m-8 items-center">
       <Image
         className="absolute object-cover bg-cover -top-5 block h-2/3" //lg:-mt-[70px]
         src={`/icons/login.svg`}

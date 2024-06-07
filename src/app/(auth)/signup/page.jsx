@@ -5,9 +5,9 @@ import SignupComponent from "@/app/(auth)/_components/SignupComponent";
 
 const SignUpPage = () => {
   return (
-    <div className="w-full relative h-screen  md:px-8 flex justify-center">
+    <div className="w-full relative h-screen p-8 md:px-8 flex justify-center mb-40 ">
       <Image
-        className="absolute object-cover mx-4 -mt-[70px] bg-cover -top-5 block h-2/3 bg-red-500"
+        className="absolute w-full object-cover mx-4 -mt-[70px] bg-cover -top-5 block h-2/3"
         src={`/icons/signup.svg`}
         alt={`image`}
         width={1920}
@@ -24,15 +24,17 @@ const SignUpPage = () => {
       </Link>
 
       <Image
-        className="hidden absolute left-[200px] top-[62%] transform translate-y-[-50%]"
+        className="hidden xl:block absolute left-[200px] top-[62%] transform translate-y-[-50%]"
         src={`/icons/signup-amico.svg`}
         alt={`img`}
         width={520}
         height={300}
       />
-      <div className="hidden absolute top-32 left-36 text-white text-2xl">
-        <h1 className="text-[58px] font-medium">Register New Account</h1>
-        <p className="pt-10 text-xl line-clamp-2">
+      <div className="hidden xl:block absolute top-32 left-32 text-white text-2xl">
+        <h1 className="2xl:text-[58px] font-medium xl:text-[50px]">
+          Register New Account
+        </h1>
+        <p className="pt-10 text-xl line-clamp-2 ">
           Create a new account to access our application.
         </p>
       </div>
