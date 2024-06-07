@@ -3,19 +3,20 @@ import data from "../../../data/asset.json";
 import { EditAssetComponents } from "./EditAssetComponents";
 import { DeleteAssetComponent } from "./DeleteAssetComponent";
 export const AssetTableComponent = () => {
-
   return (
-    <div className="">
-      <table className="w-full border-separate border-spacing-y-3 px-6 mt-0">
+    <div className="w-full overflow-scroll ">
+      <table className="w-full border-separate border-spacing-y-3 px-1 mt-0 ">
         <thead className="h-14 drop-shadow-soft text-primary-text rounded-radiusUi bg-tableBg uppercase">
-          <tr className="w-full overflow-auto text-xs lg:text-base">
-            <th className="py-3 font-medium px-2 rounded-l-radiusUi">NO</th>
-            <th className="py-3 font-medium">ASSET NAME</th>
-            <th className="font-medium">QTY</th>
-            <th className="font-medium">UNIT</th>
-            <th className="font-medium">CREATED BY</th>
-            <th className="font-medium">STATUS</th>
-            <th className="font-medium rounded-r-radiusUi px-3  ">ACTION</th>
+          <tr className=" text-xs lg:text-base">
+            <th className="py-3 font-medium px-5 rounded-l-radiusUi">NO</th>
+            <th className="py-3 px-5 font-medium">ASSET NAME</th>
+            <th className="py-3 px-5 font-medium">QTY</th>
+            <th className="py-3 px-5 font-medium">UNIT</th>
+            <th className="py-3 px-5 font-medium">CREATED AT</th>
+            <th className="py-3 px-5 font-medium">STATUS</th>
+            <th className="py-3 font-medium rounded-r-radiusUi px-3  ">
+              ACTION
+            </th>
           </tr>
         </thead>
         <tbody className="border rounded-radiusUi w-full drop-shadow-soft bg-white ">

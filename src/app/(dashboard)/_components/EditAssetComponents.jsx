@@ -16,20 +16,19 @@ export const EditAssetComponents = () => {
     console.log(data);
   };
   return (
-  
     <div>
       <Image
         src={"/icons/edit-blue.svg"}
         width={20}
         height={20}
-        onClick={() => document.getElementById("my_modal_updateasset").showModal()}
+        onClick={() =>
+          document.getElementById("my_modal_updateasset").showModal()
+        }
       />
       <dialog id="my_modal_updateasset" className="modal">
         <div className="modal-box w-11/12 md:w-1/2 max-w-5xl space-y-8">
           <div className="flex flex-row items-center text-primary-text">
-            <h2 className="text-lg lg:text-xl font-semibold">
-              Create Category
-            </h2>
+            <h2 className="text-lg lg:text-xl font-semibold">Create Asset</h2>
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                 ✕
@@ -40,8 +39,10 @@ export const EditAssetComponents = () => {
           <form action="" onSubmit={handleSubmit(onSubmit)}>
             <div className=" ">
               <div className="text-center  flex flex-col justify-start items-start">
-                <label htmlFor="">Asset Name <span className="text-redUi">*</span></label>
-               
+                <label htmlFor="">
+                  Asset Name <span className="text-redUi">*</span>
+                </label>
+
                 <input
                   type="text"
                   id=""
@@ -107,17 +108,12 @@ export const EditAssetComponents = () => {
                 >
                   Cancel
                 </div>
-                  <button
+                <button
                   type="submit"
                   className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
                 >
-                    <Image
-                      src={"/icons/edit.svg"}
-                      width={20}
-                      height={20}
-                    
-                    />
-               
+                  <Image src={"/icons/edit.svg"} width={20} height={20} />
+
                   <span className=" cancle h-12 text-white font-semibold text-sm flex justify-center items-center">
                     Update
                   </span>

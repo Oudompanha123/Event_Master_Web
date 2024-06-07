@@ -5,12 +5,12 @@ import { AssetTableComponent } from "../_components/AssetTableComponent";
 export default function assetPage() {
   return (
     <>
-      <div className="contain bg-white w-fit lg:w-full rounded-3xl box-border">
-        <div className="head flex flex-col gap-2 lg:flex-row lg:justify-between p-6 ">
+      <div className="contain space-y-4 w-full bg-white lg:w-full rounded-3xl">
+        <div className="head flex flex-col gap-2 lg:flex-row lg:justify-between p-6">
           <div className="md:text-lg xl:text-xl font-semibold text-primary-text">
             Asset Management
           </div>
-          <div className="search_bar flex gap-7   lg:w-3/4 justify-between ">
+          <div className="search_bar flex gap-7 lg:w-3/4 justify-between ">
             <div className=" w-4/5 lg:w-[730px]">
               <input
                 type="text"
@@ -24,11 +24,10 @@ export default function assetPage() {
             </div>
           </div>
         </div>
-        <div className="tables box-border mt-0">
-          <AssetTableComponent />
-        </div>
+        <AssetTableComponent />
+
         <div className="pagination flex justify-end px-8 pb-8 mt-8">
-          <Pagination/>
+          <Pagination />
         </div>
       </div>
     </>
