@@ -20,7 +20,7 @@ export const LogoutAction = () => {
                         </button>
                     </form>
                     <div className="justify-center flex">
-                        <img src="images/logout.svg" alt="delete" className="w-[58%] mb-3" />
+                        <img src="/images/logout.svg" alt="delete" className="w-[58%] mb-3" />
                     </div>
                     <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
                         Are you sure,you want to
@@ -32,7 +32,7 @@ export const LogoutAction = () => {
                         <form method="dialog" className=" flex justify-around w-full mb-4 mt-3 px-3">
                             <Link href={'/login'}>
                                 <button className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700" value="yes">
-                                    <p className="text-white font-semibold">yes</p>
+                                    <p className="text-white font-semibold">Yes</p>
                                 </button>
                             </Link>
                             <button className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500" value="cancel">

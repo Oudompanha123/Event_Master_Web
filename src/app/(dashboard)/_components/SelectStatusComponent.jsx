@@ -32,7 +32,7 @@ export const SelectStatus = () => {
               Status
             </Label>
             <Listbox.Button
-              className={`relative h-[42px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${
+              className={`relative h-[48px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${
                 !selected ? " text-gray-400" : "bg-white text-black"
               }`}
             >

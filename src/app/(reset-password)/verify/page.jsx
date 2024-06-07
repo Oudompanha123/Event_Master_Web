@@ -11,7 +11,7 @@ const VerifyPage = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             router.push('/overview');
-        }, 2000);
+        }, 1500);
 
         return () => clearTimeout(timer);
     }, [router]);

@@ -1,74 +1,13 @@
-import { Plus_Jakarta_Sans } from "next/font/google";
 import React from "react";
 import { IoSearchOutline } from "react-icons/io5";
+import data from "../../../data/attendee.json";
 import { DeleteAttendeeComponent } from "../_components/Action/DeleteAttendeeComponent";
-const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
-
-const attendees = [
-  {
-    id: 1,
-    name: "Morng Many",
-    gender: "Female",
-    email: "many@gmail.com",
-    address: "Phnom Penh",
-    phone: "0968672198",
-  },
-  {
-    id: 2,
-    name: "Ly Nita",
-    gender: "Female",
-    email: "nita@gmail.com",
-    address: "Prey Veng",
-    phone: "0889789176",
-  },
-  {
-    id: 3,
-    name: "Ra Dalin",
-    gender: "Female",
-    email: "dalin@gmail.com",
-    address: "Prey Veng",
-    phone: "0987898123",
-  },
-  {
-    id: 4,
-    name: " Ny Daro",
-    gender: "Male",
-    email: "daro@gmail.com",
-    address: "Kampot",
-    phone: "0921893589",
-  },
-  {
-    id: 5,
-    name: "Sok Bora",
-    gender: "Male",
-    email: "bora@gmail.com",
-    address: "Siem Reap",
-    phone: "0869827145",
-  },
-  {
-    id: 6,
-    name: "Pheak Nary",
-    gender: "Female",
-    email: "nary@gmail.com",
-    address: "Phnom Penh",
-    phone: "0123065987",
-  },
-  {
-    id: 7,
-    name: "Pok Hengly",
-    gender: "Female",
-    email: "hengly@gmail.com",
-    address: "Banteay Meanchey",
-    phone: "095367159",
-  },
-];
-
 const AttendeePage = () => {
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
         <div className="lg:w-[650px] md:w-full w-full">
-          <a className="font-semibold md:text-lg xl:text-xl text-primary-text block py-3 lg:py-0">
+          <a className="md:text-lg xl:text-xl font-semibold text-primary-text">
             Show All Attendees in Sport Event
           </a>
         </div>
@@ -83,7 +22,7 @@ const AttendeePage = () => {
           </div>
         </div>
       </div>
-      <div className="relative overflow-x-auto px-[3px]">
+      <div className="w-full overflow-scroll">
         <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
           <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
             <tr className="text-xs lg:text-base">
@@ -99,13 +38,13 @@ const AttendeePage = () => {
             </tr>
           </thead>
           <tbody>
-            {attendees.map((attendee, index) => (
+            {data.data.map((attendee, index) => (
               <tr
                 key={attendee.id}
                 className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
               >
-                <td className=" px-5 py-2 text-xs lg:text-base rounded-l-radiusUi">
-                  {attendee.id}
+                <td className=" px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">
+                  {index+1}
                 </td>
                 <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.name}

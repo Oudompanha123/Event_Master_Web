@@ -12,22 +12,22 @@ const Page = () => {
                         <thead className="h-14 shadow-soft rounded-radiusUi text-primary-text bg-[#FFFFFF] uppercase">
                             <tr className="text-xs lg:text-base">
                                 <th className="px-5 py-2 font-medium rounded-l-radiusUi">No</th>
-                                <th className="px-5 py-2 font-medium">Name</th>
+                                <th className="px-5 py-2 font-medium w-64">Name</th>
                                 <th className="px-5 py-2 font-medium">Gender</th>
                                 <th className="px-5 py-2 font-medium">Phone Number</th>
                                 <th className="px-5 py-2 font-medium">Email</th>
-                                <th className="px-5 py-2 font-medium rounded-r-radiusUi">Action</th>
+                                <th className="px-5 py-2 font-medium rounded-r-radiusUi text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {userData.data.map((x, index) => (
-                                <tr className={`h-14 shadow-soft text-primary-text rounded-radiusUi even:bg-softwhiteUi odd:bg-white`}>
+                                <tr className={`h-14 shadow-soft text-primary-text rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}>
                                     <td className="px-5 py-2 text-xs lg:text-base rounded-l-radiusUi">{index + 1}</td>
-                                    <td className="px-5 py-2 text-xs lg:text-base">{x.name}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base w-64">{x.name}</td>
                                     <td className="px-5 py-2 text-xs lg:text-base">{x.gender}</td>
                                     <td className="px-5 py-2 text-xs lg:text-base">{x.tel}</td>
                                     <td className="px-5 py-2 text-xs lg:text-base">{x.email}</td>
-                                    <td className="rounded-r-radiusUi">
+                                    <td className="rounded-r-radiusUi flex justify-center">
                                         <RegisterActionComponent />
                                     </td>
                                 </tr>
