@@ -107,30 +107,32 @@ function NewFormComponent() {
         <div className="flex flex-col items-center md:mt-20 sm:mt-1 lg:-mt-20">
           <div className="w-full h-40 bg-purple rounded-t-2xl sm:mt-0"></div>
           <div className="w-300 h-300 rounded-full lg:-mt-20 sm:-mt-20 sm:w-40 sm:h-40 md:w-44 md:h-44 lg:w-44 relative lg:h-44">
-            <Image
-              src={logo}
-              alt="My Image"
-              width={450}
-              height={450}
-              className={`mt-2 rounded-full ${styles.profile}`}
-            />
-            <div
-              className={`w-8 h-8 rounded-full  flex justify-center items-center mt-[-30px] ml-28 z-50 ${styles.iconProfile}`}
-            >
-              <label
-                htmlFor="image-upload"
-                className="w-full h-full bg-purple-200 rounded-full flex items-center justify-center bg-gray-100 duration-300 hover:bg-gray-200 cursor-pointer"
+            <div className="relative -top-32 sm:-top-12">
+              <Image
+                src={logo}
+                alt="My Image"
+                width={450}
+                height={450}
+                className={`mt-2 rounded-full ${styles.profile}`}
+              />
+              <div
+                className={`w-8 h-8 rounded-full  flex justify-center items-center mt-[-30px] ml-28 z-50 ${styles.iconProfile}`}
               >
-                <LiaUserEditSolid className="w-5 h-5 text-gray-700" />
-                <input
-                  id="image-upload"
-                  name="file-upload"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleImageUpload}
-                />
-              </label>
+                <label
+                  htmlFor="image-upload"
+                  className="w-full h-full bg-purple-200 rounded-full flex items-center justify-center bg-gray-100 duration-300 hover:bg-gray-200 cursor-pointer"
+                >
+                  <LiaUserEditSolid className="w-5 h-5 text-gray-700" />
+                  <input
+                    id="image-upload"
+                    name="file-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleImageUpload}
+                  />
+                </label>
+              </div>
             </div>
           </div>
           <h2 className="text-primary-text font-bold text-2xl mt-5 lg:mt-6 lg:text-2xl">
@@ -141,7 +143,7 @@ function NewFormComponent() {
         {/* Input Fields */}
 
         <div
-          className={`h-[280px] w-full lg:h-auto px-6 lg:px-4 ${styles.inputContainer}`}
+          className={`relative bottom-32 lg:bottom-0 h-[280px] w-full lg:h-auto px-6 lg:px-4 ${styles.inputContainer}`}
         >
           <div className="w-[500px] max-w-full mx-auto mt-12 lg:mt-8 lg:max-w-[550px]">
             {/* Organization Code */}
