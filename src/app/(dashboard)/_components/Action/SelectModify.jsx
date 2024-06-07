@@ -35,7 +35,6 @@ export const SelectModify = ({ height, label }) => {
     const removeCategory = () => {
         const updatedOptions = options.filter(option => option.id !== 999);
         setOptionData(updatedOptions);
-        console.log(updatedOptions)
         setOptionData([...updatedOptions,
         { id: lastArray.id + 1, name: `${newCategory}` },
         { id: 999, name: "Create Category" }
@@ -44,7 +43,6 @@ export const SelectModify = ({ height, label }) => {
 
     const handleCategorySave = () => {
         removeCategory()
-        console.log(lastArray.id)
         document.getElementById('my_modal_create_new_category').close()
         document.getElementById('my_modal_event').showModal();
     }
@@ -99,8 +97,7 @@ export const SelectModify = ({ height, label }) => {
                                         {({ selected }) => (
                                             <>
                                                 <span
-                                                    className={` ${selected ? "font-medium" : "font-normal"
-                                                        } h-full w-full`}
+                                                    className={`${selected ? "font-medium" : "font-normal"} ${option.id == 999 && 'text-greenUi'} h-full w-full`}
                                                 >
                                                     {option.name}
                                                 </span>
@@ -111,7 +108,7 @@ export const SelectModify = ({ height, label }) => {
                                                     </span>
                                                 )}
                                                 {option.id == 999 &&
-                                                    <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-black">
+                                                    <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-greenUi">
                                                         <Add size="20" />
                                                     </span>
                                                 }
@@ -128,9 +125,10 @@ export const SelectModify = ({ height, label }) => {
                 <div className="modal-box w-11/12 md:w-1/3 max-w-5xl space-y-8">
                     <div className="flex flex-row items-center text-primary-text">
                         <h2 className="text-lg lg:text-xl font-semibold">Create Category</h2>
-                        <form method="dialog">
-                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                        </form>
+                        <button onClick={() => {
+                            document.getElementById("my_modal_create_new_category").close();
+                            document.getElementById('my_modal_event').showModal();
+                        }} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </div>
                     <input
                         type="text"
@@ -141,7 +139,10 @@ export const SelectModify = ({ height, label }) => {
                         onChange={(e) => setNewCategory(e.target.value)}
                     />
                     <div className="flex justify-end space-x-3">
-                        <div onClick={() => { document.getElementById("my_modal_create_new_category").close(); document.getElementById('my_modal_event').showModal(); }} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
+                        <div onClick={() => {
+                            document.getElementById("my_modal_create_new_category").close();
+                            document.getElementById('my_modal_event').showModal();
+                        }} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
                         <div onClick={() => handleCategorySave()} className="cursor-pointer save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
                             <AddSquare size="20" color="#FFFFFF" variant="Bold" />
                             <span className="h-12 text-white flex justify-center items-center">Create</span>
