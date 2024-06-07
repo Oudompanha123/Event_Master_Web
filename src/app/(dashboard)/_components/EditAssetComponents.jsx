@@ -102,6 +102,7 @@ export const EditAssetComponents = () => {
                   Cancel
                 </div>
                 <button
+                <button
                   type="submit"
                   className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
                 >

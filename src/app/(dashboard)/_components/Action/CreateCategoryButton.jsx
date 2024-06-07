@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { AddSquare } from "iconsax-react"
+import { AddSquare } from "iconsax-react";
 
 const CreateCategoryButton = () => {
     return (
@@ -40,4 +40,4 @@ const CreateCategoryButton = () => {
     )
 }
 
-export default CreateCategoryButton
+export default CreateCategoryButton;
