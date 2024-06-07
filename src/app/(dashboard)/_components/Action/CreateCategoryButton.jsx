@@ -29,7 +29,7 @@ const CreateCategoryButton = () => {
                     />
                     <div className="flex justify-end space-x-3">
                         <div onClick={() => document.getElementById("my_modal_category").close()} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
-                        <button type="submit" className="save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
+                        <button onClick={() => document.getElementById("my_modal_category").close()} type="submit" className="save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
                             <AddSquare size="20" color="#FFFFFF" variant="Bold" />
                             <span className="h-12 text-white flex justify-center items-center">Create</span>
                         </button>
