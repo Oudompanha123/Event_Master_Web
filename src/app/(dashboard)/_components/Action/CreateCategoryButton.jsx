@@ -13,7 +13,7 @@ const CreateCategoryButton = () => {
                 <p className="text-xs lg:text-base hidden md:block">New Category</p>
             </button>
             <dialog id="my_modal_category" className="modal">
-                <div className="modal-box w-11/12 md:w-1/2 max-w-5xl space-y-8">
+                <div className="modal-box w-11/12 md:w-1/3 max-w-5xl space-y-8">
                     <div className="flex flex-row items-center text-primary-text">
                         <h2 className="text-lg lg:text-xl font-semibold">Create Category</h2>
                         <form method="dialog">

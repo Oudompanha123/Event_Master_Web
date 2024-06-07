@@ -11,15 +11,15 @@ import Link from "next/link"
 export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
     return (
-        <div className={`${className} sticky top-0 z-50 bg-white flex lg:justify-between justify-end items-center py-3 px-3 lg:px-14 border-b-[1px]`}>
-            <h2 className="text-xl font-semibold hidden lg:block">
+        <div className={`${className} justify-between sticky top-0 z-50 bg-white flex lg:justify-between items-center py-3 px-3 lg:px-14 border-b-[1px]`}>
+            <h2 className="text-lg lg:text-xl font-semibold block">
                 {pathname === '/overview' ?
                     'Overview' :
                     pathname === '/members' ?
                         'Member' :
                         pathname === '/assets' ?
                             'Assets' :
-                            pathname === '/events' || pathname == "/event-detail" || pathname === "/attendees" ?
+                            pathname === '/events' || pathname.startsWith("/event-detail") || pathname === "/attendees" ?
                                 'Events' :
                                 pathname === '/user-request' ?
                                     'Notification' :

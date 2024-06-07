@@ -4,20 +4,15 @@ import Image from "next/image";
 export function DeleteMemberComponent() {
   return (
     <>
-      <button
-        className=" rounded-2xl "
-        value="delete"
+      <Image
         onClick={() => document.getElementById("delete").showModal()}
-      >
-        <Image
-          src="icons/deleteicon.svg"
-          alt="delete icon"
-          className="  w-8 h-8 ml-3 mt-1"
-          property=" "
-          width={0}
-          height={0}
-        />
-      </button>
+        src="icons/deleteicon.svg"
+        alt="delete icon"
+        className="cursor-pointer w-8 h-8 ml-3 mt-1"
+        property=" "
+        width={0}
+        height={0}
+      />
       <dialog id="delete" className="modal">
         <div className="modal-box w-[310px] justity-center  ">
           <form method="dialog" className="justify-end flex">

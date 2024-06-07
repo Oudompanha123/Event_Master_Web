@@ -5,7 +5,7 @@ import { DeleteAssetComponent } from "./DeleteAssetComponent";
 export const AssetTableComponent = () => {
 
   return (
-    <table className="w-full border-separate border-spacing-y-3 mt-0">
+    <table className="w-full px-1 border-separate border-spacing-y-3 mt-0">
       <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-tableBg uppercase">
         <tr className="w-full overflow-auto text-xs lg:text-base">
           <th className="py-3 font-medium px-2 rounded-l-radiusUi">NO</th>
