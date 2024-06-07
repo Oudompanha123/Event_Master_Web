@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { ToogleBtn } from "../_components/Action/ToogleBtn";
 import { RxCross2 } from "react-icons/rx";
+import { SelectDropdown } from "./SelectDropdownComponent";
 // import { ToogleBtn } from "./Action/ToogleBtn";
 
 export function EventActionButton() {
@@ -253,7 +254,13 @@ export function EventActionButton() {
                   )}
                 </div>
                 <div className="w-full">
-                  <label
+                  <SelectDropdown
+                    {...register("category")}
+                    label={`!font-medium`}
+                    height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                  />
+
+                  {/* <label
                     htmlFor="category"
                     className="text-sm font-medium primary-text block mb-2"
                   >
@@ -283,7 +290,7 @@ export function EventActionButton() {
                     <span className="text-red-600 text-sm">
                       {errors.category.message}
                     </span>
-                  )}
+                  )} */}
                 </div>
               </div>
               <div className="flex flex-col md:flex-row gap-8">
