@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { ToogleBtn } from "./Action/ToogleBtn";
+import { SelectDropdown } from "./SelectDropdownComponent";
+import { SelectModifyV2 } from "./Action/SelectModifyV2";
 
 export const UpdateEventButton = () => {
   const [hide, setHide] = useState(false);
@@ -59,7 +61,7 @@ export const UpdateEventButton = () => {
       <button
         className="bg-white rounded-full bg-opacity-80 right-5 w-10 h-10 items-center flex flex-row justify-center"
         value="update"
-        onClick={() => document.getElementById("updateEvent").showModal()}
+        onClick={() => document.getElementById("updateEventCard").showModal()}
       >
         <svg
           width="20"
@@ -82,7 +84,7 @@ export const UpdateEventButton = () => {
           />
         </svg>
       </button>
-      <dialog id="updateEvent" className="modal !m-0">
+      <dialog id="updateEventCard" className="modal !m-0">
         <div className="modal-box w-11/12 lg:w-1/2 lg:max-w-5xl p-8">
           <div className="flex justify-between">
             <h3 className="font-bold text-xl">Update Event</h3>
@@ -163,11 +165,10 @@ export const UpdateEventButton = () => {
                     type="text"
                     name="name"
                     id="name"
-                    className={`${
-                      errors.name
+                    className={`${errors.name
                         ? "border-red-700 focus:border-red-600"
                         : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter event name"
                   />
                   {errors.name && (
@@ -177,7 +178,13 @@ export const UpdateEventButton = () => {
                   )}
                 </div>
                 <div className="w-full">
-                  <label
+                  <SelectModifyV2
+                    {...register("category")}
+                    label={`!font-medium`}
+                    height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                  />
+
+                  {/* <label
                     htmlFor="password"
                     className="text-sm font-medium primary-text block mb-2"
                   >
@@ -207,7 +214,7 @@ export const UpdateEventButton = () => {
                     <span className="text-red-600 text-sm">
                       {errors.category.message}
                     </span>
-                  )}
+                  )} */}
                 </div>
               </div>
               <div className="flex flex-col md:flex-row gap-8">
@@ -225,11 +232,10 @@ export const UpdateEventButton = () => {
                     type="datetime-local"
                     name="startDate"
                     id="startdate"
-                    className={`${
-                      errors.startDate
+                    className={`${errors.startDate
                         ? "border-red-700 focus:border-red-600"
                         : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="MM/DD/YYYY 6:00 AM"
                     required=""
                   />
@@ -258,11 +264,10 @@ export const UpdateEventButton = () => {
                     type="datetime-local"
                     name="endDate"
                     id="enddate"
-                    className={`${
-                      errors.endDate
+                    className={`${errors.endDate
                         ? "border-red-700 focus:border-red-600"
                         : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="MM/DD/YYYY 6:00 AM"
                     required=""
                   />
@@ -288,11 +293,10 @@ export const UpdateEventButton = () => {
                     type="number"
                     name="duration"
                     id="duration"
-                    className={`${
-                      errors.duration
+                    className={`${errors.duration
                         ? "border-red-700 focus:border-red-600"
                         : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter duration"
                     required=""
                   />
@@ -316,11 +320,10 @@ export const UpdateEventButton = () => {
                     type="number"
                     name="maxAttendee"
                     id="max"
-                    className={`${
-                      errors.maxAttendee
+                    className={`${errors.maxAttendee
                         ? "border-red-700 focus:border-red-600"
                         : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter maximum attendee"
                     required=""
                   />
@@ -346,11 +349,10 @@ export const UpdateEventButton = () => {
                     type="test"
                     name="address"
                     id="address"
-                    className={`${
-                      errors.address
+                    className={`${errors.address
                         ? "border-red-700 focus:border-red-600"
                         : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter address"
                     required=""
                   />
@@ -377,11 +379,10 @@ export const UpdateEventButton = () => {
                     type="text"
                     name="description"
                     id="description"
-                    className={`${
-                      errors.description
+                    className={`${errors.description
                         ? "border-red-700 focus:border-red-600"
                         : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter description..."
                     required=""
                   />
@@ -401,17 +402,17 @@ export const UpdateEventButton = () => {
 
               <div className="flex justify-end space-x-3 w-full mb-4 gap-2">
                 <button
-                  className="h-11 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white"
+                  className="py-3 px-6 rounded-2xl border-1px border-borderUi   bg-white hover:border-gray-500 hover:bg-white"
                   onClick={() => document.getElementById("updateEvent").close()}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="h-11  rounded-xl flex items-center justify-center gap-2  border bg-green-700  w-32  hover:bg-green-800"
+                  className="py-3 px-6 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-2  bg-green-700  hover:bg-green-800"
                   onClick={handleSubmit}
                 >
-                  <img src="icons/edit.svg" alt="" />
+                  <Image src="/icons/edit.svg" alt="" width={24} height={24} />
                   <p className="text-white">Update</p>
                 </button>
               </div>

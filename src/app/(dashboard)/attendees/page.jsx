@@ -24,7 +24,7 @@ const AttendeePage = () => {
       </div>
       <div className="w-full overflow-scroll">
         <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
-          <thead className="h-14 drop-shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
+          <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
             <tr className="text-xs lg:text-base">
               <th className=" px-5 py-2 font-medium rounded-l-radiusUi">NO</th>
               <th className=" px-5 py-2 font-medium">NAME</th>
@@ -41,27 +41,27 @@ const AttendeePage = () => {
             {data.data.map((attendee, index) => (
               <tr
                 key={attendee.id}
-                className={`h-14 drop-shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}
+                className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
               >
                 <td className=" px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">
                   {index+1}
                 </td>
-                <td className=" px-5 py-2 text-xs xl:text-base">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.name}
                 </td>
-                <td className=" px-5 py-2 text-xs xl:text-base">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.gender}
                 </td>
-                <td className=" px-5 py-2 text-xs xl:text-base">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.email}
                 </td>
-                <td className=" px-5 py-2 text-xs xl:text-base">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.address}
                 </td>
-                <td className=" px-5 py-2 text-xs xl:text-base">
+                <td className=" px-5 py-2 text-xs lg:text-base">
                   {attendee.phone}
                 </td>
-                <td className=" px-5 py-2 text-xs xl:text-base rounded-r-radiusUi">
+                <td className=" px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
                   <DeleteAttendeeComponent />
                 </td>
               </tr>

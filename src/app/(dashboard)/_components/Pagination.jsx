@@ -36,7 +36,7 @@ export const Pagination = () => {
                     </li>
                     {
                         numbers.map((n, i) => (
-                            <li className={`hidden md:flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 bg-white dark:bg-gray-700 text-black dark:text-white hover:border-gray-300 dark:hover:border-gray-600 cursor-pointer text-sm ${n == 1 && 'bg-[#ECE8FF]'}`} key={i}>
+                            <li className={`flex w-10 h-10 mx-1 justify-center items-center rounded-full border border-gray-200 dark:bg-gray-700 text-black dark:text-white hover:border-gray-300 dark:hover:border-gray-600 cursor-pointer text-sm ${n == 1 ? 'bg-[#ECE8FF]' : 'bg-white'}`} key={i}>
                                 <a href="#" className="page-link" onClick={() => changeCPage(n)}>{n}</a>
                             </li>
                         ))

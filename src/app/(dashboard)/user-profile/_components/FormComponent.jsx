@@ -75,7 +75,7 @@ function FormComponent() {
                     <div className='grid md:grid-cols-2 gap-6 w-[100%] sm:grid-cols-1'>
                         <div className="w-full mb-2 group flex flex-col">
                             <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Name <span className='text-red-500'>*</span></label>
-                            <input type="text" id="name" name='name' className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} border rounded-2xl input input-bordered max-w-[600px] text-gray-900 text-sm block w-full p-2.5 ps-4 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
+                            <input type="text" id="name" name='name' className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                 placeholder="Enter your name" 
                                 {...register('name', { required: 'Name is required' })}
                             />
@@ -85,13 +85,13 @@ function FormComponent() {
                         <div className="w-full mb-2 group">
                             <label htmlFor="gender" className='block mb-2 text-sm font-semibold text-gray-900 dark:text-white'>Gender <span className='text-red-500'>*</span></label>
                             <div className='relative'>
-                               <select onClick={isDrop} className={`${errors.gender ? "border-red-700 focus:border-red-600" : "border-gray-300"} border pe-2 input input-bordered max-w-[600px] text-gray-900 text-sm rounded-2xl block w-full p-2.5 ps-4 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`} id='gender'  
+                               <select onClick={isDrop} className={`${errors.gender ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='gender'  
                                     {...register('gender', { required: 'Gender is required' })}>
                                     <option value="female">Female</option>
                                     <option value="male">Male</option>
                                     <option value="other" selected>Other</option>
                                 </select>
-                                    {drop ? (
+                                    {/* {drop ? (
                                     <>
                                         <div className={"absolute top-2.5 right-2 cursor-pointer"}>
                                             <svg width="29" height="26" viewBox="0 0 29 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -107,7 +107,7 @@ function FormComponent() {
                                             </svg>
                                         </div>     
                                     </>
-                                    )}
+                                    )} */}
                             </div>
                             {errors.gender && <span className='text-red-500 text-sm'>{errors.gender.message}</span>}
                         </div>
@@ -115,7 +115,7 @@ function FormComponent() {
                         <div className="w-full mb-2 group flex flex-col">
                             <label htmlFor="email-address-icon" className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Your Email <span className='text-red-500'>*</span></label>
                             <div className="relative">
-                                <input type="email" id="email" name='email' className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} border pe-2 input input-bordered max-w-[600px] text-gray-900 text-sm rounded-2xl block w-full p-2.5 ps-4 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
+                                <input type="email" id="email" name='email' className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                 placeholder="Enter your email" 
                                 {...register("email", {
                                     required: "Email is required",
@@ -129,7 +129,7 @@ function FormComponent() {
                         </div>
                         <div className="w-full mb-2 group flex flex-col">
                             <label htmlFor="date" className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Date <span className='text-red-500'>*</span></label>
-                            <input type="date" id="date" name='date' className={`${errors.date ? "border-red-700 focus:border-red-600" : "border-gray-300"} border pe-2 input input-bordered max-w-[600px] text-gray-900 text-sm rounded-2xl block w-full p-2.5 ps-4 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
+                            <input type="date" id="date" name='date' className={`${errors.date ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                 placeholder="Enter your name"
                                 {...register('date', { required: 'Date is required' })}
                             />
@@ -137,14 +137,14 @@ function FormComponent() {
                         </div>
                         <div className="w-full mb-2 group flex flex-col">
                             <label htmlFor="phone" className='mb-1 text-sm font-semibold'>Phone Number <span className='text-red-500'>*</span></label>
-                            <input type="text" placeholder="Phone number" name='phone' className={`${errors.phoneNumber ? "border-red-700 focus:border-red-600" : "border-gray-300"} border pe-2 input input-bordered max-w-[600px] text-gray-900 text-sm rounded-2xl block w-full p-2.5 ps-4 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`} id='phone' 
+                            <input type="text" placeholder="Phone number" name='phone' className={`${errors.phoneNumber ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='phone' 
                                 {...register('phoneNumber', { required: 'Phone number is required' })}
                             />
                             {errors.phoneNumber && <span className='text-red-500 text-sm'>{errors.phoneNumber.message}</span>}
                         </div>
                         <div className="w-full mb-2 group flex flex-col">
                             <label htmlFor="address" className='mb-1 text-sm font-semibold'>Address <span className='text-red-500'>*</span></label>
-                            <input type="text" placeholder="" name='address' className={`${errors.address ? "border-red-700 focus:border-red-600" : "border-gray-300"} border pe-2 input input-bordered max-w-[600px] text-gray-900 text-sm rounded-2xl block w-full p-2.5 ps-4 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`} id='address' 
+                            <input type="text" placeholder="" name='address' className={`${errors.address ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='address' 
                                 {...register('address', { required: 'Address is required' })}
                             />
                             {errors.address && <span className='text-red-500 text-sm'>{errors.address.message}</span>}
@@ -158,7 +158,7 @@ function FormComponent() {
                     <div className="w-full mb-5 group flex flex-col">   
                         <label htmlFor="current-password" className='mb-1 text-sm font-semibold'>Current Password <span className='text-red-500'>*</span></label>
                         <div className='relative'>
-                            <input type={showPasswords.currentPassword ? "text" : "password"} className={`${errors.currentPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} border pe-2 input input-bordered max-w-full text-gray-900 text-sm rounded-2xl block w-full p-2.5 ps-4 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`} placeholder="Enter your current password"  id='current-password' 
+                            <input type={showPasswords.currentPassword ? "text" : "password"} className={`${errors.currentPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} placeholder="Enter your current password"  id='current-password' 
                                 disabled={isLock}
                                 {...register('currentPassword', { required: 'Current password is required' })}
                             />
@@ -171,7 +171,7 @@ function FormComponent() {
                     <div className="w-full mb-5 group flex flex-col">
                         <label htmlFor="new-password" className='mb-1 text-sm font-semibold'>New Password <span className='text-red-500'>*</span></label>
                         <div className='relative'>
-                            <input type={showPasswords.newPassword ? "text" : "password"} className={`${errors.newPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} border pe-2 input input-bordered max-w-full text-gray-900 text-sm rounded-2xl block w-full p-2.5 ps-4 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`} 
+                            <input type={showPasswords.newPassword ? "text" : "password"} className={`${errors.newPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} 
                                 placeholder="Enter your new password" disabled={isLock} {...register('newPassword', { required: 'New password is required' })}
                             />
                             <div className={"absolute top-4 right-3 cursor-pointer"} onClick={()=> toggleShowPassword("newPassword")}>
@@ -183,7 +183,7 @@ function FormComponent() {
                     <div className="w-full md:mb-10 group flex flex-col">
                         <label htmlFor="confirm-password" className='mb-1 text-sm font-semibold'>Confirm Password <span className='text-red-500'>*</span></label>
                         <div className='relative'>
-                            <input type={showPasswords.confirmPassword ? "text" : "password"}  className={`${errors.confirmPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} border pe-2 input input-bordered max-w-full text-gray-900 text-sm rounded-2xl block w-full p-2.5 ps-4 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`} placeholder="Confirm your new password" id='confirm-password'
+                            <input type={showPasswords.confirmPassword ? "text" : "password"}  className={`${errors.confirmPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} placeholder="Confirm your new password" id='confirm-password'
                                 disabled={isLock} 
                                 {...register('confirmPassword', {
                                     required: 'Confirm password is required',
@@ -199,7 +199,9 @@ function FormComponent() {
                     <div className='flex justify-end my-3 w-full'>
                         {isLock ? (
                             <>
-                                <button type='submit' className=' btn sm:text-sm btn-success text-lg w-40 lg:w-32 lg:text-base flex items-center text-white rounded-2xl' onClick={handleUpdateClick}><FiEdit/>Update</button>
+                                <button type='submit' className='btn btn-success text-white flex items-center rounded-2xl text-lg sm:text-sm w-40 lg:w-32 lg:text-base sm:w-20' onClick={handleUpdateClick}>
+                                    <FiEdit/>Update
+                                </button>
                             </>
                         ) : (
                             <>

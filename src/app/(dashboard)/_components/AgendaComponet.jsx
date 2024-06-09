@@ -31,7 +31,7 @@ export default function AgendaComponent() {
 
   if (agenda.length === 0) {
     return (
-      <div className="py-5 pl-1">
+      <div className="mb-5 mt-14 pl-1">
         <div className="flex justify-between align-middle content-center mb-4 ">
           <div className="flex items-center justify-center">
             <p className="text-primary-text font-semibold text-2xl">
@@ -70,7 +70,7 @@ export default function AgendaComponent() {
   }
 
   return (
-    <div className="space-y-4 py-5">
+    <div className="space-y-4 mb-5 mt-14">
       <div className="flex justify-between align-middle content-center mb-4">
         <div className="flex items-center justify-center">
           <p className="text-primary-text font-semibold text-2xl">
@@ -85,7 +85,7 @@ export default function AgendaComponent() {
         </div>
       </div>
       {agenda.map((data, index) => (
-        <div key={index} className="space-y-4 transition duration-200 ease-in-out hover:scale-[100.4%]">
+        <div key={index} className="space-y-4 ">
           <div
             className={`border h-auto py-4 px-4 rounded-3xl flex gap-5 ${
               index % 2 === 1 ? "bg-blue-0" : "bg-gray-100"
@@ -97,7 +97,7 @@ export default function AgendaComponent() {
               }`}
             ></div>
             <div className="h-auto w-full space-y-2 ">
-              <p className="text-base font-medium text-primary-text">{`${convertTo12HourFormat(
+              <p className="text-base font-regular text-primary-text">{`${convertTo12HourFormat(
                 data.startTime
               )} - ${convertTo12HourFormat(data.endTime)}`}</p>
               <p className="text-xl font-semibold text-primary-text">
@@ -108,7 +108,7 @@ export default function AgendaComponent() {
                 <hr className="h-[1px] w-full bg-gray-300" />
               )}
               {data.description && (
-                <p className="text-base font-medium text-primary-text">
+                <p className="text-base font-regular text-primary-text">
                   {data.description}
                 </p>
               )}

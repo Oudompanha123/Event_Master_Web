@@ -16,3 +16,54 @@ EventMaster, developed by the Korea Software HRD Center, is a web application de
 - Dynamic Form
 - Notification
 - Verify OTP
+
+## Routes
+
+> Login Page
+> <br>
+> http://34.87.153.65:9999/login
+> <br><br>
+> Signup Page
+> <br>
+> http://34.87.153.65:9999/member
+> <br><br>
+> Langin Page
+> <br>
+> http://34.87.153.65:9999/
+> <br><br>
+> About Page
+> <br>
+> http://34.87.153.65:9999/about
+> <br><br>
+> Overview Page
+> <br>
+> http://34.87.153.65:9999/overview
+> <br><br>
+> Member Page
+> <br>
+> http://34.87.153.65:9999/members
+> <br><br>
+> Asset Page
+> <br>
+> http://34.87.153.65:9999/assets
+> <br><br>
+> Events Page
+> <br>
+> http://34.87.153.65:9999/events
+> <br><br>
+> User Request Page
+> <br>
+> http://34.87.153.65:9999/user-request
+> <br><br>
+> Organization Profile Page
+> <br>
+> http://34.87.153.65:9999/organization-profile
+> <br><br>
+> User Profile Page
+> <br>
+> http://34.87.153.65:9999/user-profile
+> <br><br>
+> Member Page
+> <br>
+> http://34.87.153.65:9999/member
+> <br><br>

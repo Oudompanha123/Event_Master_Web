@@ -17,7 +17,7 @@ export const SidebarComponent = ({ className }) => {
         <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-5 border-r-1px sticky top-0 h-screen`}>
             <Link href={'/overview'}>
                 <div className="p-2 lg:p-2 flex items-center gap-4">
-                    <Image src={logo} height={75} width={75} />
+                    <Image src={logo} height={60} width={60} />
                     <h2 className="hidden xl:block text-xl font-semibold">EventMaster</h2>
                 </div>
             </Link>
@@ -28,16 +28,16 @@ export const SidebarComponent = ({ className }) => {
                         <div className={`space-x-3 px-3 lg:px-4 py-3 flex justify-center xl:justify-start rounded-radiusUi w-fit xl:!w-full items-center 
                             ${pathname === x.link && "text-white bg-purple-text"} 
                             ${x.name == "Events" && pathname === "/attendees" ? "text-white bg-purple-text" : ""}
-                            ${x.name == "Events" && pathname === "/event-detail" ? "text-white bg-purple-text" : ""}`}
+                            ${x.name == "Events" && pathname.startsWith("/event-detail") ? "text-white bg-purple-text" : ""}`}
                         >
                             {x.icon == 'overview' ? <Layer size="20" color={`${pathname === "/overview" ? "#FFFFFF" : '#344054'}`} variant="Bulk" />
                                 : x.icon == "members" ? <People size="20" color={`${pathname === "/members" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                     : x.icon == 'assets' ? <I3Dcube size="20" color={`${pathname === "/assets" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
-                                        : x.icon == "events" ? <Calendar1 size="20" color={`${pathname === "/events" || pathname === "/attendees" || pathname == "/event-detail" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
+                                        : x.icon == "events" ? <Calendar1 size="20" color={`${pathname === "/events" || pathname === "/attendees" || pathname.startsWith("/event-detail") ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                             : x.icon == "request" ? <Notification size="20" color={`${pathname === "/user-request" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                                 : x.icon == "setting" ? <Setting2 size="20" color={`${pathname === "/account-setting" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                                     : x.icon == "logout" ? <LogoutCurve size="20" color="#344054" variant="Bulk" /> : <LogoutCurve size="24" color="#344054" variant="Bulk" />}
-                            <p className="hidden xl:block text-base 2xl:text-lg">{x.name}</p>
+                            <p className="hidden xl:block text-base">{x.name}</p>
                         </div>
                     </Link>
                 ))}
@@ -48,7 +48,7 @@ export const SidebarComponent = ({ className }) => {
                         <div className="flex items-center space-x-3">
                             <Setting2 size="20" color={`${pathname === "/organization-profile" || pathname === "/user-profile" ? '#344054' : '#344054'}`} variant="Bulk" />
                             <div className="flex items-center justify-between">
-                                <p className={`text-base 2xl:text-lg hidden xl:block font-normal ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-primary-text" : 'text-primary-text'}`}>
+                                <p className={`text-base hidden w-[124px] xl:block font-normal ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-primary-text" : 'text-primary-text'}`}>
                                     Account Setting
                                 </p>
                             </div>
@@ -57,14 +57,14 @@ export const SidebarComponent = ({ className }) => {
                     </h2>
                     <ul className={`${!click && 'hidden'}`}>
                         <li className="flex">
-                            <Link className={`rounded-radiusUi w-full flex gap-3 pl-10 py-3 !text-sm ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
-                                <Buildings2 size="20" color={`${pathname === "/organization-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
+                            <Link className={`rounded-radiusUi w-full flex gap-3 pl-12 py-3 !text-base ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
+                                {/* <Buildings2 size="20" color={`${pathname === "/organization-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" /> */}
                                 Organization Profile
                             </Link>
                         </li>
                         <li className="flex">
-                            <Link className={`rounded-radiusUi w-full flex gap-3 hover:!bg-none pl-10 py-3 !text-sm ${pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`} href={'/user-profile'}>
-                                <Personalcard size="20" color={`${pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
+                            <Link className={`rounded-radiusUi w-full flex gap-3 hover:!bg-none pl-12 py-3 !text-base ${pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`} href={'/user-profile'}>
+                                {/* <Personalcard size="20" color={`${pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" /> */}
                                 User Profile
                             </Link>
                         </li>

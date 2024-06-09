@@ -151,7 +151,7 @@ const MemberPage = () => {
             {members.map((member, index) => (
               <tr
                 key={member.id}
-                className={`h-14 shadow-sm rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}
+                className={`h-14 shadow-sm rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
               >
                 <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi border border-r-0 border-member-border sm:text-sm">
                   {index + 1}

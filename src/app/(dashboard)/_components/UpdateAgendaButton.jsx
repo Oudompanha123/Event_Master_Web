@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import Image from "next/image";
 
 function UpdateAgenda({ inputList, setInputList }) {
   const handleAddClick = () => {
@@ -52,7 +53,7 @@ function UpdateAgenda({ inputList, setInputList }) {
                   <input
                     type="text"
                     name="topic"
-                    className="appearance-none input input-bordered font-medium text-sm w-full rounded-xl"
+                    className="appearance-none input input-bordered font-medium text-sm w-full rounded-xl focus:outline-none focus:border-purple-text"
                     placeholder="Enter the Topic"
                     value={x.topic}
                     onChange={(e) => handleInputChange(e, i)}
@@ -93,14 +94,14 @@ function UpdateAgenda({ inputList, setInputList }) {
                       End Time<span className="align-top text-red-600">*</span>
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
+                      <div className="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none focus:outline-none focus:border-purple-text">
                         {/* icon */}
                       </div>
                       <input
                         type="time"
                         id="end-time"
                         name="endTime"
-                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border leading-none border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         min="09:00"
                         max="18:00"
                         value={x.endTime}
@@ -119,7 +120,7 @@ function UpdateAgenda({ inputList, setInputList }) {
                     <input
                       type="text"
                       name="speaker"
-                      className="input input-bordered font-medium text-sm w-full rounded-xl"
+                      className="input input-bordered font-medium text-sm w-full rounded-xl focus:outline-none focus:border-purple-text "
                       placeholder="Enter the Speaker"
                       value={x.speaker}
                       onChange={(e) => handleInputChange(e, i)}
@@ -137,7 +138,7 @@ function UpdateAgenda({ inputList, setInputList }) {
                   <textarea
                     type="text"
                     name="description"
-                    className="textarea textarea-bordered font-medium text-sm w-full rounded-xl h-20"
+                    className="textarea textarea-bordered font-medium text-sm w-full rounded-xl h-20 focus:outline-none focus:border-purple-text"
                     placeholder="Enter the description..."
                     value={x.description}
                     onChange={(e) => handleInputChange(e, i)}
@@ -181,7 +182,7 @@ export function UpdateAgendaButton() {
         className="btn  rounded-xl flex  border bg-green-700 hover:bg-green-800 w-32  "
         onClick={() => document.getElementById("my_modal_4").showModal()}
       >
-        <img src="icons/edit.svg" alt="" className="" />
+        <Image src="/icons/edit.svg" alt="" className="" width={24} height={24}/>
         <p className="text-white">Edit</p>
       </button>
       <dialog id="my_modal_4" className="modal ">
@@ -189,16 +190,16 @@ export function UpdateAgendaButton() {
           <UpdateAgenda inputList={inputList} setInputList={setInputList} />
           <div className="modal-action gap-2 pr-4  mb-4">
             <button
-              className="h-11 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white"
+              className="py-3 px-6 rounded-2xl border-1px border-borderUi bg-white hover:border-gray-500 hover:bg-white"
               onClick={() => document.getElementById("my_modal_4").close()}
             >
               Cancel
             </button>
             <button
-              className="h-11  rounded-xl flex items-center justify-center gap-2  border bg-green-700  w-32  hover:bg-green-800"
+              className="py-3 px-6   rounded-2xl border-1px border-borderUi flex items-center justify-center gap-2  bg-green-700   hover:bg-green-800"
               onClick={handleSubmit}
             >
-              <img src="icons/edit.svg" alt="" className="h-5 w-5" />
+              <Image src="/icons/edit.svg" alt="" className="h-5 w-5" width={5} height={5}/>
               <p className="text-white">Update</p>
             </button>
           </div>

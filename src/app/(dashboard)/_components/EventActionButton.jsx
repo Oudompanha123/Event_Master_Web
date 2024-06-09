@@ -1,10 +1,44 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import { ToogleBtn } from "./Action/ToogleBtn";
+import { ToogleBtn } from "../_components/Action/ToogleBtn";
+import { RxCross2 } from "react-icons/rx";
+import { SelectDropdown } from "./SelectDropdownComponent";
+import { SelectModify } from "./Action/SelectModify";
+import { SelectModifyV2 } from "./Action/SelectModifyV2";
+// import { ToogleBtn } from "./Action/ToogleBtn";
 
 export function EventActionButton() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null); // Reference for dropdown
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeDropdown = () => {
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeDropdown();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   const [hide, setHide] = useState(false);
   const [previewSrc, setPreviewSrc] = useState(""); // Added state for image preview source
 
@@ -52,13 +86,14 @@ export function EventActionButton() {
   const onSubmit = (data) => {
     console.log(data);
   };
+
   return (
-    <div>
-      <div className="dropdown  dropdown-end active:bg-none">
-        <div
-          tabIndex={0}
-          role="button"
-          className=" bg-white rounded-full bg-opacity-80 right-5 w-8 h-8 items-center  flex flex-row justify-center"
+    <div className="">
+      <div className="relative inline-block" ref={dropdownRef}>
+        <button
+          type="button"
+          className=" bg-white rounded-full bg-opacity-80 right-5 w-8 h-8 items-center flex flex-row justify-center"
+          onClick={toggleDropdown}
         >
           <svg
             width="18"
@@ -71,34 +106,59 @@ export function EventActionButton() {
             <circle cx="9" cy="2" r="2" fill="#101828" />
             <circle cx="16" cy="2" r="2" fill="#101828" />
           </svg>
-        </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content z-[1] bg-white menu  rounded-box w-52 active:bg-none"
-        >
-          <li classNam="active:bg-none">
-            <a
-            className="gap-4 flex text-gray-700 px-4 py-2 text-sm active:bg-none" role="menuitem" tabindex="-1"
-              // className="gap-4 flex"
-              onClick={() =>
-                document.getElementById("updateEventCard").showModal()
-              }
+        </button>
+
+        {isOpen && (
+          <div className="origin-top-right absolute right-0 mt-1 w-44 rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <ul
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="options-menu"
             >
-              <img src="icons/edit-blue.svg" alt="" />
-              <p className="text-primary-text text-base font-semibold ">
-                Update
-              </p>
-            </a>
-          </li>
-          <li >
-            <a className="gap-4 flex">
-              <img src="icons/delete-red.svg" alt="" />{" "}
-              <p className="text-primary-text  text-base font-semibold ">
-                Delete
-              </p>
-            </a>
-          </li>
-        </ul>
+              <li>
+                <a
+                  className="gap-5 flex px-5 py-3 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-xl"
+                  role="menuitem"
+                  tabIndex="-1"
+                  onClick={() =>
+                    document.getElementById("updateEventCard").showModal()
+                  }
+                >
+                  <Image
+                    src="icons/edit-blue.svg"
+                    alt=""
+                    height={24}
+                    width={24}
+                  />
+                  <p className="text-primary-text text-base font-semibold ">
+                    Update
+                  </p>
+                </a>
+              </li>
+              <hr />
+              <li>
+                <a
+                  className="gap-5 flex px-5 py-3 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-xl "
+                  role="menuitem"
+                  tabIndex="-1"
+                  onClick={() =>
+                    document.getElementById("delete-event").showModal()
+                  }
+                >
+                  <Image
+                    src="icons/delete-red.svg"
+                    alt=""
+                    height={24}
+                    width={24}
+                  />{" "}
+                  <p className="text-primary-text text-base font-semibold ">
+                    Delete
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
 
       <dialog id="updateEventCard" className="modal !m-0">
@@ -157,7 +217,7 @@ export function EventActionButton() {
                   </h3>
                 </div>
                 {previewSrc && ( // Conditionally render the image preview
-                  <img
+                  <Image
                     src={previewSrc}
                     className="mt-4 mx-auto h-80 w-full object-cover"
                     id="preview"
@@ -170,7 +230,7 @@ export function EventActionButton() {
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="name"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Event Name <span className="text-red-600">*</span>
@@ -182,11 +242,10 @@ export function EventActionButton() {
                     type="text"
                     name="name"
                     id="name"
-                    className={`${
-                      errors.name
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.name
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter event name"
                   />
                   {errors.name && (
@@ -196,43 +255,16 @@ export function EventActionButton() {
                   )}
                 </div>
                 <div className="w-full">
-                  <label
-                    htmlFor="password"
-                    className="text-sm font-medium primary-text block mb-2"
-                  >
-                    Event Category <span className="text-red-600">*</span>
-                  </label>
-                  <select
-                    name="category"
-                    id="category"
-                    className={`${
-                      errors.category && "border-red-700 focus:border-red-600"
-                    } mb-2 classic shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
-                    {...register("category", {
-                      required: "category is required",
-                      validate: (v) => {
-                        if (v === "0") {
-                          return "please select category";
-                        }
-                      },
-                    })}
-                  >
-                    <option value="0">Choose event category</option>
-                    <option value="1">Conference</option>
-                    <option value="2">Social Event</option>
-                    <option value="3">Sport</option>
-                  </select>
-                  {errors.category && (
-                    <span className="text-red-600 text-sm">
-                      {errors.category.message}
-                    </span>
-                  )}
+                  <SelectModifyV2
+                    label={`!font-medium`}
+                    height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                  />
                 </div>
               </div>
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="startdate"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Start Date Time <span className="text-red-600">*</span>
@@ -244,11 +276,10 @@ export function EventActionButton() {
                     type="datetime-local"
                     name="startDate"
                     id="startdate"
-                    className={`${
-                      errors.startDate
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.startDate
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="MM/DD/YYYY 6:00 AM"
                     required=""
                   />
@@ -260,7 +291,7 @@ export function EventActionButton() {
                 </div>
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="enddate"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     End Date Time <span className="text-red-600">*</span>
@@ -277,11 +308,10 @@ export function EventActionButton() {
                     type="datetime-local"
                     name="endDate"
                     id="enddate"
-                    className={`${
-                      errors.endDate
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.endDate
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="MM/DD/YYYY 6:00 AM"
                     required=""
                   />
@@ -295,7 +325,7 @@ export function EventActionButton() {
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="duration"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Duration <span className="text-red-600">*</span>
@@ -307,11 +337,10 @@ export function EventActionButton() {
                     type="number"
                     name="duration"
                     id="duration"
-                    className={`${
-                      errors.duration
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.duration
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter duration"
                     required=""
                   />
@@ -323,7 +352,7 @@ export function EventActionButton() {
                 </div>
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="max"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Maximum Attendee <span className="text-red-600">*</span>
@@ -335,11 +364,10 @@ export function EventActionButton() {
                     type="number"
                     name="maxAttendee"
                     id="max"
-                    className={`${
-                      errors.maxAttendee
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.maxAttendee
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter maximum attendee"
                     required=""
                   />
@@ -353,7 +381,7 @@ export function EventActionButton() {
               <div className="flex gap-8">
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="address"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Address <span className="text-red-600">*</span>
@@ -362,14 +390,13 @@ export function EventActionButton() {
                     {...register("address", {
                       required: "address is required",
                     })}
-                    type="test"
+                    type="text"
                     name="address"
                     id="address"
-                    className={`${
-                      errors.address
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.address
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter address"
                     required=""
                   />
@@ -383,7 +410,7 @@ export function EventActionButton() {
               <div className="flex gap-8">
                 <div className="w-full">
                   <label
-                    htmlFor="password"
+                    htmlFor="description"
                     className="text-sm font-medium primary-text block mb-2"
                   >
                     Description <span className="text-red-600">*</span>
@@ -396,11 +423,10 @@ export function EventActionButton() {
                     type="text"
                     name="description"
                     id="description"
-                    className={`${
-                      errors.description
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
-                    } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                    className={`${errors.description
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
+                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter description..."
                     required=""
                   />
@@ -414,26 +440,72 @@ export function EventActionButton() {
               <div className="flex items-center gap-5">
                 <p>Create this event as :</p>
                 <div>
+                  {/* <ToogleBtn /> */}
                   <ToogleBtn />
                 </div>
               </div>
 
               <div className="flex justify-end space-x-3 w-full mb-4 gap-2">
                 <button
-                  className="h-11 rounded-xl border-gray-400 border bg-white w-32 hover:border-gray-500 hover:bg-white"
-                  onClick={() => document.getElementById("updateEvent").close()}
+                  className="py-3 px-6py-3 px-6 rounded-2xl border-1px border-borderUi  bg-white hover:border-gray-500 hover:bg-white"
+                  onClick={() =>
+                    document.getElementById("updateEventCard").close()
+                  }
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="h-11  rounded-xl flex items-center justify-center gap-2  border bg-green-700  w-32  hover:bg-green-800"
+                  className="py-3 px-6 rounded-2xl border-1px border-borderUi  flex items-center justify-center gap-2  bg-green-700 hover:bg-green-800"
                   onClick={handleSubmit}
                 >
-                  <img src="icons/edit.svg" alt="" />
+                  <Image src="icons/edit.svg" alt="" height={24} width={24} />
                   <p className="text-white">Update</p>
                 </button>
               </div>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog id="delete-event" className="modal">
+        <div className="modal-box w-[310px] justity-center  ">
+          <form method="dialog" className="justify-end flex">
+            <button type="submit">
+              <RxCross2 className="absolute right-[20px] top-[20px] w-6 h-6 " />
+            </button>
+          </form>
+          <div className="justify-center flex">
+            <img
+              src="images/delete.svg"
+              alt="delete"
+              className="w-[58%] mb-3"
+            />
+          </div>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            Are you sure,you want to
+          </p>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            remove this event?
+          </p>
+          <div className="modal-action ">
+            <form
+              method="dialog"
+              className=" flex justify-around w-full mb-4 mt-3 px-3"
+            >
+              <button
+                className="h-9 rounded-3xl bg-red-600 w-[100px] hover:bg-red-700 flex items-center justify-center"
+                value="yes"
+              >
+                <p className="text-white font-semibold al">yes</p>
+              </button>
+
+              <button
+                className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500 flex items-center justify-center"
+                value="cancel"
+              >
+                <p className="text-white font-semibold al">No</p>
+              </button>
             </form>
           </div>
         </div>

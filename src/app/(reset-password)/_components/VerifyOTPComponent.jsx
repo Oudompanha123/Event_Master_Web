@@ -4,13 +4,37 @@ import Link from "next/link";
 import styles from "@/app/(reset-password)/style.module.css";
 import OtpInput from "react18-input-otp";
 import {useState} from "react";
+import {useRouter} from "next/navigation";
 
 const VerifyOTPComponent = () => {
 
     const [otp, setOtp] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
+
     const handleChange = (enteredOtp) => {
+        console.log(enteredOtp)
+        if (!/^\d+$/.test(enteredOtp)) {
+            setOtp('');
+            setErrorMessage("Please enter only numbers.");
+            return;
+        }
         setOtp(enteredOtp);
+        setErrorMessage('');
     };
+
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Backspace') {
+            event.preventDefault();
+            setOtp(prev => prev.slice(0, -1));// Remove the last character
+            const prevInput = event.target.previousElementSibling;
+            if (prevInput) {
+                prevInput.focus();
+            }
+        }
+    }
+
+    const router = useRouter();
 
     return (
         <div className="absolute mx-[29%] mt-[18%] left-[9.5%]">
@@ -22,21 +46,27 @@ const VerifyOTPComponent = () => {
                     <p className="flex justify-center greyUi mt-6">Enter the 4 digits code that received your email.</p>
                 </div>
 
-                <OtpInput className={styles.inputStyle}
+                <OtpInput inputStyle={styles.inputStyle}
                           value={otp}
                           onChange={handleChange}
+                          onKeyDown={handleKeyDown}
                           numInputs={4}
                 />
 
-                <Link href={`/set-new-password`}>
-                    <div className="flex justify-center mt-12">
-                        <button type="sign Up" id="sign-up"
-                                className="bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400">
-                            Continue
-                        </button>
-                    </div>
-                </Link>
-                <Link href={`/forgot`}>
+                {errorMessage && <p className="text-red-600 mt-3 ml-4">{errorMessage}</p>}
+
+                <button
+                    onClick={() => router.push('/set-new-password')}
+                    type="button"
+                    id="continue"
+                    className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 mt-10 ml-2 shadow-md shadow-violet-400 ${otp.length !== 4 ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}
+                    disabled={otp.length !== 4}
+                >
+                    Continue
+                </button>
+
+
+                <Link href={`/verify-otp`}>
                     <p className="flex justify-end text-blueUi mt-5"><u>Resend Code</u>
                     </p>
                 </Link>
