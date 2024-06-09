@@ -4,7 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 
 export function ChangeRoleComponent({ role, onConfirm, onClose }) {
   return (
-    <dialog open className="modal bg-black/40 transition ease-out duration-700">
+    <dialog open className="modal bg-black/40 ">
       <div className="modal-box w-[270px] h-[350px] justify-center">
         <form method="dialog" className="justify-end flex">
           <button type="button" onClick={onClose}>
@@ -15,7 +15,7 @@ export function ChangeRoleComponent({ role, onConfirm, onClose }) {
           <Image
             src="/images/Questions-pana.svg"
             alt="delete"
-            className="w-[58%] mt-3"
+            className="w-[58%]  mb-3"
             width={0}
             height={0}
           />
