@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import mockEventService from "../mockEventService";
 import { EventActionButton } from "./EventActionButton";
+import { Location } from "iconsax-react";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -50,7 +51,7 @@ export default function CardEventComponent() {
                       {month}
                     </small>
                   </div>
-                  <EventActionButton/>
+                  <EventActionButton />
                 </div>
               </div>
 
@@ -61,25 +62,25 @@ export default function CardEventComponent() {
                   </div>
 
                   <span
-                    className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${
-                      data.isOpen
+                    className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${data.isOpen
                         ? "bg-blue-100 text-blue-700"
                         : "bg-red-100 text-red-700"
-                    }`}
+                      }`}
                   >
                     {data.isOpen ? "Open" : "Closed"}
                   </span>
                 </div>
 
-                <p className="text-gray-700 text-sm px-1 mt-3 flex gap-2">
-                  <Image
+                <p className="text-gray-700 text-sm px-1 mt-3 flex items-center gap-2">
+                  {/* <Image
                     className=""
-                    src="icons/location.svg"
+                    src="/icons/location.svg"
                     alt="Location"
                     width={17}
                     height={10}
                     priority
-                  />
+                  /> */}
+                  <Location size="20" color="#7A44FF" variant="Bold" />
                   <span className="mt-2  line-clamp-1 ">{data.address}</span>
                 </p>
               </div>

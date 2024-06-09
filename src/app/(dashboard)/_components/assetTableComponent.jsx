@@ -19,7 +19,7 @@ export const AssetTableComponent = () => {
       <tbody className="border rounded-radiusUi w-full bg-white ">
         {data.data.map((asset, index) => (
           <tr className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border">
-            <td className="py-3 rounded-l-radiusUi items-center ml-1   text-xs xl:text-base w-20 bg-green-200">
+            <td className="py-3 rounded-l-radiusUi items-center ml-1   text-xs xl:text-base w-20">
               {index + 1}
             </td>
             <td className="w-28">
