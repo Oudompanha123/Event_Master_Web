@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { OverviewCardComponent } from "../_components/OverviewCardComponent"
 import categoryData from "../../../data/category.json"
 import { BarChartComponent } from "../_components/BarChartComponent"
@@ -8,12 +7,40 @@ import { CategoryDeleteAction } from "../_components/Action/CategoryDeleteAction
 import { CategoryEditAction } from "../_components/Action/CategoryEditAction"
 import { Pagination } from "../_components/Pagination"
 import { Getstart } from "../_components/Action/GetstartBtn"
+import { getOverviewData } from "@/services/dashboard/overviewService"
 
-const Page = () => {
+const Page = async () => {
+    const data = await getOverviewData();
+    //convert data from api to be an array for looping
+    const convertToObjectArray = (data) => {
+        const mappings = {
+            eventCount: { title: "Event Count", logo: "event" },
+            publishEvent: { title: "Published Event", logo: "published" },
+            totalAttendee: { title: "Total Attendees", logo: "attendee" },
+            member: { title: "Members", logo: "member" }
+        };
+
+        return {
+            payload: Object.entries(data).map(([key, value]) => ({
+                logo: mappings[key].logo,
+                title: mappings[key].title,
+                count: value.toLocaleString()
+            }))
+        };
+    }
+    const originalObject = {
+        eventCount: data.payload.eventCount,
+        publishEvent: data.payload.publishEvent,
+        totalAttendee: data.payload.totalAttendee,
+        member: data.payload.member
+    };
+    const result = convertToObjectArray(originalObject);
+    let topCardData = result;
+
     return (
         <div className="space-y-4 xl:space-y-7">
             <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 xl:gap-6">
-                {statusData.payload.map((x, index) => (
+                {topCardData.payload.map((x, index) => (
                     <OverviewCardComponent key={index} title={x.title} count={x.count} logo={x.logo} />
                 ))}
             </section>
@@ -22,7 +49,7 @@ const Page = () => {
                 <div className=" bg-white w-full xl:w-1/2 h-auto p-6 rounded-3xl space-y-6">
                     <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Total Event By Category</h2>
                     <div className="rounded-3xl w-full">
-                        <BarChartComponent />
+                        <BarChartComponent data={data.payload.categoryEventCountList} />
                     </div>
                 </div>
                 <div className="w-full xl:w-1/2 rounded-3xl relative bg-[#7B61FF] space-y-8 p-8 overflow-hidden">
