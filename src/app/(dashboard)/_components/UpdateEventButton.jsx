@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { ToogleBtn } from "./Action/ToogleBtn";
 import { SelectDropdown } from "./SelectDropdownComponent";
+import { SelectModify } from "./Action/SelectModify";
 
 export const UpdateEventButton = () => {
   const [hide, setHide] = useState(false);
@@ -178,11 +179,16 @@ export const UpdateEventButton = () => {
                   )}
                 </div>
                 <div className="w-full">
-                  <SelectDropdown
+                  <SelectModify
                     {...register("category")}
                     label={`!font-medium`}
                     height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
                   />
+                  {errors.category && (
+                    <span className="text-red-600 text-sm">
+                      {errors.category.message}
+                    </span>
+                  )}
 
                   {/* <label
                     htmlFor="password"
