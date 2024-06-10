@@ -1,6 +1,6 @@
 {
   "name": "final-next",
-  "version": "v1.22.22",
+  "version": "1.22.22",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -32,8 +32,13 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",
-    "daisyui": "^4.11.1",
+    "daisyui": "^4.12.2",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4"
-  }
+  },
+  "description": "<p align=\"center\"><a href=\"#\" target=\"_blank\"><img src=\"https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/image_237-removebg%204.png?alt=media&token=a6cbd8a5-a874-49b9-8659-36579def7a84\" width=\"400\" alt=\"Laravel Logo\"></a></p>",
+  "main": "postcss.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

@@ -77,7 +77,7 @@ const SignupComponent = () => {
       <div className="p-6 space-y-6 mx-8">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-6 gap-6">
-            <div className="col-span-6 sm:col-span-3">
+              <div className="col-span-6 sm:col-span-3">
               <label
                 htmlFor="name"
                 className="text-sm font-medium primary-text block mb-2"

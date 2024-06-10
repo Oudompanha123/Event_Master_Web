@@ -122,21 +122,30 @@ function NewFormComponent() {
                                 </span>
                             )}
                         </div>
+
+
+            
                         <div className="text-primary-text text-lg font-semibold lg:text-base flex mt-8">
                             Organization Name <p className="text-red-700">*</p>
                         </div>
-                        <input type="text" placeholder="Enter address" className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 mt-3 ${errors.name ? "border-red-500" : ""}`} value={organizationName}
-                            {...register("name", { required: "Organization name is required" })}
+                        <input type="text" placeholder="Enter address" className={`${errors.name? "border-red-700 focus:border-red-600" : "border-gray-300"}shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 mt-3`} value={organizationName}
+                            {...register("name", { 
+                                    required: "Organization name is required" 
+                                }
+                            )}
                             onChange={(e) => setOrganizationName(e.target.value)}
                             disabled={!isEditing}
                         />
                         {errors.name && (<p className="text-red-500 text-xs mt-1">{errors.name.message}</p>)}
+
                         <div className="mt-3 text-primary-text text-lg font-semibold lg:text-base lg:mt-7 flex">
                             Address <p className="text-red-700">*</p>
                         </div>
-                        <input type="text" placeholder="Enter address" className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 mt-3 
-                            ${errors.address ? "border-red-500" : ""}`} value={address}
-                            {...register("address", { required: "Address is required" },)}
+                        <input type="text" placeholder="Enter address" className={`${errors.address? "border-red-700 focus:border-red-600" : "border-gray-300"}shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 mt-3 `} value={address}
+                            {...register("address", { 
+                                    required: "Address is required" 
+                                }
+                            )}
                             onChange={(e) => setAddress(e.target.value)}
                             disabled={!isEditing}
                         />
@@ -144,13 +153,13 @@ function NewFormComponent() {
                     </div>
 
                     {/* button  */}
-                    <div className="flex justify-center w-[100%] mr-10 mt-8 lg:mt-9 lg:mr-10">
+                    <div className="flex justify-end w-[100%] mr-10 mt-8 lg:mt-9 lg:mr-10">
                         {isEditing ? (
                                 <>
                                     <button className="btn btn-outline border-solid border-1 border-primary-text text-lg w-40 lg:w-32 lg:text-base" onClick={handleCancelChanges}>
                                         Cancel
                                     </button>
-                                    <button className="btn btn-primary text-white w-40 text-lg lg:w-32 lg:text-base ml-5" onClick={handleSaveChanges} type="submit">
+                                    <button className="btn btn-primary text-white w-40 text-lg lg:w-32 lg:text-base ml-5" onClick={handleSaveChanges } type="submit">
                                         <BsFillPlusSquareFill className="w-7 h-7 lg:w-5 lg:h-5" />
                                         Save
                                     </button>
