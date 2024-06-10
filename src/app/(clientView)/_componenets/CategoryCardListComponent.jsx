@@ -3,9 +3,9 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { CategoryCardComponent } from './CategoryCardComponent';
-import data from "../../../data/popular.json"
 
-export const CategoryCardListComponent = () => {
+export const CategoryCardListComponent = ({ data }) => {
+
     return (
         <div>
             <Swiper
@@ -27,7 +27,7 @@ export const CategoryCardListComponent = () => {
             >
                 {data.payload.map((x, index) => (
                     <SwiperSlide key={index} >
-                        <CategoryCardComponent title={x.title} content={x.content} img={x.image} />
+                        <CategoryCardComponent title={x?.eventName} content={x?.description} cate={x?.categoryName} img={`https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/headway-F2KRf_QfCqw-unsplash.jpgbff2c2b3-3340-421f-b8bf-06cf683bb395?alt=media&token=19e9782d-0cca-4105-ab02-d627bd515ac6`} />
                     </SwiperSlide>
                 ))}
             </Swiper>
