@@ -57,13 +57,13 @@ export const SidebarComponent = ({ className }) => {
                     </h2>
                     <ul className={`${!click && 'hidden'}`}>
                         <li className="flex">
-                            <Link className={`rounded-radiusUi w-full flex gap-3 pl-10 py-3 !text-base ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
+                            <Link className={`rounded-radiusUi w-full flex gap-3 pl-12 py-3 !text-base ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
                                 {/* <Buildings2 size="20" color={`${pathname === "/organization-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" /> */}
                                 Organization Profile
                             </Link>
                         </li>
                         <li className="flex">
-                            <Link className={`rounded-radiusUi w-full flex gap-3 hover:!bg-none pl-10 py-3 !text-base ${pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`} href={'/user-profile'}>
+                            <Link className={`rounded-radiusUi w-full flex gap-3 hover:!bg-none pl-12 py-3 !text-base ${pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`} href={'/user-profile'}>
                                 {/* <Personalcard size="20" color={`${pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" /> */}
                                 User Profile
                             </Link>

@@ -407,7 +407,7 @@ export default function MaterialComponent() {
 
 
   return (
-    <div>
+    <>
       {/* Material */}
       <div className="text-primary-text font-semibold text-2xl py-5">
         Material Management
@@ -819,7 +819,7 @@ export default function MaterialComponent() {
           </tbody>
         </table>
       </div>
-    </div>
+      </>
   );
 }
 

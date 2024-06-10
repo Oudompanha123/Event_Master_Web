@@ -1,57 +1,74 @@
-"use client";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import Image from "next/image";
-import Link from "next/link";
+'use client';
+
+import {useState} from 'react';
+import {useForm} from 'react-hook-form';
+import Image from 'next/image';
+import {useRouter} from 'next/navigation';
+import Link from 'next/link';
 
 const SignupComponent = () => {
-  const initialData = {
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    phoneNumber: "",
-    organizationCode: "",
-  };
+    const initialData = {
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        phoneNumber: '',
+        organizationCode: '',
+    };
 
-  const [isAdminSelected, setIsAdminSelected] = useState(false);
-  const [isLocked, setIsLocked] = useState(true);
-  const [isKeyLocked, setIsKeyLocked] = useState(true);
+    const [isAdminSelected, setIsAdminSelected] = useState(false);
+    const [isLocked, setIsLocked] = useState(true);
+    const [isKeyLocked, setIsKeyLocked] = useState(true);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-    reset,
-  } = useForm({
-    defaultValues: initialData,
-  });
+    const {
+        register,
+        handleSubmit,
+        formState: {errors, isValid},
+        watch,
+        reset,
+    } = useForm({
+        mode: 'onChange',
+        defaultValues: initialData,
+    });
 
-  const handleAdminClick = () => {
-    setIsAdminSelected(true);
-    reset(initialData); // Reset form fields to initialData
-  };
+    const handleAdminClick = () => {
+        setIsAdminSelected(true);
+        reset(initialData);
+    };
 
-  const handleUserClick = () => {
-    setIsAdminSelected(false);
-    reset(initialData); // Reset form fields to initialData
-  };
+    const handleUserClick = () => {
+        setIsAdminSelected(false);
+        reset(initialData);
+    };
 
-  const handleLockClick = () => setIsLocked((prevState) => !prevState);
-  const handleKeyLockClick = () => setIsKeyLocked((prevState) => !prevState);
+    const handleLockClick = () => setIsLocked((prevState) => !prevState);
+    const handleKeyLockClick = () => setIsKeyLocked((prevState) => !prevState);
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+    const router = useRouter();
+
+    const onSubmit = (data) => {
+        console.log(data);
+        if (!isAdminSelected) {
+            const modal = document.getElementById("my_modal_5");
+            if (modal) {
+                modal.showModal();
+            } else {
+                console.error('Modal element not found');
+            }
+        } else {
+            router.push('/verify-register');
+        }
+    };
 
   return (
-    <div className="mx-[42%] mt-56 w-[45%] bg-white rounded-[40px] shadow-md absolute">
+    <div className="w-[75%] h-auto p-8 mt-20 md:w-[55%] xl:left-6 xl:mt-32 xl:mx-[42%] 2xl:mt-[10%]  2xl:left-5 xl:w-[45%] bg-white rounded-[40px] shadow-md absolute ">
+      {" "}
+      {/*mt-56 */}
       <div className="flex justify-start p-6 pt-12 mx-8 focus:outline-none">
         <button
           type="button"
           id="admin-button"
-          className={`font-medium text-sm rounded-[100px] px-12 py-3.5 -mr-10 ${
+          className={`font-medium text-sm rounded-[100px] px-12 py-3.5 -mr-10  ${
             isAdminSelected
               ? "bg-purple-text text-white z-20"
               : "shadow-sm bg-white border border-gray-300 primary-text z-10"
@@ -63,7 +80,7 @@ const SignupComponent = () => {
         <button
           type="button"
           id="user-button"
-          className={`font-medium text-sm rounded-[100px] px-12 py-3.5 ${
+          className={`font-medium text-sm rounded-[100px] px-12 py-3.5  ${
             !isAdminSelected
               ? "bg-purple-text text-white z-20"
               : "shadow-sm bg-white border border-gray-300 primary-text z-10"
@@ -73,11 +90,12 @@ const SignupComponent = () => {
           USER
         </button>
       </div>
-
-      <div className="p-6 space-y-6 mx-8">
+      <div className=" w-full h-full">
+        {" "}
+        {/*space-y-6 mx-8 p-6*/}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-6 gap-6">
-            <div className="col-span-6 sm:col-span-3">
+          <div className="grid grid-cols-6 gap-6 px-3">
+            <div className="col-span-6 md:col-span-3 ">
               <label
                 htmlFor="name"
                 className="text-sm font-medium primary-text block mb-2"
@@ -104,7 +122,9 @@ const SignupComponent = () => {
               )}
             </div>
 
-            <div className="col-span-6 sm:col-span-3">
+            <div className="col-span-6 md:col-span-3">
+              {" "}
+              {/*sm:col-span-3*/}
               <label
                 htmlFor="email"
                 className="text-sm font-medium primary-text block mb-2"
@@ -135,7 +155,8 @@ const SignupComponent = () => {
               )}
             </div>
 
-            <div className="col-span-6 sm:col-span-3">
+            <div className="col-span-6 md:col-span-3">
+              {/* sm:col-span-3*/}
               <label
                 htmlFor="password"
                 className="text-sm font-medium primary-text block mb-2"
@@ -181,7 +202,9 @@ const SignupComponent = () => {
               )}
             </div>
 
-            <div className="col-span-6 sm:col-span-3">
+            <div className="col-span-6 md:col-span-3">
+              {" "}
+              {/* sm:col-span-3*/}
               <label
                 htmlFor="confirm-password"
                 className="text-sm font-medium primary-text block mb-2"
@@ -263,11 +286,13 @@ const SignupComponent = () => {
             )}
 
             {!isAdminSelected && (
-              <div className="col-span-6 flex space-x-4">
-                <div className="flex-1">
+              <div className="w-full col-span-6  flex flex-col h-full gap-6 md:flex-row md:flex-1 xl:justify-between ">
+                {" "}
+                {/*space-x-4*/}
+                <div className="grid grid-rows-1 w-full">
                   <label
                     htmlFor="phone-number"
-                    className="text-sm font-medium primary-text block mb-2"
+                    className="text-sm font-medium primary-text block mb-2 "
                   >
                     Phone Number <span className="text-red-600 text-sm">*</span>
                   </label>
@@ -278,7 +303,7 @@ const SignupComponent = () => {
                       errors.phoneNumber
                         ? "border-red-700 focus:border-red-600"
                         : "border-gray-300"
-                    } shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                    } shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block xl:w-full p-3.5`}
                     placeholder="Enter your phone number"
                     {...register("phoneNumber", {
                       required: "Phone Number is required",
@@ -290,11 +315,10 @@ const SignupComponent = () => {
                     </span>
                   )}
                 </div>
-
-                <div className="flex-1">
+                <div className="w-full">
                   <label
                     htmlFor="organization-code"
-                    className="text-sm font-medium primary-text block mb-2"
+                    className="text-sm font-medium primary-text block mb-2 xl:col-span-3"
                   >
                     Organization Code{" "}
                     <span className="text-red-600 text-sm">*</span>
@@ -327,7 +351,7 @@ const SignupComponent = () => {
               <button
                 type="submit"
                 id="sign-up"
-                className="bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400"
+                className="bg-purple-text text-white font-medium text-sm rounded-3xl px-32 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400"
                 onClick={() =>
                   document.getElementById("my_modal_5").showModal()
                 }

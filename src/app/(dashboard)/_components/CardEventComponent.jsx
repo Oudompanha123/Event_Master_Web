@@ -1,9 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import React from "react";
+// import { useEffect, useState } from "react";
 import Image from "next/image";
 import mockEventService from "../mockEventService";
 import { EventActionButton } from "./EventActionButton";
+import { Location } from "iconsax-react";
+import Event from './../events/page';
+import { getAllEventService } from "@/service/event.service";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -13,18 +17,29 @@ const formatDate = (dateString) => {
     .toUpperCase();
   return { day, month };
 };
+export async function CardEventComponent({eventData}) {
+    const events = eventData;
 
-export default function CardEventComponent() {
-  const [events, setEvents] = useState([]);
+  // const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      const { payload: eventData } = await mockEventService();
-      setEvents(eventData);
-    };
+  // useEffect(() => {
+  //   const fetchEvents = async () => {
+  //     const { payload: eventData } = await mockEventService();
+  //     setEvents(eventData);
+  //   };
 
-    fetchEvents();
-  }, []);
+  //   fetchEvents();
+  // }, []);
+  // const [events, setEvents] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchEvents = async () => {
+  //     const { payload: eventData } = await getAllEventService();
+  //     setEvents(eventData);
+  //   };
+
+  //   fetchEvents();
+  // }, []);
 
   return (
     <div className="gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:gap-6 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2 2xl:grid-cols-4  ">
@@ -50,7 +65,7 @@ export default function CardEventComponent() {
                       {month}
                     </small>
                   </div>
-                  <EventActionButton/>
+                  <EventActionButton />
                 </div>
               </div>
 
@@ -61,25 +76,25 @@ export default function CardEventComponent() {
                   </div>
 
                   <span
-                    className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${
-                      data.isOpen
+                    className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${data.isOpen
                         ? "bg-blue-100 text-blue-700"
                         : "bg-red-100 text-red-700"
-                    }`}
+                      }`}
                   >
                     {data.isOpen ? "Open" : "Closed"}
                   </span>
                 </div>
 
-                <p className="text-gray-700 text-sm px-1 mt-3 flex gap-2">
-                  <Image
+                <p className="text-gray-700 text-sm px-1 mt-3 flex items-center gap-2">
+                  {/* <Image
                     className=""
-                    src="icons/location.svg"
+                    src="/icons/location.svg"
                     alt="Location"
                     width={17}
                     height={10}
                     priority
-                  />
+                  /> */}
+                  <Location size="20" color="#7A44FF" variant="Bold" />
                   <span className="mt-2  line-clamp-1 ">{data.address}</span>
                 </p>
               </div>
@@ -91,7 +106,8 @@ export default function CardEventComponent() {
                   <button className="mx-auto">View all attendees</button>
                 </Link>
                 <Link
-                  href="/event-detail/1"
+              
+                  href={`/event-detail/${data.movie_id}`}
                   className="flex hover:bg-violet-700 active:bg-violet-800 focus:outline-none focus:ring focus:ring-violet-500 items-center justify-center flex-1 rounded-full bg-[#7939EF] text-white antialiased py-2 text-sm transition duration-300 ease-in-out hover:scale-[102%]"
                 >
                   <button className="mx-auto">View event detail</button>
@@ -104,3 +120,4 @@ export default function CardEventComponent() {
     </div>
   );
 }
+export default CardEventComponent;

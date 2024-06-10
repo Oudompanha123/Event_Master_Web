@@ -2,8 +2,11 @@ import CardEventComponent from "../_components/CardEventComponent";
 import { IoSearchOutline } from "react-icons/io5";
 import { SelectDropdown } from "../_components/SelectDropdownComponent";
 import { SelectStatus } from "../_components/SelectStatusComponent";
+import { getAllEventService } from "@/services/event.service";
 
-export default function Event() {
+export default async function Event() {
+  // const allEvent = await getAllEventService();
+  const allEvent = await getAllEventService();
   return (
     <main>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -56,7 +59,7 @@ export default function Event() {
         </div>
       </div>
 
-      <CardEventComponent />
+      <CardEventComponent eventData={allEvent.payload}/>
     </main>
   );
 }
