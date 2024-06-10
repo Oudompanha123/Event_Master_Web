@@ -6,13 +6,13 @@ import racingImage from "../../../public/images/racing.jpg"
 import conferenceImage from "../../../public/images/conference.jpg"
 import { CategoryCardListComponent } from "./_componenets/CategoryCardListComponent";
 import { CTAComponent } from "./_componenets/CTAComponent";
-import eventData from "../../data/event.json";
 import { EventList } from "./_componenets/EventList";
 import { SearchBar } from "./_componenets/SearchBar";
-import { getAllEvents } from "@/services/clientPage/landingService";
+import { getAllEvents, getPopularEvent } from "@/services/clientPage/landingService";
 
 export default async function Home() {
   const data = await getAllEvents();
+  const popularData = await getPopularEvent();
   const allCate = new Set();
   const arrCate = [];
   data.payload.filter(x => allCate.add(x.cateName))
@@ -57,7 +57,7 @@ export default async function Home() {
           <h2 className="text-4xl lg:text-5xl font-semibold w-full sm:w-2/3 lg:w-1/2 mx-auto">Popular events you may like also.</h2>
           <p className="text-sm md:text-base font-medium">explore new thing by gathering with people.</p>
         </div>
-        <CategoryCardListComponent />
+        <CategoryCardListComponent data={popularData} />
       </section>
 
       <section className="mb-16">
