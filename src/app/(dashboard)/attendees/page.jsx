@@ -62,7 +62,7 @@ const AttendeePage = () => {
                   {attendee.phone}
                 </td>
                 <td className=" px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
-                  <DeleteAttendeeComponent />
+                  <DeleteAttendeeComponent attendeeId={attendee.id}/>
                 </td>
               </tr>
             ))}
