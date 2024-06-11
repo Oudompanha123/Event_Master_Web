@@ -24,16 +24,16 @@ const ForgotPasswordComponent = () => {
     };
 
     return (
-        <div className="absolute lg:mx-[29%] lg:mt-[13%] lg:left-[9%] lg:block md:top-28 md:left-14 md:block sm:hidden">
+        <div className="absolute flex justify-center sm:pt-[500px] sm:pl-0 md:pl-[30%] lg:pl-[50%] lg:pt-[400px] w-full md:w-[70%] lg:w-[39%] h-[100%]">
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="lg:mt-5 lg:block">
-                    <h2 className="lg:mt-6 lg:text-center lg:text-3xl leading-9 font-extrabold Stext-purple-text-head flex justify-center md:text-3xl ">
+                <div className="mt-5">
+                    <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
                         Forgot Password?
                     </h2>
-                    <p className="flex justify-center greyUi lg:mt-3 md:badge-md md:mt-4 md:mr-1.5">Please enter your email to reset password</p>
+                    <p className="flex justify-center greyUi mt-6">Please enter your email to reset password</p>
                 </div>
 
-                <div className="lg:mt-12">
+                <div className="mt-12">
                     <label htmlFor="email" className="text-sm font-medium primary-text block mb-2">Email</label>
                     <div>
                         <input
@@ -53,7 +53,7 @@ const ForgotPasswordComponent = () => {
                     {errors.email && <span className="text-red-600 text-sm">{errors.email.message}</span>}
                 </div>
 
-                <div className="lg:flex lg:justify-center lg:mt-10">
+                <div className="flex justify-center mt-10">
                     <button
                         onClick={() => router.push('/verify-otp')}
                         type="button"
