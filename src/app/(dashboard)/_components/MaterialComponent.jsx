@@ -25,7 +25,7 @@ const getStatusColor = (status) => {
   }
 };
 
-export default function MaterialComponent() {
+export default function MaterialComponent({id}) {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   // const [isFocused, setIsFocused] = useState(false);
@@ -407,7 +407,7 @@ export default function MaterialComponent() {
 
 
   return (
-    <div>
+    <>
       {/* Material */}
       <div className="text-primary-text font-semibold text-2xl py-5">
         Material Management
@@ -819,7 +819,7 @@ export default function MaterialComponent() {
           </tbody>
         </table>
       </div>
-    </div>
+      </>
   );
 }
 

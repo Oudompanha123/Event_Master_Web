@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ToogleBtn } from "./Action/ToogleBtn";
 import { SelectDropdown } from "./SelectDropdownComponent";
 import { SelectModifyV2 } from "./Action/SelectModifyV2";
+import { SelectModify } from "./Action/SelectModify";
 
 export const UpdateEventButton = () => {
   const [hide, setHide] = useState(false);
@@ -183,38 +184,11 @@ export const UpdateEventButton = () => {
                     label={`!font-medium`}
                     height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
                   />
-
-                  {/* <label
-                    htmlFor="password"
-                    className="text-sm font-medium primary-text block mb-2"
-                  >
-                    Event Category <span className="text-red-600">*</span>
-                  </label>
-                  <select
-                    name="category"
-                    id="category"
-                    className={`${
-                      errors.category && "border-red-700 focus:border-red-600"
-                    } mb-2 classic shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
-                    {...register("category", {
-                      required: "category is required",
-                      validate: (v) => {
-                        if (v === "0") {
-                          return "please select category";
-                        }
-                      },
-                    })}
-                  >
-                    <option value="0">Choose event category</option>
-                    <option value="1">Conference</option>
-                    <option value="2">Social Event</option>
-                    <option value="3">Sport</option>
-                  </select>
                   {errors.category && (
                     <span className="text-red-600 text-sm">
                       {errors.category.message}
                     </span>
-                  )} */}
+                  )}
                 </div>
               </div>
               <div className="flex flex-col md:flex-row gap-8">
