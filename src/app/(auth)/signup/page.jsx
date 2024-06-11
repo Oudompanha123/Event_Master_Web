@@ -5,13 +5,13 @@ import SignupComponent from "@/app/(auth)/_components/SignupComponent";
 
 const SignUpPage = () => {
   return (
-    <div className="w-full relative h-screen p-8 md:px-8 flex justify-center mb-40 ">
+    <div className="w-full relative h-screen  md:px-8 flex justify-center">
       <Image
-        className="absolute w-full object-cover mx-4 -mt-[70px] bg-cover -top-5 block h-2/3"
+        className="absolute w-full object-cover -mt-[120px] top-10 bg-cover h-5/6 block "
         src={`/icons/signup.svg`}
         alt={`image`}
         width={1920}
-        height={100}
+        height={300}
         property=""
       />
 
@@ -29,6 +29,7 @@ const SignUpPage = () => {
         alt={`img`}
         width={520}
         height={300}
+        property=""
       />
       <div className="hidden xl:block absolute top-32 left-32 text-white text-2xl">
         <h1 className="2xl:text-[58px] font-medium xl:text-[50px]">

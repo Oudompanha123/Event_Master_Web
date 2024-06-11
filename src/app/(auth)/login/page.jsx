@@ -7,11 +7,11 @@ const LoginPage = () => {
   return (
     <div className="w-full relative h-screen flex items-center">
       <Image
-        className="absolute object-cover bg-cover -top-5 block h-2/3" //lg:-mt-[70px]
+        className="absolute object-cover bg-cover -mt-20 -top-10 block h-5/6"
         src={`/icons/login.svg`}
         alt={`image`}
         width={1920}
-        height={80}
+        height={580}
         property=""
       />
 

@@ -2,11 +2,16 @@
 
 import { Trash } from "iconsax-react";
 import React from "react";
-import { RxCross2 } from "react-icons/rx"
+import { RxCross2 } from "react-icons/rx";
 export const DeleteAssetComponent = () => {
   return (
     <div>
-      <Trash onClick={() => document.getElementById("category_action").showModal()} className="cursor-pointer" size="20" color="#F4485D" />
+      <Trash
+        onClick={() => document.getElementById("category_action").showModal()}
+        className="cursor-pointer"
+        size="20"
+        color="#F4485D"
+      />
       <dialog id="category_action" className="modal">
         <div className="modal-box w-[310px] justity-center  ">
           <form method="dialog" className="justify-end flex">
@@ -15,10 +20,13 @@ export const DeleteAssetComponent = () => {
             </button>
           </form>
           <div className="justify-center flex">
-            <img
-              src="images/delete.svg"
-              alt="delete"
+            <Image
+              src={`images/delete.svg`}
+              alt={`delete`}
+              width={0}
+              height={0}
               className="w-[58%] mb-3"
+              property=""
             />
           </div>
           <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">

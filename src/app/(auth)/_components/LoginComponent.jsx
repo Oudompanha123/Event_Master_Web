@@ -31,7 +31,7 @@ const LoginComponent = () => {
   };
 
   return (
-    <div className="absolute flex mt-11 flex-col h-full justify-center lg:px-8 w-full p-8 xl:mx-[42%] xl:mt-2 xl:w-[45%] xl:right-[10%]">
+    <div className="absolute flex mt-11 flex-col h-screen justify-center lg:px-8 w-full p-8 xl:mx-[42%] xl:mt-2 xl:w-[45%] xl:right-[10%]">
       {" "}
       {/*sm:px-6 px-6 top-44 left-[15%]*/}
       <div className="mt-8 sm:mx-auto w-full sm:w-full sm:max-w-md flex justify-center ">

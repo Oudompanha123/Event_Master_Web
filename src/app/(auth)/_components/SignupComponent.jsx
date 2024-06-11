@@ -1,67 +1,67 @@
-'use client';
+"use client";
 
-import {useState} from 'react';
-import {useForm} from 'react-hook-form';
-import Image from 'next/image';
-import {useRouter} from 'next/navigation';
-import Link from 'next/link';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const SignupComponent = () => {
-    const initialData = {
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        phoneNumber: '',
-        organizationCode: '',
-    };
+  const initialData = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phoneNumber: "",
+    organizationCode: "",
+  };
 
-    const [isAdminSelected, setIsAdminSelected] = useState(false);
-    const [isLocked, setIsLocked] = useState(true);
-    const [isKeyLocked, setIsKeyLocked] = useState(true);
+  const [isAdminSelected, setIsAdminSelected] = useState(false);
+  const [isLocked, setIsLocked] = useState(true);
+  const [isKeyLocked, setIsKeyLocked] = useState(true);
 
-    const {
-        register,
-        handleSubmit,
-        formState: {errors, isValid},
-        watch,
-        reset,
-    } = useForm({
-        mode: 'onChange',
-        defaultValues: initialData,
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    watch,
+    reset,
+  } = useForm({
+    mode: "onChange",
+    defaultValues: initialData,
+  });
 
-    const handleAdminClick = () => {
-        setIsAdminSelected(true);
-        reset(initialData);
-    };
+  const handleAdminClick = () => {
+    setIsAdminSelected(true);
+    reset(initialData);
+  };
 
-    const handleUserClick = () => {
-        setIsAdminSelected(false);
-        reset(initialData);
-    };
+  const handleUserClick = () => {
+    setIsAdminSelected(false);
+    reset(initialData);
+  };
 
-    const handleLockClick = () => setIsLocked((prevState) => !prevState);
-    const handleKeyLockClick = () => setIsKeyLocked((prevState) => !prevState);
+  const handleLockClick = () => setIsLocked((prevState) => !prevState);
+  const handleKeyLockClick = () => setIsKeyLocked((prevState) => !prevState);
 
-    const router = useRouter();
+  const router = useRouter();
 
-    const onSubmit = (data) => {
-        console.log(data);
-        if (!isAdminSelected) {
-            const modal = document.getElementById("my_modal_5");
-            if (modal) {
-                modal.showModal();
-            } else {
-                console.error('Modal element not found');
-            }
-        } else {
-            router.push('/verify-register');
-        }
-    };
+  const onSubmit = (data) => {
+    console.log(data);
+    if (!isAdminSelected) {
+      const modal = document.getElementById("my_modal_5");
+      if (modal) {
+        modal.showModal();
+      } else {
+        console.error("Modal element not found");
+      }
+    } else {
+      router.push("/verify-register");
+    }
+  };
 
   return (
-    <div className="w-[75%] h-auto p-8 mt-20 md:w-[55%] xl:left-6 xl:mt-32 xl:mx-[42%] 2xl:mt-[10%]  2xl:left-5 xl:w-[45%] bg-white rounded-[40px] shadow-md absolute ">
+    <div className="w-[75%] h-auto p-1 md:p-8 md:mt-[15%]  mt-20 md:w-[55%] xl:left-6 xl:mt-32 xl:mx-[42%] 2xl:mt-[10%]  2xl:left-5 xl:w-[45%] bg-white rounded-[40px] shadow-md absolute ">
       {" "}
       {/*mt-56 */}
       <div className="flex justify-start p-6 pt-12 mx-8 focus:outline-none">
