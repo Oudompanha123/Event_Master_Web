@@ -54,7 +54,7 @@ export const SelectModify = ({ height, label }) => {
                 {({ open }) => (
                     <>
                         <Label
-                            for="category"
+                            htmlFor="category"
                             className={`text-sm ${label} font-semibold text-primary-text block mb-2`}
                         >
                             Event Category

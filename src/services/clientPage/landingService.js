@@ -30,10 +30,20 @@ export const getPopularEvent = async () => {
     return data
 }
 
-export const findEvent = async () => {
-    const res = await fetch(`${process.env.API_URL}landing-page/getAllPopularEvent`,
-        { cache: "no-store" }
+export const findEvent = async (searchData) => {
+    const res = await fetch(`
+        ${process.env.API_URL}landing-page/search?eventName=${searchData.eventName}&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}`,
+        {
+            cache: "no-store",
+            method: 'POST',
+        }
     )
     const data = await res.json();
+    return data
+}
+
+export const getAllCategory = async () => {
+    const res = await fetch(`${process.env.API_URL}landing-page/getAllCategoryNames`)
+    const data = await res.json()
     return data
 }

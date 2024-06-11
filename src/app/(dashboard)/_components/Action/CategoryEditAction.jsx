@@ -1,13 +1,21 @@
 'use client'
 
+import { updateCategoryAction } from "@/actions/categoryAction"
 import { Edit } from "iconsax-react"
 import Image from "next/image"
+import { useState } from "react"
 
-export const CategoryEditAction = () => {
+export const CategoryEditAction = ({ cateId }) => {
+    const [categoryName, setCategoryName] = useState();
+    const handleUpdate = async () => {
+        await updateCategoryAction(cateId, categoryName);
+        setCategoryName('');
+        document.getElementById(`update_category_${cateId}`).close()
+    }
     return (
         <>
-            <Edit className="cursor-pointer" onClick={() => document.getElementById('update_category').showModal()} size="20" color="#16AE65" />
-            <dialog id="update_category" className="modal">
+            <Edit className="cursor-pointer" onClick={() => document.getElementById(`update_category_${cateId}`).showModal()} size="20" color="#16AE65" />
+            <dialog id={`update_category_${cateId}`} className="modal">
                 <div className="modal-box w-11/12 md:w-1/3 max-w-5xl space-y-8">
                     <div className="flex flex-row items-center text-primary-text">
                         <h2 className="text-lg lg:text-xl font-semibold">Update Category</h2>
@@ -21,10 +29,12 @@ export const CategoryEditAction = () => {
                         id="category"
                         className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
                         placeholder="Category" required=""
+                        value={categoryName}
+                        onChange={(e) => setCategoryName(e.target.value)}
                     />
                     <div className="flex justify-end space-x-3">
-                        <div onClick={() => document.getElementById("update_category").close()} className="flex items-center px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
-                        <button onClick={() => document.getElementById("update_category").close()} type="submit" className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3">
+                        <div onClick={() => document.getElementById(`update_category_${cateId}`).close()} className="flex items-center px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
+                        <button onClick={() => handleUpdate()} type="submit" className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3">
                             <Image
                                 src={"/icons/edit.svg"}
                                 width={20}

@@ -6,12 +6,16 @@ import {MdKeyboardArrowLeft} from "react-icons/md";
 
 const LoginPage = () => {
 
+    // define handle login
     async function handleLogin(userInfo) {
+
+        // define object structure
         const newUser = {
             userEmail: userInfo.get("email"),
             userPassword: userInfo.get("password")
         }
 
+        // calling next auth service and passing " newUseInfo "
         const res = await signIn("credentials", {
             redirect: false,
             ...newUser,

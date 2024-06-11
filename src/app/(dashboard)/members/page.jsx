@@ -162,6 +162,7 @@ const MemberPage = () => {
                     alt={member.name}
                     width={40}
                     height={40}
+                    property=" "
                     className="mr-4 rounded-full"
                   />
                   {member.name}
@@ -218,6 +219,7 @@ const MemberPage = () => {
                                   alt="Admin"
                                   height={22}
                                   width={22}
+                                  property=" "
                                 />
                                 <p className="text-primary-text text-base font-semibold">
                                   Admin
@@ -242,6 +244,7 @@ const MemberPage = () => {
                                   alt="User"
                                   height={22}
                                   width={22}
+                                  property=" "
                                 />
                                 <p className="text-primary-text text-base font-semibold">
                                   User
@@ -266,6 +269,7 @@ const MemberPage = () => {
                                   alt="Sub Admin"
                                   height={22}
                                   width={22}
+                                  property=" "
                                 />
                                 <p className="text-primary-text text-base font-semibold">
                                   Sub Admin
