@@ -3,7 +3,7 @@ import Link from "next/link"
 import image from "../../../../public/images/event-master-logo.png"
 import { MegaImage } from "@/components/MegaImage";
 
-export const EventCardComponent = ({ img, title, location, description, company, date }) => {
+export const EventCardComponent = ({ img, title, location, description, company, date, id, status }) => {
     const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
     const inputDate = date;
     const formattedDate = formatDate(inputDate);
@@ -12,14 +12,16 @@ export const EventCardComponent = ({ img, title, location, description, company,
         <div className="shadow-md rounded-3xl">
             <div className="relative">
                 <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
-                    <MegaImage 
+                    <MegaImage
                         src={img}
                         className={'rounded-t-3xl'}
                     />
                 </div>
                 {/* <Image src={img} width={500} height={300} className="rounded-t-3xl h-[300px] w-full object-cover" alt="racingImage" /> */}
                 <div className="absolute top-0 right-0 p-6 ">
-                    <span className="bg-white text-sm rounded-full py-2 px-4 font-semibold text-blueUi">Open</span>
+                    <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${status ? 'text-blueUi' : 'text-redUi'}`}>
+                        {status ? 'Open' : 'Close'}
+                    </span>
                 </div>
             </div>
             <div className="bg-white px-6 py-8 rounded-b-3xl flex flex-col justify-between h-[305.72px]">
@@ -40,7 +42,7 @@ export const EventCardComponent = ({ img, title, location, description, company,
                     </div>
                 </div>
                 <div className="flex justify-between">
-                    <Link href={'/detail/1'} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
+                    <Link href={`/detail/${id}`} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
                     <Link href={'/register'} className="text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text">Join Event</Link>
                 </div>
             </div>

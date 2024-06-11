@@ -4,6 +4,7 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import SignupComponent from "@/app/(auth)/_components/SignupComponent";
 
 const SignUpPage = () => {
+
   return (
     <div className="w-full relative h-screen  md:px-8 flex justify-center">
       <Image
