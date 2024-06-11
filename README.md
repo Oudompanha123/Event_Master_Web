@@ -2,7 +2,7 @@
 
 ## Introduction
 
-EventMaster, developed by the Korea Software HRD Center, is a web application designed to streamline the management of events and improve the experience for both the event organizers and the attendees. For event organizers, EventMaster offers them with many useful features, such as dynamic registration form creation, attendee management, agenda management, and material management. With these essential tools, event organizers can efficiently manage their events. On the other hand, the attendees will find it easier to browse for any kind of event that interests them and join by filling out the registration form attached to each event. In brief, EventMaster is the finest choice for fulfilling the event management system, with many wonderful features provided.
+EventMaster, developed by the Korea Software HRD Center, is a web application designed to streamline the management of events and improve the experience htmlFor both the event organizers and the attendees. htmlFor event organizers, EventMaster offers them with many useful features, such as dynamic registration form creation, attendee management, agenda management, and material management. With these essential tools, event organizers can efficiently manage their events. On the other hand, the attendees will find it easier to browse htmlFor any kind of event that interests them and join by filling out the registration form attached to each event. In brief, EventMaster is the finest choice htmlFor fulfilling the event management system, with many wonderful features provided.
 
 <img src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/landing.jpg?alt=media&token=16c12168-8f97-44cd-b3a1-2452b7e2caae" alt="landing_page">
 <img src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/material.jpg?alt=media&token=7c4140eb-1b70-477f-96fe-c1b12a9790ae" alt="material_page">
@@ -20,50 +20,26 @@ EventMaster, developed by the Korea Software HRD Center, is a web application de
 ## Routes
 
 > Login Page
-> <br>
-> http://34.87.153.65:9999/login
-> <br><br>
+> <br> > http://34.87.153.65:9999/login > <br><br>
 > Signup Page
-> <br>
-> http://34.87.153.65:9999/member
-> <br><br>
+> <br> > http://34.87.153.65:9999/member > <br><br>
 > Langin Page
-> <br>
-> http://34.87.153.65:9999/
-> <br><br>
+> <br> > http://34.87.153.65:9999/ > <br><br>
 > About Page
-> <br>
-> http://34.87.153.65:9999/about
-> <br><br>
+> <br> > http://34.87.153.65:9999/about > <br><br>
 > Overview Page
-> <br>
-> http://34.87.153.65:9999/overview
-> <br><br>
+> <br> > http://34.87.153.65:9999/overview > <br><br>
 > Member Page
-> <br>
-> http://34.87.153.65:9999/members
-> <br><br>
+> <br> > http://34.87.153.65:9999/members > <br><br>
 > Asset Page
-> <br>
-> http://34.87.153.65:9999/assets
-> <br><br>
+> <br> > http://34.87.153.65:9999/assets > <br><br>
 > Events Page
-> <br>
-> http://34.87.153.65:9999/events
-> <br><br>
+> <br> > http://34.87.153.65:9999/events > <br><br>
 > User Request Page
-> <br>
-> http://34.87.153.65:9999/user-request
-> <br><br>
+> <br> > http://34.87.153.65:9999/user-request > <br><br>
 > Organization Profile Page
-> <br>
-> http://34.87.153.65:9999/organization-profile
-> <br><br>
+> <br> > http://34.87.153.65:9999/organization-profile > <br><br>
 > User Profile Page
-> <br>
-> http://34.87.153.65:9999/user-profile
-> <br><br>
+> <br> > http://34.87.153.65:9999/user-profile > <br><br>
 > Member Page
-> <br>
-> http://34.87.153.65:9999/member
-> <br><br>
+> <br> > http://34.87.153.65:9999/member > <br><br>

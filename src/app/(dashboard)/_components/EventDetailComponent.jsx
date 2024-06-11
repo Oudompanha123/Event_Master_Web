@@ -19,14 +19,14 @@ export const EventDetail = () => {
 
   if (!event) {
     return (
-      <div class="flex justify-center items-center h-screen">
-        <div class="rounded-full h-20 w-20 bg-violet-800 animate-ping"></div>
+      <div className="flex justify-center items-center h-screen">
+        <div className="rounded-full h-20 w-20 bg-violet-800 animate-ping"></div>
       </div>
     );
   }
 
   const formatDate = (dateString) => {
-    const options = { day: "2-digit" ,  month:  "long",  year: "numeric" };
+    const options = { day: "2-digit", month: "long", year: "numeric" };
     return new Date(dateString).toLocaleDateString("en-GB", options);
   };
 
@@ -40,7 +40,7 @@ export const EventDetail = () => {
         }}
         alt="Event Photo"
       >
-        <UpdateEventButton/>
+        <UpdateEventButton />
       </div>
 
       <div className="flex justify-between px-5 mb-3">
@@ -48,14 +48,13 @@ export const EventDetail = () => {
           {event.eventName}
         </div>
         <div className="flex justify-center items-center ">
-  <span
-    className={`inline-block rounded-full px-4 py-1 text-sm font-medium ${
-      event.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
-    }`}
-  >
-    {event.isOpen ? "Open" : "Closed"}
-  </span>
-</div>
+          <span
+            className={`inline-block rounded-full px-4 py-1 text-sm font-medium ${event.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
+              }`}
+          >
+            {event.isOpen ? "Open" : "Closed"}
+          </span>
+        </div>
 
       </div>
       <div className="ml-5 text-primary-text font-regular text-base w-[65%] ">
@@ -68,7 +67,7 @@ export const EventDetail = () => {
       <button className="px-5 py-2 rounded-full bg-blue-200 text-[#215EE9] ml-5  mx-5  mt-5">
         {formatDate(event.startDate)}
       </button>
-      
+
     </div>
   );
 };

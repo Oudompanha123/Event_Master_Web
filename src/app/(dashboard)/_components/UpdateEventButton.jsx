@@ -9,7 +9,7 @@ import { SelectModifyV2 } from "./Action/SelectModifyV2";
 
 export const UpdateEventButton = () => {
   const [hide, setHide] = useState(false);
-  const [previewSrc, setPreviewSrc] = useState(""); // Added state for image preview source
+  const [previewSrc, setPreviewSrc] = useState(""); // Added state htmlFor image preview source
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -166,8 +166,8 @@ export const UpdateEventButton = () => {
                     name="name"
                     id="name"
                     className={`${errors.name
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
                       } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter event name"
                   />
@@ -233,8 +233,8 @@ export const UpdateEventButton = () => {
                     name="startDate"
                     id="startdate"
                     className={`${errors.startDate
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
                       } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="MM/DD/YYYY 6:00 AM"
                     required=""
@@ -265,8 +265,8 @@ export const UpdateEventButton = () => {
                     name="endDate"
                     id="enddate"
                     className={`${errors.endDate
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
                       } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="MM/DD/YYYY 6:00 AM"
                     required=""
@@ -294,8 +294,8 @@ export const UpdateEventButton = () => {
                     name="duration"
                     id="duration"
                     className={`${errors.duration
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
                       } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter duration"
                     required=""
@@ -321,8 +321,8 @@ export const UpdateEventButton = () => {
                     name="maxAttendee"
                     id="max"
                     className={`${errors.maxAttendee
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
                       } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter maximum attendee"
                     required=""
@@ -350,8 +350,8 @@ export const UpdateEventButton = () => {
                     name="address"
                     id="address"
                     className={`${errors.address
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
                       } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter address"
                     required=""
@@ -380,8 +380,8 @@ export const UpdateEventButton = () => {
                     name="description"
                     id="description"
                     className={`${errors.description
-                        ? "border-red-700 focus:border-red-600"
-                        : "border-gray-300"
+                      ? "border-red-700 focus:border-red-600"
+                      : "border-gray-300"
                       } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter description..."
                     required=""

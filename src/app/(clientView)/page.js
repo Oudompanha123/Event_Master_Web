@@ -6,17 +6,14 @@ import racingImage from "../../../public/images/racing.jpg"
 import conferenceImage from "../../../public/images/conference.jpg"
 import { CategoryCardListComponent } from "./_componenets/CategoryCardListComponent";
 import { CTAComponent } from "./_componenets/CTAComponent";
-import { EventList } from "./_componenets/EventList";
 import { SearchBar } from "./_componenets/SearchBar";
-import { getAllEvents, getPopularEvent } from "@/services/clientPage/landingService";
+import { getAllCategory, getEventByCateName, getPopularEvent } from "@/services/clientPage/landingService";
+import { Suspense } from "react";
+import { EventList } from "./_componenets/EventList";
 
 export default async function Home() {
-  const data = await getAllEvents();
   const popularData = await getPopularEvent();
-  const allCate = new Set();
-  const arrCate = [];
-  data.payload.filter(x => allCate.add(x.cateName))
-  allCate.forEach(x => arrCate.push(x));
+  const allCategory = await getAllCategory();
 
   return (
     <div className="container">
@@ -26,7 +23,7 @@ export default async function Home() {
           <div className="space-y-8 mb-8">
             <h1 className="!leading-snug font-bold text-5xl md:text-6xl lg:text-[64px] w-full lg:w-3/4 2xl:w-1/2 mx-auto">Bringing everyone <br className="hidden lg:block"></br>all together</h1>
             <p className="text-sm md:text-base w-full md:w-3/4 lg:w-1/3 xl:w-1/3 mx-auto font-medium">Unite, Celebrate, Create: Bringing Everyone Together
-              for Unforgettable Events, Perfectly Realized with Seamless
+              htmlFor Unforgettable Events, Perfectly Realized with Seamless
               Planning and Exquisite Execution.
             </p>
           </div>
@@ -57,21 +54,23 @@ export default async function Home() {
           <h2 className="text-4xl lg:text-5xl font-semibold w-full sm:w-2/3 lg:w-1/2 mx-auto">Popular events you may like also.</h2>
           <p className="text-sm md:text-base font-medium">explore new thing by gathering with people.</p>
         </div>
-        <CategoryCardListComponent data={popularData} />
+        <Suspense>
+          <CategoryCardListComponent data={popularData} />
+        </Suspense>
       </section>
 
       <section className="mb-16">
-        <SearchBar />
+        <Suspense>
+          <SearchBar />
+        </Suspense>
       </section>
       {/* event section */}
       <section id="content" className="space-y-16">
-        {arrCate.map((name, index) => (
-          <EventList
-            key={index}
-            title={name}
-            data={data.payload[index].events}
-          />
-        ))}
+        <Suspense fallback={<p>Loading</p>}>
+          {allCategory.payload.map(async (x, index) => (
+            <EventList key={index} title={x} data={await getEventByCateName(x)} />
+          ))}
+        </Suspense>
       </section>
       {/* cta section */}
       <section>

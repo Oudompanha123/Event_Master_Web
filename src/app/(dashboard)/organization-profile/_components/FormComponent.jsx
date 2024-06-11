@@ -1,10 +1,10 @@
 "use client";
-import {useRef, useState} from "react";
-import {TbEdit} from "react-icons/tb";
-import {LiaUserEditSolid} from "react-icons/lia";
-import {BsFillPlusSquareFill} from "react-icons/bs";
+import { useRef, useState } from "react";
+import { TbEdit } from "react-icons/tb";
+import { LiaUserEditSolid } from "react-icons/lia";
+import { BsFillPlusSquareFill } from "react-icons/bs";
 import Image from "next/image";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import styles from "./MyComponent.module.css"
 import React from 'react'
 
@@ -27,7 +27,7 @@ function FormComponent() {
 
     const {
         register, handleSubmit,
-        formState: {errors},
+        formState: { errors },
         watch,
         reset
     } = useForm({
@@ -82,13 +82,13 @@ function FormComponent() {
                 <div className="flex flex-col items-center mt-20 lg:-mt-20">
                     <div className="w-60 h-60 rounded-full lg:w-40 lg:h-40">
                         <Image src={profileImage} alt="My Image" width={300} height={300}
-                               className="mt-2 rounded-full"/>
+                            className="mt-2 rounded-full" />
                         <div className="w-8 h-8 rounded-full flex justify-center items-center mt-[-30px] ml-28 z-50">
                             <label htmlFor="image-upload"
-                                   className="w-full h-full bg-purple-200 rounded-full flex items-center justify-center bg-white duration-300 hover:bg-gray-200 cursor-pointer">
-                                <LiaUserEditSolid className="w-5 h-5 text-gray-700"/>
+                                className="w-full h-full bg-purple-200 rounded-full flex items-center justify-center bg-white duration-300 hover:bg-gray-200 cursor-pointer">
+                                <LiaUserEditSolid className="w-5 h-5 text-gray-700" />
                                 <input id="image-upload" name="file-upload" type="file" accept="image/*"
-                                       className="hidden" onChange={handleImageUpload}/>
+                                    className="hidden" onChange={handleImageUpload} />
                             </label>
                         </div>
                     </div>
@@ -110,26 +110,26 @@ function FormComponent() {
                                 {organizationCode}
                             </div>
                             <button onClick={handleCopy}
-                                    className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800 cursor-pointer`}>
+                                className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800 cursor-pointer`}>
                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                     xmlns="http://www.w3.org/2000/svg" className="ml-[350px] mt-3">
+                                    xmlns="http://www.w3.org/2000/svg" className="ml-[350px] mt-3">
                                     <path
                                         d="M11.5715 3.21484H3.85725C3.14717 3.21484 2.57153 3.79048 2.57153 4.50056V16.072C2.57153 16.7821 3.14717 17.3577 3.85725 17.3577H11.5715C12.2816 17.3577 12.8572 16.7821 12.8572 16.072V4.50056C12.8572 3.79048 12.2816 3.21484 11.5715 3.21484Z"
-                                        stroke="#344054" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M5.14307 6.42773H10.2859" stroke="#344054" stroke-linecap="round"
-                                          stroke-linejoin="round"/>
-                                    <path d="M5.14307 9.64258H10.2859" stroke="#344054" stroke-linecap="round"
-                                          stroke-linejoin="round"/>
+                                        stroke="#344054" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M5.14307 6.42773H10.2859" stroke="#344054" strokeLinecap="round"
+                                        strokeLinejoin="round" />
+                                    <path d="M5.14307 9.64258H10.2859" stroke="#344054" strokeLinecap="round"
+                                        strokeLinejoin="round" />
                                     <path d="M5.14307 12.8574H7.71449" stroke="#344054" s troke-linecap="round"
-                                          stroke-linejoin="round"/>
+                                        strokeLinejoin="round" />
                                     <path
                                         d="M5.78589 0.642578H14.143C14.484 0.642578 14.8111 0.778037 15.0522 1.01915C15.2932 1.26027 15.4287 1.5873 15.4287 1.92829V14.1426"
-                                        stroke="#344054" stroke-linecap="round" stroke-linejoin="round"/>
+                                        stroke="#344054" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </button>
                             {copied && (
                                 <span className="absolute top-0 right-0 bg-green-500 text-white px-2 py-1 text-xs">
-                                Copied!
+                                    Copied!
                                 </span>
                             )}
                         </div>
@@ -137,11 +137,11 @@ function FormComponent() {
                             Organization Name <p className="text-red-700">*</p>
                         </div>
                         <input type="text" placeholder="Enter address"
-                               className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 mt-3 ${errors.name ? "border-red-500" : ""}`}
-                               value={organizationName}
-                               {...register("name", {required: "Organization name is required"})}
-                               onChange={(e) => setOrganizationName(e.target.value)}
-                               disabled={!isEditing}
+                            className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 mt-3 ${errors.name ? "border-red-500" : ""}`}
+                            value={organizationName}
+                            {...register("name", { required: "Organization name is required" })}
+                            onChange={(e) => setOrganizationName(e.target.value)}
+                            disabled={!isEditing}
                         />
                         {errors.name && (<p className="text-red-500 text-xs mt-1">{errors.name.message}</p>)}
 
@@ -151,9 +151,9 @@ function FormComponent() {
 
                         <input type="text" placeholder="Enter address" className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 mt-3 
                             ${errors.address ? "border-red-500" : ""}`} value={address}
-                               {...register("address", {required: "Address is required"})}
-                               onChange={(e) => setAddress(e.target.value)}
-                               disabled={!isEditing}
+                            {...register("address", { required: "Address is required" })}
+                            onChange={(e) => setAddress(e.target.value)}
+                            disabled={!isEditing}
                         />
                         {errors.address && (<p className="text-red-500 text-xs mt-1">{errors.address.message}</p>)}
 
@@ -169,15 +169,15 @@ function FormComponent() {
                                     Cancel
                                 </button>
                                 <button className="btn btn-primary text-white w-40 text-lg lg:w-40 lg:text-base ml-5"
-                                        onClick={handleSaveChanges} type="submit">
-                                    <BsFillPlusSquareFill className="w-7 h-7 lg:w-5 lg:h-5"/>
+                                    onClick={handleSaveChanges} type="submit">
+                                    <BsFillPlusSquareFill className="w-7 h-7 lg:w-5 lg:h-5" />
                                     Save
                                 </button>
                             </>
                         ) : (
                             <button className="btn btn-success text-white w-40 text-lg lg:w-40 lg:text-base "
-                                    onClick={handleUpdateClick}>
-                                <TbEdit className="w-7 h-7 lg:w-6 lg:h-6"/>
+                                onClick={handleUpdateClick}>
+                                <TbEdit className="w-7 h-7 lg:w-6 lg:h-6" />
                                 Edit
                             </button>
                         )}

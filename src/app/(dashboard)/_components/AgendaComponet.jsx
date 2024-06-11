@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import mockAgendaService from "../mockAgendaService";
-import { DeleteButton} from "./Action/DeleteButton";
+import { DeleteButton } from "./Action/DeleteButton";
 import CreateAgendaButton from "./Action/CreateAgendaButton";
 import { UpdateAgendaButton } from "./UpdateAgendaButton";
 
@@ -38,7 +38,7 @@ export default function AgendaComponent() {
               Agenda Management
             </p>
           </div>
-          <CreateAgendaButton/>
+          <CreateAgendaButton />
         </div>
 
         <div className=" justify-center w-full content-center space-y-6 py-24">
@@ -62,7 +62,7 @@ export default function AgendaComponent() {
             You don’t have an agenda form!
           </p>
           <p className=" text-center text-xl font-medium  text-gray-500">
-            Please create agenda form for attendees to join event!
+            Please create agenda form htmlFor attendees to join event!
           </p>
         </div>
       </div>
@@ -78,23 +78,21 @@ export default function AgendaComponent() {
           </p>
         </div>
         <div className="lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex">
-          <DeleteButton/>
-          <UpdateAgendaButton/>
-      
-         
+          <DeleteButton />
+          <UpdateAgendaButton />
+
+
         </div>
       </div>
       {agenda.map((data, index) => (
         <div key={index} className="space-y-4 ">
           <div
-            className={`border h-auto py-4 px-4 rounded-3xl flex gap-5 ${
-              index % 2 === 1 ? "bg-blue-0" : "bg-gray-100"
-            }`}
+            className={`border h-auto py-4 px-4 rounded-3xl flex gap-5 ${index % 2 === 1 ? "bg-blue-0" : "bg-gray-100"
+              }`}
           >
             <div
-              className={`bg-red-100 h-auto border-l-[2.6px] ${
-                index % 2 === 1 ? "border-blue-600" : "border-green-600"
-              }`}
+              className={`bg-red-100 h-auto border-l-[2.6px] ${index % 2 === 1 ? "border-blue-600" : "border-green-600"
+                }`}
             ></div>
             <div className="h-auto w-full space-y-2 ">
               <p className="text-base font-regular text-primary-text">{`${convertTo12HourFormat(

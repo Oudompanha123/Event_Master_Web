@@ -11,10 +11,10 @@ export default function Event() {
         <SelectStatus />
 
         <form>
-          <div class="mb-5">
+          <div className="mb-5">
             <label
-              for="start date"
-              class="text-sm font-semibold text-primary-text block mb-2 "
+              htmlFor="start date"
+              className="text-sm font-semibold text-primary-text block mb-2 "
             >
               Start Date
             </label>
@@ -28,10 +28,10 @@ export default function Event() {
         </form>
 
         <form>
-          <div class="mb-5">
+          <div className="mb-5">
             <label
-              for="end date"
-              class="text-sm font-semibold text-primary-text block mb-2 "
+              htmlFor="end date"
+              className="text-sm font-semibold text-primary-text block mb-2 "
             >
               End Date
             </label>
