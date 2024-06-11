@@ -1,7 +1,6 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import {loginService} from "@/services/auth.service";
-import {process} from "yarn/lib/cli";
+import {loginService} from "@/services/login-signup/auth.service";
 
 export const authOption = {
     providers: [
@@ -24,6 +23,7 @@ export const authOption = {
         signIn: "/login",
     },
 
+    // used to set token into cookies
     callbacks: {
         async jwt({token, user}) {
             return {...token, ...user};

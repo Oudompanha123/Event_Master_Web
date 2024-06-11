@@ -37,9 +37,9 @@ const VerifyOTPComponent = () => {
     const router = useRouter();
 
     return (
-        <div className="absolute mx-[29%] mt-[18%] left-[9.5%]">
+        <div className="absolute flex justify-center sm:pt-[500px] md:pl-[30%] lg:pl-0 lg:pt-[400px] w-full md:w-[70%] lg:w-[39%] lg:left-[30%] h-[100%]">
             <form>
-                <div className="mt-5 mb-12">
+                <div className="mt-3 mb-5">
                     <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
                         Enter 4 Digits Code
                     </h2>
