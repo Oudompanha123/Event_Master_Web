@@ -68,7 +68,11 @@ export async function CardEventComponent({ eventData }) {
               </div>
               <div className="flex lg:gap-4 md:gap-2 px-4 pt-4 pb-7 mt-6 sm:gap-2">
                 <Link
+<<<<<<< HEAD
                   href={`/attendees/${data.eventId}`}
+=======
+                  href="/attendees/62"
+>>>>>>> origin/simphalleng
                   className="flex-1 flex items-center justify-center rounded-full border-purple-text border-[1px] text-purple-text antialiased py-2 text-sm transition duration-300 ease-in-out hover:scale-[102%]"
                 >
                   <button className="mx-auto">View all attendees</button>
