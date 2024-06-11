@@ -2,14 +2,13 @@
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
 
-export function DeleteAttendeeComponent({ attendeeId }) {
+export function DeleteAttendeeComponent() {
   return (
     <>
       <button
         className="rounded-2xl"
         value="delete"
         onClick={() => {
-          console.log("Delete Attendee Id:", attendeeId);
           document.getElementById("delete").showModal();
         }}
       >
@@ -31,7 +30,7 @@ export function DeleteAttendeeComponent({ attendeeId }) {
           </form>
           <div className="justify-center flex">
             <Image
-              src={`images/delete.svg`}
+              src={`/images/delete.svg`}
               alt={`delete image`}
               className="w-[58%] mb-3"
               width={32}
