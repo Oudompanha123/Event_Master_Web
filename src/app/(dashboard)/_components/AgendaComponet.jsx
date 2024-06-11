@@ -1,9 +1,7 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import mockAgendaService from "../mockAgendaService";
 import { DeleteButton} from "./Action/DeleteButton";
 import CreateAgendaButton from "./Action/CreateAgendaButton";
 import { UpdateAgendaButton } from "./UpdateAgendaButton";
+import { getAgendaByEventId } from "@/services/dashboard/agenda.service";
 
 
 const convertTo12HourFormat = (time) => {
@@ -14,22 +12,11 @@ const convertTo12HourFormat = (time) => {
   return `${hours}:${minutes.padStart(2, "0")} ${period}`;
 };
 
-export default function AgendaComponent() {
-  const [agenda, setAgenda] = useState([]);
+export default async function AgendaComponent({id}) {
+  const agenda =await getAgendaByEventId(id);
+  const data = await agenda?.payload?.data?.agenda;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await mockAgendaService();
-        setAgenda(response.payload);
-      } catch (error) {
-        console.error("Error fetching agenda:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  if (agenda.length === 0) {
+  if (data==null) {
     return (
       <div className="mb-5 mt-14 pl-1">
         <div className="flex justify-between align-middle content-center mb-4 ">
@@ -78,13 +65,11 @@ export default function AgendaComponent() {
           </p>
         </div>
         <div className="lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex">
-          <DeleteButton/>
+          <DeleteButton id={id}/>
           <UpdateAgendaButton/>
-      
-         
         </div>
       </div>
-      {agenda.map((data, index) => (
+      {data?.map((data, index) => (
         <div key={index} className="space-y-4 ">
           <div
             className={`border h-auto py-4 px-4 rounded-3xl flex gap-5 ${
@@ -98,23 +83,23 @@ export default function AgendaComponent() {
             ></div>
             <div className="h-auto w-full space-y-2 ">
               <p className="text-base font-regular text-primary-text">{`${convertTo12HourFormat(
-                data.startTime
+                data?.startTime
               )} - ${convertTo12HourFormat(data.endTime)}`}</p>
               <p className="text-xl font-semibold text-primary-text">
-                {data.topic}
+                {data?.topic}
               </p>
 
-              {(data.description || data.speaker) && (
+              {(data?.description || data?.speaker) && (
                 <hr className="h-[1px] w-full bg-gray-300" />
               )}
               {data.description && (
                 <p className="text-base font-regular text-primary-text">
-                  {data.description}
+                  {data?.description}
                 </p>
               )}
-              {data.speaker && (
+              {data?.speaker && (
                 <p className="text-base font-medium text-primary-text">
-                  <span className="font-semibold">Speaker:</span> {data.speaker}
+                  <span className="font-semibold">Speaker:</span> {data?.speaker}
                 </p>
               )}
             </div>

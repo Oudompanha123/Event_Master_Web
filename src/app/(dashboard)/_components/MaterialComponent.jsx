@@ -25,7 +25,7 @@ const getStatusColor = (status) => {
   }
 };
 
-export default function MaterialComponent() {
+export default function MaterialComponent({id}) {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   // const [isFocused, setIsFocused] = useState(false);

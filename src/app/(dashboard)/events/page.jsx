@@ -2,11 +2,12 @@ import CardEventComponent from "../_components/CardEventComponent";
 import { IoSearchOutline } from "react-icons/io5";
 import { SelectDropdown } from "../_components/SelectDropdownComponent";
 import { SelectStatus } from "../_components/SelectStatusComponent";
-import { getAllEventService } from "@/services/event.service";
+import { Export } from "iconsax-react";
+import { getAllEventsService } from "@/services/dashboard/event.service";
 
-export default async function Event() {
-  // const allEvent = await getAllEventService();
-  const allEvent = await getAllEventService();
+const Page = async () => {
+  const eventData = await getAllEventsService();
+
   return (
     <main>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -58,8 +59,9 @@ export default async function Event() {
           <IoSearchOutline className="w-[24px] h-[24px] -mt-9 ml-3" />
         </div>
       </div>
-
-      <CardEventComponent eventData={allEvent.payload}/>
+      <CardEventComponent eventData={eventData.payload} />
     </main>
   );
 }
+
+export default Page

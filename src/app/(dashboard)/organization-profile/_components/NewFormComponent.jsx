@@ -16,7 +16,7 @@ function NewFormComponent() {
   const [profileImage, setProfileImage] = useState(
     "/images/event-master-logo.png"
   );
-  const [organizationName, setOrganizationName] = useState("");
+  const [organizationName, setOrganizationName] = useState("EventMaster");
   const [address, setAddress] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [organizationCode] = useState("123456");
@@ -106,36 +106,34 @@ function NewFormComponent() {
       >
         <div className="flex flex-col items-center md:mt-20 sm:mt-1 lg:-mt-20">
           <div className="w-full h-40 bg-purple rounded-t-2xl sm:mt-0"></div>
-          <div className="w-300 h-300 rounded-full lg:-mt-20 sm:-mt-20 sm:w-40 sm:h-40 md:w-44 md:h-44 lg:w-44 relative lg:h-44">
-            <div className="relative -top-32 sm:-top-12">
-              <Image
-                src={logo}
-                alt="My Image"
-                width={450}
-                height={450}
-                className={`mt-2 rounded-full ${styles.profile}`}
-              />
-              <div
-                className={`w-8 h-8 rounded-full  flex justify-center items-center mt-[-30px] ml-28 z-50 ${styles.iconProfile}`}
+          <div className="w-[] h-[50px] rounded-full sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-44 lg:h-44 lg:-mt-20">
+            <Image
+              src={profileImage}
+              alt="My Image"
+              width={250}
+              height={250}
+              className={` mt-[-250px] lg:mt-2 w-28 h-28 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-44 lg:h-44 rounded-full ${styles.profile}`}
+            />
+            <div
+              className={`w-8 h-8 rounded-full flex justify-center items-center mt-[-455px] lg:mt-[-30px] ml-28 z-50 ${styles.iconProfile}`}
+            >
+              <label
+                htmlFor="image-upload"
+                className="w-full h-full bg-purple-200 rounded-full flex items-center justify-center bg-gray-100 duration-300 hover:bg-gray-200 cursor-pointer"
               >
-                <label
-                  htmlFor="image-upload"
-                  className="w-full h-full bg-purple-200 rounded-full flex items-center justify-center bg-gray-100 duration-300 hover:bg-gray-200 cursor-pointer"
-                >
-                  <LiaUserEditSolid className="w-5 h-5 text-gray-700" />
-                  <input
-                    id="image-upload"
-                    name="file-upload"
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleImageUpload}
-                  />
-                </label>
-              </div>
+                <LiaUserEditSolid className="w-5 h-5 text-gray-700" />
+                <input
+                  id="image-upload"
+                  name="file-upload"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageUpload}
+                />
+              </label>
             </div>
           </div>
-          <h2 className="text-primary-text font-bold text-2xl mt-5 lg:mt-6 lg:text-2xl">
+          <h2 className="text-primary-text font-bold text-2xl mt-24 lg:mt-6 lg:text-2xl sm:mt-52">
             {organizationName}
           </h2>
         </div>
@@ -260,7 +258,7 @@ function NewFormComponent() {
         </div>
       </form>
       <div
-        className={`
+        className={` hidden sm:block
   z-0 
   h-24 sm:h-32 md:h-40 lg:h-80 xl:h-96 2xl:h-[400px]
 `}
