@@ -19,6 +19,7 @@ export const loginService = async (userInfo) => {
 }
 
 export const registerService = async (userInfo) => {
+    console.log("Admin : " ,userInfo)
     const res = await fetch('http://34.124.203.109:8081/api/auth/admin-register', {
         method: 'POST',
         headers: {
@@ -28,5 +29,6 @@ export const registerService = async (userInfo) => {
         body: JSON.stringify(userInfo)
     });
     const data = await res.json();
-    return data;
+    // return data;
+    console.log(data)
 }

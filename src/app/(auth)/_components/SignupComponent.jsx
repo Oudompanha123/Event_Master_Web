@@ -50,7 +50,7 @@ const SignupComponent = () => {
     const router = useRouter();
 
     const onSubmit = async (data) => {
-        console.log(data);
+        console.log("Data: " ,data);
         await signupAction(data);
 
         if (!isAdminSelected) {

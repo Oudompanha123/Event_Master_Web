@@ -10,17 +10,15 @@ import { SearchBar } from "./_componenets/SearchBar";
 import { getAllCategory, getEventByCateName, getPopularEvent } from "@/services/clientPage/landingService";
 import { Suspense } from "react";
 import { EventList } from "./_componenets/EventList";
+import {data} from "autoprefixer";
 
 export default async function Home() {
   const popularData = await getPopularEvent();
-<<<<<<< HEAD
   const allCategory = await getAllCategory();
-=======
   const allCate = new Set();
   const arrCate = [];
   // data.payload.filter(x => allCate.add(x.cateName))
   allCate.forEach(x => arrCate.push(x));
->>>>>>> origin/hengly
 
   return (
     <div className="container">
