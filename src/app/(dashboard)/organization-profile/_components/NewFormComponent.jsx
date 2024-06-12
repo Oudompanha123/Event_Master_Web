@@ -18,9 +18,11 @@ function NewFormComponent() {
   );
   const [organizationName, setOrganizationName] = useState("");
   const [address, setAddress] = useState("");
+  
   const [isEditing, setIsEditing] = useState(false);
   const [organizationCode] = useState("123456");
   const [copied, setCopied] = useState(false);
+
   const [nameValid, setNameValid] = useState(true);
   const [addressValid, setAddressValid] = useState(true);
 
@@ -236,8 +238,7 @@ function NewFormComponent() {
                   Cancel
                 </button>
                 <button
-                  className={`btn btn-primary text-white w-40 text-lg lg:w-32 lg:text-base ml-5 ${isFormValid ? "" : "opacity-50 cursor-not-allowed"
-                    }`}
+                  className={`btn btn-primary text-white w-40 text-lg lg:w-32 lg:text-base ml-5 ${isFormValid ? "" : "opacity-50 cursor-not-allowed"}`}
                   onClick={handleSaveChanges}
                   type="button"
                   disabled={!isFormValid || !organizationName || !address}

@@ -1,12 +1,53 @@
-@media (max-width: 640px) {
+@media (min-width: 400px) and (max-width: 700px) {
     .hideOnPhone {
         display: none;
 
     }
-@media (min-width: 640px) {
+
+    .profileContainer{
+        background-color: aquamarine;
+        display: flex;
+        justify-content: center;
+    }
     .profile {
-        margin-top: 100px;
+        width: 100%;
+        height: 100%;
+        margin: auto;
+    }
+
+    .container {
+        display: flex;
+        /* background-color: aqua; */
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        /* background-color: aqua; */
+        
+    }
+
+    .icon {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 30px;
+        height: 30px;
+        object-fit: cover;
+    }
+
+}
+
+@media (min-width: 700px) and (max-width: 1000px) {
+    .icon {
+        position: absolute;
+        top: 70px;
+        right: 0;
     }
 }
 
+@media (min-width: 1000px) and (max-width: 1300px) {
+    .icon {
+        position: absolute;
+        top: 87px;
+        right: 2px;
+    }
 }
