@@ -28,6 +28,8 @@ const Page = () => {
   };
 
   const handleCancelChanges = () => {
+    setOrganizationName('');
+    setAddress('');
     // Implement the logic to cancel the changes
     setIsEditing(false);
   };
