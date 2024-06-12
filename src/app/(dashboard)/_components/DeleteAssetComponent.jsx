@@ -1,8 +1,10 @@
 "use client";
 
 import { Trash } from "iconsax-react";
+import Image from "next/image";
 import React from "react";
 import { RxCross2 } from "react-icons/rx";
+
 export const DeleteAssetComponent = () => {
   return (
     <div>

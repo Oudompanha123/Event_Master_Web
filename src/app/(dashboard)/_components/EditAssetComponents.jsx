@@ -3,8 +3,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import { AddSquare, Edit } from "iconsax-react";
-// import { TbEdit } from "react-icons/tb";
-// import { colors } from "react-select/dist/declarations/src/theme";
+
 export const EditAssetComponents = () => {
   const {
     register,
@@ -44,11 +43,11 @@ export const EditAssetComponents = () => {
                 </label>
                 <input
                   type="text"
-                  id=""
-                  name="assetname"
+                  id="assetName"
+                  name="assetName"
                   className="sm:w-full mt-2 shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
                   placeholder="Enter asset name"
-                  {...register("assetname", {
+                  {...register("assetName", {
                     required: "asset name is required",
                   })}
                 />
@@ -65,10 +64,10 @@ export const EditAssetComponents = () => {
                   <input
                     type="number"
                     id=""
-                    name="quantity"
+                    name="qty"
                     className="shadow-sm mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
                     placeholder="Enter quantity"
-                    {...register("quantity", {
+                    {...register("qty", {
                       required: "quantity is required",
                     })}
                   />
@@ -108,7 +107,7 @@ export const EditAssetComponents = () => {
                   Cancel
                 </div>
                 <button
-                  type="submit"
+                  type="submit" 
                   className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
                 >
                   <Image src={"/icons/edit.svg"} width={20} height={20} />

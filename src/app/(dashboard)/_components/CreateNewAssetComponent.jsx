@@ -1,7 +1,14 @@
 "use client";
-import { IoIosAdd } from "react-icons/io";
+// import { IoIosAdd } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { AddSquare } from "iconsax-react";
+// import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
+// import { createAssetButton } from "@/app/actions/assetAction/createAssetButton";
+import { CreateNewAsset } from "./Action/CreateNewAssetButton";
+import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
+import { data } from "autoprefixer";
+// import { SaveNewAssetButton } from "./Action/SaveNewAssetButton";
+// import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
 export const AssetPopupComponent = () => {
   const {
     register,
@@ -9,33 +16,29 @@ export const AssetPopupComponent = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const onSubmit = (data) => {};
 
+  const test = () => {
+    handleSubmit(onSubmit);
+    handleAsset;
+  };
   return (
     <div>
-      <button
-        onClick={() => document.getElementById("my_modal_new").showModal()}
-        className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text h-11 w-11 justify-center text-purple-text rounded-3xl md:px-4 md:py-2.5 flex items-center space-x-3 md:w-40"
-      >
-        <AddSquare size="20" variant="Bold" className="" />
-        <p className="text-xs lg:text-base hidden md:block">New Assset</p>
-      </button>
+      <CreateNewAsset />
       <dialog id="my_modal_new" className="modal">
         <div className="modal-box w-11/12 md:w-1/2 max-w-5xl space-y-8">
           <div className="flex flex-row items-center text-primary-text">
-            <h2 className="text-lg lg:text-xl font-semibold">
-              Create Asset
-            </h2>
+            <h2 className="text-lg lg:text-xl font-semibold">Create Asset</h2>
             <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              <button
+                type="submit"
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              >
                 ✕
               </button>
             </form>
           </div>
-          {/* <div className="w-11/12 md:w-1/2 max-w-5xl space-y-8"> */}
-          <form action="" onSubmit={handleSubmit(onSubmit)}>
+          <form action="" onSubmit={test}>
             <div className="">
               <div className="">
                 <label htmlFor="">Asset Name</label>
@@ -43,16 +46,16 @@ export const AssetPopupComponent = () => {
                 <input
                   type="text"
                   id=""
-                  name="assetname"
+                  name="assetName"
                   className="sm:w-full mt-2 shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
                   placeholder="Enter asset name"
-                  {...register("assetname", {
+                  {...register("assetName", {
                     required: "asset name is required",
                   })}
                 />
-                {errors.assetname && (
+                {errors.assetName && (
                   <div className="text-red-600 text-sm">
-                    {errors.assetname.message}
+                    {errors.assetName.message}
                   </div>
                 )}
               </div>
@@ -63,16 +66,16 @@ export const AssetPopupComponent = () => {
                   <input
                     type="number"
                     id=""
-                    name="quantity"
+                    name="qty"
                     className="shadow-sm mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
                     placeholder="Enter quantity"
-                    {...register("quantity", {
+                    {...register("qty", {
                       required: "quantity is required",
                     })}
                   />
-                  {errors.quantity && (
+                  {errors.qty && (
                     <div className="text-red-600 text-sm">
-                      {errors.quantity.message}
+                      {errors.qty.message}
                     </div>
                   )}
                 </div>
@@ -105,7 +108,14 @@ export const AssetPopupComponent = () => {
                 >
                   Cancel
                 </div>
-                <button className="px-6 py-3 rounded-2xl border-1px border-borderUi flex space-x-2 bg-purple-text text-white">
+                {/* <SaveNewAssetButton /> */}
+                <button
+                  type="submit"
+                  // onClick={() =>
+                  //   document.getElementById("my_modal_new").close()
+                  // }
+                  className="px-6 py-3 rounded-2xl border-1px border-borderUi flex space-x-2 bg-purple-text text-white"
+                >
                   <AddSquare size="24" color="#FFFFFF" variant="Bold" />
                   <p>Save</p>
                 </button>
