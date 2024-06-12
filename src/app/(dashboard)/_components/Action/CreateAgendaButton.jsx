@@ -4,6 +4,7 @@ import { MdAddBox } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { AddSquare } from "iconsax-react";
+import createAgenda from "@/app/actions/createAgendaAction";
 
 function AddmoreInput({ inputList, setInputList }) {
   const handleAddClick = () => {
@@ -25,14 +26,13 @@ function AddmoreInput({ inputList, setInputList }) {
     list[index][name] = value;
     setInputList(list);
   };
-
   return (
     <div className="container">
       <div className="row">
         <div className="col-sm-12 ">
           {inputList.map((x, i) => (
             <div key={i} className="row ">
-              <div className="mb-5 mt-4 px-4 pt-4 pb-3  bottom-1 bg-white rounded-3xl border-1px  ">
+              <div className="mb-5 mt-4 px-4 pt-4 pb-3 bottom-1 bg-white rounded-3xl border-1px">
                 <div className="form-group justify-end flex h-5">
                   {inputList.length !== 1 && (
                     <button
@@ -54,7 +54,7 @@ function AddmoreInput({ inputList, setInputList }) {
                   <input
                     type="text"
                     name="topic"
-                    className="appearance-none input input-bordered font-medium text-sm w-full rounded-xl  focus:outline-none focus:border-purple-text"
+                    className="appearance-none input input-bordered font-medium text-sm w-full rounded-xl focus:outline-none focus:border-purple-text"
                     placeholder="Enter the Topic"
                     value={x.topic}
                     onChange={(e) => handleInputChange(e, i)}
@@ -78,7 +78,7 @@ function AddmoreInput({ inputList, setInputList }) {
                         type="time"
                         id="start-time"
                         name="startTime"
-                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none "
+                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
                         min="09:00"
                         max="18:00"
                         value={x.startTime}
@@ -102,7 +102,7 @@ function AddmoreInput({ inputList, setInputList }) {
                         type="time"
                         id="end-time"
                         name="endTime"
-                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none "
+                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
                         min="09:00"
                         max="18:00"
                         value={x.endTime}
@@ -165,45 +165,62 @@ function AddmoreInput({ inputList, setInputList }) {
   );
 }
 
-export function CreateAgendaButton() {
+export function CreateAgendaButton({ id }) {
+  console.log("event id is",id)
   const [inputList, setInputList] = useState([
     { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
   ]);
 
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    console.log("Form Submitted", inputList);
-    // Close the modal after submission
+  async function handleCreate() {
+    const agenda = inputList.map((item) => ({
+      "startTime": item.startTime,
+      "endTime": item.endTime,
+      "topic": item.topic,
+      "description": item.description || "",
+      "speaker": item.speaker,
+    }));
+
+    const requestBody = { agenda };
+
+    console.log("Request Body:", requestBody);
     document.getElementById("my_modal_4").close();
-  };
+
+    try {
+      const data = await createAgenda(requestBody,id);
+      console.log("API Response:", data);
+    } catch (error) {
+      console.error("Error creating agenda:", error);
+    }
+  }
+
 
   return (
     <>
       <button
-        className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-11 justify-center text-purple-text rounded-3xl  md:py-2.5 flex items-center gap-1"
+        className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-11 justify-center text-purple-text rounded-3xl md:py-2.5 flex items-center gap-1"
         onClick={() => document.getElementById("my_modal_4").showModal()}
       >
-          <AddSquare size="24" variant="Bold" className="" />
+        <AddSquare size="24" variant="Bold" className="" />
         <p className="text-base">Create Agenda</p>
       </button>
-      <dialog id="my_modal_4" className="modal ">
-        <div className="modal-box w-11/12 max-w-5xl  bg-[#F7F9FB]">
+      <dialog id="my_modal_4" className="modal">
+        <div className="modal-box w-11/12 max-w-5xl bg-[#F7F9FB]">
           <AddmoreInput inputList={inputList} setInputList={setInputList} />
           <div className="modal-action gap-2 mb-4">
-          <button
-              className="px-6 py-3 rounded-2xl border-1px border-borderUi bg-white  hover:border-gray-500 hover:bg-white"
+            <button
+              className="px-6 py-3 rounded-2xl border-1px border-borderUi bg-white hover:border-gray-500 hover:bg-white"
               onClick={() => document.getElementById("my_modal_4").close()}
             >
               Cancel
             </button>
             <button
-              className="px-6 py-3 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-3  bg-blue-700  w-32 hover:border-blueUi hover:bg-blue-800"
-              onClick={handleSubmit}
+              type="submit"
+              className="px-6 py-3 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-3 bg-blue-700 w-32 hover:border-blueUi hover:bg-blue-800"
+              onClick={() => handleCreate(id)}
             >
-              <MdAddBox size={24} color="white" />
+              <AddSquare size="24" variant="Bold" className="text-white" />
               <p className="text-white">Save</p>
             </button>
-            
           </div>
         </div>
       </dialog>

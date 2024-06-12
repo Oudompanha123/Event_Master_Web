@@ -21,18 +21,6 @@ const VerifyRegisterComponent = () => {
         setErrorMessage('');
     };
 
-
-    const handleKeyDown = (event) => {
-        if (event.key === 'Backspace') {
-            event.preventDefault();
-            setOtp(prev => prev.slice(0, -1));// Remove the last character
-            const prevInput = event.target.previousElementSibling;
-            if (prevInput) {
-                prevInput.focus();
-            }
-        }
-    }
-
     const router = useRouter();
 
     return (
@@ -48,7 +36,6 @@ const VerifyRegisterComponent = () => {
                 <OtpInput inputStyle={styles.inputStyle}
                           value={rgotp}
                           onChange={handleChange}
-                          onKeyDown={handleKeyDown}
                           numInputs={4}
                 />
 

@@ -2,11 +2,10 @@ import ForgotPasswordComponent from "@/app/(reset-password)/_components/ForgotPa
 
 const ForgotPasswordPage = () => {
     return (
-
         <div>
+
             <ForgotPasswordComponent/>
         </div>
-
     )
 }
 

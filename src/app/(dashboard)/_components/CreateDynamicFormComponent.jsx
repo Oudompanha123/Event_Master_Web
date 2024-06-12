@@ -130,18 +130,16 @@ export const CreateDynamicForm = () => {
       </div>
       {/* popup form */}
       <div
-        className={`${
-          !popUp ? `hidden` : `flex`
-        } fixed top-0 left-0 h-full w-full bg-black/25 backdrop-blur-sx flex-col justify-center items-center z-50`}
+        className={`${!popUp ? `hidden` : `flex`
+          } fixed top-0 left-0 h-full w-full bg-black/25 backdrop-blur-sx flex-col justify-center items-center z-50`}
       >
         {/* add field form  */}
         <div
-          className={`${
-            !addFieldNamePopup ? `block` : `hidden`
-          } bg-white w-1/2 h-auto py-6 px-8 rounded-3xl mx-auto space-y-6`}
+          className={`${!addFieldNamePopup ? `block` : `hidden`
+            } bg-white w-1/2 h-auto py-6 px-8 rounded-3xl mx-auto space-y-6`}
         >
           <div className="flex justify-between">
-            <Title title={"Choose field for your form"} />
+            <Title title={"Choose field htmlFor your form"} />
             <svg
               onClick={() => setPopUp(false)}
               xmlns="http://www.w3.org/2000/svg"
@@ -217,12 +215,11 @@ export const CreateDynamicForm = () => {
 
         {/* pop up add field name  */}
         <div
-          className={`${
-            addFieldNamePopup ? `block` : `hidden`
-          } bg-white w-1/4 h-auto py-6 px-8 rounded-2xl mx-auto space-y-6 z-50`}
+          className={`${addFieldNamePopup ? `block` : `hidden`
+            } bg-white w-1/4 h-auto py-6 px-8 rounded-2xl mx-auto space-y-6 z-50`}
         >
           <div className="flex justify-between">
-            <Title title={"Add name for your choosed field"} />
+            <Title title={"Add name htmlFor your choosed field"} />
             <svg
               onClick={() => handleResetPopup()}
               xmlns="http://www.w3.org/2000/svg"

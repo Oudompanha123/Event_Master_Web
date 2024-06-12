@@ -1,9 +1,8 @@
 "use client";
 
+import deleteAgenda from "@/app/actions/deleteAgendaAction";
 import Image from "next/image";
-
-
-export function DeleteButton() {
+export function DeleteButton({id}) {
   return (
     <>
       <button
@@ -41,6 +40,7 @@ export function DeleteButton() {
               <button
                 className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700"
                 value="yes"
+                onClick = {() => deleteAgenda(id)}
               >
                 <p className="text-white font-semibold">yes</p>
               </button>

@@ -26,15 +26,14 @@ export const SelectStatus = () => {
         {({ open }) => (
           <>
             <Label
-              for="status"
+              htmlFor="status"
               className="text-sm font-semibold text-primary-text block mb-2"
             >
               Status
             </Label>
             <Listbox.Button
-              className={`relative h-[48px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${
-                !selected ? " text-gray-400" : "bg-white text-black"
-              }`}
+              className={`relative h-[48px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${!selected ? " text-gray-400" : "bg-white text-black"
+                }`}
             >
               <span className="block truncate ">
                 {selected ? selected.name : placeholder}
@@ -61,8 +60,7 @@ export const SelectStatus = () => {
                   <Listbox.Option
                     key={option.id}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 hover:bg-blue-200 pl-8 p-[174px]  ${
-                        active ? " text-black" : "text-gray-900"
+                      `relative cursor-default select-none py-2 hover:bg-blue-200 pl-8 p-[174px]  ${active ? " text-black" : "text-gray-900"
                       }`
                     }
                     value={option}
@@ -70,9 +68,8 @@ export const SelectStatus = () => {
                     {({ selected }) => (
                       <>
                         <span
-                          className={` ${
-                            selected ? "font-medium" : "font-normal"
-                          }`}
+                          className={` ${selected ? "font-medium" : "font-normal"
+                            }`}
                         >
                           {option.name}
                         </span>

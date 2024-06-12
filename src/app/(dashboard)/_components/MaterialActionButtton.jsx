@@ -6,7 +6,7 @@ import { ToogleBtn } from "../_components/Action/ToogleBtn";
 
 export function MaterialActionButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null); // Reference for dropdown
+  const dropdownRef = useRef(null); // Reference htmlFor dropdown
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -203,7 +203,7 @@ export function MaterialActionButton() {
                   />
                   Handler
                 </div>
-                <div class="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
+                <div className="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
                   <Image
                     src="/images/sok.png"
                     alt="Neil image"
@@ -211,8 +211,8 @@ export function MaterialActionButton() {
                     width={50}
                     height={50}
                   />
-                  <div class="ms-1">
-                    <p class="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36	">
+                  <div className="ms-1">
+                    <p className="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36	">
                       Ronado
                     </p>
                   </div>
@@ -225,7 +225,7 @@ export function MaterialActionButton() {
                 </div>
 
                 <div className="gap-2 flex">
-                  <div class="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
+                  <div className="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
                     <Image
                       src="/images/sok.png"
                       alt="Neil image"
@@ -233,14 +233,14 @@ export function MaterialActionButton() {
                       width={50}
                       height={50}
                     />
-                    <div class="ms-1">
-                      <p class="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36	">
+                    <div className="ms-1">
+                      <p className="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36	">
                         Ly Nyta
                       </p>
                     </div>
                   </div>
 
-                  <div class="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
+                  <div className="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
                     <Image
                       src="/images/sok.png"
                       alt="Neil image"
@@ -248,8 +248,8 @@ export function MaterialActionButton() {
                       width={50}
                       height={50}
                     />
-                    <div class="ms-1">
-                      <p class="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36	">
+                    <div className="ms-1">
+                      <p className="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36	">
                         Davin
                       </p>
                     </div>

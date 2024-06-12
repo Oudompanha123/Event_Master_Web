@@ -11,7 +11,7 @@ import { SelectModifyV2 } from "./Action/SelectModifyV2";
 
 export function EventActionButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null); // Reference for dropdown
+  const dropdownRef = useRef(null); // Reference htmlFor dropdown
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -40,7 +40,7 @@ export function EventActionButton() {
   }, [isOpen]);
 
   const [hide, setHide] = useState(false);
-  const [previewSrc, setPreviewSrc] = useState(""); // Added state for image preview source
+  const [previewSrc, setPreviewSrc] = useState(""); // Added state htmlFor image preview source
 
   const handleDragOver = (e) => {
     e.preventDefault();
