@@ -1,15 +1,9 @@
-<<<<<<< HEAD
 "use client";
 import React, { useEffect, useState } from "react";
-import mockAgendaService from "../mockAgendaService";
-import { DeleteButton } from "./Action/DeleteButton";
-=======
 import { DeleteButton} from "./Action/DeleteButton";
->>>>>>> origin/chhaitith
 import CreateAgendaButton from "./Action/CreateAgendaButton";
 import { UpdateAgendaButton } from "./UpdateAgendaButton";
 import { getAgendaByEventId } from "@/services/dashboard/agenda.service";
-
 
 const convertTo12HourFormat = (time) => {
   let [hours, minutes] = time.split(":");
@@ -72,15 +66,8 @@ export default async function AgendaComponent({id}) {
           </p>
         </div>
         <div className="lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex">
-<<<<<<< HEAD
-          <DeleteButton />
-          <UpdateAgendaButton />
-
-
-=======
           <DeleteButton id={id}/>
           <UpdateAgendaButton/>
->>>>>>> origin/chhaitith
         </div>
       </div>
       {data?.map((data, index) => (
