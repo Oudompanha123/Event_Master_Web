@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
             <NavbarComponent />
             <div
               data-theme="light"
-              className="p-6 lg:px-14 bg-backgroundUi min-h-screen overflow-scroll"
+              className="p-6 lg:px-14 bg-backgroundUi min-h-[92%] overflow-scroll"
             >
               {children}
             </div>

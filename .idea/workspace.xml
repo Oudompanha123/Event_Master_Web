@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71fc11cd-7c7c-4360-b72b-f626311dfb4d" name="Changes" comment="fetch AIP to Sign up and update Reset password">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(auth)/_components/SignupComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/_components/SignupComponent.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(auth)/_components/VerifyRegisterComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/_components/VerifyRegisterComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/login-signup/otp.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/login-signup/otp.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(clientView)/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(clientView)/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/actions/signupAction.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/actions/signupAction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/dashboard/event.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/dashboard/event.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/login-signup/auth.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/login-signup/auth.service.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,22 +58,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Node.js.ForgotPasswordComponent.jsx.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.SetNewPasswordComponent.jsx.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;hengly&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/HRD-school/KPS-Finalp_Project/public/icons&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Administrator\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Node.js.ForgotPasswordComponent.jsx.executor": "Run",
+    "Node.js.SetNewPasswordComponent.jsx.executor": "Run",
+    "Node.js.SignupComponent.jsx.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "hengly",
+    "last_opened_file_path": "D:/HRD-school/KPS-Finalp_Project/public/icons",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -119,7 +125,7 @@
       <workItem from="1718101426809" duration="172000" />
       <workItem from="1718119564154" duration="725000" />
       <workItem from="1718154504153" duration="11386000" />
-      <workItem from="1718174007585" duration="4996000" />
+      <workItem from="1718174007585" duration="9537000" />
     </task>
     <task id="LOCAL-00001" summary="login sign up and reset password">
       <option name="closed" value="true" />

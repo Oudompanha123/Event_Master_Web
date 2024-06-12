@@ -21,7 +21,6 @@ const VerifyRegisterComponent = () => {
         setErrorMessage('');
     };
 
-
     const router = useRouter();
 
     return (
@@ -37,7 +36,6 @@ const VerifyRegisterComponent = () => {
                 <OtpInput inputStyle={styles.inputStyle}
                           value={rgotp}
                           onChange={handleChange}
-                          // onKeyDown={handleKeyDown}
                           numInputs={4}
                 />
 

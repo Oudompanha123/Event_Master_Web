@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import Image from "next/image";
+import updateAgenda from "@/app/actions/updateAgendaAction";
 
 function UpdateAgenda({ inputList, setInputList }) {
   const handleAddClick = () => {
@@ -24,14 +25,13 @@ function UpdateAgenda({ inputList, setInputList }) {
     list[index][name] = value;
     setInputList(list);
   };
-
   return (
     <div className="container">
       <div className="row">
-        <div className="col-sm-12">
+        <div className="col-sm-12 ">
           {inputList.map((x, i) => (
-            <div key={i} className="row">
-              <div className="mb-5 mt-4 px-4 pt-5 pb-5 border bottom-1 bg-white rounded-3xl ">
+            <div key={i} className="row ">
+              <div className="mb-5 mt-4 px-4 pt-4 pb-3 bottom-1 bg-white rounded-3xl border-1px">
                 <div className="form-group justify-end flex h-5">
                   {inputList.length !== 1 && (
                     <button
@@ -77,7 +77,7 @@ function UpdateAgenda({ inputList, setInputList }) {
                         type="time"
                         id="start-time"
                         name="startTime"
-                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
                         min="09:00"
                         max="18:00"
                         value={x.startTime}
@@ -94,14 +94,14 @@ function UpdateAgenda({ inputList, setInputList }) {
                       End Time<span className="align-top text-red-600">*</span>
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none focus:outline-none focus:border-purple-text">
+                      <div className="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
                         {/* icon */}
                       </div>
                       <input
                         type="time"
                         id="end-time"
                         name="endTime"
-                        className="bg-gray-50 border leading-none border-gray-300  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
                         min="09:00"
                         max="18:00"
                         value={x.endTime}
@@ -120,7 +120,7 @@ function UpdateAgenda({ inputList, setInputList }) {
                     <input
                       type="text"
                       name="speaker"
-                      className="input input-bordered font-medium text-sm w-full rounded-xl focus:outline-none focus:border-purple-text "
+                      className="input input-bordered font-medium text-sm w-full rounded-xl focus:outline-none focus:border-purple-text"
                       placeholder="Enter the Speaker"
                       value={x.speaker}
                       onChange={(e) => handleInputChange(e, i)}
@@ -148,7 +148,7 @@ function UpdateAgenda({ inputList, setInputList }) {
               <div className="form-group col-md-2">
                 {inputList.length - 1 === i && (
                   <button
-                    className="btn w-full font-medium text-sm bg-blue-100 text-blue-700 rounded-3xl justify-start hover:bg-blue-200"
+                    className="btn w-full mx-1 font-medium text-sm bg-blue-100 text-blue-700 rounded-3xl justify-start hover:bg-blue-200"
                     onClick={handleAddClick}
                   >
                     <IoIosAddCircleOutline size={24} />
@@ -164,40 +164,58 @@ function UpdateAgenda({ inputList, setInputList }) {
   );
 }
 
-export function UpdateAgendaButton() {
+export function UpdateAgendaButton({ id }) {
+  console.log("event id is",id)
   const [inputList, setInputList] = useState([
     { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
   ]);
 
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    console.log("Form Submitted", inputList);
-    // Close the modal after submission
+  async function handleUpdate() {
+    const agenda = inputList.map((item) => ({
+      "startTime": item.startTime,
+      "endTime": item.endTime,
+      "topic": item.topic,
+      "description": item.description || "",
+      "speaker": item.speaker,
+    }));
+
+    const requestBody = { agenda };
+
+    console.log("Request Body:", requestBody);
     document.getElementById("my_modal_4").close();
-  };
+
+    try {
+      const data = await updateAgenda(requestBody,id)
+      console.log("API Response:", data);
+    } catch (error) {
+      console.error("Error creating agenda:", error);
+    }
+  }
+
 
   return (
     <>
-      <button
+    <button
         className="btn  rounded-xl flex  border bg-green-700 hover:bg-green-800 w-32  "
         onClick={() => document.getElementById("my_modal_4").showModal()}
       >
         <Image src="/icons/edit.svg" alt="" className="" width={24} height={24}/>
         <p className="text-white">Edit</p>
       </button>
-      <dialog id="my_modal_4" className="modal ">
-        <div className="modal-box w-11/12 max-w-5xl rounded-3xl  bg-[#F7F9FB]">
+      <dialog id="my_modal_4" className="modal">
+        <div className="modal-box w-11/12 max-w-5xl bg-[#F7F9FB]">
           <UpdateAgenda inputList={inputList} setInputList={setInputList} />
-          <div className="modal-action gap-2 pr-4  mb-4">
+          <div className="modal-action gap-2 mb-4">
             <button
-              className="py-3 px-6 rounded-2xl border-1px border-borderUi bg-white hover:border-gray-500 hover:bg-white"
+              className="px-6 py-3 rounded-2xl border-1px border-borderUi bg-white hover:border-gray-500 hover:bg-white"
               onClick={() => document.getElementById("my_modal_4").close()}
             >
               Cancel
             </button>
             <button
+              type="submit"
               className="py-3 px-6   rounded-2xl border-1px border-borderUi flex items-center justify-center gap-2  bg-green-700   hover:bg-green-800"
-              onClick={handleSubmit}
+              onClick={() => handleUpdate(id)}
             >
               <Image src="/icons/edit.svg" alt="" className="h-5 w-5" width={5} height={5}/>
               <p className="text-white">Update</p>

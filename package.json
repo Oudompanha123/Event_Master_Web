@@ -1,6 +1,6 @@
 {
   "name": "final-next",
-  "version": "v1.22.22",
+  "version": "1.22.22",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -26,6 +26,7 @@
     "react-hook-form": "^7.51.5",
     "react-icons": "^5.2.1",
     "react-multi-select-component": "^4.3.4",
+    "react-paginate": "^8.2.0",
     "react-search-autocomplete": "^8.5.2",
     "react-select": "^5.8.0",
     "react18-input-otp": "^1.1.4",
@@ -35,8 +36,13 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",
-    "daisyui": "^4.11.1",
+    "daisyui": "^4.12.2",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4"
-  }
+  },
+  "description": "<p align=\"center\"><a href=\"#\" target=\"_blank\"><img src=\"https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/image_237-removebg%204.png?alt=media&token=a6cbd8a5-a874-49b9-8659-36579def7a84\" width=\"400\" alt=\"Laravel Logo\"></a></p>",
+  "main": "postcss.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
