@@ -20,7 +20,9 @@ const Page = async ({params: {id}}) => {
                 <div className="space-y-6 mt-6">
                     <div className="flex justify-between items-center">
                         <h2 className="text-xl lg:text-2xl font-semibold">{data.payload.eventName}</h2>
-                        <button className="text-sm lg:text-base bg-blue-200 text-blue-800 px-6 py-1.5 rounded-full">Open</button>
+                        <button className={`text-sm lg:text-base ${data.payload.isOpen ? 'bg-blue-200 text-blue-800' : 'bg-red-200 text-red-800'} px-6 py-1.5 rounded-full`}>
+                            {data.payload.isOpen ? 'Open' : 'Close'}
+                        </button>
                     </div>
                     <p className="text-sm lg:text-base w-full lg:w-2/3 font-light">
                        {data.payload.description}

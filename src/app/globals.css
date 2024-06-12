@@ -55,3 +55,41 @@ body {
 *::-webkit-scrollbar {
   display: none;
 }
+
+.pagination {
+  list-style: none;
+  height: 31.5px;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #ECE8FF !important;
+  border-radius: 50%;
+}
+
+.page-item {
+  display: flex;
+  width: 2.5rem; 
+  height: 2.5rem;
+  margin: 0 0.25rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.page-item a {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  align-content: center;
+}

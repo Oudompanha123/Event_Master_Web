@@ -12,8 +12,8 @@ export const getOverviewData = async () => {
     return data
 }
 
-export const getAllCategory = async () => {
-    const res = await fetch(`${process.env.API_URL}categories?offset=1&limit=8`,
+export const getAllCategory = async (page) => {
+    const res = await fetch(`${process.env.API_URL}categories?offset=${page ? page : 1}&limit=8`,
         {
             next: { tags: ['overview'] },
             cache: "no-store",
@@ -24,6 +24,7 @@ export const getAllCategory = async () => {
         }
     )
     const data = await res.json();
+    console.log('code goes here')
     return data
 }
 
