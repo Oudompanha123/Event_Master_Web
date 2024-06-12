@@ -3,15 +3,18 @@
 import { updateCategoryAction } from "@/actions/categoryAction"
 import { Edit } from "iconsax-react"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export const CategoryEditAction = ({ cateId }) => {
+export const CategoryEditAction = ({ cateId, name }) => {
     const [categoryName, setCategoryName] = useState();
     const handleUpdate = async () => {
         await updateCategoryAction(cateId, categoryName);
         setCategoryName('');
         document.getElementById(`update_category_${cateId}`).close()
     }
+    useEffect(() => {
+        setCategoryName(name)
+    }, [])
     return (
         <>
             <Edit className="cursor-pointer" onClick={() => document.getElementById(`update_category_${cateId}`).showModal()} size="20" color="#16AE65" />
