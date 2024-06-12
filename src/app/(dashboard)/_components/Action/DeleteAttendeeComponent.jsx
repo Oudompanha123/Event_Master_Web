@@ -2,7 +2,7 @@
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
 
-export function DeleteAttendeeComponent() {
+export function DeleteAttendeeComponent({}) {
   return (
     <>
       <button

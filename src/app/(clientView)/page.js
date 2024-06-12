@@ -13,7 +13,14 @@ import { EventList } from "./_componenets/EventList";
 
 export default async function Home() {
   const popularData = await getPopularEvent();
+<<<<<<< HEAD
   const allCategory = await getAllCategory();
+=======
+  const allCate = new Set();
+  const arrCate = [];
+  // data.payload.filter(x => allCate.add(x.cateName))
+  allCate.forEach(x => arrCate.push(x));
+>>>>>>> origin/hengly
 
   return (
     <div className="container">

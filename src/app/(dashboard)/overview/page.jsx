@@ -102,7 +102,7 @@ const Page = async () => {
                                             <td className="px-5 py-2 text-xs xl:text-base rounded-r-radiusUi">
                                                 <div className="flex items-center gap-2 lg:gap-4">
                                                     <CategoryDeleteAction cateId={x?.categoryId} />
-                                                    <CategoryEditAction cateId={x?.categoryId} />
+                                                    <CategoryEditAction cateId={x?.categoryId} name={x?.categoryName} />
                                                 </div>
                                             </td>
                                         </tr>

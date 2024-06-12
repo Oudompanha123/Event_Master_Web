@@ -2,31 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { UpdateEventButton } from "./UpdateEventButton";
 
-<<<<<<< HEAD
-export const EventDetail = () => {
-  const [event, setEvent] = useState(null);
-
-  useEffect(() => {
-    const fetchEventData = async () => {
-      const data = await mockEventService();
-      // Assuming you want to display the first event from the payload
-      setEvent(data.payload[0]);
-    };
-
-    fetchEventData();
-  }, []);
-
-  if (!event) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="rounded-full h-20 w-20 bg-violet-800 animate-ping"></div>
-      </div>
-    );
-  }
-=======
 export const EventDetail = ({ eventData }) => {
   const event = eventData;
->>>>>>> origin/chhaitith
 
   // if (!event) {
   //   return (
@@ -60,15 +37,6 @@ export const EventDetail = ({ eventData }) => {
           {event?.eventName}
         </div>
         <div className="flex justify-center items-center ">
-<<<<<<< HEAD
-          <span
-            className={`inline-block rounded-full px-4 py-1 text-sm font-medium ${event.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
-              }`}
-          >
-            {event.isOpen ? "Open" : "Closed"}
-          </span>
-        </div>
-=======
   <span
     className={`inline-block rounded-full px-4 py-1 text-sm font-medium ${
       event?.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
@@ -77,7 +45,6 @@ export const EventDetail = ({ eventData }) => {
     {event?.isOpen ? "Open" : "Closed"}
   </span>
 </div>
->>>>>>> origin/chhaitith
 
       </div>
       <div className="ml-5 text-primary-text font-regular text-base w-[65%] ">

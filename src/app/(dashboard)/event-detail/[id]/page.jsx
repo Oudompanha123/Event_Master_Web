@@ -1,9 +1,9 @@
-import React from "react";
 import { EventDetail } from "../../_components/EventDetailComponent";
 import { CreateDynamicForm } from "../../_components/CreateDynamicFormComponent";
 import MaterialComponent from "../../_components/MaterialComponent";
 import AgendaComponent from "../../_components/AgendaComponet";
 import { getEventByIdService } from "@/services/dashboard/event.service";
+import { EventToggle } from "../../_components/toogle/EventToogle";
 
 
 const Page = async ({ params: { id } }) => {
@@ -17,8 +17,9 @@ const Page = async ({ params: { id } }) => {
         </p>
         <CreateDynamicForm/>
         {/* <RegisterFormConferrence /> */}
-        <MaterialComponent id={id}/>
-        <AgendaComponent id={id}/>
+        {/* <MaterialComponent id={id}/>
+        <AgendaComponent id={id}/> */}
+        <EventToggle id={id} />
       </div>
     </main>
   );

@@ -3,17 +3,17 @@ import { IoSearchOutline } from "react-icons/io5";
 import { DeleteAttendeeComponent } from "../../_components/Action/DeleteAttendeeComponent";
 import { getAttendeeByEventIdService } from "@/services/dashboard/attendee.service";
 import { Pagination } from "../../_components/Pagination";
+import { getEventById } from "@/services/clientPage/landingService";
 
 const AttendeePage = async ({ params: { id } }) => {
   const attendeeData = await getAttendeeByEventIdService(id);
-  // const eventData = await getEventById(id);
+  const eventData = await getEventById(id);
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
         <div className="lg:w-[650px] md:w-full w-full">
           <a className="md:text-lg xl:text-xl font-semibold text-primary-text">
-            {/* Show All Attendees in {eventData.eventName} */}
-            Show All Attendees in Sport Event
+            Show All Attendees in {eventData.payload.eventName} Event
           </a>
         </div>
         <div className="w-full flex justify-end lg:mt-0 mt-3">
@@ -43,6 +43,7 @@ const AttendeePage = async ({ params: { id } }) => {
             </tr>
           </thead>
           <tbody>
+
             {attendeeData.payload.map((attendeeWrapper, index) => {
               const attendee = attendeeWrapper.data;
               return (
@@ -69,7 +70,7 @@ const AttendeePage = async ({ params: { id } }) => {
                     {attendee.Phone}
                   </td>
                   <td className="px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
-                    <DeleteAttendeeComponent />
+                    <DeleteAttendeeComponent id={id }/>
                   </td>
                 </tr>
               );
