@@ -15,7 +15,7 @@ export default async function Home() {
   const popularData = await getPopularEvent();
   const allCate = new Set();
   const arrCate = [];
-  data.payload.filter(x => allCate.add(x.cateName))
+  // data.payload.filter(x => allCate.add(x.cateName))
   allCate.forEach(x => arrCate.push(x));
 
   return (
