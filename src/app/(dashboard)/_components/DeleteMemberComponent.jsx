@@ -4,25 +4,21 @@ import Image from "next/image";
 export function DeleteMemberComponent() {
   return (
     <>
-      <button
-        className=" rounded-2xl "
-        value="delete"
+      <Image
         onClick={() => document.getElementById("delete").showModal()}
-      >
-        <Image
-          src="icons/deleteicon.svg"
-          alt="delete icon"
-          className="  w-8 h-8 ml-3 mt-1"
-          property=" "
-          width={0}
-          height={0}
-        />
-      </button>
+        src="icons/deleteicon.svg"
+        alt="delete icon"
+        className="cursor-pointer w-8 h-8 ml-3 mt-1"
+        property=" "
+        width={0}
+        height={0}
+      />
       <dialog id="delete" className="modal">
         <div className="modal-box w-[310px] justity-center  ">
           <form method="dialog" className="justify-end flex">
-            <button type="submit">
-              <RxCross2 className="absolute right-[20px] top-[20px] w-6 h-6 " />
+            {/* if there is a button, it will close the modal */}
+            <button>
+              <RxCross2 className=" absolute text-[#181818] right-[20px] top-[20px] w-6 h-6 " />
             </button>
           </form>
           <div className="justify-center flex">

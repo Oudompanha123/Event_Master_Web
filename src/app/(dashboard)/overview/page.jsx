@@ -27,7 +27,7 @@ const Page = () => {
                 </div>
                 <div className="w-full xl:w-1/2 rounded-3xl relative bg-[#7B61FF] space-y-8 p-8 overflow-hidden">
                     <h2 className="text-white text-2xl font-bold w-4/5">Let's manage your event with us</h2>
-                    <p className="text-xs lg:text-sm text-white w-4/5 absolute z-20">
+                    <p className="text-xs lg:text-sm text-white w-4/5 absolute z-20 !leading-relaxed">
                         Forge a Strategic Alliance with Our Esteemed Team,
                         Renowned for Its Meticulous Approach to Event Planning,
                         Impeccable Execution, and the Ability to Craft Timeless
@@ -39,8 +39,8 @@ const Page = () => {
                         Impeccable Execution, and the Ability to Craft Timeless
                         Experiences That Will Resonate Long After the Occasion.
                     </p>
-                    <Getstart className={`absolute z-20`} />
-                    <Getstart className={`opacity-0`} />
+                    <Getstart className={`absolute z-20 mt-6`} />
+                    <Getstart className={`opacity-0 mt-6`} />
                     <div className="absolute -bottom-56 rotate-[13.5deg] right-0 h-80 w-80 bg-[#AD9CFF] rounded-radius64 z-0"></div>
                     <div className="absolute -bottom-72 rotate-[13.5deg] -right-12 h-80 w-80 bg-[#9782FF] rounded-radius64 z-0"></div>
                 </div>

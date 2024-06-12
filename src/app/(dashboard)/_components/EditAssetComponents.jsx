@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
-import { AddSquare } from "iconsax-react";
+import { AddSquare, Edit } from "iconsax-react";
 // import { TbEdit } from "react-icons/tb";
 // import { colors } from "react-select/dist/declarations/src/theme";
 export const EditAssetComponents = () => {
@@ -16,14 +16,9 @@ export const EditAssetComponents = () => {
     console.log(data);
   };
   return (
-  
+
     <div>
-      <Image
-        src={"/icons/edit-blue.svg"}
-        width={20}
-        height={20}
-        onClick={() => document.getElementById("my_modal_updateasset").showModal()}
-      />
+      <Edit className="cursor-pointer" onClick={() => document.getElementById("my_modal_updateasset").showModal()} size="20" color="#16AE65" />
       <dialog id="my_modal_updateasset" className="modal">
         <div className="modal-box w-11/12 md:w-1/2 max-w-5xl space-y-8">
           <div className="flex flex-row items-center text-primary-text">
@@ -106,15 +101,15 @@ export const EditAssetComponents = () => {
                 >
                   Cancel
                 </div>
-                  <button
+                <button
                   type="submit"
                   className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
                 >
-                    <Image
-                      src={"/icons/edit.svg"}
-                      width={20}
-                      height={20}
-                    />
+                  <Image
+                    src={"/icons/edit.svg"}
+                    width={20}
+                    height={20}
+                  />
                   <span className="h-12 text-white flex justify-center items-center">
                     Update
                   </span>

@@ -20,7 +20,6 @@ function page() {
             </div>
             <PictureComponent/>
         </div>
-        
     </div>   
     </>
     

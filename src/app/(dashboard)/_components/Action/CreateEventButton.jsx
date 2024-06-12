@@ -6,6 +6,9 @@ import { ToogleBtn } from "./ToogleBtn";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
+import { useRouter } from "next/navigation";
+import { SelectModify } from "./SelectModify";
+
 export const CreateEventButton = () => {
     const [hide, setHide] = useState(false);
 
@@ -43,6 +46,8 @@ export const CreateEventButton = () => {
         };
     };
 
+    const router = useRouter();
+
     const {
         watch,
         register,
@@ -54,6 +59,8 @@ export const CreateEventButton = () => {
 
     const onSubmit = (data) => {
         console.log(data);
+        router.push('/event-detail/1')
+        document.getElementById('my_modal_event').close()
     };
 
     return (
@@ -76,7 +83,7 @@ export const CreateEventButton = () => {
                                 onDragOver={handleDragOver}
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDrop}>
-                                <input type="file" className="absolute inset-0 w-full h-full opacity-0 z-50" id="file-upload" onChange={handleFileChange} />
+                                <input {...register("image")} type="file" className="absolute inset-0 w-full h-full opacity-0 z-50" id="file-upload" onChange={handleFileChange} />
                                 <div className={`text-center ${hide && 'hidden'}`}>
                                     <Image src={'/icons/upload-icon.svg'} className="mx-auto h-16 w-16" height={48} width={48} />
                                     <h3 className="mt-2 text-lg font-medium">
@@ -109,7 +116,7 @@ export const CreateEventButton = () => {
                                     {errors.name && <div className="text-red-600 text-sm mt-2">{errors.name.message}</div>}
                                 </div>
                                 <div className="w-full">
-                                    <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
+                                    {/* <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
                                         Event Category <span className="text-red-600">*</span>
                                     </label>
                                     <select
@@ -127,7 +134,12 @@ export const CreateEventButton = () => {
                                         <option value="1">Conference</option>
                                         <option value="2">Social Event</option>
                                         <option value="3">Sport</option>
-                                    </select>
+                                    </select> */}
+                                    <SelectModify
+                                        {...register("category")}
+                                        label={`!font-medium`}
+                                        height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                                    />
                                     {errors.category && <span className="text-red-600 text-sm">{errors.category.message}</span>}
                                 </div>
                             </div>

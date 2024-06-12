@@ -16,7 +16,7 @@ export const RegisterActionComponent = () => {
                             </button>
                         </form>
                         <div className="justify-center flex">
-                            <img className="w-[58%] mb-3" src="/images/accept.svg" alt="accept-image" />
+                            <img src="/images/accept.svg" alt="accept" className="w-[58%] mb-3" />
                         </div>
                         <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
                             Are you sure,you want to

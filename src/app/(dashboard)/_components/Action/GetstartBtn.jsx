@@ -58,7 +58,7 @@ export const Getstart = ({className}) => {
 
     return (
         <>
-            <button onClick={() => document.getElementById('my_modal_event').showModal()} className={`bg-white rounded-full px-8 py-3 font-bold mt-4 lg:mt-8 text-sm ${className}`}>Get Start</button>
+            <button onClick={() => document.getElementById('my_modal_event').showModal()} className={`bg-white rounded-full px-8 py-3 font-bold mt-4 lg:mt-8 text-sm ${className}`}>Get Started</button>
             <dialog id="my_modal_event" className="modal !m-0">
                 <div className="modal-box w-11/12 lg:w-1/2 lg:max-w-5xl p-8">
                     <div className="flex justify-between">

@@ -1,7 +1,7 @@
 "use client";
 import { Fragment, useState } from "react";
 import { Label, Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { CheckIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 
 const options = [
@@ -10,7 +10,7 @@ const options = [
   { id: 3, name: "Marathons" },
 ];
 
-export const SelectDropdown = () => {
+export const SelectDropdown = ({height, label}) => {
   const [selected, setSelected] = useState(null);
   const placeholder = "Choose category";
 
@@ -21,6 +21,7 @@ export const SelectDropdown = () => {
       setSelected(option);
     }
   };
+
   return (
     <div className="w-auto">
       <Listbox value={selected} onChange={handleChange}>
@@ -28,12 +29,12 @@ export const SelectDropdown = () => {
           <>
             <Label
               for="category"
-              className="text-sm font-semibold text-primary-text block mb-2"
+              className={`text-sm ${label} font-semibold text-primary-text block mb-2`}
             >
               Event Category
             </Label>
             <Listbox.Button
-              className={`relative h-[42px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${
+              className={`relative ${height} h-[48px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${
                 !selected ? " text-gray-400" : "bg-white text-black"
               }`}
             >

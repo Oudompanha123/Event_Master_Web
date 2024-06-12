@@ -1,5 +1,4 @@
 'use client'
-
 import {useForm} from "react-hook-form";
 import {useRouter} from "next/navigation";
 
@@ -25,7 +24,7 @@ const ForgotPasswordComponent = () => {
     };
 
     return (
-        <div className="absolute mx-[29%] mt-[18%] left-[9.5%]">
+        <div className="absolute mx-[29%] mt-[18%] left-[9.5%] ">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mt-5">
                     <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
@@ -56,7 +55,7 @@ const ForgotPasswordComponent = () => {
 
                 <div className="flex justify-center mt-10">
                     <button
-                        onClick={()=> router.push('/verify-otp')}
+                        onClick={() => router.push('/verify-otp')}
                         type="button"
                         id="continue"
                         className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 shadow-md shadow-violet-400 ${!isValid ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}

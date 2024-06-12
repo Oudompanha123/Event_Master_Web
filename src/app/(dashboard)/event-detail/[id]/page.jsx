@@ -11,7 +11,7 @@ const Page = async ({ params: { id } }) => {
     <main>
       <div className=" rounded-2xl bg-white  z-0 pt-[2%] px-[2%]">
         <EventDetail/>
-        <p className="text-primary-text font-semibold text-2xl my-7">
+        <p className="text-primary-text font-semibold text-2xl mt-14 mb-5">
           Registratioin form
         </p>
         <CreateDynamicForm/>
