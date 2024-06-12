@@ -9,7 +9,8 @@ import { LiaUserEditSolid } from "react-icons/lia";
 
 
 // import { CiLock } from "react-icons/ci";
-function FormComponent() {
+function FormComponent({getAllMemberProfile}) {
+    console.log(getAllMemberProfile, "Get all member")
     const ref = useRef();
 
     const [isLock, setLocked] = useState(true);

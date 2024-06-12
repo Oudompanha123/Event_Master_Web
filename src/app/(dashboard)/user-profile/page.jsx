@@ -4,9 +4,12 @@ import { CgProfile } from "react-icons/cg";
 import ProfileComponent from './_components/ProfileComponent';
 import PictureComponent from './_components/PictureComponent';
 import FormComponent from './_components/FormComponent';
+import { getAllProfileMember } from '@/services/profile/profile.service';
 
 
-function page() {
+async function page() {
+  const getAllMember = await getAllProfileMember();
+  // console.log("Get all ", getAllMember)
   return (
     <>
     <div className='p-2 rounded-2xl relative'>
@@ -16,7 +19,7 @@ function page() {
                 <PictureComponent/>
             </div> */}
             <div className='w-full flex justify-center items-center py-5'>
-                <FormComponent/>
+                <FormComponent getAllMemberProfile={getAllMember}/>
             </div>
             <PictureComponent/>
         </div>

@@ -218,7 +218,7 @@ function NewFormComponent() {
                 </div>
             </div>
         </form>
-    </>
+    <main/>
   )
 }
 
