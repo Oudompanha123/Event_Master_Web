@@ -1,17 +1,17 @@
 import React from "react";
 
-export const RegisterFormConferrence =  () => {
+export const RegisterFormConferrence = () => {
   return (
     <div className=" m-auto w-full rounded-2xl h-[50%] bg-white shadow-[#D5D4DC] shadow  py-6 px-4">
       <div className="text-primary-text font-semibold text-xl flex mb-4 content-center gap-2 ">
         <div className="content-center">
-        <img
-          src="https://em-content.zobj.net/source/microsoft-teams/337/card-index_1f4c7.png"
-          alt=""
-          className="h-4"
-        />
+          <img
+            src="https://em-content.zobj.net/source/microsoft-teams/337/card-index_1f4c7.png"
+            alt=""
+            className="h-4"
+          />
         </div>
-        
+
         <p>Contact Information</p>
       </div>
 
@@ -34,7 +34,7 @@ export const RegisterFormConferrence =  () => {
         <form>
           <div className="col-span-6 sm:col-span-3">
             <label
-              for="gender"
+              htmlFor="gender"
               className="text-sm font-semibold text-primary-text block mb-2"
             >
               Status<span className="align-top text-red-600">*</span>
@@ -86,14 +86,14 @@ export const RegisterFormConferrence =  () => {
           />
         </div>
       </div>
-     
+
       <div className="text-primary-text font-semibold text-xl flex my-4 gap-2">
-      <div className="content-center">
-        <img
-          src=" https://icons.iconarchive.com/icons/microsoft/fluentui-emoji-flat/128/Office-Building-Flat-icon.png"
-          alt=""
-          className="h-4"
-        />
+        <div className="content-center">
+          <img
+            src=" https://icons.iconarchive.com/icons/microsoft/fluentui-emoji-flat/128/Office-Building-Flat-icon.png"
+            alt=""
+            className="h-4"
+          />
         </div>
         Affiliation
       </div>

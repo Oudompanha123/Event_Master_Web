@@ -25,7 +25,7 @@ const getStatusColor = (status) => {
   }
 };
 
-export default function MaterialComponent() {
+export default function MaterialComponent({id}) {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   // const [isFocused, setIsFocused] = useState(false);
@@ -52,7 +52,7 @@ export default function MaterialComponent() {
     setSuggestions([]);
   };
 
- 
+
   const [rows, setRows] = useState([
     // Example initial row
     // {
@@ -65,9 +65,9 @@ export default function MaterialComponent() {
     //   supporters: "",
     //   status: "Pending",
     //   note: "",
-    //   inputValue: "", // Add input value state for each row
-    //   suggestions: [], // Add suggestions state for each row
-    //   isFocused: false, // Add focus state for each row
+    //   inputValue: "", // Add input value state htmlFor each row
+    //   suggestions: [], // Add suggestions state htmlFor each row
+    //   isFocused: false, // Add focus state htmlFor each row
     // },
     // ... (other rows)
   ]);
@@ -82,7 +82,7 @@ export default function MaterialComponent() {
       )
     );
   };
-  // Function to handle input change for a specific rows
+  // Function to handle input change htmlFor a specific rows
   const handleInputChangeForRow = (event, rowId) => {
     const value = event.target.value;
     setRows((prevRows) =>
@@ -397,7 +397,7 @@ export default function MaterialComponent() {
               You don’t have any material!
             </p>
             <p className=" text-center text-xl font-medium  text-gray-500">
-              Please create materail for your event!
+              Please create materail htmlFor your event!
             </p>
           </div>
         </div>
@@ -407,7 +407,7 @@ export default function MaterialComponent() {
 
 
   return (
-    <div>
+    <>
       {/* Material */}
       <div className="text-primary-text font-semibold text-2xl py-5">
         Material Management
@@ -636,56 +636,56 @@ export default function MaterialComponent() {
                 </td>
                 {/*  */}
                 <td>
-                <div style={{ position: "relative", width: "150px" }}>
-              <input
-                type="text"
-                name="asset"
-                className="border text-primary-text text-base px-2 w-full h-10 rounded-xl font-normal focus:outline-none"
-                placeholder=""
-                value={row.inputValue}
-                onChange={(e) => handleInputChangeForRow(e, row.id)}
-                onFocus={() => {
-                  // Update the isFocused state for the specific row
-                  setRows((prevRows) =>
-                    prevRows.map((r) =>
-                      r.id === row.id ? { ...r, isFocused: true } : r
-                    )
-                  );
-                }}
-                onBlur={() => {
-                  // Delay to allow click event on suggestion
-                  setTimeout(() => {
-                    setRows((prevRows) =>
-                      prevRows.map((r) =>
-                        r.id === row.id ? { ...r, isFocused: false } : r
-                      )
-                    );
-                  }, 100);
-                }}
-              />
-             {row.isFocused && row.suggestions?.length > 0 && (
-                <ul
-                  style={{
-                    position: "absolute",
-                    width: "100%",
-                    backgroundColor: "white",
-                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                    borderRadius: "0 0 10px 10px",
-                    zIndex: 1000,
-                  }}
-                >
-                  {row.suggestions.map((suggestion, idx) => (
-                    <li
-                      key={idx}
-                      onClick={() => handleSuggestionClickForRow(suggestion, row.id)}
-                      style={{ padding: "10px", cursor: "pointer" }}
-                    >
-                      {suggestion}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+                  <div style={{ position: "relative", width: "150px" }}>
+                    <input
+                      type="text"
+                      name="asset"
+                      className="border text-primary-text text-base px-2 w-full h-10 rounded-xl font-normal focus:outline-none"
+                      placeholder=""
+                      value={row.inputValue}
+                      onChange={(e) => handleInputChangeForRow(e, row.id)}
+                      onFocus={() => {
+                        // Update the isFocused state htmlFor the specific row
+                        setRows((prevRows) =>
+                          prevRows.map((r) =>
+                            r.id === row.id ? { ...r, isFocused: true } : r
+                          )
+                        );
+                      }}
+                      onBlur={() => {
+                        // Delay to allow click event on suggestion
+                        setTimeout(() => {
+                          setRows((prevRows) =>
+                            prevRows.map((r) =>
+                              r.id === row.id ? { ...r, isFocused: false } : r
+                            )
+                          );
+                        }, 100);
+                      }}
+                    />
+                    {row.isFocused && row.suggestions?.length > 0 && (
+                      <ul
+                        style={{
+                          position: "absolute",
+                          width: "100%",
+                          backgroundColor: "white",
+                          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                          borderRadius: "0 0 10px 10px",
+                          zIndex: 1000,
+                        }}
+                      >
+                        {row.suggestions.map((suggestion, idx) => (
+                          <li
+                            key={idx}
+                            onClick={() => handleSuggestionClickForRow(suggestion, row.id)}
+                            style={{ padding: "10px", cursor: "pointer" }}
+                          >
+                            {suggestion}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </td>
                 <td className="text-sm font-normal text-primary-text px-2 ">
                   <input
@@ -819,7 +819,7 @@ export default function MaterialComponent() {
           </tbody>
         </table>
       </div>
-    </div>
+      </>
   );
 }
 

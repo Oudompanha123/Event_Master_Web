@@ -9,7 +9,7 @@ const Page = async ({params: {name}}) => {
         <div className="container">
             <RedirectBackComponent link={'/'} />
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
-                {eventData?.payload.events.map((x, index) => (
+                {eventData?.payload?.map((x, index) => (
                     <EventCardComponent
                         key={index}
                         img={`https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/headway-F2KRf_QfCqw-unsplash.jpgbff2c2b3-3340-421f-b8bf-06cf683bb395?alt=media&token=19e9782d-0cca-4105-ab02-d627bd515ac6`}
@@ -19,6 +19,7 @@ const Page = async ({params: {name}}) => {
                         company={x?.orgName}
                         date={x?.startDate}
                         status={x?.isOpen}
+                        id={x?.eventId}
                     />
                 ))}
             </div>

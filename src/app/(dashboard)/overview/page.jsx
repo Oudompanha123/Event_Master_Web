@@ -1,17 +1,15 @@
 import { OverviewCardComponent } from "../_components/OverviewCardComponent"
-import categoryData from "../../../data/category.json"
 import { BarChartComponent } from "../_components/BarChartComponent"
-import statusData from "../../../data/overview.json"
 import CreateCategoryButton from "../_components/Action/CreateCategoryButton"
 import { CategoryDeleteAction } from "../_components/Action/CategoryDeleteAction"
 import { CategoryEditAction } from "../_components/Action/CategoryEditAction"
 import { Pagination } from "../_components/Pagination"
 import { Getstart } from "../_components/Action/GetstartBtn"
-import { getOverviewData } from "@/services/dashboard/overviewService"
+import { getAllCategory, getOverviewData } from "@/services/dashboard/overviewService"
 
 const Page = async () => {
     const data = await getOverviewData();
-    //convert data from api to be an array for looping
+    const allCategory = await getAllCategory();
     const convertToObjectArray = (data) => {
         const mappings = {
             eventCount: { title: "Event Count", logo: "event" },
@@ -56,13 +54,13 @@ const Page = async () => {
                     <h2 className="text-white text-2xl font-bold w-4/5">Let's manage your event with us</h2>
                     <p className="text-xs lg:text-sm text-white w-4/5 absolute z-20 !leading-relaxed">
                         Forge a Strategic Alliance with Our Esteemed Team,
-                        Renowned for Its Meticulous Approach to Event Planning,
+                        Renowned htmlFor Its Meticulous Approach to Event Planning,
                         Impeccable Execution, and the Ability to Craft Timeless
                         Experiences That Will Resonate Long After the Occasion.
                     </p>
                     <p className="text-xs lg:text-sm text-white w-4/5 opacity-0">
                         Forge a Strategic Alliance with Our Esteemed Team,
-                        Renowned for Its Meticulous Approach to Event Planning,
+                        Renowned htmlFor Its Meticulous Approach to Event Planning,
                         Impeccable Execution, and the Ability to Craft Timeless
                         Experiences That Will Resonate Long After the Occasion.
                     </p>
@@ -90,21 +88,21 @@ const Page = async () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {categoryData.payload.map((x, index) => {
+                                {allCategory.payload.map((x, index) => {
                                     const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-                                    const inputDate = x.created_at;
+                                    const inputDate = x.createAt;
                                     const formattedDate = formatDate(inputDate);
                                     const formated = formattedDate;
                                     return (
-                                        <tr className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}>
+                                        <tr key={x.categoryId} className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}>
                                             <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{index + 1}</td>
-                                            <td className="px-5 py-2 text-xs xl:text-base">{x.name}</td>
+                                            <td className="px-5 py-2 text-xs xl:text-base">{x?.categoryName}</td>
                                             <td className="px-5 py-2 text-xs xl:text-base">{formated}</td>
-                                            <td className="px-5 py-2 text-xs xl:text-base">{x.created_by}</td>
+                                            <td className="px-5 py-2 text-xs xl:text-base">{x?.createBy}</td>
                                             <td className="px-5 py-2 text-xs xl:text-base rounded-r-radiusUi">
                                                 <div className="flex items-center gap-2 lg:gap-4">
-                                                    <CategoryDeleteAction />
-                                                    <CategoryEditAction />
+                                                    <CategoryDeleteAction cateId={x?.categoryId} />
+                                                    <CategoryEditAction cateId={x?.categoryId} />
                                                 </div>
                                             </td>
                                         </tr>

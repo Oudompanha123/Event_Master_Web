@@ -10,7 +10,7 @@ const options = [
   { id: 3, name: "Marathons" },
 ];
 
-export const SelectDropdown = ({height, label}) => {
+export const SelectDropdown = ({ height, label }) => {
   const [selected, setSelected] = useState(null);
   const placeholder = "Choose category";
 
@@ -28,15 +28,14 @@ export const SelectDropdown = ({height, label}) => {
         {({ open }) => (
           <>
             <Label
-              for="category"
+              htmlFor="category"
               className={`text-sm ${label} font-semibold text-primary-text block mb-2`}
             >
               Event Category
             </Label>
             <Listbox.Button
-              className={`relative ${height} h-[48px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${
-                !selected ? " text-gray-400" : "bg-white text-black"
-              }`}
+              className={`relative ${height} h-[48px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${!selected ? " text-gray-400" : "bg-white text-black"
+                }`}
             >
               <span className="block truncate ">
                 {selected ? selected.name : placeholder}
@@ -63,8 +62,7 @@ export const SelectDropdown = ({height, label}) => {
                   <Listbox.Option
                     key={option.id}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 hover:bg-blue-200 pl-8 p-[174px] ${
-                        active ? " text-black" : "text-gray-900"
+                      `relative cursor-default select-none py-2 hover:bg-blue-200 pl-8 p-[174px] ${active ? " text-black" : "text-gray-900"
                       }`
                     }
                     value={option}
@@ -72,9 +70,8 @@ export const SelectDropdown = ({height, label}) => {
                     {({ selected }) => (
                       <>
                         <span
-                          className={` ${
-                            selected ? "font-medium" : "font-normal"
-                          }`}
+                          className={` ${selected ? "font-medium" : "font-normal"
+                            }`}
                         >
                           {option.name}
                         </span>

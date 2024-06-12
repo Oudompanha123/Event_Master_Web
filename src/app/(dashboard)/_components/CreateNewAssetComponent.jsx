@@ -2,13 +2,9 @@
 // import { IoIosAdd } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { AddSquare } from "iconsax-react";
-// import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
-// import { createAssetButton } from "@/app/actions/assetAction/createAssetButton";
 import { CreateNewAsset } from "./Action/CreateNewAssetButton";
 import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
-import { data } from "autoprefixer";
-// import { SaveNewAssetButton } from "./Action/SaveNewAssetButton";
-// import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
+
 export const AssetPopupComponent = () => {
   const {
     register,
@@ -16,12 +12,10 @@ export const AssetPopupComponent = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {};
-
-  const test = () => {
-    handleSubmit(onSubmit);
-    handleAsset;
+  const onSubmit = (e) => {
+    handleAsset(e);
   };
+
   return (
     <div>
       <CreateNewAsset />
@@ -38,7 +32,7 @@ export const AssetPopupComponent = () => {
               </button>
             </form>
           </div>
-          <form action="" onSubmit={test}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="">
               <div className="">
                 <label htmlFor="">Asset Name</label>
@@ -108,12 +102,8 @@ export const AssetPopupComponent = () => {
                 >
                   Cancel
                 </div>
-                {/* <SaveNewAssetButton /> */}
                 <button
                   type="submit"
-                  // onClick={() =>
-                  //   document.getElementById("my_modal_new").close()
-                  // }
                   className="px-6 py-3 rounded-2xl border-1px border-borderUi flex space-x-2 bg-purple-text text-white"
                 >
                   <AddSquare size="24" color="#FFFFFF" variant="Bold" />

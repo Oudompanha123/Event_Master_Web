@@ -1,8 +1,16 @@
 "use client";
 
+import { addNewCategoryAction } from "@/actions/categoryAction";
 import { AddSquare } from "iconsax-react";
+import { useState } from "react";
 
 const CreateCategoryButton = () => {
+    const [categoryName, setCategoryName] = useState();
+    const handleSubmit = () => {
+        addNewCategoryAction(categoryName);
+        setCategoryName('');
+        document.getElementById("my_modal_category").close()
+    }
     return (
         <>
             <button
@@ -26,10 +34,12 @@ const CreateCategoryButton = () => {
                         id="category"
                         className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
                         placeholder="Category" required=""
+                        value={categoryName}
+                        onChange={(e) => setCategoryName(e.target.value)}
                     />
                     <div className="flex justify-end space-x-3">
                         <div onClick={() => document.getElementById("my_modal_category").close()} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
-                        <button onClick={() => document.getElementById("my_modal_category").close()} type="submit" className="save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
+                        <button onClick={() => handleSubmit()} type="submit" className="save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
                             <AddSquare size="20" color="#FFFFFF" variant="Bold" />
                             <span className="h-12 text-white flex justify-center items-center">Create</span>
                         </button>

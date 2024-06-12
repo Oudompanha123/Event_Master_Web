@@ -15,7 +15,7 @@ export function ChangeRoleComponent({ role, onConfirm, onClose }) {
           <Image
             src="/images/Questions-pana.svg"
             alt="delete"
-            className="w-[58%] mt-3"
+            className="w-[58%]  mb-3"
             width={0}
             height={0}
           />

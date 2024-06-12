@@ -51,9 +51,9 @@ export const EditAssetComponents = () => {
                     required: "asset name is required",
                   })}
                 />
-                {errors.assetname && (
+                {errors.assetName && (
                   <div className="text-red-600 text-sm">
-                    {errors.assetname.message}
+                    {errors.assetName.message}
                   </div>
                 )}
               </div>
@@ -71,9 +71,9 @@ export const EditAssetComponents = () => {
                       required: "quantity is required",
                     })}
                   />
-                  {errors.quantity && (
+                  {errors.qty && (
                     <div className="text-red-600 text-sm">
-                      {errors.quantity.message}
+                      {errors.qty.message}
                     </div>
                   )}
                 </div>
@@ -107,7 +107,7 @@ export const EditAssetComponents = () => {
                   Cancel
                 </div>
                 <button
-                  type="submit" 
+                  type="submit"
                   className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
                 >
                   <Image src={"/icons/edit.svg"} width={20} height={20} />

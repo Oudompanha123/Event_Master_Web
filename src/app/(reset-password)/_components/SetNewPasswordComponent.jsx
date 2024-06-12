@@ -35,7 +35,7 @@ const SetNewPasswordComponent = () => {
     };
 
     return (
-        <div className="absolute mx-[29%] mt-[18%] left-[9.5%]">
+        <div className="absolute flex justify-center sm:pt-[460px] md:pl-[30%] lg:pl-[50%] lg:pt-[360px] w-full md:w-[70%] lg:w-[39%] h-[100%]">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mt-5">
                     <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">

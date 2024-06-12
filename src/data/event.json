@@ -36,7 +36,7 @@
             "event": {
                 "image": "https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/pietro-mattia-zXqizKxnbBU-unsplash.jpg?alt=media&token=4ce06f74-7201-45c8-815c-05f6e3349c02",
                 "title": "Horse Challenging",
-                "description": "Saddle up for a thrilling horse riding experience, where elegance meets adventure.",
+                "description": "Saddle up htmlFor a thrilling horse riding experience, where elegance meets adventure.",
                 "date": "2024-05-26T12:55:11.199",
                 "location": "Sen Sok"
             }
@@ -49,7 +49,7 @@
             "event": {
                 "image": "https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/joe-neric-HHunRG19kF8-unsplash.jpg?alt=media&token=1059d7c6-69b2-4fd9-9bc0-f19a19196411",
                 "title": "Motor Challenging",
-                "description": "Gear up for the ultimate adrenaline rush! Motor Challenging promises to be.",
+                "description": "Gear up htmlFor the ultimate adrenaline rush! Motor Challenging promises to be.",
                 "date": "2024-05-26T12:55:11.199",
                 "location": "Kamboul"
             }
@@ -62,7 +62,7 @@
             "event": {
                 "image": "https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/markus-spiske-WUehAgqO5hE-unsplash.jpg?alt=media&token=c6b6dd05-e33a-48a8-b22f-c7be239e477e",
                 "title": "Bicycles resting",
-                "description": "Join us for a leisurely bicycle ride.",
+                "description": "Join us htmlFor a leisurely bicycle ride.",
                 "date": "2024-05-26T12:55:11.199",
                 "location": "Chbar Ampov"
             }

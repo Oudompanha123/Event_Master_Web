@@ -5,10 +5,7 @@ import {useState} from "react";
 import {useForm} from "react-hook-form";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
-import { signIn } from "next-auth/react";
-import {almostWhole} from "chart.js/helpers";
-import {loginService} from "@/services/auth.service";
-import {loginAction} from "@/app/actions/authAction";
+import {signIn} from "next-auth/react";
 
 const LoginComponent = () => {
 
@@ -36,7 +33,7 @@ const LoginComponent = () => {
             redirect: false,
             ...data,
         });
-        if(res.ok){
+        if (res.ok) {
             router.push(("/overview"))
         }
     }
