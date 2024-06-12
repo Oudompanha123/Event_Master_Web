@@ -15,6 +15,7 @@ const convertTo12HourFormat = (time) => {
 export default async function AgendaComponent({id}) {
   const agenda =await getAgendaByEventId(id);
   const data = await agenda?.payload?.data?.agenda;
+  // console.log("agenda data is new a:",data)
 
   if (data==null) {
     return (
@@ -25,7 +26,7 @@ export default async function AgendaComponent({id}) {
               Agenda Management
             </p>
           </div>
-          <CreateAgendaButton/>
+          <CreateAgendaButton id={id}/>
         </div>
 
         <div className=" justify-center w-full content-center space-y-6 py-24">
@@ -66,7 +67,7 @@ export default async function AgendaComponent({id}) {
         </div>
         <div className="lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex">
           <DeleteButton id={id}/>
-          <UpdateAgendaButton/>
+          <UpdateAgendaButton id={id}/>
         </div>
       </div>
       {data?.map((data, index) => (

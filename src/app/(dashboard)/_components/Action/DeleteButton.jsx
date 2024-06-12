@@ -1,6 +1,6 @@
 "use client";
 
-import deleteAgenda from "@/app/actions/agendaAction";
+import deleteAgenda from "@/app/actions/deleteAgendaAction";
 import Image from "next/image";
 export function DeleteButton({id}) {
   return (
