@@ -10,12 +10,12 @@ export const loginService = async (userInfo) => {
         body: JSON.stringify(userInfo)
     });
     const data = await res.json();
-    // return data;
-    if (data.token) {
-        return data
-    } else {
-        return null
-    }
+    return data;
+    // if (data.token) {
+    //     return data
+    // } else {
+    //     return null
+    // }
 }
 
 export const registerService = async (userInfo) => {
