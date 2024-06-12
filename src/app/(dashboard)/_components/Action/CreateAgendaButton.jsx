@@ -4,6 +4,8 @@ import { MdAddBox } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { AddSquare } from "iconsax-react";
+import { CreateAgendaService } from "@/services/dashboard/agenda.service";
+import createAgenda from "@/app/actions/createAgendaAction";
 
 function AddmoreInput({ inputList, setInputList }) {
   const handleAddClick = () => {
@@ -170,12 +172,29 @@ export function CreateAgendaButton() {
     { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
   ]);
 
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    console.log("Form Submitted", inputList);
-    // Close the modal after submission
+  // const handleSubmit = () => {
+  //   // Handle form submission logic here
+  //   console.log("Form Submitted", inputList);
+  //   // Close the modal after submission
+  //   document.getElementById("my_modal_4").close();
+  // };
+
+  async function handleCreate(inputList) {
+    console.log("user input ", inputList);
+    // define structure object
+    const newAgenda = {
+      topic: inputList.get("topic"),
+      startTime: inputList.get("startTime"),
+       endTime: inputList.get("endTime"),
+      description: "",
+      speaker: inputList.get("speaker"),
+    };
+    // calling next auth service and passing " newUseInfo "
     document.getElementById("my_modal_4").close();
-  };
+    console.log(newAgenda);
+    const data = await createAgenda(newAgenda)
+    console.log("data", data);
+  }
 
   return (
     <>
@@ -198,7 +217,7 @@ export function CreateAgendaButton() {
             </button>
             <button
               className="px-6 py-3 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-3  bg-blue-700  w-32 hover:border-blueUi hover:bg-blue-800"
-              onClick={handleSubmit}
+              onClick={handleCreate}
             >
               <MdAddBox size={24} color="white" />
               <p className="text-white">Save</p>
