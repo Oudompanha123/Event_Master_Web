@@ -78,10 +78,7 @@ const Page = async () => {
                         <CreateCategoryButton />
                     </div>
                     <div className="w-full overflow-scroll">
-                        <OverviewTable allCategory={allCategory} />
-                        <div className="w-full flex justify-end mt-8">
-                            <Pagination />
-                        </div>
+                        <OverviewTable />
                     </div>
                 </div>
             </section>
