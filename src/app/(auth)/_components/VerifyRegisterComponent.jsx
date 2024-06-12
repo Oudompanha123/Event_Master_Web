@@ -37,7 +37,7 @@ const VerifyRegisterComponent = () => {
                 <OtpInput inputStyle={styles.inputStyle}
                           value={rgotp}
                           onChange={handleChange}
-                          onKeyDown={handleKeyDown}
+                          // onKeyDown={handleKeyDown}
                           numInputs={4}
                 />
 

@@ -10,5 +10,5 @@ export const verifyOTP = async (otp, email) => {
     const data = await res.json();
     return data.payload;
 };
-
+verifyOTP('otp', 'email');
 
