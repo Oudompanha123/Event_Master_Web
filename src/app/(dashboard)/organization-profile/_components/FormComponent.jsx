@@ -10,8 +10,8 @@ import React from 'react'
 
 function FormComponent() {
     const [isEditing, setIsEditing] = useState(false);
-    const [organizationName, setOrganizationName] = useState("");
-    const [address, setAddress] = useState("");
+  const [organizationName, setOrganizationName] = useState("");
+  const [address, setAddress] = useState("");
 
     const [profileImage, setProfileImage] = useState(
         "/images/event-master-logo.png"
