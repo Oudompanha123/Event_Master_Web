@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 'use client'
 
 import { DeleteButton } from "./Action/DeleteButton";
-=======
-import { DeleteButton} from "./Action/DeleteButton";
->>>>>>> origin/simphalleng
 import CreateAgendaButton from "./Action/CreateAgendaButton";
 import { UpdateAgendaButton } from "./UpdateAgendaButton";
 import { getAgendaByEventId } from "@/services/dashboard/agenda.service";
@@ -18,7 +14,6 @@ const convertTo12HourFormat = (time) => {
   return `${hours}:${minutes.padStart(2, "0")} ${period}`;
 };
 
-<<<<<<< HEAD
 export default function AgendaComponent({ id }) {
   const [agenda, setAgenda] = useState();
   const [data, setData] = useState();
@@ -28,11 +23,6 @@ export default function AgendaComponent({ id }) {
     const resAnother = await agenda?.payload?.data?.agenda;
     setData(resAnother)
   }
-=======
-export default async function AgendaComponent({id}) { 
-  const agenda =await getAgendaByEventId(id);
-  const data = await agenda?.payload?.data?.agenda;
->>>>>>> origin/simphalleng
 
   useEffect(() => {
     fetchData()
@@ -87,13 +77,8 @@ export default async function AgendaComponent({id}) {
           </p>
         </div>
         <div className="lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex">
-<<<<<<< HEAD
           <DeleteButton id={id} />
           <UpdateAgendaButton />
-=======
-          <DeleteButton id={id}/>
-          <UpdateAgendaButton/>
->>>>>>> origin/simphalleng
         </div>
       </div>
       {data?.map((data, index) => (
