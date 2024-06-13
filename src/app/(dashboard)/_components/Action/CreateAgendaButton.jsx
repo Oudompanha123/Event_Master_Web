@@ -1,23 +1,26 @@
 "use client";
 import React, { useState } from "react";
-import { MdAddBox } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { AddSquare } from "iconsax-react";
 import createAgenda from "@/app/actions/createAgendaAction";
 
-function AddmoreInput({ inputList, setInputList }) {
+function AddmoreInput({ inputList, setInputList, errors, setErrors }) {
   const handleAddClick = () => {
     setInputList([
       ...inputList,
       { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
     ]);
+    setErrors([...errors, {}]);
   };
 
   const handleRemove = (index) => {
     const list = [...inputList];
+    const errs = [...errors];
     list.splice(index, 1);
+    errs.splice(index, 1);
     setInputList(list);
+    setErrors(errs);
   };
 
   const handleInputChange = (e, index) => {
@@ -26,6 +29,7 @@ function AddmoreInput({ inputList, setInputList }) {
     list[index][name] = value;
     setInputList(list);
   };
+
   return (
     <div className="container">
       <div className="row">
@@ -44,7 +48,7 @@ function AddmoreInput({ inputList, setInputList }) {
                     </button>
                   )}
                 </div>
-                <div className="w-full form-group col-md-4 text-sm font-semibold text-primary-text block mb-4">
+                <div className="w-full form-group col-md-4 block mb-4">
                   <label
                     htmlFor="topic"
                     className="text-sm font-semibold text-primary-text block mb-2"
@@ -60,6 +64,9 @@ function AddmoreInput({ inputList, setInputList }) {
                     onChange={(e) => handleInputChange(e, i)}
                     required
                   />
+                  {errors[i]?.topic && (
+                    <p className="text-red-600 text-xs mt-1">{errors[i].topic}</p>
+                  )}
                 </div>
                 <div className="flex gap-4 mb-1 sm:grid-cols-2">
                   <div className="w-full mx-auto form-group">
@@ -86,6 +93,9 @@ function AddmoreInput({ inputList, setInputList }) {
                         onChange={(e) => handleInputChange(e, i)}
                       />
                     </div>
+                    {errors[i]?.startTime && (
+                      <p className="text-red-600 text-xs mt-1">{errors[i].startTime}</p>
+                    )}
                   </div>
                   <div className="w-full mx-auto form-group">
                     <label
@@ -110,6 +120,9 @@ function AddmoreInput({ inputList, setInputList }) {
                         onChange={(e) => handleInputChange(e, i)}
                       />
                     </div>
+                    {errors[i]?.endTime && (
+                      <p className="text-red-600 text-xs mt-1">{errors[i].endTime}</p>
+                    )}
                   </div>
                   <div className="form-group w-full col-md-4 text-sm font-semibold text-primary-text block mb-2">
                     <label
@@ -166,18 +179,38 @@ function AddmoreInput({ inputList, setInputList }) {
 }
 
 export function CreateAgendaButton({ id }) {
-  console.log("event id is",id)
+  console.log("event id is", id);
   const [inputList, setInputList] = useState([
     { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
   ]);
+  const [errors, setErrors] = useState([{ topic: "", startTime: "", endTime: "" }]);
 
   async function handleCreate() {
+    const newErrors = inputList.map((item, index) => {
+      const error = { topic: "", startTime: "", endTime: "" };
+      if (!item.topic) {
+        error.topic = "Topic is required.";
+      }
+      if (item.startTime >= item.endTime) {
+        error.startTime = "Start time must be before end time.";
+      }
+      return error;
+    });
+
+    setErrors(newErrors);
+
+    // Check if there are any errors
+    const hasErrors = newErrors.some((error) => error.topic || error.startTime || error.endTime);
+    if (hasErrors) {
+      return;
+    }
+
     const agenda = inputList.map((item) => ({
-      "startTime": item.startTime,
-      "endTime": item.endTime,
-      "topic": item.topic,
-      "description": item.description || "",
-      "speaker": item.speaker,
+      startTime: item.startTime,
+      endTime: item.endTime,
+      topic: item.topic,
+      description: item.description || "",
+      speaker: item.speaker,
     }));
 
     const requestBody = { agenda };
@@ -186,13 +219,12 @@ export function CreateAgendaButton({ id }) {
     document.getElementById("my_modal_4").close();
 
     try {
-      const data = await createAgenda(requestBody,id);
+      const data = await createAgenda(requestBody, id);
       console.log("API Response:", data);
     } catch (error) {
       console.error("Error creating agenda:", error);
     }
   }
-
 
   return (
     <>
@@ -205,7 +237,12 @@ export function CreateAgendaButton({ id }) {
       </button>
       <dialog id="my_modal_4" className="modal">
         <div className="modal-box w-11/12 max-w-5xl bg-[#F7F9FB]">
-          <AddmoreInput inputList={inputList} setInputList={setInputList} />
+          <AddmoreInput
+            inputList={inputList}
+            setInputList={setInputList}
+            errors={errors}
+            setErrors={setErrors}
+          />
           <div className="modal-action gap-2 mb-4">
             <button
               className="px-6 py-3 rounded-2xl border-1px border-borderUi bg-white hover:border-gray-500 hover:bg-white"
@@ -216,7 +253,7 @@ export function CreateAgendaButton({ id }) {
             <button
               type="submit"
               className="px-6 py-3 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-3 bg-blue-700 w-32 hover:border-blueUi hover:bg-blue-800"
-              onClick={() => handleCreate(id)}
+              onClick={handleCreate}
             >
               <AddSquare size="24" variant="Bold" className="text-white" />
               <p className="text-white">Save</p>

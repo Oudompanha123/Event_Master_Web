@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SelectModify } from "./SelectModify";
-import { createEventService } from "@/services/dashboard/overviewService";
 import { addNewCategoryAction, addNewEventAction } from "@/actions/categoryAction";
 
 export const CreateEventButton = () => {
@@ -60,12 +59,18 @@ export const CreateEventButton = () => {
     const start = watch("startDate");
 
     const [eventCategory, setEventCategory] = useState();
-    const [isPublic, setIsPublic] = useState();
+    const [isPublic, setIsPublic] = useState(false);
     const [imageLink, setImageLink] = useState();
 
     const handleCategorySelect = (v) => {
         console.log("from parent", v)
         setEventCategory(v)
+        console.log("log state", eventCategory)
+    }
+
+    const handleEventType = (type) => {
+        console.log(type)
+        setIsPublic(type)
     }
 
     const onSubmit = async (data) => {
@@ -78,7 +83,7 @@ export const CreateEventButton = () => {
             duration: data.duration,
             address: data.address,
             poster: `${imageLink}.png`,
-            isPost: true,
+            isPost: isPublic,
             maxAttendee: data.maxAttendee,
             categoryId: 90
         }
@@ -268,7 +273,7 @@ export const CreateEventButton = () => {
                             <div className="flex items-center gap-5">
                                 <p>Create this event as :</p>
                                 <div>
-                                    <ToogleBtn />
+                                    <ToogleBtn func={handleEventType} />
                                 </div>
                             </div>
                             <div className="flex justify-end space-x-3">

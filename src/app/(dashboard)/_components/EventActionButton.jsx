@@ -9,9 +9,10 @@ import { SelectModify } from "./Action/SelectModify";
 import { SelectModifyV2 } from "./Action/SelectModifyV2";
 // import { ToogleBtn } from "./Action/ToogleBtn";
 
-export function EventActionButton() {
+export function EventActionButton({id}) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null); // Reference htmlFor dropdown
+  // console.log("data of event is ",id)
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
