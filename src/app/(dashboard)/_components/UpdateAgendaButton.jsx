@@ -1,22 +1,41 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import Image from "next/image";
 import updateAgenda from "@/app/actions/updateAgendaAction";
+import fetchAgenda from "@/app/actions/fetchAgendaAction";
 
-function UpdateAgenda({ inputList, setInputList }) {
+function UpdateAgenda({ inputList, setInputList, errors, setErrors, id }) {
+  const [data, setData] = useState(null);
+
+  const fetchData = async () => {
+    const res = await fetchAgenda(id);
+    setData(res?.payload?.data?.agenda);
+
+    // Set the inputList state with the fetched data
+    setInputList(res?.payload?.data?.agenda || []);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+
   const handleAddClick = () => {
     setInputList([
       ...inputList,
       { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
     ]);
+    setErrors([...errors, {}]);
   };
 
   const handleRemove = (index) => {
     const list = [...inputList];
+    const errs = [...errors];
     list.splice(index, 1);
+    errs.splice(index, 1);
     setInputList(list);
+    setErrors(errs);
   };
 
   const handleInputChange = (e, index) => {
@@ -25,6 +44,7 @@ function UpdateAgenda({ inputList, setInputList }) {
     list[index][name] = value;
     setInputList(list);
   };
+
   return (
     <div className="container">
       <div className="row">
@@ -43,7 +63,7 @@ function UpdateAgenda({ inputList, setInputList }) {
                     </button>
                   )}
                 </div>
-                <div className="w-full form-group col-md-4 text-sm font-semibold text-primary-text block mb-4">
+                <div className="w-full form-group col-md-4 block mb-4">
                   <label
                     htmlFor="topic"
                     className="text-sm font-semibold text-primary-text block mb-2"
@@ -59,6 +79,9 @@ function UpdateAgenda({ inputList, setInputList }) {
                     onChange={(e) => handleInputChange(e, i)}
                     required
                   />
+                  {errors[i]?.topic && (
+                    <p className="text-red-600 mt-1 text-xs">{errors[i].topic}</p>
+                  )}
                 </div>
                 <div className="flex gap-4 mb-1 sm:grid-cols-2">
                   <div className="w-full mx-auto form-group">
@@ -85,6 +108,9 @@ function UpdateAgenda({ inputList, setInputList }) {
                         onChange={(e) => handleInputChange(e, i)}
                       />
                     </div>
+                    {errors[i]?.startTime && (
+                      <p className="text-red-600 text-xs mt-1">{errors[i].startTime}</p>
+                    )}
                   </div>
                   <div className="w-full mx-auto form-group">
                     <label
@@ -109,6 +135,9 @@ function UpdateAgenda({ inputList, setInputList }) {
                         onChange={(e) => handleInputChange(e, i)}
                       />
                     </div>
+                    {errors[i]?.endTime && (
+                      <p className="text-red-600 text-xs mt-1">{errors[i].endTime}</p>
+                    )}
                   </div>
                   <div className="form-group w-full col-md-4 text-sm font-semibold text-primary-text block mb-2">
                     <label
@@ -165,18 +194,38 @@ function UpdateAgenda({ inputList, setInputList }) {
 }
 
 export function UpdateAgendaButton({ id }) {
-  console.log("event id is",id)
+  // console.log("event id is", id);
   const [inputList, setInputList] = useState([
     { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
   ]);
+  const [errors, setErrors] = useState([{ topic: "", startTime: "", endTime: "" }]);
 
   async function handleUpdate() {
+    const newErrors = inputList.map((item, index) => {
+      const error = { topic: "", startTime: "", endTime: "" };
+      if (!item.topic) {
+        error.topic = "Topic is required.";
+      }
+      if (item.startTime >= item.endTime) {
+        error.startTime = "Start time must be before end time.";
+      }
+      return error;
+    });
+
+    setErrors(newErrors);
+
+    // Check if there are any errors
+    const hasErrors = newErrors.some((error) => error.topic || error.startTime || error.endTime);
+    if (hasErrors) {
+      return;
+    }
+
     const agenda = inputList.map((item) => ({
-      "startTime": item.startTime,
-      "endTime": item.endTime,
-      "topic": item.topic,
-      "description": item.description || "",
-      "speaker": item.speaker,
+      startTime: item.startTime,
+      endTime: item.endTime,
+      topic: item.topic,
+      description: item.description || "",
+      speaker: item.speaker,
     }));
 
     const requestBody = { agenda };
@@ -185,26 +234,38 @@ export function UpdateAgendaButton({ id }) {
     document.getElementById("my_modal_4").close();
 
     try {
-      const data = await updateAgenda(requestBody,id)
+      const data = await updateAgenda(requestBody, id);
       console.log("API Response:", data);
     } catch (error) {
       console.error("Error creating agenda:", error);
     }
   }
 
-
   return (
     <>
-    <button
-        className="btn  rounded-xl flex  border bg-green-700 hover:bg-green-800 w-32  "
+      <button
+        className="btn rounded-xl flex border bg-green-700 hover:bg-green-800 w-32"
         onClick={() => document.getElementById("my_modal_4").showModal()}
       >
-        <Image src="/icons/edit.svg" alt="" className="" width={24} height={24}/>
+        <Image src="/icons/edit.svg" alt="" className="" width={24} height={24} />
         <p className="text-white">Edit</p>
       </button>
       <dialog id="my_modal_4" className="modal">
         <div className="modal-box w-11/12 max-w-5xl bg-[#F7F9FB]">
-          <UpdateAgenda inputList={inputList} setInputList={setInputList} />
+          <div className="flex justify-right">
+            <form method="dialog">
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
+            </form>
+          </div>
+          <UpdateAgenda
+            inputList={inputList}
+            setInputList={setInputList}
+            errors={errors}
+            setErrors={setErrors}
+            id={id}
+          />
           <div className="modal-action gap-2 mb-4">
             <button
               className="px-6 py-3 rounded-2xl border-1px border-borderUi bg-white hover:border-gray-500 hover:bg-white"
@@ -214,10 +275,10 @@ export function UpdateAgendaButton({ id }) {
             </button>
             <button
               type="submit"
-              className="py-3 px-6   rounded-2xl border-1px border-borderUi flex items-center justify-center gap-2  bg-green-700   hover:bg-green-800"
+              className="py-3 px-6 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800"
               onClick={() => handleUpdate(id)}
             >
-              <Image src="/icons/edit.svg" alt="" className="h-5 w-5" width={5} height={5}/>
+              <Image src="/icons/edit.svg" alt="" className="h-5 w-5" width={5} height={5} />
               <p className="text-white">Update</p>
             </button>
           </div>

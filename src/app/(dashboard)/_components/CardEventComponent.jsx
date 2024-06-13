@@ -42,7 +42,7 @@ export async function CardEventComponent({ eventData }) {
                       {month}
                     </small>
                   </div>
-                  <EventActionButton />
+                  <EventActionButton id={data.eventId}/>
                 </div>
               </div>
 
