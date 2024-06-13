@@ -3,8 +3,10 @@
 import { DeleteButton } from "./Action/DeleteButton";
 import CreateAgendaButton from "./Action/CreateAgendaButton";
 import { UpdateAgendaButton } from "./UpdateAgendaButton";
-import { getAgendaByEventId } from "@/services/dashboard/agenda.service";
 import { useEffect, useState } from "react";
+// import { getAgendaByEventId } from "@/services/dashboard/agenda.service";
+import fetchAgenda from "@/app/actions/fetchAgendaAction";
+
 
 const convertTo12HourFormat = (time) => {
   let [hours, minutes] = time.split(":");
@@ -14,14 +16,22 @@ const convertTo12HourFormat = (time) => {
   return `${hours}:${minutes.padStart(2, "0")} ${period}`;
 };
 
-export default async function AgendaComponent({id}) {
-  const agenda =await getAgendaByEventId(id);
-  const data = await agenda?.payload?.data?.agenda;
-  // console.log("agenda data is new a:",data)
+export default function AgendaComponent({id}) {
+
+  const [data, setData] = useState(null);
+
+  const fetchData = async () => {
+    const res = await fetchAgenda(id);
+    setData(res?.payload?.data?.agenda );
+  };
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+  
 
   if (data == null) {
     return (
-      <div className="mb-5 mt-14 pl-1">
+      <div className="mb-5 mt-12">
         <div className="flex justify-between align-middle content-center mb-4 ">
           <div className="flex items-center justify-center">
             <p className="text-primary-text font-semibold text-2xl">
@@ -52,7 +62,7 @@ export default async function AgendaComponent({id}) {
             You don’t have an agenda form!
           </p>
           <p className=" text-center text-xl font-medium  text-gray-500">
-            Please create agenda form htmlFor attendees to join event!
+            Please create agenda form For attendees to join event!
           </p>
         </div>
       </div>
@@ -61,7 +71,7 @@ export default async function AgendaComponent({id}) {
 
   return (
     <div className="space-y-4 mb-5 mt-14">
-      <div className="flex justify-between align-middle content-center mb-4">
+      <div className="flex justify-between align-middle content-center mb-5">
         <div className="flex items-center justify-center">
           <p className="text-primary-text font-semibold text-2xl">
             Agenda Management
