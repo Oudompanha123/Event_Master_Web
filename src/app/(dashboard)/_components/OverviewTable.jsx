@@ -4,10 +4,10 @@ import { CategoryDeleteAction } from "./Action/CategoryDeleteAction";
 import { CategoryEditAction } from "./Action/CategoryEditAction";
 import { useEffect, useState } from "react";
 import { getAllCategoryAction } from "@/actions/categoryAction";
-import { RPaginate } from "./RPaginate";
+import { RPaginate } from "./paginate/RPaginate";
 
-export const OverviewTable = () => {
-    const [data, setData] = useState();
+export const OverviewTable = ({ server }) => {
+    const [data, setData] = useState(server);
     const [navigate, setNavigate] = useState();
 
     const getData = async () => {
@@ -63,7 +63,7 @@ export const OverviewTable = () => {
                     })}
                 </tbody>
             </table>
-            <div className="w-full flex justify-end mt-8">
+            <div className="w-full h-full flex justify-end mt-8">
                 <RPaginate totalData={data?.totalRecord} func={navigatePage} />
             </div>
         </div>

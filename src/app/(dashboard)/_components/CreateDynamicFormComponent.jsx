@@ -58,7 +58,7 @@ export const CreateDynamicForm = () => {
   return (
     <>
       <div className="space-y-6">
-        <div className="p-5 w-full rounded-3xl h-[33%] bg-white shadow-[#D5D4DC] shadow ">
+        <div className="p-5 w-full rounded-3xl h-[33%] bg-white shadow-soft">
           <div className="text-primary-text font-semibold text-xl flex mb-4 content-center gap-2 ">
             <div className="content-center">
               <img
@@ -120,7 +120,7 @@ export const CreateDynamicForm = () => {
 
           <button
             onClick={() => setPopUp(true)}
-            className=" btn w-full font-medium text-sm bg-blue-100 text-blue-700 rounded-3xl justify-start hover:bg-blue-200 mt-5"
+            className="border-none btn w-full font-medium text-sm bg-blue-100 text-blue-700 rounded-radiusUi justify-start hover:bg-blue-200 mt-5"
           >
             {" "}
             <IoIosAddCircleOutline size={24} color="blue" />

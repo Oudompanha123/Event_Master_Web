@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Data from "../../../data/asset.json";
+import Data from "../../../../data/asset.json";
 
 export const Pagination = () => {
     const [currentPage, setCurrentPage] = useState(1);

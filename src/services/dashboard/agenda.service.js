@@ -4,16 +4,16 @@ export const getAgendaByEventId = async (id) => {
   const res = await fetch(`${process.env.API_URL}agendas/${id}`, {
     cache: "no-store",
     headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDIsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6IkQ1Q1VRUiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDIsIm1lbWJlcklkIjo2MCwic3ViIjoicGVuZ2NoaGFpdGl0aEBnbWFpbC5jb20iLCJpYXQiOjE3MTgwNDIwMjcsImV4cCI6MTcxODkwNjAyN30.uXoLW1f_guhaMR6Di1VQjFUb6QIhLyghz4HZj8GRG1k",
-      "Content-Type": "application/json",
-    },
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6MzgsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImJPTVdJNiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6MzgsIm1lbWJlcklkIjo1Niwic3ViIjoibWVnYW5vdGNsb25lQGdtYWlsLmNvbSIsImlhdCI6MTcxODAwMzgzMywiZXhwIjoxNzE4ODY3ODMzfQ.nxMolNOTpbgoZ3qoERBY3YVZbVRyQiuEo4CCp7zDwms',
+      'Content-Type': 'application/json'
+    }
   });
   const data = await res.json();
+  console.log(data, "show here")
   return data;
 };
 
-export const CreateAgendaService = async (data,id) => {
+export const CreateAgendaService = async (data, id) => {
   // console.log("event id is :",id)
   try {
     const res = await fetch(`${process.env.API_URL}agendas/${id}`, {
@@ -23,7 +23,7 @@ export const CreateAgendaService = async (data,id) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-          data
+        data
       }),
     });
 
@@ -61,7 +61,7 @@ export const DeleteAgendaService = async (id) => {
   }
 };
 
-export const UpdateAgendaService = async (data,id) => {
+export const UpdateAgendaService = async (data, id) => {
   // console.log("event id is :",id)
   try {
     const res = await fetch(`${process.env.API_URL}agendas/${id}`, {
@@ -71,7 +71,7 @@ export const UpdateAgendaService = async (data,id) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-          data
+        data
       }),
     });
 

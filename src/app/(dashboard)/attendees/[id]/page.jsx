@@ -2,7 +2,7 @@ import React from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { DeleteAttendeeComponent } from "../../_components/Action/DeleteAttendeeComponent";
 import { getAttendeeByEventIdService } from "@/services/dashboard/attendee.service";
-import { Pagination } from "../../_components/Pagination";
+import { Pagination } from "../../_components/paginate/Pagination";
 import { getEventById } from "@/services/clientPage/landingService";
 
 const AttendeePage = async ({ params: { id } }) => {
@@ -70,7 +70,7 @@ const AttendeePage = async ({ params: { id } }) => {
                     {attendee.Phone}
                   </td>
                   <td className="px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
-                    <DeleteAttendeeComponent id={id }/>
+                    <DeleteAttendeeComponent id={id} />
                   </td>
                 </tr>
               );
@@ -78,7 +78,7 @@ const AttendeePage = async ({ params: { id } }) => {
           </tbody>
         </table>
         <div className="w-full flex justify-end mt-8">
-         <Pagination/>
+          <Pagination />
         </div>
       </div>
     </div>
