@@ -1,6 +1,7 @@
 'use client'
 
 import { LogoutCurve } from "iconsax-react"
+import { signOut } from "next-auth/react"
 import Link from "next/link"
 import { RxCross2 } from "react-icons/rx"
 
@@ -30,11 +31,9 @@ export const LogoutAction = () => {
                     </p>
                     <div className="modal-action ">
                         <form method="dialog" className=" flex justify-around w-full mb-4 mt-3 px-3">
-                            <Link href={'/login'}>
-                                <button className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700" value="yes">
-                                    <p className="text-white font-semibold">Yes</p>
-                                </button>
-                            </Link>
+                            <button className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700" value="yes">
+                                <p onClick={() => signOut()} className="text-white font-semibold">Yes</p>
+                            </button>
                             <button className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500" value="cancel">
                                 <p className="text-white font-semibold">No</p>
                             </button>

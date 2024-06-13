@@ -20,7 +20,7 @@ export const EventDetail = ({ eventData }) => {
   
 
   return (
-    <div className="m-auto w-full rounded-3xl h-[50%] bg-white shadow-[#D5D4DC] shadow py-5 ">
+    <div className="m-auto w-full rounded-3xl h-[50%] bg-white py-5 ">
       <div
         className="w-[96%] ml-[2%] h-68 bg-cover bg-center rounded-2xl flex justify-end p-3 mb-4"
         style={{

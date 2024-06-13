@@ -1,5 +1,5 @@
 import userData from "../../../data/member.json"
-import { Pagination } from "../_components/Pagination"
+import { Pagination } from "../_components/paginate/Pagination"
 import { RegisterActionComponent } from "../_components/RegisterActionComponent"
 
 const Page = () => {

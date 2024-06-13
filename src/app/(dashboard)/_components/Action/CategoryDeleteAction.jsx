@@ -7,6 +7,7 @@ import { RxCross2 } from "react-icons/rx"
 export const CategoryDeleteAction = ({ cateId }) => {
     const handleDelete = async () => {
         await deleteCategoryAction(cateId)
+        console.log("Delete Attendee:",handleDelete);
     }
 
     return (
