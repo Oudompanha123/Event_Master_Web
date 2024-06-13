@@ -1,13 +1,28 @@
+// "use client"
 import React from "react";
-import { IoSearchOutline } from "react-icons/io5";
 import { DeleteAttendeeComponent } from "../../_components/Action/DeleteAttendeeComponent";
-import { getAttendeeByEventIdService } from "@/services/dashboard/attendee.service";
-import { Pagination } from "../../_components/paginate/Pagination";
+import { getAttendeeByEventIdService } from "@/services/dashboard/attendeeService";
+// import { Pagination } from "../../_components/Pagination";
 import { getEventById } from "@/services/clientPage/landingService";
+import SearchAttendeeComponent from "../../_components/SearchAttendeeComponent";
+import { Pagination } from "../../_components/paginate/Pagination";
+// import { AttendeePageComponent } from "../../_components/AttendeePageComponent";
 
 const AttendeePage = async ({ params: { id } }) => {
-  const attendeeData = await getAttendeeByEventIdService(id);
+  // const [currentPage,setCurrentPage]=useState(1);
+  // const recordPersPage = 7;
+  // const lastIndex = currentPage*recordPersPage;
+  // const firstIndex= lastIndex - recordPersPage;
+  // const records= attendeeData.slice(firstIndex,lastIndex);
+  // const npage = Math.ceil(attendeeData.length/recordPersPage);
+  // const numbers = [...Array(npage+1).keys].slice(1);
+  let attendeeData = await getAttendeeByEventIdService(id);
   const eventData = await getEventById(id);
+
+  // function searchAttendee(attendeeFromSearch){
+  //   attendeeData = attendeeFromSearch;
+  // }
+
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
@@ -16,16 +31,7 @@ const AttendeePage = async ({ params: { id } }) => {
             Show All Attendees in {eventData.payload.eventName} Event
           </a>
         </div>
-        <div className="w-full flex justify-end lg:mt-0 mt-3">
-          <div className="relative w-full lg:w-[450px]">
-            <input
-              type="text"
-              placeholder="Search by name or phone number"
-              className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
-            />
-            <IoSearchOutline className="w-[24px] h-[24px] -mt-8 ml-3" />
-          </div>
-        </div>
+        <SearchAttendeeComponent/>
       </div>
       <div className="w-full overflow-scroll">
         <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
@@ -43,9 +49,9 @@ const AttendeePage = async ({ params: { id } }) => {
             </tr>
           </thead>
           <tbody>
-
-            {attendeeData.payload.map((attendeeWrapper, index) => {
-              const attendee = attendeeWrapper.data;
+            {attendeeData?.payload.map((attendeeWrapper, index) => {
+              const attendee = attendeeWrapper?.data;
+            
               return (
                 <tr
                   key={attendeeWrapper.attendeeId}
@@ -70,7 +76,9 @@ const AttendeePage = async ({ params: { id } }) => {
                     {attendee.Phone}
                   </td>
                   <td className="px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
-                    <DeleteAttendeeComponent id={id} />
+                    <DeleteAttendeeComponent
+                      attendeeId={attendeeWrapper.attendeeId}
+                    />
                   </td>
                 </tr>
               );
