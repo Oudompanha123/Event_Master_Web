@@ -45,7 +45,7 @@ export const SelectModify = ({ height, label, func }) => {
         const updatedOptions = options.filter(option => option.categoryId !== 999);
         setOptionData(updatedOptions);
         setOptionData([...updatedOptions,
-        { categoryId: (lastArray.categoryId + 1) * 2, categoryName: `${newCategory}` },
+        { categoryId: 88888, categoryName: `${newCategory}` },
         { categoryId: 999, categoryName: "Create Category" }
         ]);
     }
@@ -65,8 +65,6 @@ export const SelectModify = ({ height, label, func }) => {
         func(v)
         console.log('gg', v)
     }
-
-    console.log("why not", options)
 
     return (
         <div className="w-auto">
@@ -107,7 +105,7 @@ export const SelectModify = ({ height, label, func }) => {
                                 {options?.map((option) => (
                                     <Listbox.Option
                                         key={option.categoryId}
-                                        onClick={() => { handlePassToParent(option.categoryName); option.categoryId == 999 && handleTrigger() }}
+                                        onClick={() => { handlePassToParent(option); option.categoryId == 999 && handleTrigger() }}
                                         className={({ active }) =>
                                             `relative cursor-default select-none py-2 hover:bg-blue-200 pl-8 p-[174px] ${active ? " text-black" : "text-gray-900"
                                             }`
