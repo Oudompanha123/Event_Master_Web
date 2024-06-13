@@ -5,8 +5,9 @@ import {useForm} from 'react-hook-form';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 import Link from 'next/link';
-import signupAction from '@/app/actions/signupAction';
 import {getOrganizationDetails} from "@/services/login-signup/org.service";
+import signupAction from "@/actions/auth/signupAction";
+import {registerUserAction} from "@/actions/auth/registerUserAction";
 
 const SignupComponent = () => {
     const initialData = {
@@ -51,7 +52,11 @@ const SignupComponent = () => {
 
     const onSubmit = async (data) => {
         console.log("Data: " ,data);
-        await signupAction(data);
+        if(data?.organizationCode) {
+            await registerUserAction(data);
+        } else {
+            await signupAction(data);
+        }
 
         if (!isAdminSelected) {
             const orgData = await getOrganizationDetails(data.organizationCode);
