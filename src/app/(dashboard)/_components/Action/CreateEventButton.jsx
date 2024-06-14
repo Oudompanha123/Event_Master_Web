@@ -5,9 +5,11 @@ import Image from "next/image";
 import { ToogleBtn } from "./ToogleBtn";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { SelectModify } from "./SelectModify";
 import { addNewCategoryAction, addNewEventAction } from "@/actions/categoryAction";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "@/lib/firebase";
+import { v4 } from 'uuid';
 
 export const CreateEventButton = () => {
     const [hide, setHide] = useState(false);
@@ -35,6 +37,8 @@ export const CreateEventButton = () => {
         setImageLink(e.target.files[0]);
         displayPreview(file);
         setHide(true);
+        console.log('check here ', e.target.files[0])
+        console.log("change", imageLink)
     };
 
     const displayPreview = (file) => {
@@ -46,8 +50,6 @@ export const CreateEventButton = () => {
             preview.classList.remove("hidden");
         };
     };
-
-    const router = useRouter();
 
     const {
         watch,
@@ -61,35 +63,75 @@ export const CreateEventButton = () => {
     const [eventCategory, setEventCategory] = useState();
     const [isPublic, setIsPublic] = useState(false);
     const [imageLink, setImageLink] = useState();
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
+    const [diffChange, setDiffChange] = useState();
 
-    const handleCategorySelect = (v) => {
-        console.log("from parent", v)
-        setEventCategory(v)
-        console.log("log state", eventCategory)
+    const triggerHourChange = () => {
+        const sDate = new Date(`${startDate}`);
+        const eDate = new Date(`${endDate}`)
+        const timeDiff = eDate - sDate;
+        const hoursDiff = timeDiff / (1000 * 60 * 60);
+        const roundedDiff = Math.round(hoursDiff * 100) / 100;
+        setDiffChange(Number(roundedDiff))
     }
 
-    const handleEventType = (type) => {
-        console.log(type)
-        setIsPublic(type)
+    const handleCategorySelect = (v) => setEventCategory(v)
+
+    const handleEventType = (type) => setIsPublic(!type)
+
+    //firebase research code
+    const [uploading, setUploading] = useState(true);
+    const [imageUrl, setImageUrl] = useState(null);
+    const [uploadedImage, setUploadedImage] = useState();
+
+    const onUpdate = async (imageLink) => {
+        //upload new image
+        onUpload(imageLink)
+        //delete old image with url
+        const desertRef = ref(storage, imageUrl);
+        await deleteObject(desertRef);
     }
 
     const onSubmit = async (data) => {
-        console.log(data, 'gg')
+        let cateId;
+        //if category id = 88888 create new category base on categoryName
+        if (eventCategory.categoryId == 88888) {
+            const res = await addNewCategoryAction(eventCategory.categoryName)
+            cateId = res.payload.categoryId;
+        }
+        //if category id isn't = 88888 calling api 
+        if (eventCategory.categoryId != 88888) {
+            cateId = eventCategory.categoryId;
+        }
+
+        //firebase
+        setUploading(false)
+        if (imageLink == null) return;
+        const imageRef = ref(storage, `${imageLink.name + v4()}`);
+        await uploadBytes(imageRef, imageLink)
+        setUploading(true)
+        const url = await getDownloadURL(imageRef);
+        setUploadedImage(url);
+        //firebase
+
         const submitData = {
             eventName: data.name,
             description: data.description,
             startDate: data.startDate,
             endDate: data.endDate,
-            duration: data.duration,
+            duration: diffChange,
             address: data.address,
-            poster: `${imageLink}.png`,
+            poster: `${url}~.png`,
             isPost: isPublic,
             maxAttendee: data.maxAttendee,
-            categoryId: 90
+            categoryId: cateId
         }
+        console.log("check image link", imageLink)
+        console.log("check body", submitData)
         const okay = await addNewEventAction(submitData);
+        console.log("data inserted", okay)
         document.getElementById("my_modal_event_create").close()
-        // router.push('/event-detail/1')
     };
 
     return (
@@ -123,7 +165,7 @@ export const CreateEventButton = () => {
                                         </label>
                                     </h3>
                                 </div>
-                                <img src="" className="mt-4 mx-auto h-80 w-full hidden object-cover" id="preview" alt="Preview" />
+                                <img src="" className="mx-auto h-80 w-full hidden object-cover" id="preview" alt="Preview" />
                             </div>
 
                             {/* input field  */}
@@ -169,6 +211,7 @@ export const CreateEventButton = () => {
                                         className={`${errors.startDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         required=""
+                                        onChange={(e) => { setStartDate(e.target.value); triggerHourChange() }}
                                     />
                                     {errors.startDate && <div className="text-red-600 text-sm mt-2">{errors.startDate.message}</div>}
                                 </div>
@@ -191,6 +234,7 @@ export const CreateEventButton = () => {
                                         className={`${errors.endDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         required=""
+                                        onChange={(e) => { setEndDate(e.target.value); triggerHourChange() }}
                                     />
                                     {errors.endDate && <div className="text-red-600 text-sm mt-2">{errors.endDate.message}</div>}
                                 </div>
@@ -201,13 +245,15 @@ export const CreateEventButton = () => {
                                         Duration <span className="text-red-600">*</span>
                                     </label>
                                     <input
-                                        {...register("duration", {
-                                            required: "duration is required",
-                                        })}
+                                        value={diffChange}
+                                        disabled
+                                        // {...register("duration", {
+                                        //     required: "duration is required",
+                                        // })}
                                         type="number"
                                         name="duration"
                                         id="duration"
-                                        className={`${errors.duration ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        className={`${errors.duration ? "border-red-700 focus:border-red-600" : "border-gray-300"} cursor-not-allowed shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter duration"
                                         required=""
                                     />
