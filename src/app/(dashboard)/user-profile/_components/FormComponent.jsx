@@ -112,7 +112,7 @@ function FormComponent({getAllMemberProfile}) {
                     
                     <div className={`flex justify-between ${styles.container}`}>
                         {/* Profile  */}
-                        <div className='profile w-[20%]'>
+                        <div className={`profile w-[20%] ${styles.profile}`}>
                             <div className={`rounded-full sm:mt-10  mx-auto min-w-[80px] max-w-[150px] relative`}>
                                 <img src={profileImage} alt="logo" className='rounded-full' id="picture"/>
                                 <label htmlFor="image-upload" className={ `${styles.icon} absolute top-28 right-3 w-8 h-8 bg-slate-100  rounded-full flex justify-center items-center p-1 duration-300 hover:bg-slate-200 cursor-pointer`}>
@@ -133,7 +133,7 @@ function FormComponent({getAllMemberProfile}) {
                             <div className='grid md:grid-cols-2 gap-2 gap-x-6 w-full sm:grid-cols-1'>
 
                                 <div className="w-full mb-2 group flex flex-col">
-                                    <label htmlFor="name" className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Name <span className='text-red-500'>*</span></label>
+                                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name <span className='text-red-500'>*</span></label>
                                     <input type="text" id="name" name='name' className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                         placeholder="Enter your name" onChange={(e)=> setUserName(e.target.value)}
                                         disabled={isLock}
@@ -143,7 +143,7 @@ function FormComponent({getAllMemberProfile}) {
                                 </div>
 
                                 <div className="w-full mb-2 group">
-                                    <label htmlFor="gender" className='block mb-2 text-sm font-semibold text-gray-900 dark:text-white'>Gender <span className='text-red-500'>*</span></label>
+                                    <label htmlFor="gender" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Gender <span className='text-red-500'>*</span></label>
                                     <div className='relative'>
                                         <select onClick={isDrop} className={`${errors.gender ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='gender' disabled={isLock}
                                             {...register('gender', 
@@ -158,7 +158,7 @@ function FormComponent({getAllMemberProfile}) {
                                 </div>
 
                                 <div className="w-full mb-2 group flex flex-col">
-                                    <label htmlFor="email-address-icon" className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Your Email <span className='text-red-500'>*</span></label>
+                                    <label htmlFor="email-address-icon" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email <span className='text-red-500'>*</span></label>
                                     <div className="relative">
                                         <input type="email" id="email" name='email' className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                         placeholder="Enter your email" disabled={isLock} 
@@ -174,7 +174,7 @@ function FormComponent({getAllMemberProfile}) {
                                 </div>
 
                                 <div className="w-full mb-2 group flex flex-col">
-                                    <label htmlFor="date" className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Date <span className='text-red-500'>*</span></label>
+                                    <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date <span className='text-red-500'>*</span></label>
                                     <input type="date" id="date" name='date' className={`${errors.date ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                         placeholder="Enter your name" disabled={isLock}
                                         {...register('date', { required: 'Date is required' })}
@@ -183,7 +183,7 @@ function FormComponent({getAllMemberProfile}) {
                                 </div>
 
                                 <div className="w-full mb-2 group flex flex-col">
-                                    <label htmlFor="phone" className='mb-1 text-sm font-semibold'>Phone Number <span className='text-red-500'>*</span></label>
+                                    <label htmlFor="phone" className='mb-1 text-sm font-medium'>Phone Number <span className='text-red-500'>*</span></label>
                                     <input type="text" placeholder="Phone number" name='phone' className={`${errors.phoneNumber ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='phone' 
                                         disabled={isLock}
                                         {...register('phoneNumber', { 
@@ -199,7 +199,7 @@ function FormComponent({getAllMemberProfile}) {
                                 </div>
 
                                 <div className="w-full mb-2 group flex flex-col">
-                                    <label htmlFor="address" className='mb-1 text-sm font-semibold'>Address <span className='text-red-500'>*</span></label>
+                                    <label htmlFor="address" className='mb-1 text-sm font-medium'>Address <span className='text-red-500'>*</span></label>
                                     <input type="text" placeholder="" name='address' className={`${errors.address ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='address' 
                                         disabled={isLock}
                                         {...register('address', { required: 'Address is required' })}
@@ -218,7 +218,7 @@ function FormComponent({getAllMemberProfile}) {
                             </div>
 
                             <div className="w-full mb-5 group flex flex-col">   
-                                <label htmlFor="current-password" className='mb-1 text-sm font-semibold'>Current Password <span className='text-red-500'>*</span></label>
+                                <label htmlFor="current-password" className='mb-1 text-sm font-medium'>Current Password <span className='text-red-500'>*</span></label>
                                 <div className='relative'>
                                     <input type={showPasswords.currentPassword ? "text" : "password"} className={`${errors.currentPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} placeholder="Enter your current password"  id='current-password' 
                                     disabled={isChange}
@@ -232,7 +232,7 @@ function FormComponent({getAllMemberProfile}) {
                             </div>
 
                             <div className="w-full mb-5 group flex flex-col">
-                                <label htmlFor="new-password" className='mb-1 text-sm font-semibold'>New Password <span className='text-red-500'>*</span></label>
+                                <label htmlFor="new-password" className='mb-1 text-sm font-medium'>New Password <span className='text-red-500'>*</span></label>
                                 <div className='relative'>
                                     <input type={showPasswords.newPassword ? "text" : "password"} className={`${errors.newPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} 
                                         placeholder="Enter your new password" disabled={isChange} 
@@ -246,7 +246,7 @@ function FormComponent({getAllMemberProfile}) {
                             </div>
 
                             <div className="w-full md:mb-10 group flex flex-col">
-                                <label htmlFor="confirm-password" className='mb-1 text-sm font-semibold'>Confirm Password <span className='text-red-500'>*</span></label>
+                                <label htmlFor="confirm-password" className='mb-1 text-sm font-medium'>Confirm Password <span className='text-red-500'>*</span></label>
                                 <div className='relative'>
                                     <input type={showPasswords.confirmPassword ? "text" : "password"}  className={`${errors.confirmPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} placeholder="Confirm your new password" id='confirm-password'
                                     disabled={isChange} 

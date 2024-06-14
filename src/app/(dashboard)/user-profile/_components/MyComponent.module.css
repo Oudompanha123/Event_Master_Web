@@ -4,11 +4,6 @@
 
     }
 
-    .profile {
-        margin-top: 100px;
-
-    }
-
     .container {
         display: flex;
         /* background-color: aqua; */
@@ -31,8 +26,18 @@
 @media (min-width: 700px) and (max-width: 1000px) {
     .icon {
         position: absolute;
-        top: 70px;
-        right: 0;
+        top: 93px;
+        right: 5px;
+    }
+    .container {
+        display: flex;
+        /* background-color: aqua; */
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .profile {
+        margin-bottom: 25px;
     }
 }
 
@@ -42,4 +47,5 @@
         top: 87px;
         right: 2px;
     }
+    
 }
