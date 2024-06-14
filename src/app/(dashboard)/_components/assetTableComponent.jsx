@@ -1,8 +1,12 @@
 import React from "react";
-import data from "../../../data/asset.json";
+// import data from "../../../data/asset.json";
 import { EditAssetComponents } from "./EditAssetComponents";
 import { DeleteAssetComponent } from "./DeleteAssetComponent";
-export const AssetTableComponent = () => {
+import { getAllAssetService } from "@/services/assetService/assetService";
+import { handleSearchAsset } from "@/app/actions/assetAction/handleAssetInput";
+export const AssetTableComponent = async () => {
+  const asset = await getAllAssetService();
+ // const assetSearch = await handleSearchAsset();
   return (
     <table className="w-full px-1 border-separate border-spacing-y-3 mt-0">
       <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-tableBg uppercase">
@@ -17,18 +21,26 @@ export const AssetTableComponent = () => {
         </tr>
       </thead>
       <tbody className="border rounded-radiusUi w-full bg-white ">
-        {data.data.map((asset, index) => (
-          <tr className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border">
+        {asset.payload.map((asset, index) => (
+
+          <tr
+            key={asset.assetId}
+            className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border"
+          >
             <td className="py-3 rounded-l-radiusUi items-center ml-1   text-xs xl:text-base w-20">
               {index + 1}
             </td>
             <td className="w-28">
               <div className="text-xs xl:text-base border rounded-radiusUi mx-3.5 py-1 w-auto">
-                {asset.name}
+                {asset.assetName}
               </div>
             </td>
             <td className="w-16">
-              <div className="text-xs xl:text-base border rounded-radiusUi mx-3 py-1">
+              <div
+                className={`text-xs xl:text-base border rounded-radiusUi mx-3 py-1 
+              ${asset.qty <= 0 && "text-redUi"}
+              `}
+              >
                 {asset.qty}
               </div>
             </td>
@@ -39,28 +51,25 @@ export const AssetTableComponent = () => {
             </td>
             <td className="w-28">
               <div className="text-xs xl:text-base border rounded-radiusUi mx-3 py-1">
-                {asset.createby}
+                {asset.createdAt}
               </div>
             </td>
             <td className="w-14">
               <div
                 className={`text-xs xl:text-base border rounded-radiusUi py-1
-                  ${
-                    asset.status == "Out of Stock"
-                      ? "bg-softRedUi"
-                      : "bg-softGreenUi"
-                  } `}
+                  ${asset.qty <= 0 ? "bg-softRedUi" : "bg-softGreenUi"} `}
               >
-                {asset.status}
+                {/* out of stock, qty color red */}
+                {asset.qty <= 0 ? "Out of stock" : "In stock"}
               </div>
             </td>
             <td className="rounded-r-radiusUi w-20">
               <div className="flex justify-center items-center gap-3 mx-3">
                 <div className="cursor-pointer">
-                  <DeleteAssetComponent />
+                  <DeleteAssetComponent assetIdprop={asset.assetId} />
                 </div>
                 <div className="cursor-pointer">
-                  <EditAssetComponents />
+                  <EditAssetComponents assetEdit={asset.assetId} name={asset.assetName} qty={asset.qty} unit={asset.unit}/>
                 </div>
               </div>
             </td>

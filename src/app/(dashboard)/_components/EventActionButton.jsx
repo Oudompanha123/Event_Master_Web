@@ -21,6 +21,7 @@ export function EventActionButton({ eventId }) {
  
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null); // Reference htmlFor dropdown
+  // console.log("data of event is ",id)
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
