@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
@@ -10,19 +10,18 @@ import signupAction from "@/actions/auth/signupAction";
 import {registerUserAction} from "@/actions/auth/registerUserAction";
 
 const SignupComponent = () => {
-    const initialData = {
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        phoneNumber: '',
-        organizationCode: '',
-    };
+  const initialData = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phoneNumber: "",
+    organizationCode: "",
+  };
 
-    const [isAdminSelected, setIsAdminSelected] = useState(false);
-    const [isLocked, setIsLocked] = useState(true);
-    const [isKeyLocked, setIsKeyLocked] = useState(true);
-    const [orgDetails, setOrgDetails] = useState(null);
+  const [isAdminSelected, setIsAdminSelected] = useState(false);
+  const [isLocked, setIsLocked] = useState(true);
+  const [isKeyLocked, setIsKeyLocked] = useState(true);
 
     const {
         register,
@@ -35,20 +34,20 @@ const SignupComponent = () => {
         defaultValues: initialData,
     });
 
-    const handleAdminClick = () => {
-        setIsAdminSelected(true);
-        reset(initialData);
-    };
+  const handleAdminClick = () => {
+    setIsAdminSelected(true);
+    reset(initialData);
+  };
 
-    const handleUserClick = () => {
-        setIsAdminSelected(false);
-        reset(initialData);
-    };
+  const handleUserClick = () => {
+    setIsAdminSelected(false);
+    reset(initialData);
+  };
 
-    const handleLockClick = () => setIsLocked((prevState) => !prevState);
-    const handleKeyLockClick = () => setIsKeyLocked((prevState) => !prevState);
+  const handleLockClick = () => setIsLocked((prevState) => !prevState);
+  const handleKeyLockClick = () => setIsKeyLocked((prevState) => !prevState);
 
-    const router = useRouter();
+  const router = useRouter();
 
     const onSubmit = async (data) => {
         console.log("Data: " ,data);
