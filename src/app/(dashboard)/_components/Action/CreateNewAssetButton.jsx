@@ -6,7 +6,7 @@ export const CreateNewAsset = () => {
 
   return (
       <button
-        type="submit"
+        // type="submit"
         onClick={() => document.getElementById("my_modal_new").showModal()}
         className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text h-11 w-11 justify-center text-purple-text rounded-3xl md:px-4 md:py-2.5 flex items-center space-x-3 md:w-40"
       >

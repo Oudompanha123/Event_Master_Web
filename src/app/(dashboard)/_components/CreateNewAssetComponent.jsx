@@ -4,16 +4,22 @@ import { useForm } from "react-hook-form";
 import { AddSquare } from "iconsax-react";
 import { CreateNewAsset } from "./Action/CreateNewAssetButton";
 import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
+// import { document } from "postcss";
 
 export const AssetPopupComponent = () => {
+  // const [isPopUpOpen, setIsPopUpOpen] = useState(false);
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (e) => {
     handleAsset(e);
+    reset();
+    document.getElementById("my_modal_new").close();
   };
 
   return (
@@ -24,10 +30,7 @@ export const AssetPopupComponent = () => {
           <div className="flex flex-row items-center text-primary-text">
             <h2 className="text-lg lg:text-xl font-semibold">Create Asset</h2>
             <form method="dialog">
-              <button
-                type="submit"
-                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              >
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                 ✕
               </button>
             </form>
@@ -39,7 +42,7 @@ export const AssetPopupComponent = () => {
                 <span className="text-redUi">*</span>
                 <input
                   type="text"
-                  id=""
+                  id="assetName"
                   name="assetName"
                   className="sm:w-full mt-2 shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
                   placeholder="Enter asset name"

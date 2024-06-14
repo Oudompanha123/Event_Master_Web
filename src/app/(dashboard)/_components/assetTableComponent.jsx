@@ -3,8 +3,10 @@ import React from "react";
 import { EditAssetComponents } from "./EditAssetComponents";
 import { DeleteAssetComponent } from "./DeleteAssetComponent";
 import { getAllAssetService } from "@/services/assetService/assetService";
+import { handleSearchAsset } from "@/app/actions/assetAction/handleAssetInput";
 export const AssetTableComponent = async () => {
   const asset = await getAllAssetService();
+ // const assetSearch = await handleSearchAsset();
   return (
     <table className="w-full px-1 border-separate border-spacing-y-3 mt-0">
       <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-tableBg uppercase">
@@ -20,6 +22,7 @@ export const AssetTableComponent = async () => {
       </thead>
       <tbody className="border rounded-radiusUi w-full bg-white ">
         {asset.payload.map((asset, index) => (
+
           <tr
             key={asset.assetId}
             className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border"
@@ -63,10 +66,10 @@ export const AssetTableComponent = async () => {
             <td className="rounded-r-radiusUi w-20">
               <div className="flex justify-center items-center gap-3 mx-3">
                 <div className="cursor-pointer">
-                  <DeleteAssetComponent />
+                  <DeleteAssetComponent assetIdprop={asset.assetId} />
                 </div>
                 <div className="cursor-pointer">
-                  <EditAssetComponents />
+                  <EditAssetComponents assetEdit={asset.assetId} name={asset.assetName} qty={asset.qty} unit={asset.unit}/>
                 </div>
               </div>
             </td>

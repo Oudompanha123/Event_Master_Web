@@ -1,20 +1,30 @@
+
+
 "use client";
 
 import { Trash } from "iconsax-react";
 import Image from "next/image";
 import React from "react";
 import { RxCross2 } from "react-icons/rx";
+//  import { useForm } from "react-hook-form";
+import { handleDeleteAsset } from "@/app/actions/assetAction/handleAssetInput";
 
-export const DeleteAssetComponent = () => {
+export const DeleteAssetComponent = ({assetIdprop}) => {
+  //console.log("asset:", assetIdprop);
+  const trigger = async (x) => {
+    await handleDeleteAsset(x)
+    //console.log("will dele te this ", x)
+  }
+   //handleDeleteAsset(assetIdprop);
   return (
     <div>
       <Trash
-        onClick={() => document.getElementById("category_action").showModal()}
+        onClick={() => document.getElementById(`category_action_${assetIdprop}`).showModal()} 
         className="cursor-pointer"
         size="20"
         color="#F4485D"
       />
-      <dialog id="category_action" className="modal">
+      <dialog id={`category_action_${assetIdprop}`} className="modal">
         <div className="modal-box w-[310px] justity-center  ">
           <form method="dialog" className="justify-end flex">
             <button type="submit">
@@ -43,8 +53,9 @@ export const DeleteAssetComponent = () => {
               className=" flex justify-around w-full mb-4 mt-3 px-3"
             >
               <button
+              onClick={() => trigger(assetIdprop)}
                 className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700"
-                value="yes"
+                value="Yes"
               >
                 <p className="text-white font-semibold">yes</p>
               </button>
