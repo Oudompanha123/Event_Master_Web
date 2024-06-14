@@ -3,28 +3,46 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import { AddSquare, Edit } from "iconsax-react";
-// import { TbEdit } from "react-icons/tb";
-// import { colors } from "react-select/dist/declarations/src/theme";
-export const EditAssetComponents = () => {
+import { handleUpdateAsset } from "@/app/actions/assetAction/handleAssetInput";
+
+export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
+  // console.log("edit Id:", assetEdit);
+  // const trigger = async (id) => {
+  //  // handleUpdateAsset(id, e)
+  // };
+  const [handleName, setHandleName] = useState(name);
+  const [handleQty, setHandleQty] = useState(qty);
+  const [handleUnit, setHandleUnit] = useState(unit);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (e) => {
+   // console.log("data", e);
+    await handleUpdateAsset(assetEdit, e);
+    reset();
+    document.getElementById(`my_modal_updateasset${assetEdit}`).close();
   };
-  return (
 
+  return (
     <div>
-      <Edit className="cursor-pointer" onClick={() => document.getElementById("my_modal_updateasset").showModal()} size="20" color="#16AE65" />
-      <dialog id="my_modal_updateasset" className="modal">
+      <Edit
+        className="cursor-pointer"
+        onClick={() =>
+          document
+            .getElementById(`my_modal_updateasset${assetEdit}`)
+            .showModal()
+        }
+        size="20"
+        color="#16AE65"
+      />
+      <dialog id={`my_modal_updateasset${assetEdit}`} className="modal">
         <div className="modal-box w-11/12 md:w-1/2 max-w-5xl space-y-8">
           <div className="flex flex-row items-center text-primary-text">
-            <h2 className="text-lg lg:text-xl font-semibold">
-              Edit Asset
-            </h2>
+            <h2 className="text-lg lg:text-xl font-semibold">Edit Asset</h2>
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                 ✕
@@ -35,20 +53,24 @@ export const EditAssetComponents = () => {
           <form action="" onSubmit={handleSubmit(onSubmit)}>
             <div className=" ">
               <div className="text-center  flex flex-col justify-start items-start">
-                <label htmlFor="">Asset Name <span className="text-redUi">*</span></label>
+                <label htmlFor="">
+                  Asset Name <span className="text-redUi">*</span>
+                </label>
                 <input
+                  value={handleName}
                   type="text"
-                  id=""
-                  name="assetname"
+                  id="assetName"
+                  name="assetName"
                   className="sm:w-full mt-2 shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
                   placeholder="Enter asset name"
-                  {...register("assetname", {
+                  {...register("assetName", {
                     required: "asset name is required",
                   })}
+                  onChange={(e) => setHandleName(e.target.value)}
                 />
-                {errors.assetname && (
+                {errors.assetName && (
                   <div className="text-red-600 text-sm">
-                    {errors.assetname.message}
+                    {errors.assetName.message}
                   </div>
                 )}
               </div>
@@ -57,18 +79,20 @@ export const EditAssetComponents = () => {
                   <label htmlFor="">Quantity</label>
                   <span className="text-redUi">*</span>
                   <input
+                    value={handleQty}
                     type="number"
-                    id=""
-                    name="quantity"
+                    id="qty"
+                    name="qty"
                     className="shadow-sm mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
                     placeholder="Enter quantity"
-                    {...register("quantity", {
+                    {...register("qty", {
                       required: "quantity is required",
                     })}
+                    onChange={(e) => setHandleQty(e.target.value)}
                   />
-                  {errors.quantity && (
+                  {errors.qty && (
                     <div className="text-red-600 text-sm">
-                      {errors.quantity.message}
+                      {errors.qty.message}
                     </div>
                   )}
                 </div>
@@ -76,14 +100,16 @@ export const EditAssetComponents = () => {
                   <label htmlFor="">Unit</label>
                   <span className="text-redUi">*</span>
                   <input
+                    value={handleUnit}
                     type="text"
-                    id=""
+                    id="unit"
                     name="unit"
                     className="shadow-sm mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
                     placeholder="Enter unit"
                     {...register("unit", {
                       required: "unit is required",
                     })}
+                    onChange={() => setHandleUnit(e.target.value)}
                   />
                   {errors.unit && (
                     <div className="text-red-600 text-sm">
@@ -95,7 +121,9 @@ export const EditAssetComponents = () => {
               <div className="flex justify-end space-x-3 bg mt-8">
                 <div
                   onClick={() =>
-                    document.getElementById("my_modal_updateasset").close()
+                    document
+                      .getElementById(`my_modal_updateasset${assetEdit}`)
+                      .close()
                   }
                   className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer"
                 >
@@ -103,13 +131,10 @@ export const EditAssetComponents = () => {
                 </div>
                 <button
                   type="submit"
+                  //onClick={() => (assetEdit)}
                   className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
                 >
-                  <Image
-                    src={"/icons/edit.svg"}
-                    width={20}
-                    height={20}
-                  />
+                  <Image src={"/icons/edit.svg"} width={20} height={20} />
                   <span className="h-12 text-white flex justify-center items-center">
                     Update
                   </span>
