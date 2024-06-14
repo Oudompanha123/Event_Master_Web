@@ -6,12 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="71fc11cd-7c7c-4360-b72b-f626311dfb4d" name="Changes" comment="fetch AIP to Sign up and update Reset password">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(auth)/_components/SignupComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/_components/SignupComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(auth)/_components/VerifyRegisterComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/_components/VerifyRegisterComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(clientView)/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(clientView)/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/actions/signupAction.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/actions/signupAction.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/dashboard/event.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/dashboard/event.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/login-signup/auth.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/login-signup/auth.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/_components/AgendaComponet.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dashboard)/_components/AgendaComponet.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/_components/DeleteAssetComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dashboard)/_components/DeleteAssetComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/_components/DeleteMemberComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(dashboard)/_components/DeleteMemberComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +50,9 @@
     &quot;repository&quot;: &quot;gatherly-ui&quot;
   }
 }</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -63,9 +66,10 @@
     "Node.js.ForgotPasswordComponent.jsx.executor": "Run",
     "Node.js.SetNewPasswordComponent.jsx.executor": "Run",
     "Node.js.SignupComponent.jsx.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "hengly",
-    "last_opened_file_path": "D:/HRD-school/KPS-Finalp_Project/public/icons",
+    "git-widget-placeholder": "dev",
+    "last_opened_file_path": "/Users/ratana/Downloads/HRD/final_project/font-end/v3/gatherly-ui",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -94,13 +98,6 @@
       <recent name="D:\HRD-school\KPS-Finalp_Project\src\app\(auth)\_components" />
     </key>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.17011.90" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -126,6 +123,7 @@
       <workItem from="1718119564154" duration="725000" />
       <workItem from="1718154504153" duration="11386000" />
       <workItem from="1718174007585" duration="9537000" />
+      <workItem from="1718245390210" duration="592000" />
     </task>
     <task id="LOCAL-00001" summary="login sign up and reset password">
       <option name="closed" value="true" />

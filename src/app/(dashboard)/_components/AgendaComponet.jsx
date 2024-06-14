@@ -14,10 +14,20 @@ const convertTo12HourFormat = (time) => {
   return `${hours}:${minutes.padStart(2, "0")} ${period}`;
 };
 
-export default async function AgendaComponent({id}) {
-  const agenda =await getAgendaByEventId(id);
-  const data = await agenda?.payload?.data?.agenda;
+export default function AgendaComponent({id}) {
+  // const agenda =await getAgendaByEventId(id);
+  // const data = await agenda?.payload?.data?.agenda;
   // console.log("agenda data is new a:",data)
+  
+  const [data, setData] = useState(null);
+
+  const fetchData = async () => {
+    const res = await getAgendaByEventId(id);
+    setData(res.payload?.data?.agenda );
+  };
+  useEffect(() => {
+    fetchData();
+  }, [id]);
 
   if (data == null) {
     return (

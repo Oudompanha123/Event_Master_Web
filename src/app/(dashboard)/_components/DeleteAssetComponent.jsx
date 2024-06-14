@@ -36,7 +36,7 @@ export const DeleteAssetComponent = () => {
                 className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700"
                 value="yes"
               >
-                <p className="text-white font-semibold">yes</p>
+                <p className="text-white font-semibold">Yes</p>
               </button>
               <button
                 className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500"
