@@ -70,7 +70,7 @@ export const NavbarComponent = ({ className }) => {
                     <Image src={'/icons/icon.svg'} width={24} height={24} />
                 </div>
                 <NotificationCard />
-                <CreateEventButton />
+                <CreateEventButton  />
                 <Link href={'/user-profile'}>
                     <div className="flex items-center gap-4">
                         <div className="hidden lg:block">

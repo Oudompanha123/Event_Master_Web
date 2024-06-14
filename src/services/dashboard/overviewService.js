@@ -42,7 +42,7 @@ export const insertCategory = async (userInput) => {
 }
 
 export const deleteCategory = async (id) => {
-    const res = await fetch(`${process.env.API_URL}categories/${id}`,
+    const res = await fetch(`http://34.124.203.109:8081/api/auth/${id}`,
         {
             next: { tags: ['overview'] },
             method: 'DELETE',

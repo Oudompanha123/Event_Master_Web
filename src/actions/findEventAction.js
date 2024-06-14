@@ -4,9 +4,8 @@ import { findEvent } from "@/services/clientPage/landingService";
 
 export const handleSearch = async (input) => {
     const searchData = {
-        eventName: input.get('search'),
-        startDateTime: `${input.get('startDate')}T12:00:00`,
-        endDateTime: `${input.get('endDate')}T12:00:00`
+        startDate: `${input.get('startDate')}T12:00:00`,
+        endDate: `${input.get('endDate')}T12:00:00`
     }
 
     try {

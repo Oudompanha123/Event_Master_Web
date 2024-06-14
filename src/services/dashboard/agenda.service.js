@@ -44,7 +44,7 @@ export const DeleteAgendaService = async (id) => {
   console.log("agenda event id is:", id);
   // const session = await getServerSession(authOption);
   try {
-    const res = await fetch(`http://34.124.203.109:8080/api/agendas/${id}`, {
+    const res = await fetch(`http://34.124.203.109:8081/api/events/${id}`, {
       cache: "no-store",
       method: "DELETE",
       headers: {
