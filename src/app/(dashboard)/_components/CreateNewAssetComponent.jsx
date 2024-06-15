@@ -1,14 +1,10 @@
 "use client";
-// import { IoIosAdd } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { AddSquare } from "iconsax-react";
 import { CreateNewAsset } from "./Action/CreateNewAssetButton";
 import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
-// import { document } from "postcss";
 
 export const AssetPopupComponent = () => {
-  // const [isPopUpOpen, setIsPopUpOpen] = useState(false);
-
   const {
     register,
     handleSubmit,
