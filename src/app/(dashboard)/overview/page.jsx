@@ -34,7 +34,7 @@ const Page = async () => {
     let topCardData = result;
 
     return (
-        <div className="space-y-4 xl:space-y-7">
+        <div className="space-y-4 xl:space-y-7 bg-blue-300">
             <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 xl:gap-6">
                 {topCardData.payload.map((x, index) => (
                     <OverviewCardComponent key={index} title={x.title} count={x.count} logo={x.logo} />

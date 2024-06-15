@@ -2,20 +2,11 @@
 import React from "react";
 import { DeleteAttendeeComponent } from "../../_components/Action/DeleteAttendeeComponent";
 import { getAttendeeByEventIdService } from "@/services/dashboard/attendeeService";
-// import { Pagination } from "../../_components/Pagination";
 import { getEventById } from "@/services/clientPage/landingService";
 import SearchAttendeeComponent from "../../_components/SearchAttendeeComponent";
 import { Pagination } from "../../_components/paginate/Pagination";
-// import { AttendeePageComponent } from "../../_components/AttendeePageComponent";
 
 const AttendeePage = async ({ params: { id } }) => {
-  // const [currentPage,setCurrentPage]=useState(1);
-  // const recordPersPage = 7;
-  // const lastIndex = currentPage*recordPersPage;
-  // const firstIndex= lastIndex - recordPersPage;
-  // const records= attendeeData.slice(firstIndex,lastIndex);
-  // const npage = Math.ceil(attendeeData.length/recordPersPage);
-  // const numbers = [...Array(npage+1).keys].slice(1);
   let attendeeData = await getAttendeeByEventIdService(id);
   const eventData = await getEventById(id);
 
@@ -86,7 +77,7 @@ const AttendeePage = async ({ params: { id } }) => {
           </tbody>
         </table>
         <div className="w-full flex justify-end mt-8">
-          <Pagination />
+          <Pagination/>
         </div>
       </div>
     </div>
