@@ -3,24 +3,30 @@ import React, { useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { Form, useForm } from "react-hook-form";
 import { handleSearchAsset } from "@/app/actions/assetAction/handleAssetInput";
-import { handleSearch } from "@/actions/findEventAction";
-export const SearchAssetComponent = () => {
-  const [SearchInput, setSearchInput] = useState();
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
-  const { register,handleSubmit } = useForm();
-  const onSubmit = async (e) => {
-   
-  };
+export const SearchAssetComponent = () => {
+  const [searchInput, setSearchInput] = useState();
+  const searchparams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const { register, handleSubmit } = useForm();
+  const onSubmit = async (e) => {};
   const handlesearch = async (e) => {
-    console.log("data1", e);
-     await handleSearchAsset(e);
+    const params = new URLSearchParams(searchparams);
+    if (e) {
+      params.set("query", e);
+    } else {
+      params.delete("query");
+    }
+    replace(`${pathname}?${params.toString()}`);
   };
 
   return (
     <div className=" w-4/5 lg:w-[730px]">
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
-          value={SearchInput}
+          value={searchInput}
           type="text"
           name="searchBar"
           placeholder="Angkor"
@@ -29,6 +35,7 @@ export const SearchAssetComponent = () => {
           onChange={(e) => {
             handlesearch(e.target.value);
           }}
+          defaultValue={searchparams.get("query")?.toString()}
         />
         <IoSearchOutline className="w-[24px] h-[24px] -mt-8 ml-3" />
       </form>

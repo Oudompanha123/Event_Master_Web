@@ -13,14 +13,31 @@ export async function middleware(request) {
 
     //if user is not authenticated redirect them to login page
     if (!token) return NextResponse.redirect(new URL("/login", request.url));
-    
+
     //get user information from token by decode
     const userInfo = jwtDecode(token.token);
 
     switch (userInfo.role) {
         case "ROLE_USER":
-            if (!request.nextUrl.pathname.startsWith("/profile")) {
-                return NextResponse.redirect(new URL("/signup", request.url));
+            if (!request.nextUrl.pathname.startsWith("/events") &&
+                !request.nextUrl.pathname.startsWith("/event-detail/") &&
+                !request.nextUrl.pathname.startsWith("/user-profile") &&
+                !request.nextUrl.pathname.startsWith("/organization-profile")
+            ) {
+                return NextResponse.redirect(new URL("/denies", request.url));
+            }
+            break;
+        case "ROLE_SUB_ADMIN":
+            if (!request.nextUrl.pathname.startsWith("/overview") &&
+                !request.nextUrl.pathname.startsWith("/members") &&
+                !request.nextUrl.pathname.startsWith("/user-request") &&
+                !request.nextUrl.pathname.startsWith("/user-profile") &&
+                !request.nextUrl.pathname.startsWith("/attendees") &&
+                !request.nextUrl.pathname.startsWith("/events") &&
+                !request.nextUrl.pathname.startsWith("/assets") &&
+                !request.nextUrl.pathname.startsWith("/event-detail/")
+            ) {
+                return NextResponse.redirect(new URL("/denies", request.url));
             }
             break;
         case "ROLE_ADMIN":
@@ -33,7 +50,7 @@ export async function middleware(request) {
                 !request.nextUrl.pathname.startsWith("/attendees") &&
                 !request.nextUrl.pathname.startsWith("/events") &&
                 !request.nextUrl.pathname.startsWith("/assets") &&
-                !request.nextUrl.pathname.startsWith("/event-detail/:path*")
+                !request.nextUrl.pathname.startsWith("/event-detail/")
             ) {
                 return NextResponse.redirect(new URL("/signup", request.url));
             }

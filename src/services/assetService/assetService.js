@@ -1,10 +1,6 @@
-import { POST } from "@/app/api/auth/[...nextauth]/route";
-import { Asset } from "next/font/google";
-
 //get all service
 export const getAllAssetService = async () => {
   const res = await fetch(`${process.env.API_URL}assets?offset=1&limit=8`, {
-    // cache: "no-store",
     next: { tags: ["asset"] },
     headers: {
       Authorization:
@@ -17,7 +13,6 @@ export const getAllAssetService = async () => {
 };
 //insert Asset
 export const insertAssetService = async (newAsset) => {
-  //console.log("new asset", newAsset);
   const res = await fetch(`${process.env.API_URL}assets/create`, {
     method: "POST",
     headers: {
@@ -28,13 +23,11 @@ export const insertAssetService = async (newAsset) => {
     body: JSON.stringify(newAsset),
   });
   const data = await res.json();
-  console.log("data", data);
   return data;
 };
 
 //delete asset by id
 export const deleteAssetService = async (id) => {
-  // console.log("asset id x", id);
   const res = await fetch(`${process.env.API_URL}assets/delete/${id}`, {
     method: "DELETE",
     headers: {
@@ -43,13 +36,11 @@ export const deleteAssetService = async (id) => {
     },
   });
   const data1 = await res.json();
-  //console.log("first", data1);
   return data1;
 };
 
 //update asset
 export const updateAssetService = async (id, newAsset) => {
-  //console.log("id,asset" ,id ,newAsset);
   const res = await fetch(`${process.env.API_URL}assets/update/${id}`, {
     method: "PUT",
     headers: {
@@ -60,18 +51,16 @@ export const updateAssetService = async (id, newAsset) => {
     body: JSON.stringify(newAsset),
   });
   const data = await res.json();
-  console.log("response", data);
   return data;
 };
 
 //search asseet by name
 export const searchAssetByName = async (name) => {
-  console.log("data service", name);
   const res = await fetch(
     `${process.env.API_URL}assets/search?name=${name}&offset=1&limit=8`,
     {
       next: { tags: ["asset"] },
-       method: "POST",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         authorization:
@@ -81,6 +70,5 @@ export const searchAssetByName = async (name) => {
     }
   );
   const data = await res.json();
-  console.log("respone",data);
   return data;
 };

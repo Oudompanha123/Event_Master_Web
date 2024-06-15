@@ -7,9 +7,18 @@ import { RxCross2 } from "react-icons/rx";
 import { SelectDropdown } from "./SelectDropdownComponent";
 import { SelectModify } from "./Action/SelectModify";
 import { SelectModifyV2 } from "./Action/SelectModifyV2";
+import deleteEvent from "@/app/actions/deleteEventAction";
 // import { ToogleBtn } from "./Action/ToogleBtn";
 
-export function EventActionButton({id}) {
+export function EventActionButton({ eventId }) {
+  const handleDelete = async () => {
+      try {
+          await deleteEvent(eventId);
+      } catch (error) {
+          console.error("Failed to delete event:", error);
+      }
+  };
+ 
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null); // Reference htmlFor dropdown
   // console.log("data of event is ",id)
@@ -143,7 +152,7 @@ export function EventActionButton({id}) {
                   role="menuitem"
                   tabIndex="-1"
                   onClick={() =>
-                    document.getElementById("delete-event").showModal()
+                    document.getElementById(`event_action_${eventId}`).showModal()
                   }
                 >
                   <Image
@@ -156,6 +165,7 @@ export function EventActionButton({id}) {
                     Delete
                   </p>
                 </a>
+
               </li>
             </ul>
           </div>
@@ -469,7 +479,7 @@ export function EventActionButton({id}) {
         </div>
       </dialog>
 
-      <dialog id="delete-event" className="modal">
+      <dialog id={`event_action_${eventId}`} className="modal">
         <div className="modal-box w-[310px] justity-center  ">
           <form method="dialog" className="justify-end flex">
             <button type="submit">
@@ -494,7 +504,7 @@ export function EventActionButton({id}) {
               method="dialog"
               className=" flex justify-around w-full mb-4 mt-3 px-3"
             >
-              <button
+              <button onClick={handleDelete}
                 className="h-9 rounded-3xl bg-red-600 w-[100px] hover:bg-red-700 flex items-center justify-center"
                 value="yes"
               >
@@ -511,6 +521,7 @@ export function EventActionButton({id}) {
           </div>
         </div>
       </dialog>
+
     </div>
   );
 }

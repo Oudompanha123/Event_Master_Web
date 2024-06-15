@@ -2,7 +2,9 @@ import { AssetPopupComponent } from "../_components/CreateNewAssetComponent";
 import { AssetTableComponent } from "../_components/assetTableComponent";
 import { SearchAssetComponent } from "../_components/SearchAssetComponent";
 import { Pagination } from "../_components/paginate/Pagination";
-export default function assetPage() {
+export default function assetPage({ searchParams }) {
+  const query = searchParams?.query || "";
+
   return (
     <>
       <div className="contain bg-white w-full lg:w-full rounded-3xl box-border">
@@ -19,7 +21,7 @@ export default function assetPage() {
         </div>
         <div className="px-6">
           <div className="box-border mt-0 overflow-scroll">
-            <AssetTableComponent />
+            <AssetTableComponent querySearch={query} />
             <div className="pagination flex justify-end px-8 pb-8 mt-8">
               <Pagination />
             </div>

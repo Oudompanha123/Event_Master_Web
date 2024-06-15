@@ -1,12 +1,15 @@
-import React from "react";
-// import data from "../../../data/asset.json";
 import { EditAssetComponents } from "./EditAssetComponents";
 import { DeleteAssetComponent } from "./DeleteAssetComponent";
-import { getAllAssetService } from "@/services/assetService/assetService";
-import { handleSearchAsset } from "@/app/actions/assetAction/handleAssetInput";
-export const AssetTableComponent = async () => {
+import {
+  getAllAssetService,
+  searchAssetByName,
+} from "@/services/assetService/assetService";
+
+export const AssetTableComponent = async ({ querySearch }) => {
+  const searchasset = await searchAssetByName(querySearch);
   const asset = await getAllAssetService();
- // const assetSearch = await handleSearchAsset();
+  querySearch = "" ? asset : searchasset;
+
   return (
     <table className="w-full px-1 border-separate border-spacing-y-3 mt-0">
       <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-tableBg uppercase">
@@ -21,8 +24,7 @@ export const AssetTableComponent = async () => {
         </tr>
       </thead>
       <tbody className="border rounded-radiusUi w-full bg-white ">
-        {asset.payload.map((asset, index) => (
-
+        {querySearch.payload.map((asset, index) => (
           <tr
             key={asset.assetId}
             className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border"
@@ -69,7 +71,12 @@ export const AssetTableComponent = async () => {
                   <DeleteAssetComponent assetIdprop={asset.assetId} />
                 </div>
                 <div className="cursor-pointer">
-                  <EditAssetComponents assetEdit={asset.assetId} name={asset.assetName} qty={asset.qty} unit={asset.unit}/>
+                  <EditAssetComponents
+                    assetEdit={asset.assetId}
+                    name={asset.assetName}
+                    qty={asset.qty}
+                    unit={asset.unit}
+                  />
                 </div>
               </div>
             </td>

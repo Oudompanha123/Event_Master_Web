@@ -12,6 +12,46 @@ import { storage } from "@/lib/firebase";
 import { v4 } from 'uuid';
 
 export const CreateEventButton = () => {
+    const [events, setEvent] = useState({
+        eventName: '',
+        startDate: '',
+        endDate: '',
+        duration: '',
+        maxAttendee: '',
+        address: '',
+        description: '',
+    })
+ 
+
+    const handleInput = (e) => {
+        e.persist();
+        setEvent({...events, [e.target.name]: e.target.value});
+    }
+    console.log(events);
+
+    const saveEvents = (e) => {
+        e.preventDefault();
+        const data = {
+            eventName: events.eventName,
+            startDate: events.startDate,
+            endDate: events.endDate,
+            duration: events.duration,
+            maxAttendee: events.maxAttendee,
+            address: events.address,
+            description: events.description,
+        }
+    }
+    // axios.post(`http://34.124.203.109:8081/api/events`, data)
+    //     .then(res=>{
+    //         alert(res.data.message);
+    //     })
+    //     .catch(function(error){
+    //         if(error.response.status === 422){
+    //             setInputError.data
+    //         }
+    //     })
+    //     ;
+    
     const [hide, setHide] = useState(false);
 
     const handleDragOver = (e) => {
@@ -175,16 +215,18 @@ export const CreateEventButton = () => {
                                         Event Name <span className="text-red-600">*</span>
                                     </label>
                                     <input
-                                        {...register("name", {
-                                            required: "name is required",
+                                        {...register("eventName", {
+                                            required: "event name is required",
                                         })}
+                                        value={events.eventName}
+                                        onChange={handleInput}
                                         type="text"
-                                        name="name"
-                                        id="name"
-                                        className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        name="eventName"
+                                        id="eventName"
+                                        className={`${errors.eventName ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter event name"
                                     />
-                                    {errors.name && <div className="text-red-600 text-sm mt-2">{errors.name.message}</div>}
+                                    {errors.eventName && <div className="text-red-600 text-sm mt-2">{errors.eventName.message}</div>}
                                 </div>
                                 <div className="w-full">
                                     <SelectModify
@@ -205,6 +247,8 @@ export const CreateEventButton = () => {
                                         {...register("startDate", {
                                             required: "start date is required",
                                         })}
+                                        value={events.startDate}
+                                        // onChange={handleInput}
                                         type="datetime-local"
                                         name="startDate"
                                         id="startdate"
@@ -228,9 +272,11 @@ export const CreateEventButton = () => {
                                                 }
                                             }
                                         })}
+                                        value={events.endDate}
+                                        // onChange={handleInput}
                                         type="datetime-local"
                                         name="endDate"
-                                        id="enddate"
+                                        id="endDate"
                                         className={`${errors.endDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         required=""
@@ -267,9 +313,11 @@ export const CreateEventButton = () => {
                                         {...register("maxAttendee", {
                                             required: "maximum attendees is required",
                                         })}
+                                        value={events.maxAttendee}
+                                        onChange={handleInput}
                                         type="number"
                                         name="maxAttendee"
-                                        id="max"
+                                        id="maxAttendee"
                                         className={`${errors.maxAttendee ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter maximum attendee"
                                         required=""
@@ -286,6 +334,8 @@ export const CreateEventButton = () => {
                                         {...register("address", {
                                             required: "address is required",
                                         })}
+                                        value={events.address}
+                                        onChange={handleInput}
                                         type="test"
                                         name="address"
                                         id="address"
@@ -305,6 +355,8 @@ export const CreateEventButton = () => {
                                         {...register("description", {
                                             required: "description is required",
                                         })}
+                                        value={events.description}
+                                        onChange={handleInput}
                                         rows={5}
                                         type="text"
                                         name="description"
