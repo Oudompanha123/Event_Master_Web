@@ -2,7 +2,7 @@ import { getEventByCateName } from "@/services/clientPage/landingService"
 import { RedirectBackComponent } from "../../_componenets/RedirectButtonComponent"
 import { EventCardComponent } from "../../_componenets/EventCardComponent"
 
-const Page = async ({params: {name}}) => {
+const Page = async ({ params: { name } }) => {
     const eventData = await getEventByCateName(name)
 
     return (
@@ -12,7 +12,7 @@ const Page = async ({params: {name}}) => {
                 {eventData?.payload?.map((x, index) => (
                     <EventCardComponent
                         key={index}
-                        img={`https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/headway-F2KRf_QfCqw-unsplash.jpgbff2c2b3-3340-421f-b8bf-06cf683bb395?alt=media&token=19e9782d-0cca-4105-ab02-d627bd515ac6`}
+                        img={`https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`}
                         title={x?.eventName}
                         description={x?.description}
                         location={x?.location}

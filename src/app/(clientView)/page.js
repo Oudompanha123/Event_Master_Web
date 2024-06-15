@@ -10,6 +10,7 @@ import { SearchBar } from "./_componenets/SearchBar";
 import { getAllCategory, getEventByCateName, getPopularEvent } from "@/services/clientPage/landingService";
 import { Suspense } from "react";
 import { EventList } from "./_componenets/EventList";
+import { ListOfSkeleton } from "./_componenets/ListOfSkeleton";
 
 export default async function Home() {
   const popularData = await getPopularEvent();
@@ -66,11 +67,13 @@ export default async function Home() {
       </section>
       {/* event section */}
       <section id="content" className="space-y-16">
-        <Suspense fallback={<p>Loading</p>}>
-          {allCategory.payload.map(async (x, index) => (
+        {/* <Suspense fallback={<p>Loading</p>}> */}
+        {allCategory.payload.map(async (x, index) => (
+          <Suspense fallback={<ListOfSkeleton />}>
             <EventList key={index} title={x} data={await getEventByCateName(x)} />
-          ))}
-        </Suspense>
+          </Suspense>
+        ))}
+        {/* </Suspense> */}
       </section>
       {/* cta section */}
       <section>

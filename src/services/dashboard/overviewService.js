@@ -5,7 +5,6 @@ export const getOverviewData = async () => {
     const res = await fetch(`${process.env.API_URL}dashboards`,
         {
             next: { tags: ['overview_event'] },
-            cache: "no-store",
             headers: header
         }
     )
@@ -18,13 +17,12 @@ export const getAllCategory = async (page) => {
     const res = await fetch(`${process.env.API_URL}categories?offset=${page ? page : 1}&limit=8`,
         {
             next: { tags: ['overview'] },
-            cache: "no-store",
             headers: header
         }
     )
     const data = await res.json();
     return data
-}
+} 
 
 export const insertCategory = async (userInput) => {
     const header = await headerToken()
@@ -35,6 +33,8 @@ export const insertCategory = async (userInput) => {
             headers: header
         }
     )
+    const data = await res.json();
+    return data
 }
 
 export const deleteCategory = async (id) => {
@@ -79,7 +79,6 @@ export const allCategory = async () => {
     const res = await fetch(`${process.env.API_URL}categories?offset=1&limit=100`,
         {
             next: { tags: ['overview'] },
-            cache: "no-store",
             headers: header
         }
     )

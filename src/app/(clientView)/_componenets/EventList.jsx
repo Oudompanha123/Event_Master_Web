@@ -10,7 +10,7 @@ export const EventList = ({ title, data }) => {
                 {data?.payload?.slice(0, 6)?.map((x, index) => (
                     <EventCardComponent
                         key={index}
-                        img={`https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/headway-F2KRf_QfCqw-unsplash.jpgbff2c2b3-3340-421f-b8bf-06cf683bb395?alt=media&token=19e9782d-0cca-4105-ab02-d627bd515ac6`}
+                        img={`https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`}
                         title={x?.eventName}
                         description={x?.description}
                         location={x?.address}
