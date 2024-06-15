@@ -1,11 +1,12 @@
+// Import necessary components and services
 import CardEventComponent from "../_components/CardEventComponent";
-import { IoSearchOutline } from "react-icons/io5";
 import { SelectDropdown } from "../_components/SelectDropdownComponent";
 import { SelectStatus } from "../_components/SelectStatusComponent";
-import { Export } from "iconsax-react";
 import { getAllEventsService } from "@/services/dashboard/event.service";
+import SearchComponent from "../_components/SearchComponent";
 
-const Page = async () => {
+// Fetch the event data server-side
+export default async function Page() {
   const eventData = await getAllEventsService();
 
   return (
@@ -18,7 +19,7 @@ const Page = async () => {
           <div className="mb-5">
             <label
               htmlFor="start date"
-              className="text-sm font-semibold text-primary-text block mb-2 "
+              className="text-sm font-semibold text-primary-text block mb-2"
             >
               Start Date
             </label>
@@ -35,7 +36,7 @@ const Page = async () => {
           <div className="mb-5">
             <label
               htmlFor="end date"
-              className="text-sm font-semibold text-primary-text block mb-2 "
+              className="text-sm font-semibold text-primary-text block mb-2"
             >
               End Date
             </label>
@@ -49,19 +50,8 @@ const Page = async () => {
         </form>
       </div>
 
-      <div className="relative z-3 mb-8">
-        <div className=" w-full ">
-          <input
-            type="text"
-            placeholder="Search by name"
-            className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-12 border rounded-3xl pl-10"
-          />
-          <IoSearchOutline className="w-[24px] h-[24px] -mt-9 ml-3" />
-        </div>
-      </div>
-      <CardEventComponent eventData={eventData.payload} />
+      {/* Pass the event data to the client-side component */}
+      <SearchComponent eventData={eventData.payload} />
     </main>
   );
 }
-
-export default Page
