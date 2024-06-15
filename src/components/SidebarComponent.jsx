@@ -5,13 +5,41 @@ import logo from "../../public/images/event-master-logo.png"
 import { ArrowDown2, Buildings2, Calendar1, I3Dcube, Layer, LogoutCurve, Notification, People, Personalcard, Setting2 } from "iconsax-react"
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import data from "../data/sidebar.json"
-import { useState } from "react";
+import sideBarData from "../data/sidebar.json"
+import { useEffect, useState } from "react";
 import { LogoutAction } from "@/app/(dashboard)/_components/Action/LogoutAction";
+import { useSession } from "next-auth/react";
+import { jwtDecode } from "jwt-decode";
 
 export const SidebarComponent = ({ className }) => {
+    const [loadData, setLoadData] = useState(sideBarData);
+    const [data, setData] = useState();
+    const { data: session, status } = useSession();
     const pathname = usePathname();
     const [click, setClick] = useState(false);
+
+    useEffect(() => {
+        let userInfo;
+        if (status === 'authenticated' && session?.user?.token) {
+            userInfo = jwtDecode(session.user.token);
+        }
+        const userRole = userInfo?.role;
+        if (userRole === "ROLE_USER") {
+            setData({
+                "data": [
+                    {
+                        "link": "/events",
+                        "name": "Events",
+                        "icon": "events"
+                    }
+                ]
+            });
+        } else if (userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN") {
+            setData(loadData)
+        }
+    }, [session, status]);
+
+    console.log("check data", data);
 
     return (
         <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-5 border-r-1px sticky top-0 h-screen`}>
@@ -84,10 +112,6 @@ export const SidebarComponent = ({ className }) => {
                         </div>
                     </Link>
                 </div>
-                {/* <div className={`space-x-3 px-4 py-4 flex justify-center xl:justify-start rounded-radiusUi w-full items-center`}>
-                        <LogoutCurve size="20" color="#344054" variant="Bulk" />
-                        <p className="hidden xl:block text-base 2xl:text-lg">Logout</p>
-                    </div> */}
                 <LogoutAction />
             </div>
         </div>

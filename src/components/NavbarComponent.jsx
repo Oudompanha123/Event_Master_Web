@@ -18,6 +18,9 @@ export const NavbarComponent = ({ className }) => {
     if (status === 'authenticated' && session?.user?.token) {
         userInfo = jwtDecode(session.user.token);
     }
+    const userRole = userInfo?.role;
+
+    console.log("check role", userRole)
 
     return (
         <div className={`${className} justify-between sticky top-0 z-50 bg-white flex lg:justify-between items-center py-3 px-3 lg:px-14 border-b-[1px]`}>
@@ -78,7 +81,7 @@ export const NavbarComponent = ({ className }) => {
                     <Image src={'/icons/icon.svg'} width={24} height={24} />
                 </div>
                 <NotificationCard />
-                <CreateEventButton />
+                {userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN" ? <CreateEventButton /> : ''}
                 <Link href={'/user-profile'}>
                     <div className="flex items-center gap-4">
                         <div className="hidden lg:block">

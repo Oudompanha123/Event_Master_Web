@@ -3,6 +3,9 @@ import { EventCardComponent } from "./EventCardComponent"
 import { TitleComponent } from "./TitleComponent"
 
 export const EventList = ({ title, data }) => {
+    if (data.payload == null) {
+        return
+    }
     return (
         <div>
             <TitleComponent title={title} />

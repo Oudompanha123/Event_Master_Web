@@ -1,35 +1,54 @@
 'use client'
 
 import { callingService } from "@/actions/findEventAction"
-import { SelectDropdown } from "@/app/(dashboard)/_components/SelectDropdownComponent"
-import { SelectStatus } from "@/app/(dashboard)/_components/SelectStatusComponent"
 import Link from "next/link"
 import { useState } from "react"
+import { SelectDropdownLanding } from "./SelectDropDownLanding"
+import { SelectStatusLanding } from "./SelectStatusLanding"
 
 export const SearchBar = () => {
     const [findData, setFindData] = useState();
     const [search, setSearch] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
+    const [dropDownValue, setDropDownValue] = useState('');
+    const [statusValue, setStatusValue] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const categoryArr = new Array(findData?.payload?.length).fill(0)
 
     const fetchData = async (event) => {
         event.preventDefault();
+        if (search === '' && startTime === '' && endTime === '' && statusValue === '') {
+            setFindData(undefined);
+            return;
+        }
+        setIsLoading(true)
         const searchData = {
             eventName: search,
             startDateTime: `${startTime}T12:00:00`,
-            endDateTime: `${endTime}T12:00:00`
+            endDateTime: `${endTime}T12:00:00`,
+            status: statusValue,
+            categoryName: dropDownValue
         };
-        console.log("trigger", searchData)
         const data = await callingService(searchData); //move to action for cors
         setFindData(data);
+        setIsLoading(false)
+        setSearch('')
+        setStartTime('')
+        setEndTime('')
+        setDropDownValue('')
+        setStatusValue('')
     };
+
+    const getDropDownValue = (v) => setDropDownValue(v)
+    const getStatusValue = (v) => setStatusValue(v)
 
     return (
         <div>
             <form onSubmit={fetchData}>
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <SelectDropdown />
-                    <SelectStatus />
+                    <SelectDropdownLanding func={getDropDownValue} />
+                    <SelectStatusLanding func={getStatusValue} />
                     <div className="mb-5">
                         <label
                             htmlFor="start-date"
@@ -89,7 +108,9 @@ export const SearchBar = () => {
                             </svg>
                         </div>
                     </div>
-                    <button className="bg-purple-text w-1/5 rounded-full text-white h-auto">Search</button>
+                    <button className="bg-purple-text w-1/5 rounded-full text-white h-auto flex justify-center text-center items-center">
+                        {!isLoading ? <p>Search</p> : <div className="loader"></div>}
+                    </button>
                 </div>
             </form>
 
@@ -97,49 +118,51 @@ export const SearchBar = () => {
             <section>
                 {findData != undefined &&
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
-                        {findData?.payload[0]?.events?.map((x, index) => {
-                            const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-                            const inputDate = x?.startDate;
-                            const formattedDate = formatDate(inputDate);
-                            const formated = formattedDate;
-                            return (
-                                <div className="shadow-md rounded-3xl">
-                                    <div className="relative">
-                                        <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
-                                            <img src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/headway-F2KRf_QfCqw-unsplash.jpgbff2c2b3-3340-421f-b8bf-06cf683bb395?alt=media&token=19e9782d-0cca-4105-ab02-d627bd515ac" alt="event-image" className="rounded-t-3xl" />
+                        {categoryArr.map((x, index) => (
+                            findData?.payload[index]?.events?.map((x, index) => {
+                                const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                                const inputDate = x?.startDate;
+                                const formattedDate = formatDate(inputDate);
+                                const formated = formattedDate;
+                                return (
+                                    <div key={index} className="shadow-md rounded-3xl">
+                                        <div className="relative">
+                                            <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
+                                                <img src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f" alt="event-image" className="rounded-t-3xl" />
+                                            </div>
+                                            {/* <Image src={img} width={500} height={300} className="rounded-t-3xl h-[300px] w-full object-cover" alt="racingImage" /> */}
+                                            <div className="absolute top-0 right-0 p-6 ">
+                                                <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${x.isOpen ? 'text-blueUi' : 'text-redUi'}`}>
+                                                    {x.isOpen ? 'Open' : 'Close'}
+                                                </span>
+                                            </div>
                                         </div>
-                                        {/* <Image src={img} width={500} height={300} className="rounded-t-3xl h-[300px] w-full object-cover" alt="racingImage" /> */}
-                                        <div className="absolute top-0 right-0 p-6 ">
-                                            <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${status ? 'text-blueUi' : 'text-redUi'}`}>
-                                                {status ? 'Open' : 'Close'}
-                                            </span>
+                                        <div className="bg-white px-6 py-8 rounded-b-3xl flex flex-col justify-between h-[305.72px]">
+                                            <div className="space-y-4">
+                                                <div className="flex gap-3 items-center">
+                                                    <img className="h-10 w-10 rounded-full" src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/headway-F2KRf_QfCqw-unsplash.jpgbff2c2b3-3340-421f-b8bf-06cf683bb395?alt=media&token=19e9782d-0cca-4105-ab02-d627bd515ac" alt="orgImage" />
+                                                    <p className="text-sm font-medium">{x?.orgName}</p>
+                                                </div>
+                                                <div className="flex text-sm justify-between font-medium">
+                                                    <p>{x?.address}</p>
+                                                    <p>{formated}</p>
+                                                </div>
+                                                <div className="flex flex-col gap-3">
+                                                    <h2 className="text-lg lg:text-xl font-bold">{x?.eventName}</h2>
+                                                    <p className="text-sm lg:text-base line-clamp-2 font-medium">
+                                                        {x?.description}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <Link href={`/detail/${x.eventId}`} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
+                                                <Link href={'/register'} className="text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text">Join Event</Link>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="bg-white px-6 py-8 rounded-b-3xl flex flex-col justify-between h-[305.72px]">
-                                        <div className="space-y-4">
-                                            <div className="flex gap-3 items-center">
-                                                <img className="h-10 w-10 rounded-full" src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/headway-F2KRf_QfCqw-unsplash.jpgbff2c2b3-3340-421f-b8bf-06cf683bb395?alt=media&token=19e9782d-0cca-4105-ab02-d627bd515ac" alt="orgImage" />
-                                                <p className="text-sm font-medium">{x?.orgName}</p>
-                                            </div>
-                                            <div className="flex text-sm justify-between font-medium">
-                                                <p>{x?.address}</p>
-                                                <p>{formated}</p>
-                                            </div>
-                                            <div className="flex flex-col gap-3">
-                                                <h2 className="text-lg lg:text-xl font-bold">{x?.eventName}</h2>
-                                                <p className="text-sm lg:text-base line-clamp-2 font-medium">
-                                                    {x?.description}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <Link href={`/detail/${x.eventId}`} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
-                                            <Link href={'/register'} className="text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text">Join Event</Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        })}
+                                )
+                            })
+                        ))}
                     </div>
                 }
             </section>
