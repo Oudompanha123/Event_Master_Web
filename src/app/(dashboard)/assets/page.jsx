@@ -1,7 +1,7 @@
 import { AssetPopupComponent } from "../_components/CreateNewAssetComponent";
 import { AssetTableComponent } from "../_components/assetTableComponent";
-import { Pagination } from "../_components/Pagination";
 import { SearchAssetComponent } from "../_components/SearchAssetComponent";
+import { Pagination } from "../_components/paginate/Pagination";
 export default function assetPage({ searchParams }) {
   const query = searchParams?.query || "";
 

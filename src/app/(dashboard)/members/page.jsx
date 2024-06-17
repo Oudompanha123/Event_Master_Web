@@ -6,7 +6,7 @@ import Image from "next/image";
 import data from "../../../data/member.json";
 import { ChangeRoleComponent } from "../_components/ChangeRoleComponent";
 import { DeleteMemberComponent } from "../_components/DeleteMemberComponent";
-import { Pagination } from "../_components/Pagination";
+import { Pagination } from "../_components/paginate/Pagination";
 
 const memberData = data.data;
 const getRoleColor = (role) => {
@@ -192,7 +192,7 @@ const MemberPage = () => {
                       }}
                     >
                       {getRoleDisplayName(member.role)}
-                      {member.role !== "ROLE_ADMIN" && <FaAngleDown className=" right-0"/>}
+                      {member.role !== "ROLE_ADMIN" && <FaAngleDown className=" right-0" />}
                     </div>
                     {activeDropdown === member.id &&
                       member.role !== "ROLE_ADMIN" && (

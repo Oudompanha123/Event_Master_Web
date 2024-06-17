@@ -1,65 +1,87 @@
+import { headerToken } from "@/app/api/auth/headerToken";
+
 export const getOverviewData = async () => {
+    const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}dashboards`,
         {
-            cache: "no-store",
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6MzgsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImJPTVdJNiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6MzgsIm1lbWJlcklkIjo1Niwic3ViIjoibWVnYW5vdGNsb25lQGdtYWlsLmNvbSIsImlhdCI6MTcxODAwMzgzMywiZXhwIjoxNzE4ODY3ODMzfQ.nxMolNOTpbgoZ3qoERBY3YVZbVRyQiuEo4CCp7zDwms',
-                'Content-Type': 'application/json'
-            }
+            next: { tags: ['overview_event'] },
+            headers: header
         }
     )
     const data = await res.json();
     return data
 }
 
-export const getAllCategory = async () => {
-    const res = await fetch(`${process.env.API_URL}categories?offset=1&limit=8`,
+export const getAllCategory = async (page) => {
+    const header = await headerToken()
+    const res = await fetch(`${process.env.API_URL}categories?offset=${page ? page : 1}&limit=8`,
         {
             next: { tags: ['overview'] },
-            cache: "no-store",
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6MzgsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImJPTVdJNiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6MzgsIm1lbWJlcklkIjo1Niwic3ViIjoibWVnYW5vdGNsb25lQGdtYWlsLmNvbSIsImlhdCI6MTcxODAwMzgzMywiZXhwIjoxNzE4ODY3ODMzfQ.nxMolNOTpbgoZ3qoERBY3YVZbVRyQiuEo4CCp7zDwms',
-                'Content-Type': 'application/json'
-            }
+            headers: header
         }
     )
     const data = await res.json();
     return data
-}
+} 
 
 export const insertCategory = async (userInput) => {
+    const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}categories?categoryName=${userInput}`,
         {
             next: { tags: ['overview'] },
             method: 'POST',
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6MzgsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImJPTVdJNiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6MzgsIm1lbWJlcklkIjo1Niwic3ViIjoibWVnYW5vdGNsb25lQGdtYWlsLmNvbSIsImlhdCI6MTcxODAwMzgzMywiZXhwIjoxNzE4ODY3ODMzfQ.nxMolNOTpbgoZ3qoERBY3YVZbVRyQiuEo4CCp7zDwms',
-                'Content-Type': 'application/json'
-            }
+            headers: header
         }
     )
+    const data = await res.json();
+    return data
 }
 
 export const deleteCategory = async (id) => {
+    const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}categories/${id}`,
         {
             next: { tags: ['overview'] },
             method: 'DELETE',
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6MzgsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImJPTVdJNiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6MzgsIm1lbWJlcklkIjo1Niwic3ViIjoibWVnYW5vdGNsb25lQGdtYWlsLmNvbSIsImlhdCI6MTcxODAwMzgzMywiZXhwIjoxNzE4ODY3ODMzfQ.nxMolNOTpbgoZ3qoERBY3YVZbVRyQiuEo4CCp7zDwms',
-            }
+            headers: header
         }
-    ) 
+    )
 }
 
 export const updateCategory = async (id, categoryName) => {
+    const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}categories/${id}?categoryName=${categoryName}`,
         {
             next: { tags: ['overview'] },
             method: 'PUT',
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6MzgsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImJPTVdJNiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6MzgsIm1lbWJlcklkIjo1Niwic3ViIjoibWVnYW5vdGNsb25lQGdtYWlsLmNvbSIsImlhdCI6MTcxODAwMzgzMywiZXhwIjoxNzE4ODY3ODMzfQ.nxMolNOTpbgoZ3qoERBY3YVZbVRyQiuEo4CCp7zDwms',
-            }
+            headers: header
         }
-    ) 
+    )
+}
+
+export const createEventService = async (data) => {
+    console.log("triggered?")
+    const header = await headerToken()
+    const res = await fetch(`${process.env.API_URL}events`,
+        {
+            next: { tags: ['overview_event'] },
+            body: JSON.stringify(data),
+            method: 'POST',
+            headers: header
+        }
+    )
+    const val = await res.json()
+    return val
+}
+
+export const allCategory = async () => {
+    const header = await headerToken()
+    const res = await fetch(`${process.env.API_URL}categories?offset=1&limit=100`,
+        {
+            next: { tags: ['overview'] },
+            headers: header
+        }
+    )
+    const data = await res.json();
+    return data
 }

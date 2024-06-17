@@ -1,11 +1,9 @@
 import { OverviewCardComponent } from "../_components/OverviewCardComponent"
 import { BarChartComponent } from "../_components/BarChartComponent"
 import CreateCategoryButton from "../_components/Action/CreateCategoryButton"
-import { CategoryDeleteAction } from "../_components/Action/CategoryDeleteAction"
-import { CategoryEditAction } from "../_components/Action/CategoryEditAction"
-import { Pagination } from "../_components/Pagination"
 import { Getstart } from "../_components/Action/GetstartBtn"
 import { getAllCategory, getOverviewData } from "@/services/dashboard/overviewService"
+import { OverviewTable } from "../_components/OverviewTable"
 
 const Page = async () => {
     const data = await getOverviewData();
@@ -27,10 +25,10 @@ const Page = async () => {
         };
     }
     const originalObject = {
-        eventCount: data.payload.eventCount,
-        publishEvent: data.payload.publishEvent,
-        totalAttendee: data.payload.totalAttendee,
-        member: data.payload.member
+        eventCount: data?.payload?.eventCount,
+        publishEvent: data?.payload?.publishEvent,
+        totalAttendee: data?.payload?.totalAttendee,
+        member: data?.payload?.member
     };
     const result = convertToObjectArray(originalObject);
     let topCardData = result;
@@ -70,49 +68,14 @@ const Page = async () => {
                     <div className="absolute -bottom-72 rotate-[13.5deg] -right-12 h-80 w-80 bg-[#9782FF] rounded-radius64 z-0"></div>
                 </div>
             </section>
-            <section className="w-full">
+            <section className="w-full h-fit">
                 <div className="space-y-8 rounded-3xl p-6 border-2 border-slate-100 bg-white">
                     <div className="flex justify-between items-center">
                         <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Event Category</h2>
                         <CreateCategoryButton />
                     </div>
                     <div className="w-full overflow-scroll">
-                        <table className="table w-full px-1 border-separate border-spacing-y-3">
-                            <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
-                                <tr className="text-xs lg:text-base">
-                                    <th className="px-5 py-2 font-medium rounded-l-radiusUi">No</th>
-                                    <th className="px-5 py-2 font-medium">Name</th>
-                                    <th className="px-5 py-2 font-medium">Created At</th>
-                                    <th className="px-5 py-2 font-medium">Created By</th>
-                                    <th className="px-5 py-2 font-medium rounded-r-radiusUi">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {allCategory.payload.map((x, index) => {
-                                    const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-                                    const inputDate = x.createAt;
-                                    const formattedDate = formatDate(inputDate);
-                                    const formated = formattedDate;
-                                    return (
-                                        <tr key={x.categoryId} className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}>
-                                            <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{index + 1}</td>
-                                            <td className="px-5 py-2 text-xs xl:text-base">{x?.categoryName}</td>
-                                            <td className="px-5 py-2 text-xs xl:text-base">{formated}</td>
-                                            <td className="px-5 py-2 text-xs xl:text-base">{x?.createBy}</td>
-                                            <td className="px-5 py-2 text-xs xl:text-base rounded-r-radiusUi">
-                                                <div className="flex items-center gap-2 lg:gap-4">
-                                                    <CategoryDeleteAction cateId={x?.categoryId} />
-                                                    <CategoryEditAction cateId={x?.categoryId} />
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
-                        <div className="w-full flex justify-end mt-8">
-                            <Pagination />
-                        </div>
+                        <OverviewTable server={allCategory} />
                     </div>
                 </div>
             </section>

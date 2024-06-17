@@ -5,7 +5,9 @@ import {useForm} from 'react-hook-form';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 import Link from 'next/link';
-import signupAction from '@/app/actions/signupAction';
+import {getOrganizationDetails} from "@/services/login-signup/org.service";
+import signupAction from "@/actions/auth/signupAction";
+import {registerUserAction} from "@/actions/auth/registerUserAction";
 
 const SignupComponent = () => {
   const initialData = {
@@ -21,7 +23,13 @@ const SignupComponent = () => {
   const [isLocked, setIsLocked] = useState(true);
   const [isKeyLocked, setIsKeyLocked] = useState(true);
 
-    const {register, handleSubmit, formState: {errors, isValid}, watch, reset} = useForm({
+    const {
+        register,
+        handleSubmit,
+        formState: {errors, isValid},
+        watch,
+        reset,
+    } = useForm({
         mode: 'onChange',
         defaultValues: initialData,
     });
@@ -42,11 +50,18 @@ const SignupComponent = () => {
   const router = useRouter();
 
     const onSubmit = async (data) => {
-        data.role = isAdminSelected ? 'admin' : 'user';
-        console.log(data);
-        await signupAction(data);
+        console.log("Data: " ,data);
+        if(data?.organizationCode) {
+            await registerUserAction(data);
+        } else {
+            await signupAction(data);
+        }
+
         if (!isAdminSelected) {
-            const modal = document.getElementById("my_modal_5");
+            const orgData = await getOrganizationDetails(data.organizationCode);
+            setOrgDetails(orgData);
+
+            const modal = document.getElementById('my_modal_5');
             if (modal) {
                 modal.showModal();
             } else {
@@ -64,7 +79,7 @@ const SignupComponent = () => {
                 <button
                     type="button"
                     id="admin-button"
-                    className={`font-medium text-sm rounded-[100px] px-12 py-3.5 -mr-10  ${isAdminSelected ? "bg-purple-text text-white z-20" : "shadow-sm bg-white border border-gray-300 primary-text z-10"}`}
+                    className={`font-medium text-sm rounded-[100px] px-12 py-3.5 -mr-10  ${isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-sm bg-white border border-gray-300 primary-text z-10'}`}
                     onClick={handleAdminClick}
                 >
                     ADMIN
@@ -72,7 +87,7 @@ const SignupComponent = () => {
                 <button
                     type="button"
                     id="user-button"
-                    className={`font-medium text-sm rounded-[100px] px-12 py-3.5  ${!isAdminSelected ? "bg-purple-text text-white z-20" : "shadow-sm bg-white border border-gray-300 primary-text z-10"}`}
+                    className={`font-medium text-sm rounded-[100px] px-12 py-3.5  ${!isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-sm bg-white border border-gray-300 primary-text z-10'}`}
                     onClick={handleUserClick}
                 >
                     USER
@@ -88,10 +103,10 @@ const SignupComponent = () => {
                             <input
                                 type="text"
                                 id="name"
-                                className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                className={`${errors.name ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                 placeholder="Enter your full name"
-                                {...register("name", {
-                                    required: "Full Name is required",
+                                {...register('name', {
+                                    required: 'Full Name is required',
                                 })}
                             />
                             {errors.name && <span className="text-red-600 text-sm">{errors.name.message}</span>}
@@ -104,13 +119,13 @@ const SignupComponent = () => {
                             <input
                                 type="text"
                                 id="email"
-                                className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                className={`${errors.email ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                 placeholder="Enter your email"
-                                {...register("email", {
-                                    required: "Email is required",
+                                {...register('email', {
+                                    required: 'Email is required',
                                     pattern: {
                                         value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                        message: "Enter a valid email address",
+                                        message: 'Enter a valid email address',
                                     },
                                 })}
                             />
@@ -121,26 +136,26 @@ const SignupComponent = () => {
                             <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
                                 Password <span className="text-red-600">*</span>
                             </label>
-                            <div className={"relative"}>
+                            <div className={'relative'}>
                                 <input
-                                    type={isLocked ? "password" : "text"}
+                                    type={isLocked ? 'password' : 'text'}
                                     id="password"
-                                    className={`${errors.password ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                    className={`${errors.password ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                     placeholder="Enter your password"
-                                    {...register("password", {
-                                        required: "Password is required",
+                                    {...register('password', {
+                                        required: 'Password is required',
                                         minLength: {
                                             value: 8,
-                                            message: "Password requires at least 8 characters",
+                                            message: 'Password requires at least 8 characters',
                                         },
                                     })}
                                 />
-                                <div className={"absolute top-4 right-3 cursor-pointer"} onClick={handleLockClick}>
+                                <div className={'absolute top-4 right-3 cursor-pointer'} onClick={handleLockClick}>
                                     <Image
-                                        src={`${isLocked ? "/icons/lock-slash.svg" : "/icons/unlock.svg"}`}
+                                        src={`${isLocked ? '/icons/lock-slash.svg' : '/icons/unlock.svg'}`}
                                         width={20}
                                         height={20}
-                                        alt={isLocked ? "lock icon" : "unlock icon"}
+                                        alt={isLocked ? 'lock icon' : 'unlock icon'}
                                     />
                                 </div>
                             </div>
@@ -151,28 +166,29 @@ const SignupComponent = () => {
                             <label htmlFor="confirm-password" className="text-sm font-medium primary-text block mb-2">
                                 Confirm Password <span className="text-red-600">*</span>
                             </label>
-                            <div className={"relative"}>
+                            <div className={'relative'}>
                                 <input
-                                    type={isKeyLocked ? "password" : "text"}
+                                    type={isKeyLocked ? 'password' : 'text'}
                                     id="confirm-password"
-                                    className={`${errors.confirmPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                    className={`${errors.confirmPassword ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                     placeholder="Enter your confirm password"
-                                    {...register("confirmPassword", {
-                                        required: "Confirm Password is required",
-                                        validate: (value) => value === watch("password") || "Passwords do not match",
+                                    {...register('confirmPassword', {
+                                        required: 'Confirm Password is required',
+                                        validate: (value) => value === watch('password') || 'Passwords do not match',
                                     })}
                                 />
-                                <div className={"absolute top-4 right-3 cursor-pointer"} onClick={handleKeyLockClick}>
+                                <div className={'absolute top-4 right-3 cursor-pointer'} onClick={handleKeyLockClick}>
                                     <Image
-                                        src={`${isKeyLocked ? "/icons/lock-slash.svg" : "/icons/unlock.svg"}`}
+                                        src={`${isKeyLocked ? '/icons/lock-slash.svg' : '/icons/unlock.svg'}`}
                                         width={20}
                                         height={20}
-                                        alt={isKeyLocked ? "lock icon" : "unlock icon"}
+                                        alt={isKeyLocked ? 'lock icon' : 'unlock icon'}
                                     />
                                 </div>
                             </div>
-                            {errors.confirmPassword &&
-                                <span className="text-red-600 text-sm">{errors.confirmPassword.message}</span>}
+                            {errors.confirmPassword && (
+                                <span className="text-red-600 text-sm">{errors.confirmPassword.message}</span>
+                            )}
                         </div>
 
                         {isAdminSelected && (
@@ -183,18 +199,19 @@ const SignupComponent = () => {
                                 <input
                                     type="text"
                                     id="phone-number"
-                                    className={`${errors.phoneNumber ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                    className={`${errors.phoneNumber ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                     placeholder="Enter your phone number"
-                                    {...register("phoneNumber", {
-                                        required: "Phone Number is required",
+                                    {...register('phoneNumber', {
+                                        required: 'Phone Number is required',
                                         pattern: {
                                             value: /^0\d{8,}$/,
-                                            message: "phone number must be number, start with 0, more than 8 digits",
+                                            message: 'phone number must be number, start with 0, more than 8 digits',
                                         },
                                     })}
                                 />
-                                {errors.phoneNumber &&
-                                    <span className="text-red-600 text-sm">{errors.phoneNumber.message}</span>}
+                                {errors.phoneNumber && (
+                                    <span className="text-red-600 text-sm">{errors.phoneNumber.message}</span>
+                                )}
                             </div>
                         )}
 
@@ -209,14 +226,15 @@ const SignupComponent = () => {
                                     <input
                                         type="text"
                                         id="phone-number"
-                                        className={`${errors.phoneNumber ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block xl:w-full p-3.5`}
+                                        className={`${errors.phoneNumber ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block xl:w-full p-3.5`}
                                         placeholder="Enter your phone number"
-                                        {...register("phoneNumber", {
-                                            required: "Phone Number is required",
+                                        {...register('phoneNumber', {
+                                            required: 'Phone Number is required',
                                         })}
                                     />
-                                    {errors.phoneNumber &&
-                                        <span className="text-red-600 text-sm">{errors.phoneNumber.message}</span>}
+                                    {errors.phoneNumber && (
+                                        <span className="text-red-600 text-sm">{errors.phoneNumber.message}</span>
+                                    )}
                                 </div>
                                 <div className="w-full">
                                     <label htmlFor="organization-code"
@@ -226,14 +244,15 @@ const SignupComponent = () => {
                                     <input
                                         type="password"
                                         id="organization-code"
-                                        className={`${errors.organizationCode ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                        className={`${errors.organizationCode ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                         placeholder="Enter your organization code"
-                                        {...register("organizationCode", {
-                                            required: "Organization Code is required",
+                                        {...register('organizationCode', {
+                                            required: 'Organization Code is required',
                                         })}
                                     />
-                                    {errors.organizationCode &&
-                                        <span className="text-red-600 text-sm">{errors.organizationCode.message}</span>}
+                                    {errors.organizationCode && (
+                                        <span className="text-red-600 text-sm">{errors.organizationCode.message}</span>
+                                    )}
                                 </div>
                             </div>
                         )}
@@ -259,38 +278,39 @@ const SignupComponent = () => {
                                         height={111}
                                         property=""
                                     />
-                                    <div className="modal-action">
-                                        <div method="dialog" className="w-[350px] m-auto">
-                                            <div className="flex justify-between">
-                                                <p className="font-medium text-base w-1/2">Organization Code</p>
-                                                <p className="font-medium text-base w-1/2 pl-10">Ab1234</p>
-                                            </div>
-                                            <div className="flex justify-between mt-2">
-                                                <p className="font-medium text-base w-1/2">Organization Name</p>
-                                                <p className="font-medium text-base w-1/2 pl-10">RUPP</p>
-                                            </div>
-                                            <div className="flex justify-between mt-2">
-                                                <p className="font-medium text-base w-1/2">Address</p>
-                                                <p className="font-medium text-base w-1/2 break-words pl-10">Street 135,
-                                                    Toul Kok, Phnom Penh</p>
-                                            </div>
-                                            <div className=" flex justify-between w-[300px] m-auto mb-4 mt-4 ">
-                                                <button
-                                                    className="border w-[110px] border-[#344054] h-10 rounded-3xl"
-                                                    onClick={() => document.getElementById("my_modal_5").close()}
-                                                >
-                                                    <p className="font-semibold">Cancel</p>
-                                                </button>
-                                                <button className="border w-[110px] bg-[#8C59FE] h-10 rounded-3xl"
-                                                        value="comform">
-                                                    <Link href={`/verify-register`}
-                                                          className="text-white font-semibold ">
-                                                        Confirm
-                                                    </Link>
-                                                </button>
+                                    {orgDetails && (
+                                        <div className="modal-action">
+                                            <div method="dialog" className="w-[350px] m-auto">
+                                                <div className="flex justify-between">
+                                                    <p className="font-medium text-base w-1/2">Organization Code</p>
+                                                    <p className="font-medium text-base w-1/2 pl-10">{orgDetails.code}</p>
+                                                </div>
+                                                <div className="flex justify-between mt-2">
+                                                    <p className="font-medium text-base w-1/2">Organization Name</p>
+                                                    <p className="font-medium text-base w-1/2 pl-10">{orgDetails.orgName}</p>
+                                                </div>
+                                                <div className="flex justify-between mt-2">
+                                                    <p className="font-medium text-base w-1/2">Address</p>
+                                                    <p className="font-medium text-base w-1/2 break-words pl-10">{orgDetails.address}</p>
+                                                </div>
+                                                <div className="flex justify-between w-[300px] m-auto mb-4 mt-4 ">
+                                                    <button
+                                                        className="border w-[110px] border-[#344054] h-10 rounded-3xl"
+                                                        onClick={() => document.getElementById('my_modal_5').close()}
+                                                    >
+                                                        <p className="font-semibold">Cancel</p>
+                                                    </button>
+                                                    <button className="border w-[110px] bg-[#8C59FE] h-10 rounded-3xl"
+                                                            value="confirm">
+                                                        <Link href={`/verify-register`}
+                                                              className="text-white font-semibold ">
+                                                            Confirm
+                                                        </Link>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    )}
                                 </div>
                             </dialog>
                         </div>

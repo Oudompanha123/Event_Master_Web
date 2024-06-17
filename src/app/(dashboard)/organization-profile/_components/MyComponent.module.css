@@ -1,4 +1,4 @@
-@media (max-width: 640px) {
+@media (min-width: 400px) and (max-width: 640px) {
     .hideOnPhone {
         display: none;
     }
@@ -34,5 +34,12 @@
         position: absolute;
         left: -70px;
         top:8;
+    }
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: aquamarine;
     }
 }

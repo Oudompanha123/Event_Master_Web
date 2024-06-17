@@ -2,15 +2,26 @@
 
 import Image from "next/image"
 import logo from "../../public/images/gundam.jpg"
-import { redirect, usePathname } from "next/navigation"
+import defaultProfile from "../../public/images/default-profile.png"
+import { usePathname } from "next/navigation"
 import { NotificationMenu } from "./NotificationMenu"
 import { CreateEventButton } from "@/app/(dashboard)/_components/Action/CreateEventButton"
 import { NotificationCard } from "@/app/(dashboard)/_components/NotificationCard"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
+import { jwtDecode } from "jwt-decode"
 
 export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
-    console.log(pathname.startsWith('/attendees'))
+    const { data: session, status } = useSession();
+    let userInfo;
+    if (status === 'authenticated' && session?.user?.token) {
+        userInfo = jwtDecode(session.user.token);
+    }
+    const userRole = userInfo?.role;
+
+    console.log("check role", userRole)
+
     return (
         <div className={`${className} justify-between sticky top-0 z-50 bg-white flex lg:justify-between items-center py-3 px-3 lg:px-14 border-b-[1px]`}>
             {!pathname.startsWith('/event-detail') && !pathname.startsWith('/attendees') ?
@@ -70,18 +81,18 @@ export const NavbarComponent = ({ className }) => {
                     <Image src={'/icons/icon.svg'} width={24} height={24} />
                 </div>
                 <NotificationCard />
-                <CreateEventButton />
+                {userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN" ? <CreateEventButton /> : ''}
                 <Link href={'/user-profile'}>
                     <div className="flex items-center gap-4">
                         <div className="hidden lg:block">
-                            <p className="font-semibold text-end text-sm">Thomas Brown</p>
-                            <p className="text-xs text-greyUi">ThomasNikola@gmail.com</p>
+                            <p className="font-semibold text-end text-sm">{userInfo?.organization?.orgName}</p>
+                            <p className="text-xs text-greyUi">{userInfo?.sub}</p>
                         </div>
                         <div className="w-[48px] h-48px] hidden lg:block">
-                            <Image src={logo} height={48} width={48} />
+                            <Image src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={48} width={48} />
                         </div>
                         <div className="w-[32px] h-[32px] block lg:hidden">
-                            <Image src={logo} />
+                            <Image src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} />
                         </div>
                     </div>
                 </Link>

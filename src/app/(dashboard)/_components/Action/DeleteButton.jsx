@@ -1,8 +1,21 @@
 "use client";
 
-import deleteAgenda from "@/app/actions/agendaAction";
+import deleteAgenda from "@/app/actions/deleteAgendaAction";
+import { useState, useEffect } from 'react';
 import Image from "next/image";
 export function DeleteButton({id}) {
+
+  const handleDelete = async () => {
+    try {
+      const res = await deleteAgenda(id);
+      console.log("Delete response:", res);
+      // Handle any state updates or notifications after deletion
+    } catch (error) {
+      console.error("Error deleting agenda:", error);
+    }
+  };
+
+
   return (
     <>
       <button
@@ -40,7 +53,8 @@ export function DeleteButton({id}) {
               <button
                 className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700"
                 value="yes"
-                onClick = {() => deleteAgenda(id)}
+                // onClick = {() => deleteAgenda(id)}
+                onClick={handleDelete}
               >
                 <p className="text-white font-semibold">yes</p>
               </button>

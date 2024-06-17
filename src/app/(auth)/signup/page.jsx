@@ -2,9 +2,42 @@ import Image from "next/image";
 import Link from "next/link";
 import {MdKeyboardArrowLeft} from "react-icons/md";
 import SignupComponent from "@/app/(auth)/_components/SignupComponent";
-import signupAction from "@/app/actions/signupAction";
+import signupAction from "@/actions/auth/signupAction";
+import registerUserAction from "@/actions/auth/signupAction";
 
 const SignUpPage = () => {
+
+    // define handle signup
+    // async function handleUserRegister(userInfo) {
+    //
+    //     // define object structure
+    //     const newUser = {
+    //         name: userInfo.get("name"),
+    //         email: userInfo.get("email"),
+    //         password: userInfo.get("password"),
+    //         confirmPassword: userInfo.get("confirmPassword"),
+    //         phoneNumber: userInfo.get("phoneNumber"),
+    //         organizationCode: userInfo.get("organizationCode"),
+    //     }
+    //
+    //     // calling next auth service and passing " newUseInfo "
+    //     const res = await signupAction("credentials", {
+    //         redirect: false,
+    //         ...newUser,
+    //     });
+    //     if (res.ok) {
+    //         router.push("/verify-register");
+    //     }
+    //
+    //     const res = await registerUserAction("credentials", {
+    //         redirect: false,
+    //         ...newUser,
+    //     });
+    //     if (res.ok) {
+    //         router.push("/verify-register");
+    //     }
+    // }
+
 
     // define handle signup
     async function handleUserRegister(userInfo) {
@@ -17,14 +50,24 @@ const SignUpPage = () => {
             confirmPassword: userInfo.get("confirmPassword"),
             phoneNumber: userInfo.get("phoneNumber"),
             organizationCode: userInfo.get("organizationCode"),
+            userName: userInfo.get("userName"), // add userName property here
+            role: userInfo.get("role") // add role property here
         }
 
         // calling next auth service and passing " newUseInfo "
-        const res = await signupAction("credentials", {
+        const res1 = await signupAction("credentials", {
             redirect: false,
             ...newUser,
         });
-        if (res.ok) {
+        if (res1.ok) {
+            router.push("/verify-register");
+        }
+
+        const res2 = await registerUserAction("credentials", {
+            redirect: false,
+            ...newUser,
+        });
+        if (res2.ok) {
             router.push("/verify-register");
         }
     }
@@ -72,3 +115,5 @@ const SignUpPage = () => {
 };
 
 export default SignUpPage;
+
+

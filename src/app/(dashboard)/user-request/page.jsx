@@ -1,13 +1,17 @@
-import userData from "../../../data/member.json"
-import { Pagination } from "../_components/Pagination"
+import { getAllUserRequestService } from "@/services/dashboard/userRequestService"
 import { RegisterActionComponent } from "../_components/RegisterActionComponent"
+import { revalidateTag } from "next/cache";
+import TableUserRequest from "../_components/TableUserRequest";
 
-const Page = () => {
+// export const revalidate = 5
+
+const Page = async () => {
+    const userRequests = await getAllUserRequestService();
     return (
         <>
             <div className="space-y-8 rounded-3xl p-6 bg-white">
                 <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Show All User Request</h2>
-                <div className="overflow-scroll px-1">
+                {/* <div className="overflow-scroll px-1">
                     <table className="table w-full border-separate border-spacing-y-3">
                         <thead className="h-14 shadow-soft rounded-radiusUi text-primary-text bg-[#FFFFFF] uppercase">
                             <tr className="text-xs lg:text-base">
@@ -20,15 +24,15 @@ const Page = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {userData.data.map((x, index) => (
-                                <tr className={`h-14 shadow-soft text-primary-text rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}>
+                            {userRequest?.payload?.map((user, index) => (
+                                <tr key={user.memberId} className={`h-14 shadow-soft text-primary-text rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}>
                                     <td className="px-5 py-2 text-xs lg:text-base rounded-l-radiusUi">{index + 1}</td>
-                                    <td className="px-5 py-2 text-xs lg:text-base w-64">{x.name}</td>
-                                    <td className="px-5 py-2 text-xs lg:text-base">{x.gender}</td>
-                                    <td className="px-5 py-2 text-xs lg:text-base">{x.tel}</td>
-                                    <td className="px-5 py-2 text-xs lg:text-base">{x.email}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base w-56">{user.memberName}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base">{user.gender? true : "No gender"}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base">{user.phone}</td>
+                                    <td className="px-5 py-2 text-xs lg:text-base">{user.email}</td>
                                     <td className="rounded-r-radiusUi flex justify-center">
-                                        <RegisterActionComponent />
+                                        <RegisterActionComponent memberId = {user.memberId}/>
                                     </td>
                                 </tr>
                             )
@@ -38,7 +42,8 @@ const Page = () => {
                     <div className="w-full flex justify-end mt-8">
                         <Pagination />
                     </div>
-                </div>
+                </div> */}
+                <TableUserRequest userRequest={userRequests}/>
             </div>
         </>
     )

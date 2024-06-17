@@ -1,12 +1,45 @@
-@media (max-width: 640px) {
+@media (min-width: 400px) and (max-width: 700px) {
     .hideOnPhone {
         display: none;
 
     }
-@media (min-width: 640px) {
+
     .profile {
         margin-top: 100px;
+
+    }
+
+    .container {
+        display: flex;
+        /* background-color: aqua; */
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .icon {
+        position: absolute;
+        top: 50px;
+        right: 0;
+        width: 30px;
+        height: 30px;
+        object-fit: cover;
+    }
+
+}
+
+@media (min-width: 700px) and (max-width: 1000px) {
+    .icon {
+        position: absolute;
+        top: 70px;
+        right: 0;
     }
 }
 
+@media (min-width: 1000px) and (max-width: 1300px) {
+    .icon {
+        position: absolute;
+        top: 87px;
+        right: 2px;
+    }
 }
