@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
-import { EventActionButton } from "./EventActionButton";
 import { Location } from "iconsax-react";
+import { EventActionButton } from "./EventActionButton";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -12,6 +12,7 @@ const formatDate = (dateString) => {
 };
 
 export default function CardEventComponent({ eventData }) {
+  console.log("event ",eventData);
   return (
     <div className="gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:gap-6 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2 2xl:grid-cols-4">
       {eventData.map((data, index) => {
@@ -35,7 +36,8 @@ export default function CardEventComponent({ eventData }) {
                       {month}
                     </small>
                   </div>
-                  <EventActionButton eventId={data.eventId} />
+                  <EventActionButton poster={data.poster} eventName={data.eventName} categoryId={data.categoryId} startDate={data.startDate} endDate={data.endDate}
+                   duration={data.duration} maxAttendee={data.maxAttendee} address={data.address} description={data.description} isPost={data.isPost} eventId={data.eventId} />
                 </div>
               </div>
 

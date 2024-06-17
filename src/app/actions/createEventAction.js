@@ -1,6 +1,6 @@
 'use server';
 
-import { createEventService } from "@/services/dashboard/event.service";
+import { createEventService } from "@/services/dashboard/eventService";
 import { revalidateTag } from "next/cache";
 
 async function createAgenda(eventData,id) {
