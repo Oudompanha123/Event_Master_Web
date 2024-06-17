@@ -6,11 +6,22 @@ import { CiLock } from "react-icons/ci";
 import { CiUnlock } from "react-icons/ci";
 import styles from "./MyComponent.module.css"
 import { LiaUserEditSolid } from "react-icons/lia";
+import { useSession } from "next-auth/react"
+import { jwtDecode } from "jwt-decode"
+import { usePathname } from "next/navigation"
 
 
 // import { CiLock } from "react-icons/ci";
-function FormComponent({getAllMemberProfile}) {
-    console.log(getAllMemberProfile, "Get all member")
+function FormComponent({getAllMemberProfile, className}) {
+
+    const pathname = usePathname();
+    const { data: session, status } = useSession();
+    let userInfo;
+    if (status === 'authenticated' && session?.user?.token) {
+        userInfo = jwtDecode(session.user.token);
+    }
+    console.log(getAllMemberProfile.payload, "Get all member")
+
     const ref = useRef();
 
     const [isLock, setLocked] = useState(true);

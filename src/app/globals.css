@@ -58,12 +58,11 @@ body {
 
 .pagination {
   list-style: none;
-  height: 31.5px;
+  height: 100%;
   width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2px;
   cursor: pointer;
 }
 

@@ -1,15 +1,19 @@
 "use client";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
+import { deleteAttendeeAction } from "@/actions/attendeeDeleteAction";
 
-export function DeleteAttendeeComponent({}) {
+export function DeleteAttendeeComponent({ attendeeId }) {
+  const handleDelete = async () => {
+    await deleteAttendeeAction(attendeeId);
+  };
   return (
     <>
       <button
         className="rounded-2xl"
         value="delete"
         onClick={() => {
-          document.getElementById("delete").showModal();
+          document.getElementById(`attendee_action_${attendeeId}`).showModal();
         }}
       >
         <Image
@@ -18,10 +22,9 @@ export function DeleteAttendeeComponent({}) {
           className="w-8 h-8 ml-3 mt-1"
           width={32}
           height={32}
-          property=" "
         />
       </button>
-      <dialog id="delete" className="modal">
+      <dialog id={`attendee_action_${attendeeId}`} className="modal">
         <div className="modal-box w-[310px] justify-center">
           <form method="dialog" className="justify-end flex">
             <button type="submit">
@@ -35,7 +38,6 @@ export function DeleteAttendeeComponent({}) {
               className="w-[58%] mb-3"
               width={32}
               height={32}
-              property=" "
             />
           </div>
           <p className="justify-center w-full flex text-primary-text font-bold text-lg text-center">
@@ -46,7 +48,7 @@ export function DeleteAttendeeComponent({}) {
           </p>
           <div className="modal-action">
             <form method="dialog" className="flex justify-around w-full mb-4 mt-3 px-3">
-              <button className="h-9 rounded-3xl bg-red-600 w-[100px] hover:bg-red-700" value="yes">
+              <button onClick={handleDelete} className="h-9 rounded-3xl bg-red-600 w-[100px] hover:bg-red-700" value="yes">
                 <p className="text-white font-semibold">Yes</p>
               </button>
               <button className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500" value="cancel">

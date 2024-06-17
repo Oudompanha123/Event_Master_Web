@@ -5,9 +5,9 @@ import Image from "next/image";
 import { ToogleBtn } from "./ToogleBtn";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-
 import { useRouter } from "next/navigation";
 import { SelectModify } from "./SelectModify";
+import { addNewCategoryAction, addNewEventAction } from "@/actions/categoryAction";
 
 export const CreateEventButton = () => {
     const [hide, setHide] = useState(false);
@@ -32,6 +32,7 @@ export const CreateEventButton = () => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
+        setImageLink(e.target.files[0]);
         displayPreview(file);
         setHide(true);
     };
@@ -57,19 +58,47 @@ export const CreateEventButton = () => {
 
     const start = watch("startDate");
 
-    const onSubmit = (data) => {
-        console.log(data);
-        router.push('/event-detail/1')
-        document.getElementById('my_modal_event').close()
+    const [eventCategory, setEventCategory] = useState();
+    const [isPublic, setIsPublic] = useState(false);
+    const [imageLink, setImageLink] = useState();
+
+    const handleCategorySelect = (v) => {
+        console.log("from parent", v)
+        setEventCategory(v)
+        console.log("log state", eventCategory)
+    }
+
+    const handleEventType = (type) => {
+        console.log(type)
+        setIsPublic(type)
+    }
+
+    const onSubmit = async (data) => {
+        console.log(data, 'gg')
+        const submitData = {
+            eventName: data.name,
+            description: data.description,
+            startDate: data.startDate,
+            endDate: data.endDate,
+            duration: data.duration,
+            address: data.address,
+            poster: `${imageLink}.png`,
+            isPost: isPublic,
+            maxAttendee: data.maxAttendee,
+            categoryId: 90
+        }
+        const okay = await addNewEventAction(submitData);
+        document.getElementById("my_modal_event_create").close()
+        // router.push('/event-detail/1')
     };
 
     return (
         <>
-            <div onClick={() => document.getElementById('my_modal_event').showModal()} className="cursor-pointer lg:flex items-center bg-[#F7F9FB] gap-2 py-3 px-3 lg:px-6 rounded-full">
+            <div onClick={() => document.getElementById('my_modal_event_create').showModal()} className="cursor-pointer lg:flex items-center bg-[#F7F9FB] gap-2 py-3 px-3 lg:px-6 rounded-full">
                 <AddSquare size="24" color="#344054" variant="Bold" />
                 <p className="text-sm hidden lg:block">New Event</p>
             </div>
-            <dialog id="my_modal_event" className="modal !m-0">
+            <dialog id="my_modal_event_create" className="modal !m-0">
                 <div className="modal-box w-11/12 lg:w-1/2 lg:max-w-5xl p-8">
                     <div className="flex justify-between">
                         <h3 className="font-bold text-xl">Create Event</h3>
@@ -83,7 +112,7 @@ export const CreateEventButton = () => {
                                 onDragOver={handleDragOver}
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDrop}>
-                                <input {...register("image")} type="file" className="absolute inset-0 w-full h-full opacity-0 z-50" id="file-upload" onChange={handleFileChange} />
+                                <input {...register("image")} type="file" className="absolute inset-0 w-full h-full opacity-0 z-50" id="file-upload" onChange={(e) => handleFileChange(e)} />
                                 <div className={`text-center ${hide && 'hidden'}`}>
                                     <Image src={'/icons/upload-icon.svg'} className="mx-auto h-16 w-16" height={48} width={48} />
                                     <h3 className="mt-2 text-lg font-medium">
@@ -116,26 +145,8 @@ export const CreateEventButton = () => {
                                     {errors.name && <div className="text-red-600 text-sm mt-2">{errors.name.message}</div>}
                                 </div>
                                 <div className="w-full">
-                                    {/* <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
-                                        Event Category <span className="text-red-600">*</span>
-                                    </label>
-                                    <select
-                                        name="category" id="category"
-                                        className={`${errors.category && "border-red-700 focus:border-red-600"} mb-2 classic shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
-                                        {...register("category", {
-                                            required: "category is required", validate: (v) => {
-                                                if (v === "0") {
-                                                    return "please select category";
-                                                }
-                                            }
-                                        })}
-                                    >
-                                        <option value="0">Choose event category</option>
-                                        <option value="1">Conference</option>
-                                        <option value="2">Social Event</option>
-                                        <option value="3">Sport</option>
-                                    </select> */}
                                     <SelectModify
+                                        func={handleCategorySelect}
                                         {...register("category")}
                                         label={`!font-medium`}
                                         height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
@@ -262,11 +273,11 @@ export const CreateEventButton = () => {
                             <div className="flex items-center gap-5">
                                 <p>Create this event as :</p>
                                 <div>
-                                    <ToogleBtn />
+                                    <ToogleBtn func={handleEventType} />
                                 </div>
                             </div>
                             <div className="flex justify-end space-x-3">
-                                <div onClick={() => document.getElementById("my_modal_event").close()} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
+                                <div onClick={() => document.getElementById("my_modal_event_create").close()} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
                                 <button type="submit" className="save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
                                     <AddSquare size="20" color="#FFFFFF" variant="Bold" />
                                     <span className="h-12 text-white flex justify-center items-center">Create</span>

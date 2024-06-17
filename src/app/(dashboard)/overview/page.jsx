@@ -1,16 +1,13 @@
 import { OverviewCardComponent } from "../_components/OverviewCardComponent"
 import { BarChartComponent } from "../_components/BarChartComponent"
 import CreateCategoryButton from "../_components/Action/CreateCategoryButton"
-import { CategoryDeleteAction } from "../_components/Action/CategoryDeleteAction"
-import { CategoryEditAction } from "../_components/Action/CategoryEditAction"
-import { Pagination } from "../_components/Pagination"
 import { Getstart } from "../_components/Action/GetstartBtn"
 import { getAllCategory, getOverviewData } from "@/services/dashboard/overviewService"
 import { OverviewTable } from "../_components/OverviewTable"
 
 const Page = async () => {
     const data = await getOverviewData();
-    // const allCategory = await getAllCategory();
+    const allCategory = await getAllCategory();
     const convertToObjectArray = (data) => {
         const mappings = {
             eventCount: { title: "Event Count", logo: "event" },
@@ -28,10 +25,10 @@ const Page = async () => {
         };
     }
     const originalObject = {
-        eventCount: data.payload.eventCount,
-        publishEvent: data.payload.publishEvent,
-        totalAttendee: data.payload.totalAttendee,
-        member: data.payload.member
+        eventCount: data?.payload?.eventCount,
+        publishEvent: data?.payload?.publishEvent,
+        totalAttendee: data?.payload?.totalAttendee,
+        member: data?.payload?.member
     };
     const result = convertToObjectArray(originalObject);
     let topCardData = result;
@@ -71,14 +68,14 @@ const Page = async () => {
                     <div className="absolute -bottom-72 rotate-[13.5deg] -right-12 h-80 w-80 bg-[#9782FF] rounded-radius64 z-0"></div>
                 </div>
             </section>
-            <section className="w-full">
+            <section className="w-full h-fit">
                 <div className="space-y-8 rounded-3xl p-6 border-2 border-slate-100 bg-white">
                     <div className="flex justify-between items-center">
                         <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Event Category</h2>
                         <CreateCategoryButton />
                     </div>
                     <div className="w-full overflow-scroll">
-                        <OverviewTable />
+                        <OverviewTable server={allCategory} />
                     </div>
                 </div>
             </section>

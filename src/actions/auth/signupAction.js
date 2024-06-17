@@ -1,14 +1,16 @@
+
 "use server";
 
 import {registerService} from "@/services/login-signup/auth.service";
-export default async function signupAction(formRegister) {
 
+export default async function signupAction(formRegister) {
     const newUser = {
         adminName: formRegister.name,
-        email: formRegister.email,
+        phone: formRegister.phoneNumber,
         password: formRegister.password,
         confirmPassword: formRegister.confirmPassword,
-        phone: formRegister.phoneNumber
+        email: formRegister.email
     };
     await registerService(newUser);
+    return newUser;
 }

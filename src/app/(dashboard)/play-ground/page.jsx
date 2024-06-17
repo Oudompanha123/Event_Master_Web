@@ -2,7 +2,7 @@
 
 import { MegaImage } from "@/components/MegaImage"
 import { ToogleBtn } from "../_components/Action/ToogleBtn"
-import { Pagination } from "../_components/Pagination"
+import { Pagination } from "../_components/paginate/Pagination"
 
 const Page = () => {
     return (

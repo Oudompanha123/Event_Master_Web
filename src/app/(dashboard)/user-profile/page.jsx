@@ -9,7 +9,7 @@ import { getAllProfileMember } from '@/services/profile/profile.service';
 
 async function page() {
   const getAllMember = await getAllProfileMember();
-  console.log("Get all member", getAllMember)
+  // console.log("Get all member", getAllMember)
   return (
     <>
     <div className='p-2 rounded-2xl relative'>
