@@ -12,7 +12,7 @@ export const OverviewTable = ({ server }) => {
 
     const getData = async () => {
         try {
-            const data = await getAllCategoryAction(navigate);
+            const data = await getAllCategoryAction(navigate); //2
             setData(data);
         } catch (err) {
             console.log(`something error while fetching ${err}`)

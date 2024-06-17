@@ -107,3 +107,25 @@ body {
 @keyframes l13{ 
   100%{transform: rotate(1turn)}
 }
+
+.rnf-notification-cell__unread-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px !important;
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+  background-color: 6px;
+  border: 1px solid 6px;
+}
+
+.rnf-notification-feed-popover__inner {
+  border-radius: 16px !important;
+}
+
+.rnf-dropdown 
+select,
+.rnf-dropdown 
+svg {
+  display: none !important;
+}
