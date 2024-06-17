@@ -22,7 +22,7 @@ export const getAllCategory = async (page) => {
     )
     const data = await res.json();
     return data
-} 
+}
 
 export const insertCategory = async (userInput) => {
     const header = await headerToken()
@@ -84,4 +84,17 @@ export const allCategory = async () => {
     )
     const data = await res.json();
     return data
+}
+
+export const storeImageService = async (image) => {
+    try {
+        const res = await fetch(`${process.env.API_URL}file`, {
+            method: 'POST',
+            body: image,
+        })
+        const data = await res.json();
+        return data
+    } catch (err) {
+        console.log(`service error : ${err}`)
+    }
 }

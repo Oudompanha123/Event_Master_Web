@@ -1,6 +1,6 @@
 'use server'
 
-import { allCategory, createEventService, getAllCategory, insertCategory, updateCategory } from "@/services/dashboard/overviewService";
+import { allCategory, createEventService, getAllCategory, insertCategory, storeImageService, updateCategory } from "@/services/dashboard/overviewService";
 import { deleteCategory } from "@/services/dashboard/overviewService";
 import { getAllMember } from "@/services/notification/notificationService";
 import { revalidateTag } from "next/cache";
@@ -54,5 +54,10 @@ export const addNewEventAction = async (data) => {
 
 export const allCategoryAction = async () => {
     const data = await allCategory();
+    return data
+}
+
+export const storeImageAction = async (image) => {
+    const data = await storeImageService(image)
     return data
 }

@@ -1,15 +1,4 @@
-"use client";
-
-import { useRef, useState } from "react";
-import { TbEdit } from "react-icons/tb";
-import { LiaUserEditSolid } from "react-icons/lia";
-import { BsFillPlusSquareFill } from "react-icons/bs";
-import Image from "next/image";
-import {useForm} from "react-hook-form";
-import FormComponent from "./_components/FormComponent";
-import styles from "./_components/FormComponent"
 import NewFormComponent from "./_components/NewFormComponent";
-
 
 const Page = () => {
   return (

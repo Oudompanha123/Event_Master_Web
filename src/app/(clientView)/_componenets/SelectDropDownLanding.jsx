@@ -27,17 +27,15 @@ export const SelectDropdownLanding = ({ height, label, func }) => {
     }, [])
 
     const handleChange = (option) => {
-        if (selected?.id === option.id) {
+        console.log(option)
+        if (selected === option) {
             setSelected(null);
         } else {
             setSelected(option);
         }
     };
 
-    const handleSelect = (v) => {
-        func(v)
-        alert(v)
-    }
+    const handleSelect = (v) => func(v)
 
     return (
         <div className="w-auto">
@@ -55,7 +53,7 @@ export const SelectDropdownLanding = ({ height, label, func }) => {
                                 }`}
                         >
                             <span className="block truncate ">
-                                {selected ? selected.name : placeholder}
+                                {selected ? selected : placeholder}
                             </span>
                             <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-3">
                                 <Image
@@ -74,7 +72,7 @@ export const SelectDropdownLanding = ({ height, label, func }) => {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >
-                            <Listbox.Options className="absolute z-10 mt-1  overflow-auto rounded-2xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                            <Listbox.Options className="absolute z-10 mt-1 h-[250px] overflow-auto rounded-2xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                 {options.map((option) => (
                                     <Listbox.Option
                                         onClick={() => handleSelect(option)}

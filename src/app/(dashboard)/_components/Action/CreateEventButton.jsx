@@ -6,10 +6,11 @@ import { ToogleBtn } from "./ToogleBtn";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { SelectModify } from "./SelectModify";
-import { addNewCategoryAction, addNewEventAction } from "@/actions/categoryAction";
+import { addNewCategoryAction, addNewEventAction, storeImageAction } from "@/actions/categoryAction";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/lib/firebase";
 import { v4 } from 'uuid';
+import { storeImageService } from "@/services/dashboard/overviewService";
 
 export const CreateEventButton = () => {
     const [events, setEvent] = useState({
@@ -21,13 +22,12 @@ export const CreateEventButton = () => {
         address: '',
         description: '',
     })
- 
+
 
     const handleInput = (e) => {
         e.persist();
-        setEvent({...events, [e.target.name]: e.target.value});
+        setEvent({ ...events, [e.target.name]: e.target.value });
     }
-    console.log(events);
 
     const saveEvents = (e) => {
         e.preventDefault();
@@ -41,17 +41,7 @@ export const CreateEventButton = () => {
             description: events.description,
         }
     }
-    // axios.post(`http://34.124.203.109:8081/api/events`, data)
-    //     .then(res=>{
-    //         alert(res.data.message);
-    //     })
-    //     .catch(function(error){
-    //         if(error.response.status === 422){
-    //             setInputError.data
-    //         }
-    //     })
-    //     ;
-    
+
     const [hide, setHide] = useState(false);
 
     const handleDragOver = (e) => {
@@ -120,6 +110,8 @@ export const CreateEventButton = () => {
 
     const handleEventType = (type) => setIsPublic(!type)
 
+    const currentTime = new Date();
+
     //firebase research code
     const [uploading, setUploading] = useState(true);
     const [imageUrl, setImageUrl] = useState(null);
@@ -145,24 +137,28 @@ export const CreateEventButton = () => {
             cateId = eventCategory.categoryId;
         }
 
-        //firebase
-        setUploading(false)
-        if (imageLink == null) return;
-        const imageRef = ref(storage, `${imageLink.name + v4()}`);
-        await uploadBytes(imageRef, imageLink)
-        setUploading(true)
-        const url = await getDownloadURL(imageRef);
-        setUploadedImage(url);
-        //firebase
+        let formData = new FormData()
+        formData.append("file", imageLink)
+        const uploadImage = await storeImageAction(formData)
 
+        //firebase
+        // setUploading(false)
+        // if (imageLink == null) return;
+        // const imageRef = ref(storage, `${imageLink.name + v4()}`);
+        // await uploadBytes(imageRef, imageLink)
+        // setUploading(true)
+        // const url = await getDownloadURL(imageRef);
+        // setUploadedImage(url);
+        //firebase
+        
         const submitData = {
-            eventName: data.name,
+            eventName: data.eventName,
             description: data.description,
             startDate: data.startDate,
             endDate: data.endDate,
             duration: diffChange,
             address: data.address,
-            poster: `${url}~.png`,
+            poster: uploadImage?.payload?.fileUrl,
             isPost: isPublic,
             maxAttendee: data.maxAttendee,
             categoryId: cateId
@@ -246,8 +242,11 @@ export const CreateEventButton = () => {
                                     <input
                                         {...register("startDate", {
                                             required: "start date is required",
+                                            validate: {
+                                                isNotPastDate: value => new Date(value) >= currentTime || "Start date cannot be in the past"
+                                            }
                                         })}
-                                        value={events.startDate}
+                                        value={startDate}
                                         // onChange={handleInput}
                                         type="datetime-local"
                                         name="startDate"
@@ -272,7 +271,7 @@ export const CreateEventButton = () => {
                                                 }
                                             }
                                         })}
-                                        value={events.endDate}
+                                        value={endDate}
                                         // onChange={handleInput}
                                         type="datetime-local"
                                         name="endDate"
