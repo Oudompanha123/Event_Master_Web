@@ -49,7 +49,6 @@ export const SidebarComponent = ({ className }) => {
         }
     }, [session, status]);
 
-    console.log("check data", data);
 
     return (
         <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-5 border-r-1px sticky top-0 h-screen`}>

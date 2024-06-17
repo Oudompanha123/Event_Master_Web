@@ -20,8 +20,6 @@ export const NotificationMenu = () => {
     let userInfo = jwtDecode(data?.user?.token);
     const [isClient, setIsClient] = useState(false);
 
-    console.log(userInfo, 'check user info')
-
     useEffect(() => {
         setIsClient(true);
     }, []);
