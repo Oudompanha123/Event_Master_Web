@@ -80,7 +80,7 @@ export const NavbarComponent = ({ className }) => {
                     {/* <NotificationMenu /> */}
                     <Image src={'/icons/icon.svg'} width={24} height={24} />
                 </div>
-                <NotificationCard />
+                {/* <NotificationCard /> */}
                 <div tabIndex={0} role="button" className="bg-[#F7F9FB] p-1 rounded-full hidden cursor-pointer lg:block">
                     <NotificationMenu />
                 </div>

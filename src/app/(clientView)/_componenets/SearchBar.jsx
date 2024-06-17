@@ -1,6 +1,6 @@
 'use client'
 
-import { callingService } from "@/actions/findEventAction"
+import { callingServiceAction } from "@/actions/findEventAction"
 import Link from "next/link"
 import { useState } from "react"
 import { SelectDropdownLanding } from "./SelectDropDownLanding"
@@ -14,11 +14,11 @@ export const SearchBar = () => {
     const [dropDownValue, setDropDownValue] = useState('');
     const [statusValue, setStatusValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const categoryArr = new Array(findData?.payload?.length).fill(0)
+    const categoryArr = new Array(findData?.payload?.length).fill(0);
 
     const fetchData = async (event) => {
         event.preventDefault();
-        if (search === '' && startTime === '' && endTime === '' && statusValue === '') {
+        if (search === '' && startTime === '' && endTime === '' && statusValue === '' && dropDownValue === '') {
             setFindData(undefined);
             return;
         }
@@ -30,7 +30,7 @@ export const SearchBar = () => {
             status: statusValue,
             categoryName: dropDownValue
         };
-        const data = await callingService(searchData); //move to action for cors
+        const data = await callingServiceAction(searchData); //move to action for cors
         setFindData(data);
         setIsLoading(false)
         setSearch('')
@@ -120,6 +120,8 @@ export const SearchBar = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
                         {categoryArr.map((x, index) => (
                             findData?.payload[index]?.events?.map((x, index) => {
+                                const imageUrl = x?.poster;
+                                const isValidUrl = imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://');
                                 const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
                                 const inputDate = x?.startDate;
                                 const formattedDate = formatDate(inputDate);
@@ -128,7 +130,7 @@ export const SearchBar = () => {
                                     <div key={index} className="shadow-md rounded-3xl">
                                         <div className="relative">
                                             <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
-                                                <img src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f" alt="event-image" className="rounded-t-3xl" />
+                                                <img src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`} alt="event-image" className="rounded-t-3xl" />
                                             </div>
                                             {/* <Image src={img} width={500} height={300} className="rounded-t-3xl h-[300px] w-full object-cover" alt="racingImage" /> */}
                                             <div className="absolute top-0 right-0 p-6 ">
@@ -162,7 +164,8 @@ export const SearchBar = () => {
                                     </div>
                                 )
                             })
-                        ))}
+                        )
+                        )}
                     </div>
                 }
             </section>
