@@ -28,6 +28,16 @@ export const SidebarComponent = ({ className }) => {
             setData({
                 "data": [
                     {
+                        "link": "/members",
+                        "name": "Members",
+                        "icon": "members"
+                    },
+                    {
+                        "link": "/assets",
+                        "name": "Assets",
+                        "icon": "assets"
+                    },
+                    {
                         "link": "/events",
                         "name": "Events",
                         "icon": "events"

@@ -1,32 +1,33 @@
-"use client";
+'use client';
 
-import {useState} from 'react';
-import {useForm} from 'react-hook-form';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Image from 'next/image';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import {getOrganizationDetails} from "@/services/login-signup/org.service";
+import { getOrganizationDetails } from "@/services/login-signup/org.service";
 import signupAction from "@/actions/auth/signupAction";
-import {registerUserAction} from "@/actions/auth/registerUserAction";
+import { registerUserAction } from "@/actions/auth/registerUserAction";
 
 const SignupComponent = () => {
-  const initialData = {
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    phoneNumber: "",
-    organizationCode: "",
-  };
+    const initialData = {
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        phoneNumber: '',
+        organizationCode: '',
+    };
 
-  const [isAdminSelected, setIsAdminSelected] = useState(false);
-  const [isLocked, setIsLocked] = useState(true);
-  const [isKeyLocked, setIsKeyLocked] = useState(true);
+    const [isAdminSelected, setIsAdminSelected] = useState(false);
+    const [isLocked, setIsLocked] = useState(true);
+    const [isKeyLocked, setIsKeyLocked] = useState(true);
+    const [orgDetails, setOrgDetails] = useState(null);
 
     const {
         register,
         handleSubmit,
-        formState: {errors, isValid},
+        formState: { errors, isValid },
         watch,
         reset,
     } = useForm({
@@ -34,24 +35,24 @@ const SignupComponent = () => {
         defaultValues: initialData,
     });
 
-  const handleAdminClick = () => {
-    setIsAdminSelected(true);
-    reset(initialData);
-  };
+    const handleAdminClick = () => {
+        setIsAdminSelected(true);
+        reset(initialData);
+    };
 
-  const handleUserClick = () => {
-    setIsAdminSelected(false);
-    reset(initialData);
-  };
+    const handleUserClick = () => {
+        setIsAdminSelected(false);
+        reset(initialData);
+    };
 
-  const handleLockClick = () => setIsLocked((prevState) => !prevState);
-  const handleKeyLockClick = () => setIsKeyLocked((prevState) => !prevState);
+    const handleLockClick = () => setIsLocked((prevState) => !prevState);
+    const handleKeyLockClick = () => setIsKeyLocked((prevState) => !prevState);
 
-  const router = useRouter();
+    const router = useRouter();
 
     const onSubmit = async (data) => {
-        console.log("Data: " ,data);
-        if(data?.organizationCode) {
+        console.log("Data: ", data);
+        if (data?.organizationCode) {
             await registerUserAction(data);
         } else {
             await signupAction(data);
@@ -220,7 +221,7 @@ const SignupComponent = () => {
                                 className="w-full col-span-6 flex flex-col h-full gap-6 md:flex-row md:flex-1 xl:justify-between">
                                 <div className="grid grid-rows-1 w-full">
                                     <label htmlFor="phone-number"
-                                           className="text-sm font-medium primary-text block mb-2">
+                                        className="text-sm font-medium primary-text block mb-2">
                                         Phone Number <span className="text-red-600 text-sm">*</span>
                                     </label>
                                     <input
@@ -238,7 +239,7 @@ const SignupComponent = () => {
                                 </div>
                                 <div className="w-full">
                                     <label htmlFor="organization-code"
-                                           className="text-sm font-medium primary-text block mb-2 xl:col-span-3">
+                                        className="text-sm font-medium primary-text block mb-2 xl:col-span-3">
                                         Organization Code <span className="text-red-600 text-sm">*</span>
                                     </label>
                                     <input
@@ -301,9 +302,9 @@ const SignupComponent = () => {
                                                         <p className="font-semibold">Cancel</p>
                                                     </button>
                                                     <button className="border w-[110px] bg-[#8C59FE] h-10 rounded-3xl"
-                                                            value="confirm">
+                                                        value="confirm">
                                                         <Link href={`/verify-register`}
-                                                              className="text-white font-semibold ">
+                                                            className="text-white font-semibold ">
                                                             Confirm
                                                         </Link>
                                                     </button>

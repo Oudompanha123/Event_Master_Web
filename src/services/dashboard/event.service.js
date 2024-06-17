@@ -1,4 +1,15 @@
-import { data } from "autoprefixer";
+export const getEventByIdService = async (id) => {
+    const res = await fetch(`${process.env.API_URL}events`,
+        {
+            headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDcsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImhWZzFsVyIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDcsIm1lbWJlcklkIjo2NSwic3ViIjoibml0YWx5MDg2QGdtYWlsLmNvbSIsImlhdCI6MTcxODIxMTY0NiwiZXhwIjoxNzE5MDc1NjQ2fQ.-8kl8QdWxyr4fWncAhKRUvyDOfWOJpZbQJ62zzIVLZ4',
+                'Content-Type': 'application/json'
+            }
+        }
+    )
+    const data = await res.json();
+    return data
+}
 
 
 export const getAllEventsService = async () => {
@@ -24,7 +35,7 @@ export const deleteEventById = async (eventId) => {
                 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDcsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImhWZzFsVyIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDcsIm1lbWJlcklkIjo2NSwic3ViIjoibml0YWx5MDg2QGdtYWlsLmNvbSIsImlhdCI6MTcxODI2NDIxMiwiZXhwIjoxNzE5MTI4MjEyfQ.dD5WOgQP3q82Uxu2rgqaN0s-qGuGqzwHcbKymRAsKWM',
             }
         }
-    ) 
+    )
 }
 
 export const getEventByNameService = async (eventName) => {
@@ -55,7 +66,7 @@ export const findEvent = async (searchData) => {
 }
 
 export const createEventService = async (newEvent) => {
-    console.log("new event",newEvent)
+    console.log("new event", newEvent)
     const res = await fetch(`${process.env.API_URL}events`,
         {
             next: { tags: 'events' },
@@ -72,9 +83,9 @@ export const createEventService = async (newEvent) => {
 }
 
 
-export const updateEventService = async (data,id) => {
+export const updateEventService = async (data, id) => {
     try {
-        const res = await fetch(`${process.env.API_URL}events/${id}`,{
+        const res = await fetch(`${process.env.API_URL}events/${id}`, {
             method: 'PUT',
             headers: {
                 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDcsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImhWZzFsVyIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDcsIm1lbWJlcklkIjo2NSwic3ViIjoibml0YWx5MDg2QGdtYWlsLmNvbSIsImlhdCI6MTcxODI0MzE2MSwiZXhwIjoxNzE5MTA3MTYxfQ.wfXJ-AcYZ08shSfRfszEqNin4mHeq0wEaVGnA1nHSG4',
@@ -83,15 +94,15 @@ export const updateEventService = async (data,id) => {
             body: JSON.stringify({
                 data
             }),
-    })
-    if (!res.ok) {
-        const errorText = await res.text();
-        throw (`Error: ${errorText}`);
-      }
-  
-      const dataAgenda = await res.json();
-      return dataAgenda;
-    }catch (error) {
+        })
+        if (!res.ok) {
+            const errorText = await res.text();
+            throw (`Error: ${errorText}`);
+        }
+
+        const dataAgenda = await res.json();
+        return dataAgenda;
+    } catch (error) {
         console.error("There was an error updating the event:", error);
         throw error;
     };
