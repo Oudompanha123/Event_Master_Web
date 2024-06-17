@@ -22,6 +22,8 @@ export async function middleware(request) {
             if (!request.nextUrl.pathname.startsWith("/events") &&
                 !request.nextUrl.pathname.startsWith("/event-detail/") &&
                 !request.nextUrl.pathname.startsWith("/user-profile") &&
+                !request.nextUrl.pathname.startsWith("/members") &&
+                !request.nextUrl.pathname.startsWith("/assets") &&
                 !request.nextUrl.pathname.startsWith("/organization-profile")
             ) {
                 return NextResponse.redirect(new URL("/denies", request.url));
