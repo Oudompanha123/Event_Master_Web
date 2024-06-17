@@ -11,6 +11,12 @@ export const getEventById = async (id) => {
     return data
 }
 
+export const getEventByCateNameLoading = async ({ name, page }) => {
+    const res = await fetch(`${process.env.API_URL}landing-page/filter/${name}?offset=${page}&limit=8`)
+    const data = await res.json();
+    return data
+}
+
 export const getEventByCateName = async (name) => {
     const res = await fetch(`${process.env.API_URL}landing-page/filter/${name}`)
     const data = await res.json();

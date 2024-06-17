@@ -889,6 +889,13 @@
     phoenix "1.6.16"
     zustand "^3.7.2"
 
+"@knocklabs/node@^0.6.11":
+  version "0.6.11"
+  resolved "https://registry.yarnpkg.com/@knocklabs/node/-/node-0.6.11.tgz#dbae6602ba7861a0f5605a154664e08a000aad4a"
+  integrity sha512-eCln5vHE/QTonDAK13ci5RCJ9el5snq/NQeAAmbVyZI7CsrHPUGW2sEOH6D9z/HyEKYki2sUHbTC0xG383EMhg==
+  dependencies:
+    jose "^5.2.0"
+
 "@knocklabs/react-core@^0.2.21":
   version "0.2.21"
   resolved "https://registry.yarnpkg.com/@knocklabs/react-core/-/react-core-0.2.21.tgz#951d46f2c212ec0eb8a4075dc1e68e2fd39de529"
@@ -2114,6 +2121,11 @@ jose@^4.15.5:
   resolved "https://registry.yarnpkg.com/jose/-/jose-4.15.5.tgz#6475d0f467ecd3c630a1b5dadd2735a7288df706"
   integrity sha512-jc7BFxgKPKi94uOvEmzlSWFFe2+vASyXaKUpdQKatWAESU2MWjDfFf0fdfc83CDKcA5QecabZeNLyfhe3yKNkg==
 
+jose@^5.2.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-5.4.0.tgz#4f6c2357e7b3cd4bc10ec65bb29e677d7adfbc84"
+  integrity sha512-6rpxTHPAQyWMb9A35BroFl1Sp0ST3DpPcm5EVIxZxdH+e0Hv9fwhyB3XLKFUcHNpdSDnETmBfuPPTTlYz5+USw==
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -2563,6 +2575,11 @@ react-icons@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-5.2.1.tgz#28c2040917b2a2eda639b0f797bff1888e018e4a"
   integrity sha512-zdbW5GstTzXaVKvGSyTaBalt7HSfuK5ovrzlpyiWHAFXndXTdd/1hdDHI4xBM1Mn7YriT6aqESucFl9kEXzrdw==
+
+react-intersection-observer@^9.10.3:
+  version "9.10.3"
+  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-9.10.3.tgz#70d21ad3c3719ea4fb4eb5a543b9755d31de3b8d"
+  integrity sha512-9NYfKwPZRovB6QJee7fDg0zz/SyYrqXtn5xTZU0vwLtLVBtfu9aZt1pVmr825REE49VPDZ7Lm5SNHjJBOTZHpA==
 
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
