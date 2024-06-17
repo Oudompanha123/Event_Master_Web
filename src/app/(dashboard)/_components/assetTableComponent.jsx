@@ -24,7 +24,7 @@ export const AssetTableComponent = async ({ querySearch }) => {
         </tr>
       </thead>
       <tbody className="border rounded-radiusUi w-full bg-white ">
-        {querySearch.payload.map((asset, index) => (
+        {querySearch?.payload?.map((asset, index) => (
           <tr
             key={asset.assetId}
             className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border"
