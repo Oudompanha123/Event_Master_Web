@@ -6,7 +6,6 @@ export const EventList = ({ title, data }) => {
     if (data.payload == null) {
         return
     }
-    console.log('check landing page', data)
     return (
         <div>
             <TitleComponent title={title} />

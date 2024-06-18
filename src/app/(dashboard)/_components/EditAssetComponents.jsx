@@ -21,7 +21,7 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
   } = useForm();
 
   const onSubmit = async (e) => {
-   // console.log("data", e);
+    // console.log("data", e);
     await handleUpdateAsset(assetEdit, e);
     reset();
     document.getElementById(`my_modal_updateasset${assetEdit}`).close();
@@ -109,7 +109,7 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                     {...register("unit", {
                       required: "unit is required",
                     })}
-                    onChange={() => setHandleUnit(e.target.value)}
+                    // onChange={() => setHandleUnit(e.target.value)}
                   />
                   {errors.unit && (
                     <div className="text-red-600 text-sm">

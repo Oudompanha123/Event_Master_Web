@@ -20,8 +20,6 @@ export const NavbarComponent = ({ className }) => {
     }
     const userRole = userInfo?.role;
 
-    console.log("check role", userRole)
-
     return (
         <div className={`${className} justify-between sticky top-0 z-50 bg-white flex lg:justify-between items-center py-3 px-3 lg:px-14 border-b-[1px]`}>
             {!pathname.startsWith('/event-detail') && !pathname.startsWith('/attendees') ?

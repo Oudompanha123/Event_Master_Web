@@ -4,10 +4,20 @@ import CreateCategoryButton from "../_components/Action/CreateCategoryButton"
 import { Getstart } from "../_components/Action/GetstartBtn"
 import { getAllCategory, getOverviewData } from "@/services/dashboard/overviewService"
 import { OverviewTable } from "../_components/OverviewTable"
+import { getServerSession } from "next-auth"
+import { authOption } from "@/app/api/auth/[...nextauth]/route"
+import { jwtDecode } from "jwt-decode"
 
 const Page = async () => {
+    const session = await getServerSession(authOption);
+    let userInfo = jwtDecode(session?.user?.token);
+    const userRole = userInfo.role;
+    console.log("chekc user info", userRole)
     const data = await getOverviewData();
     const allCategory = await getAllCategory();
+
+    console.log(data, 'check data')
+
     const convertToObjectArray = (data) => {
         const mappings = {
             eventCount: { title: "Event Count", logo: "event" },
@@ -20,7 +30,7 @@ const Page = async () => {
             payload: Object.entries(data).map(([key, value]) => ({
                 logo: mappings[key].logo,
                 title: mappings[key].title,
-                count: value.toLocaleString()
+                count: value?.toLocaleString()
             }))
         };
     }
@@ -62,8 +72,8 @@ const Page = async () => {
                         Impeccable Execution, and the Ability to Craft Timeless
                         Experiences That Will Resonate Long After the Occasion.
                     </p>
-                    <Getstart className={`absolute z-20 mt-6`} />
-                    <Getstart className={`opacity-0 mt-6`} />
+                    <Getstart className={`absolute z-20 mt-6 ${userRole == 'ROLE_USER' && 'hidden'}`} />
+                    <Getstart className={`opacity-0 mt-6 ${userRole == 'ROLE_USER' && 'hidden'}`} />
                     <div className="absolute -bottom-56 rotate-[13.5deg] right-0 h-80 w-80 bg-[#AD9CFF] rounded-radius64 z-0"></div>
                     <div className="absolute -bottom-72 rotate-[13.5deg] -right-12 h-80 w-80 bg-[#9782FF] rounded-radius64 z-0"></div>
                 </div>
@@ -72,10 +82,12 @@ const Page = async () => {
                 <div className="space-y-8 rounded-3xl p-6 border-2 border-slate-100 bg-white">
                     <div className="flex justify-between items-center">
                         <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Event Category</h2>
-                        <CreateCategoryButton />
+                        <div className={`${userRole == 'ROLE_USER' ? 'hidden' : 'block'}`}>
+                            <CreateCategoryButton />
+                        </div>
                     </div>
                     <div className="w-full overflow-scroll">
-                        <OverviewTable server={allCategory} />
+                        <OverviewTable server={allCategory} role={userRole} />
                     </div>
                 </div>
             </section>

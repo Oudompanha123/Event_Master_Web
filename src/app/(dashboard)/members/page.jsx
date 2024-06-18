@@ -192,7 +192,9 @@ const MemberPage = () => {
                       }}
                     >
                       {getRoleDisplayName(member.role)}
-                      {member.role !== "ROLE_ADMIN" && <FaAngleDown className=" right-0" />}
+                      {member.role !== "ROLE_ADMIN" && (
+                        <FaAngleDown className=" right-0" />
+                      )}
                     </div>
                     {activeDropdown === member.id &&
                       member.role !== "ROLE_ADMIN" && (

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { getAllCategoryAction } from "@/actions/categoryAction";
 import { RPaginate } from "./paginate/RPaginate";
 
-export const OverviewTable = ({ server }) => {
+export const OverviewTable = ({ server, role }) => {
     const [data, setData] = useState(server);
     const [navigate, setNavigate] = useState();
 
@@ -37,7 +37,7 @@ export const OverviewTable = ({ server }) => {
                         <th className="px-5 py-2 font-medium">Name</th>
                         <th className="px-5 py-2 font-medium">Created At</th>
                         <th className="px-5 py-2 font-medium">Created By</th>
-                        <th className="px-5 py-2 font-medium rounded-r-radiusUi">Action</th>
+                        <th className={`${role == 'ROLE_USER' && 'hidden'} px-5 py-2 font-medium rounded-r-radiusUi`}>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,7 +52,7 @@ export const OverviewTable = ({ server }) => {
                                 <td className="px-5 py-2 text-xs xl:text-base">{x?.categoryName}</td>
                                 <td className="px-5 py-2 text-xs xl:text-base">{formated}</td>
                                 <td className="px-5 py-2 text-xs xl:text-base">{x?.createBy}</td>
-                                <td className="px-5 py-2 text-xs xl:text-base rounded-r-radiusUi">
+                                <td className={`${role == 'ROLE_USER' && 'hidden'} px-5 py-2 text-xs xl:text-base rounded-r-radiusUi`}>
                                     <div className="flex items-center gap-2 lg:gap-4">
                                         <CategoryDeleteAction cateId={x?.categoryId} />
                                         <CategoryEditAction cateId={x?.categoryId} name={x?.categoryName} />
