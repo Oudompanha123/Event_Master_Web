@@ -6,10 +6,10 @@ import {
 } from "@/services/assetService/assetService";
 
 export const AssetTableComponent = async ({ querySearch }) => {
+ 
   const searchasset = await searchAssetByName(querySearch);
   const assets = await getAllAssetService();
-  querySearch = "" ? assets : searchasset;
-
+  const data = (querySearch == "" || querySearch == null ? assets : searchasset)
   return (
     <table className="w-full px-1 border-separate border-spacing-y-3 mt-0">
       <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-tableBg uppercase">
@@ -24,7 +24,7 @@ export const AssetTableComponent = async ({ querySearch }) => {
         </tr>
       </thead>
       <tbody className="border rounded-radiusUi w-full bg-white ">
-        {querySearch.payload?.map((asset, index) => (
+        {data?.payload?.map((asset, index) => (
           <tr
             key={asset.assetId}
             className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border"

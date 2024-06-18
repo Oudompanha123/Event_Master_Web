@@ -33,6 +33,7 @@
     "react-paginate": "^8.2.0",
     "react-search-autocomplete": "^8.5.2",
     "react-select": "^5.8.0",
+    "react-toastify": "^10.0.5",
     "react18-input-otp": "^1.1.4",
     "sharp": "^0.33.4",
     "swiper": "^11.1.3",
