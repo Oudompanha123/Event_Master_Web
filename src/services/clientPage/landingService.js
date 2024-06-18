@@ -30,8 +30,13 @@ export const getPopularEvent = async () => {
 }
 
 export const findEvent = async (searchData) => {
-    console.log(searchData.categoryName, 'check eventname')
-    const res = await fetch(`${process.env.API_URL}landing-page/search?eventName=${searchData.eventName}&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}&status=${searchData.status}&categoryName=${searchData.categoryName}`)
+    searchData.categoryName ? console.log('have data') : console.log('no data')
+    let res;
+    if (searchData.categoryName) {
+        res = await fetch(`${process.env.API_URL}landing-page/search?eventName=${searchData.eventName}&categoryName=${searchData.categoryName}&status=${searchData.status}&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}`)
+    } else {
+        res = await fetch(`${process.env.API_URL}landing-page/search?eventName=${searchData.eventName}&status=${searchData.status}&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}`)
+    }
     const data = await res.json()
     return data
 }

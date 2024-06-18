@@ -19,6 +19,5 @@ export const handleSearch = async (input) => {
 
 export const callingServiceAction = async (searchData) => {
     const data = await findEvent(searchData);
-    console.log('inside action')
     return data
 }

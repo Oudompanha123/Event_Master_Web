@@ -5,6 +5,8 @@ import Link from "next/link"
 import { useState } from "react"
 import { SelectDropdownLanding } from "./SelectDropDownLanding"
 import { SelectStatusLanding } from "./SelectStatusLanding"
+import { useRouter } from "next/navigation"
+import { TitleComponent } from "./TitleComponent"
 
 export const SearchBar = () => {
     const [findData, setFindData] = useState();
@@ -15,11 +17,13 @@ export const SearchBar = () => {
     const [statusValue, setStatusValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const categoryArr = new Array(findData?.payload?.length).fill(0);
+    const router = useRouter()
 
     const fetchData = async (event) => {
         event.preventDefault();
         if (search === '' && startTime === '' && endTime === '' && statusValue === '' && dropDownValue === '') {
             setFindData(undefined);
+            router.push(`/`, undefined, { shallow: true });
             return;
         }
         setIsLoading(true)
@@ -30,7 +34,11 @@ export const SearchBar = () => {
             status: statusValue,
             categoryName: dropDownValue
         };
+        console.log('check search data', searchData)
         const data = await callingServiceAction(searchData); //move to action for cors
+        console.log(data.payload, 'check data in search')
+        router.push('/?search=true');
+        router.refresh();
         setFindData(data);
         setIsLoading(false)
         setSearch('')
@@ -117,58 +125,65 @@ export const SearchBar = () => {
             {/* searched data  */}
             <section>
                 {findData != undefined &&
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
-                        {categoryArr.map((x, index) => (
-                            findData?.payload[index]?.events?.map((x, index) => {
-                                const imageUrl = x?.poster;
-                                const isValidUrl = imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://');
-                                const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-                                const inputDate = x?.startDate;
-                                const formattedDate = formatDate(inputDate);
-                                const formated = formattedDate;
-                                return (
-                                    <div key={index} className="shadow-md rounded-3xl">
-                                        <div className="relative">
-                                            <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
-                                                <img src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`} alt="event-image" className="rounded-t-3xl" />
-                                            </div>
-                                            {/* <Image src={img} width={500} height={300} className="rounded-t-3xl h-[300px] w-full object-cover" alt="racingImage" /> */}
-                                            <div className="absolute top-0 right-0 p-6 ">
-                                                <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${x.isOpen ? 'text-blueUi' : 'text-redUi'}`}>
-                                                    {x.isOpen ? 'Open' : 'Close'}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="bg-white px-6 py-8 rounded-b-3xl flex flex-col justify-between h-[305.72px]">
-                                            <div className="space-y-4">
-                                                <div className="flex gap-3 items-center">
-                                                    <img className="h-10 w-10 rounded-full" src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/headway-F2KRf_QfCqw-unsplash.jpgbff2c2b3-3340-421f-b8bf-06cf683bb395?alt=media&token=19e9782d-0cca-4105-ab02-d627bd515ac" alt="orgImage" />
-                                                    <p className="text-sm font-medium">{x?.orgName}</p>
-                                                </div>
-                                                <div className="flex text-sm justify-between font-medium">
-                                                    <p>{x?.address}</p>
-                                                    <p>{formated}</p>
-                                                </div>
-                                                <div className="flex flex-col gap-3">
-                                                    <h2 className="text-lg lg:text-xl font-bold">{x?.eventName}</h2>
-                                                    <p className="text-sm lg:text-base line-clamp-2 font-medium">
-                                                        {x?.description}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="flex justify-between">
-                                                <Link href={`/detail/${x.eventId}`} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
-                                                <Link href={'/register'} className="text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text">Join Event</Link>
-                                            </div>
-                                        </div>
+                    <>
+                        {
+                            categoryArr.map((x, index) => (
+                                <>
+                                    <div className="mt-8">
+                                        <TitleComponent title={findData.payload[index].cateName} />
                                     </div>
-                                )
-                            })
-                        )
-                        )}
-                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
+                                        {findData.payload[index]?.events?.map((x, index) => {
+                                            const imageUrl = x?.poster;
+                                            const isValidUrl = imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://');
+                                            const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                                            const inputDate = x?.startDate;
+                                            const formattedDate = formatDate(inputDate);
+                                            const formated = formattedDate;
+                                            return (
+                                                <div key={index} className="shadow-md rounded-3xl">
+                                                    <div className="relative">
+                                                        <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
+                                                            <img src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`} alt="event-image" className="rounded-t-3xl" />
+                                                        </div>
+                                                        <div className="absolute top-0 right-0 p-6 ">
+                                                            <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${x.isOpen ? 'text-blueUi' : 'text-redUi'}`}>
+                                                                {x.isOpen ? 'Open' : 'Close'}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="bg-white px-6 py-8 rounded-b-3xl flex flex-col justify-between h-[305.72px]">
+                                                        <div className="space-y-4">
+                                                            <div className="flex gap-3 items-center">
+                                                                <img className="h-10 w-10 rounded-full" src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/headway-F2KRf_QfCqw-unsplash.jpgbff2c2b3-3340-421f-b8bf-06cf683bb395?alt=media&token=19e9782d-0cca-4105-ab02-d627bd515ac" alt="orgImage" />
+                                                                <p className="text-sm font-medium">{x?.orgName}</p>
+                                                            </div>
+                                                            <div className="flex text-sm justify-between font-medium">
+                                                                <p>{x?.address}</p>
+                                                                <p>{formated}</p>
+                                                            </div>
+                                                            <div className="flex flex-col gap-3">
+                                                                <h2 className="text-lg lg:text-xl font-bold">{x?.eventName}</h2>
+                                                                <p className="text-sm lg:text-base line-clamp-2 font-medium">
+                                                                    {x?.description}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex justify-between">
+                                                            <Link href={`/detail/${x.eventId}`} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
+                                                            <Link href={'/register'} className="text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text">Join Event</Link>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </>
+                            ))
+                        }
+                    </>
                 }
-            </section>
-        </div>
+            </section >
+        </div >
     )
 }
