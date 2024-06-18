@@ -1,48 +1,52 @@
+
+import { headerToken } from "@/app/api/auth/headerToken";
 // Get Attendee By EventId
-export const getAttendeeByEventIdService = async (id) => {
-  const res = await fetch(`${process.env.API_URL}attendees/${id}`, {
+export const getAttendeeByEventIdService = async (eventId) => {
+  // console.log("id in event for get attendee by event id:",id)
+  console.log("EVENT ID: ", eventId)
+  const header = await headerToken()
+  const res = await fetch(`${process.env.API_URL}attendees/${eventId}`, {
     cache: "no-store",
-    headers: {
-      Authorization:
-        " Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDIsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6IkQ1Q1VRUiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDIsIm1lbWJlcklkIjo2MCwic3ViIjoicGVuZ2NoaGFpdGl0aEBnbWFpbC5jb20iLCJpYXQiOjE3MTgyNjEwMjksImV4cCI6MTcxOTEyNTAyOX0.YpGls2D8r4NUe0yKLupmuD0YnsrjIMpZOYn-ju7HRaQ",
-      "Content-Type": "application/json",
-    },
+    headers: header
   });
 
   const data = await res.json();
+  // console.log("Data in attendee:",data)
   return data;
 };
 
 // Delete Attendee By Id
 export const DeleteAttendeeService = async (attendeeId) => {
+  // console.log("Attendee Id:,",attendeeId);
+  const header = await headerToken()
   const res = await fetch(`${process.env.API_URL}attendees/${attendeeId}`, {
     next: { tags: ["attendee"] },
     method: "DELETE",
-    headers: {
-      Authorization:
-        " Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDIsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6IkQ1Q1VRUiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDIsIm1lbWJlcklkIjo2MCwic3ViIjoicGVuZ2NoaGFpdGl0aEBnbWFpbC5jb20iLCJpYXQiOjE3MTgyNjEwMjksImV4cCI6MTcxOTEyNTAyOX0.YpGls2D8r4NUe0yKLupmuD0YnsrjIMpZOYn-ju7HRaQ",
-      "Content-Type": "application/json",
-    },
+    headers: header,
   });
   const data = await res.json();
   // console.log("Data:", data);
   return data;
 };
-
 // Search Attendee service by name or phone number
-export const SearchAttendeeByNameOrPhoneService = async (id, attendeeNameOrPhone ) => {
+export const searchAttendeeByNameOrPhoneService = async (id, attendeeNameOrPhone ) => {
+  // console.log("id in event for search attendee by name or phone:",id)
+  // console.log("Name or Phone: ",attendeeNameOrPhone);
+  const header = await headerToken()
   const res = await fetch(
-    `${process.env.API_URL}attendees/search?eventId=${id}&attendeeNameOrPhone=${attendeeNameOrPhone}&offset=1&limit=7`,
+    `${process.env.API_URL}attendees/search?eventId=${id}&attendeeNameOrPhone=${attendeeNameOrPhone}&offset=1&limit=8`,
+    // http://34.124.203.109:8081/api/attendees/search?eventId=62&attendeeNameOrPhone=R&offset=1&limit=8
     {
-      next: {tags: ['attendee']},
+      method: "GET",
+      headers: header,
       cache: "no-store",
-      headers: {
-        Authorization:
-          " Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDIsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6IkQ1Q1VRUiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDIsIm1lbWJlcklkIjo2MCwic3ViIjoicGVuZ2NoaGFpdGl0aEBnbWFpbC5jb20iLCJpYXQiOjE3MTgyNjEwMjksImV4cCI6MTcxOTEyNTAyOX0.YpGls2D8r4NUe0yKLupmuD0YnsrjIMpZOYn-ju7HRaQ",
-          "Content-Type": "application/json",
-      },
+      next: { tags: ["attendee"] },
+      // 
+    
+      // body: JSON.stringify(id, attendeeNameOrPhone ),
     }
   );
   const data = await res.json();
+  console.log("Data Attendee:", data);
   return data;
 };
