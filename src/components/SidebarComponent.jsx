@@ -17,16 +17,21 @@ export const SidebarComponent = ({ className }) => {
     const { data: session, status } = useSession();
     const pathname = usePathname();
     const [click, setClick] = useState(false);
+    const [userInfo, setUserInfo] = useState();
 
     useEffect(() => {
-        let userInfo;
         if (status === 'authenticated' && session?.user?.token) {
-            userInfo = jwtDecode(session.user.token);
+            setUserInfo(jwtDecode(session.user.token));
         }
         const userRole = userInfo?.role;
         if (userRole === "ROLE_USER") {
             setData({
                 "data": [
+                    {
+                        "link": "/overview",
+                        "name": "Overview",
+                        "icon": "overview"
+                    }, ,
                     {
                         "link": "/members",
                         "name": "Members",
@@ -48,7 +53,6 @@ export const SidebarComponent = ({ className }) => {
             setData(loadData)
         }
     }, [session, status]);
-
 
     return (
         <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-5 border-r-1px sticky top-0 h-screen`}>
@@ -94,7 +98,7 @@ export const SidebarComponent = ({ className }) => {
                         <ArrowDown2 className={`${click && 'rotate-180 duration-300'} duration-300`} size="20" color="#344054" variant="Outline" />
                     </h2>
                     <ul className={`${!click && 'hidden'}`}>
-                        <li className="flex">
+                        <li className={`${userInfo?.role == 'ROLE_USER' ? '!hidden' : 'flex'}`}>
                             <Link className={`rounded-radiusUi w-full flex gap-3 pl-12 py-3 !text-base ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
                                 {/* <Buildings2 size="20" color={`${pathname === "/organization-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" /> */}
                                 Organization Profile

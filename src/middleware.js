@@ -20,11 +20,12 @@ export async function middleware(request) {
     switch (userInfo.role) {
         case "ROLE_USER":
             if (!request.nextUrl.pathname.startsWith("/events") &&
+                !request.nextUrl.pathname.startsWith("/overview") &&
                 !request.nextUrl.pathname.startsWith("/event-detail/") &&
                 !request.nextUrl.pathname.startsWith("/user-profile") &&
                 !request.nextUrl.pathname.startsWith("/members") &&
-                !request.nextUrl.pathname.startsWith("/assets") &&
-                !request.nextUrl.pathname.startsWith("/organization-profile")
+                !request.nextUrl.pathname.startsWith("/assets") 
+                // !request.nextUrl.pathname.startsWith("/organization-profile")
             ) {
                 return NextResponse.redirect(new URL("/denies", request.url));
             }

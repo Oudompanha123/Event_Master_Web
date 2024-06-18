@@ -4,7 +4,7 @@ import { AddSquare } from "iconsax-react"
 import Image from "next/image";
 import { ToogleBtn } from "./ToogleBtn";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectModify } from "./SelectModify";
 import { addNewCategoryAction, addNewEventAction, storeImageAction } from "@/actions/categoryAction";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -99,12 +99,12 @@ export const CreateEventButton = () => {
 
     const triggerHourChange = () => {
         const sDate = new Date(`${startDate}`);
-        const eDate = new Date(`${endDate}`)
+        const eDate = new Date(`${endDate}`);
         const timeDiff = eDate - sDate;
         const hoursDiff = timeDiff / (1000 * 60 * 60);
         const roundedDiff = Math.round(hoursDiff * 100) / 100;
-        setDiffChange(Number(roundedDiff))
-    }
+        setDiffChange(Number(roundedDiff));
+    };
 
     const handleCategorySelect = (v) => setEventCategory(v)
 
@@ -150,7 +150,7 @@ export const CreateEventButton = () => {
         // const url = await getDownloadURL(imageRef);
         // setUploadedImage(url);
         //firebase
-        
+
         const submitData = {
             eventName: data.eventName,
             description: data.description,
@@ -169,6 +169,11 @@ export const CreateEventButton = () => {
         console.log("data inserted", okay)
         document.getElementById("my_modal_event_create").close()
     };
+
+    useEffect(() => {
+        triggerHourChange();
+    }, [startDate, endDate]);
+
 
     return (
         <>
@@ -378,7 +383,7 @@ export const CreateEventButton = () => {
                                 <button type="submit" className="save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
                                     <AddSquare size="20" color="#FFFFFF" variant="Bold" />
                                     <span className="h-12 text-white flex justify-center items-center">Create</span>
-                                </button>
+                                </button>   
                             </div>
                         </form>
                     </div>
