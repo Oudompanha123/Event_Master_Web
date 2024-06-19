@@ -10,8 +10,8 @@ const VerifyPage = () => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            router.push('/overview');
-        }, 200);
+            router.push('/login');
+        }, 1000);
 
         return () => clearTimeout(timer);
     }, [router]);
@@ -20,7 +20,7 @@ const VerifyPage = () => {
         <div>
             <div>
                 <Image
-                    className="absolute sm:mt-[320px] md:mt-[420px] lg:mt-[300px] sm:ml-[15%] md:ml-[25%] lg:ml-[38%]"
+                    className="absolute left-[50%] top-[40%] transform -translate-x-[50%] lg:size-[200px]"
                     src="/images/verify-success.gif"
                     alt="Verification success image"
                     width={400}
