@@ -6,7 +6,9 @@ export const getAllEvents = async () => {
 }
 
 export const getEventById = async (id) => {
-    const res = await fetch(`${process.env.API_URL}landing-page/${id}`)
+    const res = await fetch(`${process.env.API_URL}landing-page/${id}`,
+        { cache: "no-store" }
+    )
     const data = await res.json();
     return data
 }

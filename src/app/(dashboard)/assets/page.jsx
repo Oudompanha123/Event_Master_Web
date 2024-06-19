@@ -6,7 +6,7 @@ import { Pagination } from "../_components/paginate/Pagination";
 export default function assetPage({ searchParams }) {
   console.log("search params:", searchParams);
   const query = searchParams?.query || "";
-
+  
   return (
     <>
       <div className="contain bg-white w-full lg:w-full rounded-3xl box-border">

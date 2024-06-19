@@ -4,7 +4,7 @@ import MaterialComponent from "../../_components/MaterialComponent";
 import AgendaComponent from "../../_components/AgendaComponet";
 import { getEventByIdService } from "@/services/dashboard/event.service";
 import { EventToggle } from "../../_components/toogle/EventToogle";
-
+import { PushRouter } from "@/components/PushRouter";
 
 const Page = async ({ params: { id } }) => {
   const eventData = await getEventByIdService(id)

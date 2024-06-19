@@ -6,13 +6,15 @@ import { useEffect, useState } from "react";
 import { getAllCategoryAction } from "@/actions/categoryAction";
 import { RPaginate } from "./paginate/RPaginate";
 
+const fetcher = (...args) => fetch(...args).then(res => res.json())
+
 export const OverviewTable = ({ server, role }) => {
     const [data, setData] = useState(server);
     const [navigate, setNavigate] = useState();
 
     const getData = async () => {
         try {
-            const data = await getAllCategoryAction(navigate); //2
+            const data = await getAllCategoryAction(navigate);
             setData(data);
         } catch (err) {
             console.log(`something error while fetching ${err}`)

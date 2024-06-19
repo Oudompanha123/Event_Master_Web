@@ -20,9 +20,9 @@ export const addNewCategoryAction = async (name) => {
     const session = await getServerSession(authOption);
     let userInfo = jwtDecode(session?.user?.token);
 
-    const allMember = await getAllMember();
     const data = await insertCategory(name);
     revalidateTag('overview')
+    const allMember = await getAllMember();
     await knockClient.notify('new-workout', {
         actor: userInfo?.sub,
         recipients: allMember.payload.filter(x => x.email !== userInfo?.sub).map(x => x.email),

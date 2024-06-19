@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaAngleDown } from "react-icons/fa";
 import Image from "next/image";

@@ -1,4 +1,3 @@
-import React from "react";
 import {getAttendeeByEventIdService} from "@/services/dashboard/attendeeService";
 // import { getEventById } from "@/services/clientPage/landingService";
 import SearchAttendeeComponent from "../../_components/SearchAttendeeComponent";

@@ -6,10 +6,11 @@ import {
 } from "@/services/assetService/assetService";
 
 export const AssetTableComponent = async ({ querySearch }) => {
- 
+
   const searchasset = await searchAssetByName(querySearch);
   const assets = await getAllAssetService();
   const data = (querySearch == "" || querySearch == null ? assets : searchasset)
+  console.log('check asset data', assets)
   return (
     <table className="w-full px-1 border-separate border-spacing-y-3 mt-0">
       <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-tableBg uppercase">
