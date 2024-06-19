@@ -1,9 +1,8 @@
 'use server'
 import { headerToken } from "@/app/api/auth/headerToken";
 
-const header = await headerToken();
-
 export async function getAllUserRequestService(){
+    const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}user-requests`,
         {
             next: { tags: ["user_request"] },
@@ -19,6 +18,7 @@ export async function getAllUserRequestService(){
 }
 
 export const RejectUserRequestByIdService = async (memberId) => {
+    const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}user-requests/reject/${memberId}`,
         {
             next: { tags: ["reject_user"] },
@@ -33,6 +33,7 @@ export const RejectUserRequestByIdService = async (memberId) => {
 }
 
 export async function ApproveUserRequestByIdService(memberId){
+    const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}user-requests/approve/${memberId}`,
         {
             next: { tags: ["approve_user"] },
