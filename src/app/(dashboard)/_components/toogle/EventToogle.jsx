@@ -3,7 +3,6 @@
 import { useState } from "react"
 import MaterialComponent from "../MaterialComponent";
 import AgendaComponent from "../AgendaComponet";
-import TestComponent from "../Test";
 
 export const EventToggle = ({ id }) => {
     const [tab, setTab] = useState('a');
@@ -15,7 +14,6 @@ export const EventToggle = ({ id }) => {
             </div>
             {tab === "a" ?
                 <MaterialComponent id={id} />
-                // <TestComponent id={id}/>
                 :
                 <AgendaComponent id={id} />
             }
