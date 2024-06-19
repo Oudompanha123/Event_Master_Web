@@ -4,12 +4,13 @@ import MaterialComponent from "../../_components/MaterialComponent";
 import AgendaComponent from "../../_components/AgendaComponet";
 import { getEventByIdService } from "@/services/dashboard/event.service";
 import { EventToggle } from "../../_components/toogle/EventToogle";
-
+import { PushRouter } from "@/components/PushRouter";
 
 const Page = async ({ params: { id } }) => {
   const eventData = await getEventByIdService(id)
   return (
     <main className="space-y-8">
+      <PushRouter name={`/event-detail/${id}?name=${eventData?.payload?.eventName}`} />
       <div className=" rounded-3xl bg-white  z-0">
         <EventDetail eventData={eventData.payload} />
       </div>

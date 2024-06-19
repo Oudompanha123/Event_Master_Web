@@ -1,23 +1,28 @@
 'use client'
 
 import Image from "next/image"
-import logo from "../../public/images/gundam.jpg"
 import defaultProfile from "../../public/images/default-profile.png"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { NotificationMenu } from "./NotificationMenu"
 import { CreateEventButton } from "@/app/(dashboard)/_components/Action/CreateEventButton"
-import { NotificationCard } from "@/app/(dashboard)/_components/NotificationCard"
 import Link from "next/link"
 import { useSession } from "next-auth/react"
 import { jwtDecode } from "jwt-decode"
 
 export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
+    const param = useSearchParams()
+    const eName = param.get('name')
+    // searchParam for server 
+    const eventId = pathname.split('/')[2];
     const { data: session, status } = useSession();
     let userInfo;
+
     if (status === 'authenticated' && session?.user?.token) {
         userInfo = jwtDecode(session.user.token);
     }
+
+    const userRole = userInfo?.role;
 
     return (
         <div className={`${className} justify-between sticky top-0 z-50 bg-white flex lg:justify-between items-center py-3 px-3 lg:px-14 border-b-[1px]`}>
@@ -46,10 +51,10 @@ export const NavbarComponent = ({ className }) => {
                     <div className="hidden lg:flex text-sm breadcrumbs">
                         <ul className="">
                             <li>
-                                <Link href={'/event-detail/1'}>Design Skill & Tech Session</Link>
+                                <Link href={'/event-detail/1'}>{eName ? eName : '...'}</Link>
                             </li>
                             <li>
-                                <Link href={'/attendees'}>Attendees</Link>
+                                <Link href={`/attendees/${eventId}`}>Attendees</Link>
                             </li>
                             <li>
                                 <Link href={'/events'}>
@@ -77,8 +82,11 @@ export const NavbarComponent = ({ className }) => {
                     {/* <NotificationMenu /> */}
                     <Image src={'/icons/icon.svg'} width={24} height={24} />
                 </div>
-                <NotificationCard />
-                <CreateEventButton />
+                {/* <NotificationCard /> */}
+                <div tabIndex={0} role="button" className="bg-[#F7F9FB] p-1 rounded-full hidden cursor-pointer lg:block">
+                    <NotificationMenu />
+                </div>
+                {userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN" ? <CreateEventButton /> : ''}
                 <Link href={'/user-profile'}>
                     <div className="flex items-center gap-4">
                         <div className="hidden lg:block">

@@ -4,13 +4,53 @@ import { AddSquare } from "iconsax-react"
 import Image from "next/image";
 import { ToogleBtn } from "./ToogleBtn";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { SelectModify } from "./SelectModify";
-import { addNewCategoryAction, addNewEventAction } from "@/actions/categoryAction";
+import { addNewCategoryAction, addNewEventAction, storeImageAction } from "@/actions/categoryAction";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "@/lib/firebase";
+import { v4 } from 'uuid';
+import { storeImageService } from "@/services/dashboard/overviewService";
+import { toast } from "react-toastify";
 
 export const CreateEventButton = () => {
+    const notify = () => {
+        toast.success("Sucessfully created event", {
+            position: "top-center"
+        });
+    }
+
+    const [events, setEvent] = useState({
+        eventName: '',
+        startDate: '',
+        endDate: '',
+        duration: '',
+        maxAttendee: '',
+        address: '',
+        description: '',
+    })
+
+
+    const handleInput = (e) => {
+        e.persist();
+        setEvent({ ...events, [e.target.name]: e.target.value });
+    }
+
+    const saveEvents = (e) => {
+        e.preventDefault();
+        const data = {
+            eventName: events.eventName,
+            startDate: events.startDate,
+            endDate: events.endDate,
+            duration: events.duration,
+            maxAttendee: events.maxAttendee,
+            address: events.address,
+            description: events.description,
+        }
+    }
+
     const [hide, setHide] = useState(false);
+    const [isSend, setIsSend] = useState(false);
 
     const handleDragOver = (e) => {
         e.preventDefault();
@@ -35,6 +75,8 @@ export const CreateEventButton = () => {
         setImageLink(e.target.files[0]);
         displayPreview(file);
         setHide(true);
+        console.log('check here ', e.target.files[0])
+        console.log("change", imageLink)
     };
 
     const displayPreview = (file) => {
@@ -47,12 +89,11 @@ export const CreateEventButton = () => {
         };
     };
 
-    const router = useRouter();
-
     const {
         watch,
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm();
 
@@ -61,36 +102,106 @@ export const CreateEventButton = () => {
     const [eventCategory, setEventCategory] = useState();
     const [isPublic, setIsPublic] = useState(false);
     const [imageLink, setImageLink] = useState();
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
+    const [diffChange, setDiffChange] = useState();
 
-    const handleCategorySelect = (v) => {
-        console.log("from parent", v)
-        setEventCategory(v)
-        console.log("log state", eventCategory)
-    }
+    const triggerHourChange = () => {
+        const sDate = new Date(`${startDate}`);
+        const eDate = new Date(`${endDate}`);
+        const timeDiff = eDate - sDate;
+        const hoursDiff = timeDiff / (1000 * 60 * 60);
+        const roundedDiff = Math.round(hoursDiff * 100) / 100;
+        setDiffChange(Number(roundedDiff));
+    };
 
-    const handleEventType = (type) => {
-        console.log(type)
-        setIsPublic(type)
+    const handleCategorySelect = (v) => setEventCategory(v)
+
+    const handleEventType = (type) => setIsPublic(!type)
+
+    const currentTime = new Date();
+
+    //firebase research code
+    const [uploading, setUploading] = useState(true);
+    const [imageUrl, setImageUrl] = useState(null);
+    const [uploadedImage, setUploadedImage] = useState();
+
+    const onUpdate = async (imageLink) => {
+        //upload new image
+        onUpload(imageLink)
+        //delete old image with url
+        const desertRef = ref(storage, imageUrl);
+        await deleteObject(desertRef);
     }
 
     const onSubmit = async (data) => {
-        console.log(data, 'gg')
+        setIsSend(true);
+        let cateId;
+        //if category id = 88888 create new category base on categoryName
+        if (eventCategory.categoryId == 88888) {
+            const res = await addNewCategoryAction(eventCategory.categoryName)
+            cateId = res.payload.categoryId;
+        }
+        //if category id isn't = 88888 calling api 
+        if (eventCategory.categoryId != 88888) {
+            cateId = eventCategory.categoryId;
+        }
+
+        let formData = new FormData()
+        formData.append("file", imageLink)
+        const uploadImage = await storeImageAction(formData)
+
+        //firebase
+        // setUploading(false)
+        // if (imageLink == null) return;
+        // const imageRef = ref(storage, `${imageLink.name + v4()}`);
+        // await uploadBytes(imageRef, imageLink)
+        // setUploading(true)
+        // const url = await getDownloadURL(imageRef);
+        // setUploadedImage(url);
+        //firebase
+
         const submitData = {
-            eventName: data.name,
+            eventName: data.eventName,
             description: data.description,
             startDate: data.startDate,
             endDate: data.endDate,
-            duration: data.duration,
+            duration: diffChange,
             address: data.address,
-            poster: `${imageLink}.png`,
+            poster: uploadImage?.payload?.fileUrl,
             isPost: isPublic,
             maxAttendee: data.maxAttendee,
-            categoryId: 90
+            categoryId: cateId
         }
+        console.log("check image link", imageLink)
+        console.log("check body", submitData)
         const okay = await addNewEventAction(submitData);
+        console.log("data inserted", okay)
+        reset();
+        setTimeout(() => {
+            setIsSend(false);
+        }, 10000)
+        notify();
         document.getElementById("my_modal_event_create").close()
-        // router.push('/event-detail/1')
     };
+
+    const handleCloseForm = () => {
+        setEvent({
+            eventName: '',
+            startDate: '',
+            endDate: '',
+            duration: '',
+            maxAttendee: '',
+            address: '',
+            description: '',
+        });
+        document.getElementById("my_modal_event_create").close();
+    }
+
+    useEffect(() => {
+        triggerHourChange();
+    }, [startDate, endDate]);
+
 
     return (
         <>
@@ -123,7 +234,7 @@ export const CreateEventButton = () => {
                                         </label>
                                     </h3>
                                 </div>
-                                <img src="" className="mt-4 mx-auto h-80 w-full hidden object-cover" id="preview" alt="Preview" />
+                                <img src="" className="mx-auto h-80 w-full hidden object-cover" id="preview" alt="Preview" />
                             </div>
 
                             {/* input field  */}
@@ -133,16 +244,18 @@ export const CreateEventButton = () => {
                                         Event Name <span className="text-red-600">*</span>
                                     </label>
                                     <input
-                                        {...register("name", {
-                                            required: "name is required",
+                                        {...register("eventName", {
+                                            required: "event name is required",
                                         })}
+                                        value={events.eventName}
+                                        onChange={handleInput}
                                         type="text"
-                                        name="name"
-                                        id="name"
-                                        className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        name="eventName"
+                                        id="eventName"
+                                        className={`${errors.eventName ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter event name"
                                     />
-                                    {errors.name && <div className="text-red-600 text-sm mt-2">{errors.name.message}</div>}
+                                    {errors.eventName && <div className="text-red-600 text-sm mt-2">{errors.eventName.message}</div>}
                                 </div>
                                 <div className="w-full">
                                     <SelectModify
@@ -162,13 +275,19 @@ export const CreateEventButton = () => {
                                     <input
                                         {...register("startDate", {
                                             required: "start date is required",
+                                            validate: {
+                                                isNotPastDate: value => new Date(value) >= currentTime || "Start date cannot be in the past"
+                                            }
                                         })}
+                                        value={startDate}
+                                        // onChange={handleInput}
                                         type="datetime-local"
                                         name="startDate"
                                         id="startdate"
                                         className={`${errors.startDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         required=""
+                                        onChange={(e) => { setStartDate(e.target.value); triggerHourChange() }}
                                     />
                                     {errors.startDate && <div className="text-red-600 text-sm mt-2">{errors.startDate.message}</div>}
                                 </div>
@@ -185,12 +304,15 @@ export const CreateEventButton = () => {
                                                 }
                                             }
                                         })}
+                                        value={endDate}
+                                        // onChange={handleInput}
                                         type="datetime-local"
                                         name="endDate"
-                                        id="enddate"
+                                        id="endDate"
                                         className={`${errors.endDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         required=""
+                                        onChange={(e) => { setEndDate(e.target.value); triggerHourChange() }}
                                     />
                                     {errors.endDate && <div className="text-red-600 text-sm mt-2">{errors.endDate.message}</div>}
                                 </div>
@@ -201,13 +323,15 @@ export const CreateEventButton = () => {
                                         Duration <span className="text-red-600">*</span>
                                     </label>
                                     <input
-                                        {...register("duration", {
-                                            required: "duration is required",
-                                        })}
+                                        value={diffChange}
+                                        disabled
+                                        // {...register("duration", {
+                                        //     required: "duration is required",
+                                        // })}
                                         type="number"
                                         name="duration"
                                         id="duration"
-                                        className={`${errors.duration ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        className={`${errors.duration ? "border-red-700 focus:border-red-600" : "border-gray-300"} cursor-not-allowed shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter duration"
                                         required=""
                                     />
@@ -221,9 +345,11 @@ export const CreateEventButton = () => {
                                         {...register("maxAttendee", {
                                             required: "maximum attendees is required",
                                         })}
+                                        value={events.maxAttendee}
+                                        onChange={handleInput}
                                         type="number"
                                         name="maxAttendee"
-                                        id="max"
+                                        id="maxAttendee"
                                         className={`${errors.maxAttendee ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter maximum attendee"
                                         required=""
@@ -240,6 +366,8 @@ export const CreateEventButton = () => {
                                         {...register("address", {
                                             required: "address is required",
                                         })}
+                                        value={events.address}
+                                        onChange={handleInput}
                                         type="test"
                                         name="address"
                                         id="address"
@@ -259,6 +387,8 @@ export const CreateEventButton = () => {
                                         {...register("description", {
                                             required: "description is required",
                                         })}
+                                        value={events.description}
+                                        onChange={handleInput}
                                         rows={5}
                                         type="text"
                                         name="description"
@@ -277,10 +407,16 @@ export const CreateEventButton = () => {
                                 </div>
                             </div>
                             <div className="flex justify-end space-x-3">
-                                <div onClick={() => document.getElementById("my_modal_event_create").close()} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
-                                <button type="submit" className="save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
-                                    <AddSquare size="20" color="#FFFFFF" variant="Bold" />
-                                    <span className="h-12 text-white flex justify-center items-center">Create</span>
+                                <div onClick={() => handleCloseForm()} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
+                                <button type="submit" className="min-w-24 save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
+                                    {!isSend ?
+                                        <div className="flex justify-center items-center gap-3">
+                                            <AddSquare size="20" color="#FFFFFF" variant="Bold" />
+                                            <span className="h-12 text-white flex justify-center items-center">Create</span>
+                                        </div>
+                                        :
+                                        <div className="loader"></div>
+                                    }
                                 </button>
                             </div>
                         </form>

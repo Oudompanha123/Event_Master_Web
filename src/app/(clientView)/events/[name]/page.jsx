@@ -1,27 +1,18 @@
-import { getEventByCateName } from "@/services/clientPage/landingService"
-import { RedirectBackComponent } from "../../_componenets/RedirectButtonComponent"
-import { EventCardComponent } from "../../_componenets/EventCardComponent"
+import { InfiniteLoad } from "../../_componenets/InfiteLoad"
+import { EventInCategory } from "../../_componenets/EventInCategory"
+import { getEventByCategoryNameAction } from "@/actions/landingAction"
+import { RedirectBackComponent } from "../../_componenets/RedirectButtonComponent";
 
-const Page = async ({params: {name}}) => {
-    const eventData = await getEventByCateName(name)
+const Page = async ({ params: { name } }) => {
+    let page = 1;
+    const eventData = await getEventByCategoryNameAction({ name, page })
 
     return (
         <div className="container">
             <RedirectBackComponent link={'/'} />
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
-                {eventData?.payload?.map((x, index) => (
-                    <EventCardComponent
-                        key={index}
-                        img={`https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/headway-F2KRf_QfCqw-unsplash.jpgbff2c2b3-3340-421f-b8bf-06cf683bb395?alt=media&token=19e9782d-0cca-4105-ab02-d627bd515ac6`}
-                        title={x?.eventName}
-                        description={x?.description}
-                        location={x?.location}
-                        company={x?.orgName}
-                        date={x?.startDate}
-                        status={x?.isOpen}
-                        id={x?.eventId}
-                    />
-                ))}
+                <EventInCategory data={eventData} />
+                <InfiniteLoad name={name} />
             </div>
         </div>
     )

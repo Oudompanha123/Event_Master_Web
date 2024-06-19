@@ -4,13 +4,25 @@ import { updateCategoryAction } from "@/actions/categoryAction"
 import { Edit } from "iconsax-react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
 
 export const CategoryEditAction = ({ cateId, name }) => {
+    const notify = () => {
+        toast.warning("Duplicated Category Name", {
+            position: "top-center"
+        });
+    }
     const [categoryName, setCategoryName] = useState();
+    const [isSend, setIsSend] = useState(false);
     const handleUpdate = async () => {
+        setIsSend(true)
         await updateCategoryAction(cateId, categoryName);
-        setCategoryName('');
+        setTimeout(() => {
+            setCategoryName('');
+        }, 1000);
+        setIsSend(false)
         document.getElementById(`update_category_${cateId}`).close()
+        notify();
     }
     useEffect(() => {
         setCategoryName(name)
@@ -37,13 +49,19 @@ export const CategoryEditAction = ({ cateId, name }) => {
                     />
                     <div className="flex justify-end space-x-3">
                         <div onClick={() => document.getElementById(`update_category_${cateId}`).close()} className="flex items-center px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
-                        <button onClick={() => handleUpdate()} type="submit" className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3">
-                            <Image
-                                src={"/icons/edit.svg"}
-                                width={20}
-                                height={20}
-                            />
-                            <span className="h-12 text-white flex justify-center items-center"> Update</span>
+                        <button onClick={() => handleUpdate()} type="submit" className="min-w-24 save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3">
+                            {!isSend ?
+                                <div className="flex justify-center text-center items-center gap-3">
+                                    <Image
+                                        src={"/icons/edit.svg"}
+                                        width={20}
+                                        height={20}
+                                    />
+                                    <span className="h-12 text-white flex justify-center items-center"> Update</span>
+                                </div>
+                                :
+                                <div className="loader"></div>
+                            }
                         </button>
                     </div>
                 </div>

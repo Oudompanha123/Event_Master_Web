@@ -5,17 +5,58 @@ import logo from "../../public/images/event-master-logo.png"
 import { ArrowDown2, Buildings2, Calendar1, I3Dcube, Layer, LogoutCurve, Notification, People, Personalcard, Setting2 } from "iconsax-react"
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import data from "../data/sidebar.json"
-import { useState } from "react";
+import sideBarData from "../data/sidebar.json"
+import { useEffect, useState } from "react";
 import { LogoutAction } from "@/app/(dashboard)/_components/Action/LogoutAction";
+import { useSession } from "next-auth/react";
+import { jwtDecode } from "jwt-decode";
 
 export const SidebarComponent = ({ className }) => {
+    const [loadData, setLoadData] = useState(sideBarData);
+    const [data, setData] = useState();
+    const { data: session, status } = useSession();
     const pathname = usePathname();
     const [click, setClick] = useState(false);
+    const [userInfo, setUserInfo] = useState();
+
+    useEffect(() => {
+        if (status === 'authenticated' && session?.user?.token) {
+            setUserInfo(jwtDecode(session.user.token));
+        }
+        const userRole = userInfo?.role;
+        if (userRole === "ROLE_USER") {
+            setData({
+                "data": [
+                    {
+                        "link": "/overview",
+                        "name": "Overview",
+                        "icon": "overview"
+                    }, ,
+                    {
+                        "link": "/members",
+                        "name": "Members",
+                        "icon": "members"
+                    },
+                    {
+                        "link": "/assets",
+                        "name": "Assets",
+                        "icon": "assets"
+                    },
+                    {
+                        "link": "/events",
+                        "name": "Events",
+                        "icon": "events"
+                    }
+                ]
+            });
+        } else if (userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN") {
+            setData(loadData)
+        }
+    }, [session, status]);
 
     return (
         <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-5 border-r-1px sticky top-0 h-screen`}>
-            <Link href={'/overview'}>
+            <Link prefetch={true} href={'/overview'}>
                 <div className="p-2 lg:p-2 flex items-center gap-4">
                     <Image src={logo} height={60} width={60} />
                     <h2 className="hidden xl:block text-xl font-semibold">EventMaster</h2>
@@ -24,7 +65,7 @@ export const SidebarComponent = ({ className }) => {
             <hr />
             <div className="w-full flex xl:block flex-col items-center xl:items-start justify-center">
                 {data?.data?.map((x, index) => (
-                    <Link onClick={() => setClick(false)} href={x.link} key={index}>
+                    <Link prefetch={true} onClick={() => setClick(false)} href={x.link} key={index}>
                         <div className={`space-x-3 px-3 lg:px-4 py-3 flex justify-center xl:justify-start rounded-radiusUi w-fit xl:!w-full items-center 
                             ${pathname === x.link && "text-white bg-purple-text"} 
                             ${x.name == "Events" && pathname === "/attendees" ? "text-white bg-purple-text" : ""}
@@ -57,14 +98,14 @@ export const SidebarComponent = ({ className }) => {
                         <ArrowDown2 className={`${click && 'rotate-180 duration-300'} duration-300`} size="20" color="#344054" variant="Outline" />
                     </h2>
                     <ul className={`${!click && 'hidden'}`}>
-                        <li className="flex">
-                            <Link className={`rounded-radiusUi w-full flex gap-3 pl-12 py-3 !text-base ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
+                        <li className={`${userInfo?.role == 'ROLE_USER' || userInfo?.role == 'ROLE_SUB_ADMIN' ? '!hidden' : 'flex'}`}>
+                            <Link prefetch={true} className={`rounded-radiusUi w-full flex gap-3 pl-12 py-3 !text-base ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
                                 {/* <Buildings2 size="20" color={`${pathname === "/organization-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" /> */}
                                 Organization Profile
                             </Link>
                         </li>
                         <li className="flex">
-                            <Link className={`rounded-radiusUi w-full flex gap-3 hover:!bg-none pl-12 py-3 !text-base ${pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`} href={'/user-profile'}>
+                            <Link prefetch={true} className={`rounded-radiusUi w-full flex gap-3 hover:!bg-none pl-12 py-3 !text-base ${pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`} href={'/user-profile'}>
                                 {/* <Personalcard size="20" color={`${pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" /> */}
                                 User Profile
                             </Link>
@@ -73,21 +114,17 @@ export const SidebarComponent = ({ className }) => {
                 </ul>
                 {/* dropdown sidebar on mobile */}
                 <div className="block xl:hidden">
-                    <Link onClick={() => setClick(false)} href={'/organization-profile'}>
+                    <Link prefetch={true} onClick={() => setClick(false)} href={'/organization-profile'}>
                         <div className={`flex justify-center mx-auto items-center rounded-radiusUi px-3 w-fit py-3 ${pathname == "/organization-profile" && "text-white bg-purple-text"}`}>
                             <Buildings2 size="20" color={`${pathname === "/organization-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                         </div>
                     </Link>
-                    <Link onClick={() => setClick(false)} href={'/user-profile'}>
+                    <Link prefetch={true} onClick={() => setClick(false)} href={'/user-profile'}>
                         <div className={`flex justify-center mx-auto items-center rounded-radiusUi px-3 w-fit py-3 ${pathname == "/user-profile" && "text-white bg-purple-text"}`}>
                             <Personalcard size="20" color={`${pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                         </div>
                     </Link>
                 </div>
-                {/* <div className={`space-x-3 px-4 py-4 flex justify-center xl:justify-start rounded-radiusUi w-full items-center`}>
-                        <LogoutCurve size="20" color="#344054" variant="Bulk" />
-                        <p className="hidden xl:block text-base 2xl:text-lg">Logout</p>
-                    </div> */}
                 <LogoutAction />
             </div>
         </div>

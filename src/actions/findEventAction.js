@@ -1,12 +1,12 @@
 'use server'
 
 import { findEvent } from "@/services/clientPage/landingService";
+import { getEventByIdService } from "@/services/dashboard/event.service";
 
 export const handleSearch = async (input) => {
     const searchData = {
-        eventName: input.get('search'),
-        startDateTime: `${input.get('startDate')}T12:00:00`,
-        endDateTime: `${input.get('endDate')}T12:00:00`
+        startDate: `${input.get('startDate')}T12:00:00`,
+        endDate: `${input.get('endDate')}T12:00:00`
     }
 
     try {
@@ -18,7 +18,12 @@ export const handleSearch = async (input) => {
     }
 }
 
-export const callingService = async (searchData) => {
+export const callingServiceAction = async (searchData) => {
     const data = await findEvent(searchData);
+    return data
+}
+
+export const getEventDetailByIdAction = async (id) => {
+    const data = await getEventByIdService(id);
     return data
 }

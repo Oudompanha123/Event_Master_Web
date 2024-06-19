@@ -1,4 +1,3 @@
-// "use client";
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
@@ -6,21 +5,16 @@ import { EventActionButton } from "./EventActionButton";
 import { Location } from "iconsax-react";
 
 const formatDate = (dateString) => {
-
   const date = new Date(dateString);
   const day = date.getDate().toString().padStart(2, "0");
-  const month = date
-    .toLocaleString("default", { month: "short" })
-    .toUpperCase();
+  const month = date.toLocaleString("default", { month: "short" }).toUpperCase();
   return { day, month };
 };
 
-export async function CardEventComponent({ eventData }) {
-  const events = eventData;
-
+export default function CardEventComponent({ eventData }) {
   return (
     <div className="gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:gap-6 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2 2xl:grid-cols-4">
-      {events.map((data, index) => {
+      {eventData.map((data, index) => {
         const { day, month } = formatDate(data.startDate);
         return (
           <div key={index}>
@@ -31,7 +25,6 @@ export async function CardEventComponent({ eventData }) {
                   backgroundImage:
                     `url(${data.poster})` ||
                     `url(https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg)`,
-                  // height: "255px",
                 }}
                 alt="Event Photo"
               >
@@ -42,7 +35,7 @@ export async function CardEventComponent({ eventData }) {
                       {month}
                     </small>
                   </div>
-                  <EventActionButton id={data.eventId}/>
+                  <EventActionButton eventId={data.eventId} />
                 </div>
               </div>
 
@@ -51,7 +44,6 @@ export async function CardEventComponent({ eventData }) {
                   <div className="font-bold primary-text w-[70%] line-clamp-1">
                     {data.eventName}
                   </div>
-
                   <span
                     className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${
                       data.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
@@ -87,5 +79,3 @@ export async function CardEventComponent({ eventData }) {
     </div>
   );
 }
-
-export default CardEventComponent;
