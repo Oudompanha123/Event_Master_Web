@@ -1,106 +1,13 @@
-"use client";
-import React, { useState, useEffect, useRef, Suspense } from "react";
+'use server'
 import { IoSearchOutline } from "react-icons/io5";
-import { FaAngleDown } from "react-icons/fa";
-import Image from "next/image";
-import data from "../../../data/member.json";
-import { ChangeRoleComponent } from "../_components/ChangeRoleComponent";
-import { DeleteMemberComponent } from "../_components/DeleteMemberComponent";
 import { Pagination } from "../_components/paginate/Pagination";
+import { MemberComponent } from "../_components/MemberProfileComponent";
+import { DeleteMemberbutton } from "../_components/DeleteMemberbutton";
+import { getAllMemberService } from "@/services/dashboard/memberService";
+import { MemberRoleConponent } from "../_components/MemberRoleComponent";
 
-const memberData = data.data;
-const getRoleColor = (role) => {
-  switch (role) {
-    case "ROLE_ADMIN":
-      return "#7A44FF";
-    case "ROLE_USER":
-      return "#457EFF";
-    case "ROLE_SUB_ADMIN":
-      return "#088A4C";
-    default:
-      return "#000";
-  }
-};
-
-const getRoleDisplayName = (role) => {
-  switch (role) {
-    case "ROLE_ADMIN":
-      return "Admin";
-    case "ROLE_USER":
-      return "User";
-    case "ROLE_SUB_ADMIN":
-      return "Sub Admin";
-    default:
-      return "Unknown";
-  }
-};
-
-const MemberPage = () => {
-  const [members, setMembers] = useState(memberData);
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const [confirmingRoleChange, setConfirmingRoleChange] = useState(null);
-  const dropdownRefs = useRef([]);
-
-  const handleRoleChange = (id, newRole) => {
-    let updatedMembers = [...members];
-    const currentAdmin = updatedMembers.find(
-      (member) => member.role === "ROLE_ADMIN"
-    );
-
-    if (newRole === "ROLE_ADMIN") {
-      const requestingMember = updatedMembers.find(
-        (member) => member.id === id
-      );
-      if (currentAdmin && requestingMember) {
-        // Swap roles
-        currentAdmin.role = requestingMember.role;
-        requestingMember.role = "ROLE_ADMIN";
-      }
-    } else {
-      updatedMembers = updatedMembers.map((member) =>
-        member.id === id ? { ...member, role: newRole } : member
-      );
-    }
-
-    setMembers(updatedMembers);
-    setActiveDropdown(null);
-    setConfirmingRoleChange(null);
-  };
-
-  const toggleDropdown = (id) => {
-    setActiveDropdown(activeDropdown === id ? null : id);
-  };
-
-  const closeDropdown = () => {
-    setActiveDropdown(null);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        activeDropdown !== null &&
-        dropdownRefs.current[activeDropdown] &&
-        !dropdownRefs.current[activeDropdown].contains(event.target)
-      ) {
-        closeDropdown();
-      }
-    };
-
-    if (activeDropdown !== null) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [activeDropdown]);
-
-  const handleConfirmRoleChange = () => {
-    handleRoleChange(confirmingRoleChange.id, confirmingRoleChange.role);
-  };
-
+const MemberPage = async () => {
+  const memberData = await getAllMemberService();
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
@@ -148,7 +55,7 @@ const MemberPage = () => {
             </tr>
           </thead>
           <tbody>
-            {members.map((member, index) => (
+            {memberData?.payload?.map((member, index) => (
               <tr
                 key={member.id}
                 className={`h-14 shadow-sm rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
@@ -156,19 +63,11 @@ const MemberPage = () => {
                 <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi border border-r-0 border-member-border sm:text-sm">
                   {index + 1}
                 </td>
-                <td className="flex items-center text-xs xl:text-base px-5 py-2 border border-x-0 border-member-border sm:text-sm sm:w-48">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    width={40}
-                    height={40}
-                    property=" "
-                    className="mr-4 rounded-full"
-                  />
-                  {member.name}
+                <td className="text-xs xl:text-base sm:text-sm ">
+                  <MemberComponent memberInfo = {member} />
                 </td>
                 <td className="px-5 py-2 text-xs xl:text-base border border-x-0 border-member-border sm:text-sm">
-                  {member.gender}
+                  {member.gender ? member.gender : "No gender"}
                 </td>
                 <td className="px-5 py-2 text-xs xl:text-base border border-x-0 border-member-border sm:text-sm">
                   {member.email}
@@ -177,115 +76,12 @@ const MemberPage = () => {
                   {member.address}
                 </td>
                 <td className="px-5 py-2 text-xs xl:text-base border border-x-0 border-member-border sm:text-sm">
-                  <div
-                    className="inline-block"
-                    ref={(el) => (dropdownRefs.current[member.id] = el)}
-                  >
-                    <div
-                      tabIndex={0}
-                      role="button"
-                      onClick={() => toggleDropdown(member.id)}
-                      className="btn btn-sm border rounded-radiusUi w-[122px] h-8"
-                      style={{
-                        color: getRoleColor(member.role),
-                        borderColor: getRoleColor(member.role),
-                      }}
-                    >
-                      {getRoleDisplayName(member.role)}
-                      {member.role !== "ROLE_ADMIN" && (
-                        <FaAngleDown className=" right-0" />
-                      )}
-                    </div>
-                    {activeDropdown === member.id &&
-                      member.role !== "ROLE_ADMIN" && (
-                        <div className="origin-top-right -ml-14 mt-1 absolute w-44 cursor-pointer rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                          <ul
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="options-menu"
-                          >
-                            <li>
-                              <a
-                                className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg"
-                                role="menuitem"
-                                tabIndex="-1"
-                                onClick={() =>
-                                  setConfirmingRoleChange({
-                                    id: member.id,
-                                    role: "ROLE_ADMIN",
-                                  })
-                                }
-                              >
-                                <Image
-                                  src="/icons/Admin.svg"
-                                  alt="Admin"
-                                  height={22}
-                                  width={22}
-                                  property=" "
-                                />
-                                <p className="text-primary-text text-base font-semibold">
-                                  Admin
-                                </p>
-                              </a>
-                            </li>
-                            <hr />
-                            <li>
-                              <a
-                                className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg"
-                                role="menuitem"
-                                tabIndex="-1"
-                                onClick={() =>
-                                  setConfirmingRoleChange({
-                                    id: member.id,
-                                    role: "ROLE_USER",
-                                  })
-                                }
-                              >
-                                <Image
-                                  src="/icons/User.svg"
-                                  alt="User"
-                                  height={22}
-                                  width={22}
-                                  property=" "
-                                />
-                                <p className="text-primary-text text-base font-semibold">
-                                  User
-                                </p>
-                              </a>
-                            </li>
-                            <hr />
-                            <li>
-                              <a
-                                className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg"
-                                role="menuitem"
-                                tabIndex="-1"
-                                onClick={() =>
-                                  setConfirmingRoleChange({
-                                    id: member.id,
-                                    role: "ROLE_SUB_ADMIN",
-                                  })
-                                }
-                              >
-                                <Image
-                                  src="/icons/Sub Admin.svg"
-                                  alt="Sub Admin"
-                                  height={22}
-                                  width={22}
-                                  property=" "
-                                />
-                                <p className="text-primary-text text-base font-semibold">
-                                  Sub Admin
-                                </p>
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      )}
-                  </div>
+                  <MemberRoleConponent memberRole = {member}/>
                 </td>
 
                 <td className="px-5 py-2 xl:text-sm rounded-r-radiusUi border border-l-0 border-member-border">
-                  {member.role !== "ROLE_ADMIN" && <DeleteMemberComponent />}
+                  {/* {member.role !== "ROLE_ADMIN" && <DeleteMemberComponent />} */}
+                  <DeleteMemberbutton memberRole = {member}/>
                 </td>
               </tr>
             ))}
@@ -295,13 +91,6 @@ const MemberPage = () => {
           <Pagination />
         </div>
       </div>
-      {confirmingRoleChange && (
-        <ChangeRoleComponent
-          role={getRoleDisplayName(confirmingRoleChange.role)}
-          onConfirm={handleConfirmRoleChange}
-          onClose={() => setConfirmingRoleChange(null)}
-        />
-      )}
     </div>
   );
 };
