@@ -5,12 +5,13 @@ import { Edit } from "iconsax-react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 
-export const CategoryEditAction = ({ cateId, name }) => {
+export const CategoryEditAction = ({ cateId, name, func }) => {
     const [categoryName, setCategoryName] = useState();
     const handleUpdate = async () => {
         await updateCategoryAction(cateId, categoryName);
         setCategoryName('');
         document.getElementById(`update_category_${cateId}`).close()
+        func()
     }
     useEffect(() => {
         setCategoryName(name)
