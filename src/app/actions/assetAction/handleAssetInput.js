@@ -1,6 +1,7 @@
 "use server";
 
 import {
+  getAllAssetService,
   insertAssetService,
   updateAssetService,
 } from "@/services/assetService/assetService";
@@ -16,6 +17,12 @@ export async function handleAsset(assetInput) {
   };
   await insertAssetService(newAsset);
   revalidateTag("asset");
+}
+export const getAllAssetAction = async (page) => {
+console.log('pages:',page);
+    const data = await getAllAssetService(page);
+    revalidateTag('overview');
+    return data
 }
 //update
 export async function handleUpdateAsset(id, newAsset) {
