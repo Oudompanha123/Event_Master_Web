@@ -1,14 +1,20 @@
+
 import { AssetPopupComponent } from "../_components/CreateNewAssetComponent";
 import { AssetTableComponent } from "../_components/assetTableComponent";
 import { SearchAssetComponent } from "../_components/SearchAssetComponent";
-import { Pagination } from "../_components/paginate/Pagination";
+import { getAllAssetService, searchAssetByName } from "@/services/assetService/assetService";
+import { ToastContainer } from "react-toastify";
 
-export default function assetPage({ searchParams }) {
-  console.log("search params:", searchParams);
+export default async function assetPage({ searchParams }) {
+  // console.log("search params:", searchParams);
   const query = searchParams?.query || "";
+  const dataasset = await getAllAssetService();
+  const searchasset =await  searchAssetByName(query);
+  const data = query == "" || query == null ? dataasset : searchasset;
 
   return (
     <>
+      <ToastContainer/>
       <div className="contain bg-white w-full lg:w-full rounded-3xl box-border">
         <div className="head flex flex-col gap-2 lg:flex-row lg:justify-between p-6 ">
           <div className="md:text-lg xl:text-xl font-semibold text-primary-text">
@@ -23,10 +29,8 @@ export default function assetPage({ searchParams }) {
         </div>
         <div className="px-6">
           <div className="box-border mt-0 overflow-scroll">
-            <AssetTableComponent querySearch={query} />
-            <div className="pagination flex justify-end px-8 pb-8 mt-8">
-              <Pagination />
-            </div>
+            <AssetTableComponent data={data} query={query} />
+           
           </div>
         </div>
       </div>
