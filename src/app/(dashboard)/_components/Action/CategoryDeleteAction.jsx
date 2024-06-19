@@ -4,11 +4,9 @@ import { deleteCategoryAction } from "@/actions/categoryAction"
 import { Trash } from "iconsax-react"
 import { RxCross2 } from "react-icons/rx"
 
-export const CategoryDeleteAction = ({ cateId, func }) => {
+export const CategoryDeleteAction = ({ cateId }) => {
     const handleDelete = async () => {
         await deleteCategoryAction(cateId)
-        console.log("Delete Attendee:", handleDelete);
-        func()
     }
 
     return (

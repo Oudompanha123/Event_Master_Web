@@ -1,23 +1,20 @@
 'use client'
 
 import Image from "next/image"
-import logo from "../../public/images/gundam.jpg"
 import defaultProfile from "../../public/images/default-profile.png"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { NotificationMenu } from "./NotificationMenu"
 import { CreateEventButton } from "@/app/(dashboard)/_components/Action/CreateEventButton"
-import { NotificationCard } from "@/app/(dashboard)/_components/NotificationCard"
 import Link from "next/link"
 import { useSession } from "next-auth/react"
 import { jwtDecode } from "jwt-decode"
-import { getEventDetailByIdAction } from "@/actions/findEventAction"
-import { useEffect, useState } from "react"
 
 export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
-    const [eventData, setEventData] = useState('');
+    const param = useSearchParams()
+    const eName = param.get('name')
+    // searchParam for server 
     const eventId = pathname.split('/')[2];
-    const eventName = eventData?.payload?.eventName;
     const { data: session, status } = useSession();
     let userInfo;
 
@@ -26,18 +23,6 @@ export const NavbarComponent = ({ className }) => {
     }
 
     const userRole = userInfo?.role;
-
-    useEffect(() => {
-        if (pathname.startsWith('/event-detail')) {
-            console.log('fetch get event by id');
-            getEventData(eventId);
-        }
-    }, [pathname, eventId]);
-
-    const getEventData = async (id) => {
-        const res = await getEventDetailByIdAction(id);
-        setEventData(res);
-    };
 
     return (
         <div className={`${className} justify-between sticky top-0 z-50 bg-white flex lg:justify-between items-center py-3 px-3 lg:px-14 border-b-[1px]`}>
@@ -66,7 +51,7 @@ export const NavbarComponent = ({ className }) => {
                     <div className="hidden lg:flex text-sm breadcrumbs">
                         <ul className="">
                             <li>
-                                <Link href={'/event-detail/1'}>{eventName ? eventName : 'fetching...'}</Link>
+                                <Link href={'/event-detail/1'}>{eName ? eName : '...'}</Link>
                             </li>
                             <li>
                                 <Link href={`/attendees/${eventId}`}>Attendees</Link>

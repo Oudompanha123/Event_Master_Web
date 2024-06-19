@@ -1,6 +1,5 @@
 import { RedirectBackComponent } from "@/app/(clientView)/_componenets/RedirectButtonComponent"
 import Image from "next/image"
-import demoImage from "../../../../../public/images/sea-chill.jpg"
 import { AgendaComponent } from "@/app/(clientView)/_componenets/AgendaComponent"
 import Link from "next/link"
 import { getEventById } from "@/services/clientPage/landingService"
@@ -11,6 +10,8 @@ const Page = async ({ params: { id } }) => {
     const inputDate = data.payload.startDateTime;
     const formattedDate = formatDate(inputDate);
     const formated = formattedDate;
+    const imageUrl = data?.payload?.poster;
+    const isValidUrl = imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://');
 
     console.log(data?.payload?.agenda, 'detail data')
 
@@ -18,7 +19,13 @@ const Page = async ({ params: { id } }) => {
         <div className="container">
             <RedirectBackComponent link={'/'} />
             <section className="p-6 rounded-3xl border-2 border-slate-100 drop-shadow-sm bg-white">
-                <Image src={demoImage} placeholder="blur" className="h-[350px] lg:h-[450px] object-cover rounded-2xl" alt="blog-image" />
+                <div className="h-[350px] lgh-[450px] relative">
+                    <Image src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`}
+                        className="h-[350px] lg:h-[450px] object-cover rounded-2xl"
+                        fill
+                        alt="blog-image"
+                    />
+                </div>
                 <div className="space-y-6 mt-6">
                     <div className="flex justify-between items-center">
                         <h2 className="text-xl lg:text-2xl font-semibold">{data.payload.eventName}</h2>

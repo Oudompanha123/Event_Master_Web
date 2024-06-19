@@ -3,12 +3,32 @@
 import { addNewCategoryAction } from "@/actions/categoryAction";
 import { AddSquare } from "iconsax-react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const CreateCategoryButton = () => {
-    const [categoryName, setCategoryName] = useState();
+    const [categoryName, setCategoryName] = useState('');
+    const [isSend, setIsSend] = useState(false);
+    const [showMsg, setShowMsg] = useState(false);
+
+    const notify = () => {
+        toast.success("Sucessfully created category", {
+            position: "top-center"
+        });
+    }
+
     const handleSubmit = () => {
+        if (categoryName == '') {
+            setShowMsg(true)
+            return
+        }
+        setIsSend(true)
+        setShowMsg(false)
         addNewCategoryAction(categoryName);
-        setCategoryName('');
+        setTimeout(() => {
+            setCategoryName('');
+        }, 1000)
+        setIsSend(false)
+        notify()
         document.getElementById("my_modal_category").close()
     }
     return (
@@ -28,20 +48,29 @@ const CreateCategoryButton = () => {
                             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                         </form>
                     </div>
-                    <input
-                        type="text"
-                        name="category"
-                        id="category"
-                        className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
-                        placeholder="Category" required=""
-                        value={categoryName}
-                        onChange={(e) => setCategoryName(e.target.value)}
-                    />
+                    <div>
+                        <input
+                            type="text"
+                            name="category"
+                            id="category"
+                            className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
+                            placeholder="Category" required=""
+                            value={categoryName}
+                            onChange={(e) => setCategoryName(e.target.value)}
+                        />
+                        <p className={`${showMsg ? 'block' : 'hidden'} text-red-500 text-sm mt-2`}>Input can't be empty</p>
+                    </div>
                     <div className="flex justify-end space-x-3">
-                        <div onClick={() => document.getElementById("my_modal_category").close()} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
+                        <div onClick={() => { document.getElementById("my_modal_category").close(); setCategoryName('') }} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
                         <button onClick={() => handleSubmit()} type="submit" className="save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
-                            <AddSquare size="20" color="#FFFFFF" variant="Bold" />
-                            <span className="h-12 text-white flex justify-center items-center">Create</span>
+                            {!isSend ?
+                                <div className="flex justify-center text-center items-center gap-3">
+                                    <AddSquare size="20" color="#FFFFFF" variant="Bold" />
+                                    <span className="h-12 text-white flex justify-center items-center">Create</span>
+                                </div>
+                                :
+                                <div className="loader"></div>
+                            }
                         </button>
                     </div>
                 </div>

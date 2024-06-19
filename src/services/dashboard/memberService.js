@@ -1,9 +1,8 @@
 'use server'
 import { headerToken } from "@/app/api/auth/headerToken";
 
-const header = await headerToken();
-
-export async function getAllMemberService(){
+export async function getAllMemberService() {
+    const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}members?offset=1&limit=8`,
         {
             next: { tags: ["member"] },
@@ -16,7 +15,8 @@ export async function getAllMemberService(){
     return data;
 }
 
-export async function deleteMemberByIdService(memberId){
+export async function deleteMemberByIdService(memberId) {
+    const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}members/${memberId}`,
         {
             next: { tags: ["member"] },
