@@ -5,21 +5,16 @@ import ProfileComponent from './_components/ProfileComponent';
 import PictureComponent from './_components/PictureComponent';
 import FormComponent from './_components/FormComponent';
 import { getAllProfileMember } from '@/services/profile/profile.service';
+import { getAllProfileMemberAction } from '@/actions/profile/memberProfileAction';
 
 
 async function page() {
-  const getAllMember = await getAllProfileMember();
-  // console.log("Get all member", getAllMember)
   return (
     <>
     <div className='p-2 rounded-2xl relative'>
         <div className='w-full bg-white sm:w-auto sm:h-auto rounded-2xl md:flex justify-between shadow-md relative'>
-            {/* <div className='relative md:w-[30%] h-auto'>
-                <ProfileComponent/>
-                <PictureComponent/>
-            </div> */}
             <div className='w-full flex justify-center items-center py-5'>
-                <FormComponent getAllMemberProfile={getAllMember}/>
+                <FormComponent/>
             </div>
             <PictureComponent/>
         </div>
