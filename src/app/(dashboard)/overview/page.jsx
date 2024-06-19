@@ -3,18 +3,22 @@ import { BarChartComponent } from "../_components/BarChartComponent"
 import CreateCategoryButton from "../_components/Action/CreateCategoryButton"
 import { Getstart } from "../_components/Action/GetstartBtn"
 import { getAllCategory, getOverviewData } from "@/services/dashboard/overviewService"
-import { OverviewTable } from "../_components/OverviewTable"
 import { getServerSession } from "next-auth"
 import { authOption } from "@/app/api/auth/[...nextauth]/route"
 import { jwtDecode } from "jwt-decode"
-import { Suspense } from "react"
+import { Suspense} from "react"
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+import { RPaginate } from "../_components/paginate/RPaginate"
+import { CategoryDeleteAction } from "../_components/Action/CategoryDeleteAction"
+import { CategoryEditAction } from "../_components/Action/CategoryEditAction"
 
-const Page = async () => {
+const Page = async ({ searchParams }) => {
     const session = await getServerSession(authOption);
     let userInfo = jwtDecode(session?.user?.token);
     const userRole = userInfo.role;
     const data = await getOverviewData();
-    const allCategory = await getAllCategory();
+    const cateData = await getAllCategory(searchParams.page);
 
     const convertToObjectArray = (data) => {
         const mappings = {
@@ -43,6 +47,7 @@ const Page = async () => {
 
     return (
         <div className="space-y-4 xl:space-y-7">
+            <ToastContainer autoClose={2000} />
             <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 xl:gap-6">
                 <Suspense>
                     {topCardData.payload.map((x, index) => (
@@ -90,7 +95,44 @@ const Page = async () => {
                     </div>
                     <div className="w-full overflow-scroll">
                         <Suspense>
-                            <OverviewTable server={allCategory} role={userRole} />
+                            <div>
+                                <table className="table w-full px-1 border-separate border-spacing-y-3">
+                                    <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
+                                        <tr className="text-xs lg:text-base">
+                                            <th className="px-5 py-2 font-medium rounded-l-radiusUi">No</th>
+                                            <th className="px-5 py-2 font-medium">Name</th>
+                                            <th className="px-5 py-2 font-medium">Created At</th>
+                                            <th className="px-5 py-2 font-medium">Created By</th>
+                                            <th className={`${userRole == 'ROLE_USER' && 'hidden'} px-5 py-2 font-medium rounded-r-radiusUi`}>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {cateData?.payload?.map((x, index) => {
+                                            const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                                            const inputDate = x.createAt;
+                                            const formattedDate = formatDate(inputDate);
+                                            const formated = formattedDate;
+                                            return (
+                                                <tr key={x.categoryId} className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}>
+                                                    <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{index + 1}</td>
+                                                    <td className="px-5 py-2 text-xs xl:text-base">{x?.categoryName}</td>
+                                                    <td className="px-5 py-2 text-xs xl:text-base">{formated}</td>
+                                                    <td className="px-5 py-2 text-xs xl:text-base">{x?.createBy}</td>
+                                                    <td className={`${userRole == 'ROLE_USER' && 'hidden'} px-5 py-2 text-xs xl:text-base rounded-r-radiusUi`}>
+                                                        <div className="flex items-center gap-2 lg:gap-4">
+                                                            <CategoryDeleteAction cateId={x?.categoryId} />
+                                                            <CategoryEditAction cateId={x?.categoryId} name={x?.categoryName} />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
+                                <div className="w-full h-full flex justify-end mt-8">
+                                    <RPaginate totalData={cateData?.totalRecord} />
+                                </div>
+                            </div>
                         </Suspense>
                     </div>
                 </div>

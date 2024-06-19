@@ -7,12 +7,14 @@ import { SelectDropdownLanding } from "./SelectDropDownLanding"
 import { SelectStatusLanding } from "./SelectStatusLanding"
 import { useRouter } from "next/navigation"
 import { TitleComponent } from "./TitleComponent"
+import Image from "next/image"
 
 export const SearchBar = () => {
     const [findData, setFindData] = useState();
     const [search, setSearch] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
+    const [empty, setEmpty] = useState(false);
     const [dropDownValue, setDropDownValue] = useState('');
     const [statusValue, setStatusValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +25,7 @@ export const SearchBar = () => {
         event.preventDefault();
         if (search === '' && startTime === '' && endTime === '' && statusValue === '' && dropDownValue === '') {
             setFindData(undefined);
+            setEmpty(true)
             router.push(`/`, { scroll: false });
             return;
         }
@@ -49,6 +52,8 @@ export const SearchBar = () => {
 
     const getDropDownValue = (v) => setDropDownValue(v)
     const getStatusValue = (v) => setStatusValue(v)
+
+    console.log('opopop', findData?.payload?.length)
 
     return (
         <div>
@@ -123,7 +128,7 @@ export const SearchBar = () => {
 
             {/* searched data  */}
             <section>
-                {findData != undefined &&
+                {findData !== undefined &&
                     <>
                         {
                             categoryArr.map((x, index) => (
@@ -181,6 +186,18 @@ export const SearchBar = () => {
                             ))
                         }
                     </>
+                }
+                {findData?.payload?.length == 0 &&
+                    <div className="w-full">
+                        <Image
+                            className="mx-auto mt-8"
+                            src="/images/empty-amico.png"
+                            alt="empty image"
+                            width={360}
+                            height={360}
+                            priority
+                        />
+                    </div>
                 }
             </section >
         </div >

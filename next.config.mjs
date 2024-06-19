@@ -9,11 +9,12 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'firebasestorage.googleapis.com',
             },
+            {
+                protocol: 'http',
+                hostname: '34.124.203.109',
+            },
         ],
-    },
-    // env : {
-    //     Next_API_URL: 'http://34.124.203.109:8081'
-    // }
+    }
 };
 
 export default withPlaiceholder(nextConfig)
