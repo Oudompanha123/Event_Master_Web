@@ -13,6 +13,7 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
   const [handleName, setHandleName] = useState(name);
   const [handleQty, setHandleQty] = useState(qty);
   const [handleUnit, setHandleUnit] = useState(unit);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -20,10 +21,16 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
     formState: { errors },
   } = useForm();
 
+  const delay = (x) => new Promise((resolve) => setTimeout(resolve, x))
+   
   const onSubmit = async (e) => {
     // console.log("data", e);
+    setIsLoading(true);
     await handleUpdateAsset(assetEdit, e);
+    await delay(2000);
+    setIsLoading(false);
     reset();
+
     document.getElementById(`my_modal_updateasset${assetEdit}`).close();
   };
 
@@ -136,7 +143,11 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                 >
                   <Image src={"/icons/edit.svg"} width={20} height={20} />
                   <span className="h-12 text-white flex justify-center items-center">
-                    Update
+                    {!isLoading ? (
+                      <p>Update</p>
+                    ) : (
+                      <div className="loader"></div>
+                    )}
                   </span>
                 </button>
               </div>

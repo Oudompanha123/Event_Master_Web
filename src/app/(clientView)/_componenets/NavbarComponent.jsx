@@ -16,10 +16,10 @@ export const NavbarComponent = () => {
             </Link>
             <div className="gap-8 items-center hidden lg:flex">
                 <div className="space-x-8">
-                    <Link href={'/'}>
+                    <Link prefetch={true} href={'/'}>
                         <span className={`py-3 ${pathname == "/" && 'border-b-2'} border-purple-text font-medium`}>Home</span>
                     </Link>
-                    <Link href={'/about'}>
+                    <Link prefetch={true} href={'/about'}>
                         <span className={`py-3 ${pathname == "/about" && 'border-b-2'} border-purple-text font-medium`}>About</span>
                     </Link>
                 </div>

@@ -28,7 +28,7 @@ export const EventList = ({ title, data }) => {
                     )
                 })}
             </div>
-            <Link href={`/events/${title}`}>
+            <Link prefetch={true} href={`/events/${title}`}>
                 <button className={`${data?.payload?.length >= 6 ? "block" : "hidden"} mx-auto mt-8 text-sm rounded-full bg-purple-text text-white px-6 py-3 border-1px border-purple-text`}>See more</button>
             </Link>
         </div>

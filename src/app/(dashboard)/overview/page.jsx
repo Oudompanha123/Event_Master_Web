@@ -7,16 +7,14 @@ import { OverviewTable } from "../_components/OverviewTable"
 import { getServerSession } from "next-auth"
 import { authOption } from "@/app/api/auth/[...nextauth]/route"
 import { jwtDecode } from "jwt-decode"
+import { Suspense } from "react"
 
 const Page = async () => {
     const session = await getServerSession(authOption);
     let userInfo = jwtDecode(session?.user?.token);
     const userRole = userInfo.role;
-    console.log("chekc user info", userRole)
     const data = await getOverviewData();
     const allCategory = await getAllCategory();
-
-    console.log(data, 'check data')
 
     const convertToObjectArray = (data) => {
         const mappings = {
@@ -46,16 +44,20 @@ const Page = async () => {
     return (
         <div className="space-y-4 xl:space-y-7">
             <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 xl:gap-6">
-                {topCardData.payload.map((x, index) => (
-                    <OverviewCardComponent key={index} title={x.title} count={x.count} logo={x.logo} />
-                ))}
+                <Suspense>
+                    {topCardData.payload.map((x, index) => (
+                        <OverviewCardComponent key={index} title={x.title} count={x.count} logo={x.logo} />
+                    ))}
+                </Suspense>
             </section>
             {/* second row */}
             <section className="flex flex-col xl:flex-row gap-4 xl:gap-8 w-full">
                 <div className=" bg-white w-full xl:w-1/2 h-auto p-6 rounded-3xl space-y-6">
                     <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Total Event By Category</h2>
                     <div className="rounded-3xl w-full">
-                        <BarChartComponent data={data.payload.categoryEventCountList} />
+                        <Suspense>
+                            <BarChartComponent data={data.payload.categoryEventCountList} />
+                        </Suspense>
                     </div>
                 </div>
                 <div className="w-full xl:w-1/2 rounded-3xl relative bg-[#7B61FF] space-y-8 p-8 overflow-hidden">
@@ -87,7 +89,9 @@ const Page = async () => {
                         </div>
                     </div>
                     <div className="w-full overflow-scroll">
-                        <OverviewTable server={allCategory} role={userRole} />
+                        <Suspense>
+                            <OverviewTable server={allCategory} role={userRole} />
+                        </Suspense>
                     </div>
                 </div>
             </section>

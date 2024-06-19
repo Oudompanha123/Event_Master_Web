@@ -6,13 +6,16 @@ import { useEffect, useState } from "react";
 import { getAllCategoryAction } from "@/actions/categoryAction";
 import { RPaginate } from "./paginate/RPaginate";
 
+const fetcher = (...args) => fetch(...args).then(res => res.json())
+
 export const OverviewTable = ({ server, role }) => {
     const [data, setData] = useState(server);
     const [navigate, setNavigate] = useState();
+    const [deleteTrigger, setDeleteTrigger] = useState(true);
 
     const getData = async () => {
         try {
-            const data = await getAllCategoryAction(navigate); //2
+            const data = await getAllCategoryAction(navigate);
             setData(data);
         } catch (err) {
             console.log(`something error while fetching ${err}`)
@@ -24,9 +27,11 @@ export const OverviewTable = ({ server, role }) => {
         setNavigate(page + 1)
     }
 
+    const deleteTriggerFnc = () => setDeleteTrigger(!deleteTrigger)
+
     useEffect(() => {
         getData();
-    }, [navigate])
+    }, [navigate, deleteTrigger])
 
     return (
         <div>
@@ -54,8 +59,8 @@ export const OverviewTable = ({ server, role }) => {
                                 <td className="px-5 py-2 text-xs xl:text-base">{x?.createBy}</td>
                                 <td className={`${role == 'ROLE_USER' && 'hidden'} px-5 py-2 text-xs xl:text-base rounded-r-radiusUi`}>
                                     <div className="flex items-center gap-2 lg:gap-4">
-                                        <CategoryDeleteAction cateId={x?.categoryId} />
-                                        <CategoryEditAction cateId={x?.categoryId} name={x?.categoryName} />
+                                        <CategoryDeleteAction cateId={x?.categoryId} func={deleteTriggerFnc} />
+                                        <CategoryEditAction cateId={x?.categoryId} name={x?.categoryName} func={deleteTriggerFnc} />
                                     </div>
                                 </td>
                             </tr>

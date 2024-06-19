@@ -10,15 +10,34 @@ import { NotificationCard } from "@/app/(dashboard)/_components/NotificationCard
 import Link from "next/link"
 import { useSession } from "next-auth/react"
 import { jwtDecode } from "jwt-decode"
+import { getEventDetailByIdAction } from "@/actions/findEventAction"
+import { useEffect, useState } from "react"
 
 export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
+    const [eventData, setEventData] = useState('');
+    const eventId = pathname.split('/')[2];
+    const eventName = eventData?.payload?.eventName;
     const { data: session, status } = useSession();
     let userInfo;
+
     if (status === 'authenticated' && session?.user?.token) {
         userInfo = jwtDecode(session.user.token);
     }
+
     const userRole = userInfo?.role;
+
+    useEffect(() => {
+        if (pathname.startsWith('/event-detail')) {
+            console.log('fetch get event by id');
+            getEventData(eventId);
+        }
+    }, [pathname, eventId]);
+
+    const getEventData = async (id) => {
+        const res = await getEventDetailByIdAction(id);
+        setEventData(res);
+    };
 
     return (
         <div className={`${className} justify-between sticky top-0 z-50 bg-white flex lg:justify-between items-center py-3 px-3 lg:px-14 border-b-[1px]`}>
@@ -47,10 +66,10 @@ export const NavbarComponent = ({ className }) => {
                     <div className="hidden lg:flex text-sm breadcrumbs">
                         <ul className="">
                             <li>
-                                <Link href={'/event-detail/1'}>Design Skill & Tech Session</Link>
+                                <Link href={'/event-detail/1'}>{eventName ? eventName : 'fetching...'}</Link>
                             </li>
                             <li>
-                                <Link href={'/attendees'}>Attendees</Link>
+                                <Link href={`/attendees/${eventId}`}>Attendees</Link>
                             </li>
                             <li>
                                 <Link href={'/events'}>

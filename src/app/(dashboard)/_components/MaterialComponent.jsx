@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import Image from "next/image";
 import SelectedItem from "./SelectedItem";
@@ -9,6 +9,11 @@ import { TiFlashOutline } from "react-icons/ti";
 import { IoSearchOutline } from "react-icons/io5";
 import { AddSquare } from "iconsax-react";
 import DropdownSupporter from "./DropdownSupporterComponent";
+import fetchMaterialData from "@/app/actions/material/fetchMaterialAction";
+import CreateMultipleMaterial from "@/app/actions/material/createMaterialMultipleAction";
+import { getAllMemberService } from "@/services/dashboard/memberService";
+import deleteMaterialMultiple from "@/app/actions/material/deleteMaterialMultipleAction";
+import { countMaterialStatusByEventId } from "@/services/dashboard/materialService";
 
 const getStatusColor = (status) => {
   switch (status) {
@@ -25,52 +30,47 @@ const getStatusColor = (status) => {
   }
 };
 
-export default function MaterialComponent({id}) {
+export default function MaterialComponent({ id }) {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  // const [isFocused, setIsFocused] = useState(false);
+  const [data, setData] = useState(null);
+  const [dataCount, setDataCount] = useState(null);
 
-  // Function to update suggestions based on the input value
-  // const updateSuggestions = (value) => {
-  //   const countries = ["Coca", "Angkor", "Table", "Ice"];
-  //   const filteredSuggestions = countries.filter((country) =>
-  //     country.toLowerCase().includes(value.toLowerCase())
-  //   );
-  //   setSuggestions(filteredSuggestions);
-  // };
+  const fetchMaterial = async () => {
+    const res = await fetchMaterialData(id);
+    setData(res?.payload);
+  };
 
-  // Function to handle input change
+  useEffect(() => {
+    fetchMaterial();
+  }, [id]);
+
+
+
+  const fetchCountMaterial = async () => {
+    const res = await countMaterialStatusByEventId(id);
+    setDataCount(res);
+  };
+
+  useEffect(() => {
+    fetchCountMaterial();
+  }, [id]);
+
+  console.log("the data count is ",dataCount)
+
   const handleInputChange = (event) => {
     const value = event.target.value;
     setInputValue(value);
     updateSuggestions(value);
   };
 
-  // Function to handle suggestion click
   const handleSuggestionClick = (suggestion) => {
     setInputValue(suggestion);
     setSuggestions([]);
   };
 
+  const [rows, setRows] = useState([]);
 
-  const [rows, setRows] = useState([
-    // Example initial row
-    // {
-    //   id: 1,
-    //   itemName: "",
-    //   qty: "",
-    //   unit: "",
-    //   dueDate: "",
-    //   handler: "",
-    //   supporters: "",
-    //   status: "Pending",
-    //   note: "",
-    //   inputValue: "", // Add input value state htmlFor each row
-    //   suggestions: [], // Add suggestions state htmlFor each row
-    //   isFocused: false, // Add focus state htmlFor each row
-    // },
-    // ... (other rows)
-  ]);
   const updateSuggestionsForRow = (value, rowId) => {
     const countries = ["Coca", "Angkor", "Table", "Ice"];
     const filteredSuggestions = countries.filter((country) =>
@@ -82,7 +82,7 @@ export default function MaterialComponent({id}) {
       )
     );
   };
-  // Function to handle input change htmlFor a specific rows
+
   const handleInputChangeForRow = (event, rowId) => {
     const value = event.target.value;
     setRows((prevRows) =>
@@ -92,14 +92,16 @@ export default function MaterialComponent({id}) {
     );
     updateSuggestionsForRow(value, rowId);
   };
+
   const handleSuggestionClickForRow = (suggestion, rowId) => {
     setRows((prevRows) =>
       prevRows.map((row) =>
-        row.id === rowId ? { ...row, inputValue: suggestion, suggestions: [] } : row
+        row.id === rowId
+          ? { ...row, inputValue: suggestion, suggestions: [] }
+          : row
       )
     );
   };
-
 
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [checkedRows, setCheckedRows] = useState([]);
@@ -108,7 +110,7 @@ export default function MaterialComponent({id}) {
   const handleSelectAllChange = (event) => {
     setSelectAllChecked(event.target.checked);
     if (event.target.checked) {
-      const allRowIds = rows.map((row) => row.id);
+      const allRowIds = [...data, ...rows].map((row) => row.id || row.materialId);
       setCheckedRows(allRowIds);
     } else {
       setCheckedRows([]);
@@ -130,14 +132,17 @@ export default function MaterialComponent({id}) {
   const addNewRow = () => {
     const newRow = {
       id: rows.length + 1,
-      itemName: "",
+      materialName: "",
       qty: "",
       unit: "",
+      toGet: "",
       dueDate: "",
       handler: "",
       supporters: "",
       status: "Pending",
-      note: "",
+      inputValue: "", // Add input value state for each row
+      suggestions: [], // Add suggestions state for each row
+      isFocused: false, // Add focus state for each row
     };
     setRows([...rows, newRow]);
   };
@@ -156,7 +161,7 @@ export default function MaterialComponent({id}) {
     );
   };
 
-  const handleRemove = (item) => {
+    const handleRemove = (item) => {
     setSelected(selected.filter((i) => i.value !== item.value));
   };
 
@@ -166,127 +171,188 @@ export default function MaterialComponent({id}) {
     }
   };
 
-  const handleCheckboxChange = (id) => {
+    const handleCheckboxChange = (id) => {
     setCheckedRows((prevCheckedRows) =>
       prevCheckedRows.includes(id)
         ? prevCheckedRows.filter((rowId) => rowId !== id)
         : [...prevCheckedRows, id]
     );
   };
+  // console.log("the id check is ", checkedRows);
 
-  const deleteSelectedRows = () => {
-    setRows(rows.filter((row) => !checkedRows.includes(row.id)));
-    setCheckedRows([]);
+  const deleteSelectedRows = async () => {
+    
+    const idsToDelete = checkedRows.filter((id) => !id.toString().startsWith("new_"));
+    const newIds = checkedRows.filter((id) => id.toString().startsWith("new_"));
+    console.log("the id of material to delete is ",idsToDelete);
+    try {
+      if (idsToDelete.length > 0) {
+        await deleteMaterialMultiple(idsToDelete);
+      }
+      setData(data.filter((row) => !idsToDelete.includes(row.materialId)));
+      setCheckedRows([]);
+      alert("Selected materials deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting materials:", error);
+      alert("Failed to delete materials.");
+    }
+  };
+ 
+
+  const handleSave = async () => {
+    const materials = rows.map((row) => ({
+      materialName: row.materialName,
+      qty: row.qty,
+      toGet: row.toGet, // Assuming this is calculated or another input
+      unit: row.unit,
+      status: row.status,
+      assignDate: new Date().toISOString().split("T")[0], // Current date in YYYY-MM-DD format
+      dueDate: row.dueDate,
+      handlerId: row.handler, // Assuming this is set from some handler mapping
+      eventId: id,
+      supporters: {}, // Assuming this is populated from somewhere
+      // assetId: 0, // Assuming this is set from some asset mapping
+    }));
+
+    try {
+      await CreateMultipleMaterial(materials);
+      alert("Materials created successfully!");
+      setRows([]); // Clear the rows state after successful save
+    } catch (error) {
+      console.error("Error creating materials:", error);
+      alert("Failed to create materials.");
+    }
+  };
+  
+
+  const [memberData, setMemberData] = useState(null);
+  const fetchData = async () => {
+    const res = await getAllMemberService();
+    setMemberData(res.payload);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // Count the length of data
+  const dataLength = data ? data.length : 0;
+
+  // Helper function to render rows based on data
+  const renderRows = () => {
+    if (!data) return null;
+    return data.map((data, index) => (
+      <tr
+        key={data.materialId}
+        className="bg-white border-b hover:bg-gray-50 border border-black"
+      >
+        <td className="w-4 p-4 rounded-l-2xl">
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              checked={checkedRows.includes(data.materialId)}
+              onChange={() => handleCheckboxChange(data.materialId)}
+              id={`checkbox-table-${index + 1}`}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label htmlFor={`checkbox-table-${index + 1}`} className="sr-only">
+              checkbox
+            </label>
+          </div>
+        </td>
+        <td className="text-base text-primary-text pl-1">{index + 1}</td>
+        <td className="text-sm font-normal text-primary-text px-2">
+          <input
+            type="text"
+            name={`materialName-${index}`}
+            className="border text-primary-text text-base px-2 w-32 h-10 rounded-xl font-normal focus:outline-none"
+            value={data.materialName}
+            readOnly // Make the input read-only
+          />
+        </td>
+        <td className="text-sm font-normal text-primary-text px-2">
+          <input
+            type="text"
+            name={`qty-${index}`}
+            className="border text-primary-text text-base px-2 w-20 h-10 rounded-xl font-normal focus:outline-none"
+            value={data.qty}
+            readOnly // Make the input read-only
+          />
+        </td>
+        <td className="text-sm font-normal text-primary-text px-2">
+          <input
+            type="text"
+            name={`unit-${index}`}
+            className="border text-primary-text text-base px-2 w-24 h-10 rounded-xl font-normal focus:outline-none"
+            value={data.unit}
+            readOnly // Make the input read-only
+          />
+        </td>
+        <td className="sm:text-sm font-normal px-2 text-base text-primary-text">
+          <input
+            type="text"
+            name={`toGet-${index}`}
+            className="border text-primary-text text-base sm:text-sm px-2 w-20 h-10 rounded-xl font-normal focus:outline-none"
+            value={data.toGet}
+            readOnly // Make the input read-only
+          />
+        </td>
+        <td className="px-2">
+          <input
+            type="date"
+            name={`dueDate-${index}`}
+            className="border text-gray-900 sm:text-sm rounded-xl block w-22 p-2 focus:outline-none placeholder:text-opacity-50"
+            placeholder="dd/mm/yyyy"
+            value={data.dueDate}
+            readOnly // Make the input read-only
+          />
+        </td>
+        <td className="px-2">
+          <select
+            name={`handler-${index}`}
+            className="border text-black text-base sm:text-sm rounded-xl block w-28 p-2.5 focus:outline-none"
+            value={data.handlerId}
+            readOnly // Make the select read-only
+          >
+            <option value="">Select handler</option>
+            {memberData?.map((data, idx) => (
+              <option key={idx} value={data.memberId}>
+                {data?.memberName}
+              </option>
+            ))}
+          </select>
+        </td>
+        <td className="px-2">
+          <DropdownSupporter />
+        </td>
+        <td className="px-2 w-36">
+          <div className=" bg-white p-[7px] border rounded-xl">
+            <div className="cursor-pointer flex items-center">
+              <span
+                className="flex px-1 py-1 w-16 text-xs font-semibold justify-center rounded-full"
+                style={{
+                  backgroundColor: getStatusColor(data.status),
+                  color: "white",
+                }}
+              >
+                {data.status}
+              </span>
+              <FaAngleDown className="ml-2" />
+            </div>
+          </div>
+        </td>
+        <td className="pl-5 rounded-r-2xl">
+          <MaterialActionButton data={data} />
+        </td>
+      </tr>
+    ));
   };
 
-  if ((rows ?? []).length === 0) {
+  if ((rows ?? []).length === 0 && data === null) {
     return (
       <div>
         {/* Material */}
         <div className="text-primary-text font-semibold text-2xl mb-5 mt-14 ">
           Material Management
-        </div>
-        <div className="grid grid-cols-1 py-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 ">
-          <div className="w-auto bg-white rounded-3xl drop-shadow flex px-3.5 py-1 ">
-            <div className="flex items-center">
-              <div className="bg-[#624F9D] p-2.5 rounded-full">
-                <Image
-                  className=""
-                  src="/icons/ranking.svg"
-                  alt="Next.js Logo"
-                  width={30}
-                  height={10}
-                  priority
-                />
-              </div>
-              <div className="pl-3 ">
-                <p className="text-primary-text text-xs lg:text-sm font-medium">
-                  Total Material
-                </p>
-                <p className="text-primary-text text-xs lg:text-sm font-bold">
-                  40
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 ">
-            <div className="flex items-center">
-              <div className="bg-[#FBBC04] p-2.5 rounded-full ">
-                <HiOutlineSwatch size="30" color="#ffffff" />
-              </div>
-              <div className=" pl-3">
-                <p className=" text-primary-text text-xs lg:text-sm font-medium">
-                  Pending Material
-                </p>
-                <p className=" text-primary-text text-xs lg:text-sm font-bold">
-                  20
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 ">
-            <div className="flex items-center">
-              <div className="bg-[#551FFF] p-2.5 rounded-full">
-                <TiFlashOutline size="32" color="#ffffff" />
-              </div>
-              <div className="pl-3">
-                <p className=" text-primary-text text-xs lg:text-sm font-medium">
-                  On Going Material
-                </p>
-                <p className=" text-primary-text text-xs lg:text-sm font-bold">
-                  10
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 ">
-            <div className="flex items-center">
-              <div className=" bg-[#038446] p-2.5 rounded-full">
-                <Image
-                  className=""
-                  src="/icons/clipboard.svg"
-                  alt="Next.js Logo"
-                  width={30}
-                  height={10}
-                  priority
-                />
-              </div>
-              <div className="pl-3">
-                <p className=" text-primary-text text-xs lg:text-sm font-medium">
-                  Done Material
-                </p>
-                <p className=" text-primary-text text-xs lg:text-sm font-bold">
-                  8
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 ">
-            <div className="flex items-center">
-              <div className=" bg-[#D72222] p-2.5 rounded-full">
-                <Image
-                  className=""
-                  src="/icons/warning-2.svg"
-                  alt="Next.js Logo"
-                  width={32}
-                  height={10}
-                  priority
-                />
-              </div>
-              <div className="pl-3">
-                <p className=" text-primary-text text-xs lg:text-sm font-medium">
-                  Issue Material
-                </p>
-                <p className=" text-primary-text text-xs lg:text-sm font-bold">
-                  2
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* <div className="relative"> */}
@@ -349,29 +415,29 @@ export default function MaterialComponent({id}) {
                 <th scope="col" className=" py-5 text-primary-text px-0">
                   NO
                 </th>
-                <th scope="col" className=" py-3 text-primary-text px-6 ">
+                <th scope="col" className="px-3 py-3 text-primary-text">
                   ITEM NAME
                 </th>
-                <th scope="col" className=" py-3 text-primary-text px-2">
+                <th scope="col" className="px-2 py-3 text-primary-text">
                   QTY
                 </th>
-                <th scope="col" className=" py-3 text-primary-text px-2">
+                <th scope="col" className="px-2 py-3 text-primary-text ">
                   UNIT
                 </th>
-                <th scope="col" className=" py-3 text-primary-text px-2">
+                <th scope="col" className="px-2 py-3 text-primary-text">
+                  To Get
+                </th>
+                <th scope="col" className="px-2 py-3 text-primary-text">
                   DUE DATE
                 </th>
-                <th scope="col" className=" py-3 text-primary-text">
+                <th scope="col" className="px-2 py-3 text-primary-text">
                   HANDLER
                 </th>
-                <th scope="col" className=" py-3 text-primary-text">
+                <th scope="col" className="px-2 py-3 text-primary-text">
                   SUPPORTERS
                 </th>
-                <th scope="col" className="px-4 py-3 text-primary-text">
+                <th scope="col" className="px-2 py-3 text-primary-text">
                   STATUS
-                </th>
-                <th scope="col" className="px-0 py-3 text-primary-text">
-                  NOTE
                 </th>
                 <th
                   scope="col"
@@ -397,7 +463,7 @@ export default function MaterialComponent({id}) {
               You don’t have any material!
             </p>
             <p className=" text-center text-xl font-medium  text-gray-500">
-              Please create materail htmlFor your event!
+              Please create materail For your event!
             </p>
           </div>
         </div>
@@ -405,117 +471,117 @@ export default function MaterialComponent({id}) {
     );
   }
 
-
   return (
     <>
+
       {/* Material */}
       <div className="text-primary-text font-semibold text-2xl py-5">
         Material Management
       </div>
+
       <div className="grid grid-cols-1 py-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 ">
-        <div className="w-auto bg-white rounded-3xl drop-shadow flex px-3.5 py-1 transition duration-300 ease-in-out hover:scale-[103%]">
-          <div className="flex items-center">
-            <div className="bg-[#624F9D] p-2.5 rounded-full">
-              <Image
-                className=""
-                src="/icons/ranking.svg"
-                alt="Next.js Logo"
-                width={30}
-                height={10}
-                priority
-              />
+          <div className="w-auto bg-white rounded-3xl drop-shadow flex px-3.5 py-1 ">
+            <div className="flex items-center">
+              <div className="bg-[#624F9D] p-2.5 rounded-full">
+                <Image
+                  className=""
+                  src="/icons/ranking.svg"
+                  alt="Next.js Logo"
+                  width={30}
+                  height={10}
+                  priority
+                />
+              </div>
+              <div className="pl-3 ">
+                <p className="text-primary-text text-xs lg:text-sm font-medium">
+                  Total Material
+                </p>
+                <p className="text-primary-text text-xs lg:text-sm font-bold">
+                  {/* {dataCount.total} */}
+                </p>
+              </div>
             </div>
-            <div className="pl-3 ">
-              <p className="text-primary-text text-xs lg:text-sm font-medium">
-                Total Material
-              </p>
-              <p className="text-primary-text text-xs lg:text-sm font-bold">
-                40
-              </p>
+          </div>
+
+          <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 ">
+            <div className="flex items-center">
+              <div className="bg-[#FBBC04] p-2.5 rounded-full ">
+                <HiOutlineSwatch size="30" color="#ffffff" />
+              </div>
+              <div className=" pl-3">
+                <p className=" text-primary-text text-xs lg:text-sm font-medium">
+                  Pending Material
+                </p>
+                <p className=" text-primary-text text-xs lg:text-sm font-bold">
+                  0
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 ">
+            <div className="flex items-center">
+              <div className="bg-[#551FFF] p-2.5 rounded-full">
+                <TiFlashOutline size="32" color="#ffffff" />
+              </div>
+              <div className="pl-3">
+                <p className=" text-primary-text text-xs lg:text-sm font-medium">
+                  On Going Material
+                </p>
+                <p className=" text-primary-text text-xs lg:text-sm font-bold">
+                  0
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 ">
+            <div className="flex items-center">
+              <div className=" bg-[#038446] p-2.5 rounded-full">
+                <Image
+                  className=""
+                  src="/icons/clipboard.svg"
+                  alt="Next.js Logo"
+                  width={30}
+                  height={10}
+                  priority
+                />
+              </div>
+              <div className="pl-3">
+                <p className=" text-primary-text text-xs lg:text-sm font-medium">
+                  Done Material
+                </p>
+                <p className=" text-primary-text text-xs lg:text-sm font-bold">
+                  0
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 ">
+            <div className="flex items-center">
+              <div className=" bg-[#D72222] p-2.5 rounded-full">
+                <Image
+                  className=""
+                  src="/icons/warning-2.svg"
+                  alt="Next.js Logo"
+                  width={32}
+                  height={10}
+                  priority
+                />
+              </div>
+              <div className="pl-3">
+                <p className=" text-primary-text text-xs lg:text-sm font-medium">
+                  Issue Material
+                </p>
+                <p className=" text-primary-text text-xs lg:text-sm font-bold">
+                  2
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
-          <div className="flex items-center">
-            <div className="bg-[#FBBC04] p-2.5 rounded-full ">
-              <HiOutlineSwatch size="30" color="#ffffff" />
-            </div>
-            <div className=" pl-3">
-              <p className=" text-primary-text text-xs lg:text-sm font-medium">
-                Pending Material
-              </p>
-              <p className=" text-primary-text text-xs lg:text-sm font-bold">
-                20
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
-          <div className="flex items-center">
-            <div className="bg-[#551FFF] p-2.5 rounded-full">
-              <TiFlashOutline size="32" color="#ffffff" />
-            </div>
-            <div className="pl-3">
-              <p className=" text-primary-text text-xs lg:text-sm font-medium">
-                On Going Material
-              </p>
-              <p className=" text-primary-text text-xs lg:text-sm font-bold">
-                10
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
-          <div className="flex items-center">
-            <div className=" bg-[#038446] p-2.5 rounded-full">
-              <Image
-                className=""
-                src="/icons/clipboard.svg"
-                alt="Next.js Logo"
-                width={30}
-                height={10}
-                priority
-              />
-            </div>
-            <div className="pl-3">
-              <p className=" text-primary-text text-xs lg:text-sm font-medium">
-                Done Material
-              </p>
-              <p className=" text-primary-text text-xs lg:text-sm font-bold">
-                8
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5 transition duration-300 ease-in-out hover:scale-[103%]">
-          <div className="flex items-center">
-            <div className=" bg-[#D72222] p-2.5 rounded-full">
-              <Image
-                className=""
-                src="/icons/warning-2.svg"
-                alt="Next.js Logo"
-                width={32}
-                height={10}
-                priority
-              />
-            </div>
-            <div className="pl-3">
-              <p className=" text-primary-text text-xs lg:text-sm font-medium">
-                Issue Material
-              </p>
-              <p className=" text-primary-text text-xs lg:text-sm font-bold">
-                2
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* <div className="relative"> */}
       <div className="flex justify-between mt-5 h-14 w-full gap-1">
         <div className=" w-full lg:w-[730px]">
           <input
@@ -543,17 +609,23 @@ export default function MaterialComponent({id}) {
               Delete
             </button>
           )}
+          <button
+            type="submit"
+            className="px-6 h-11 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-3 bg-blue-700 w-32 hover:border-blueUi hover:bg-blue-800"
+            onClick={handleSave}
+          >
+            <p className="text-white">Save</p>
+          </button>
 
           <button
             onClick={addNewRow}
-            className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-11 justify-center text-purple-text rounded-3xl  md:py-2.5 flex items-center gap-1"
+            className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-12 justify-center text-purple-text rounded-3xl  md:py-2.5 flex items-center gap-1"
           >
             <AddSquare size="24" variant="Bold" className="" />
             <p className="text-base w-[100px]">New Material</p>
           </button>
         </div>
       </div>
-
       <div className=" relative overflow-x-auto sm:rounded-lg px-1 h-[550px] ">
         <table className="overflow-x-auto  w-full text-sm text-left rtl:text-right text-gray-500 border-separate dark:text-gray-400 border-spacing-y-3 table ">
           <thead className="uppercase dark:text-gray-400 text-sm font-normal h-10 drop-shadow text-primary-text bg-[#F0F1F3]">
@@ -584,6 +656,9 @@ export default function MaterialComponent({id}) {
               <th scope="col" className=" py-3 text-primary-text px-2">
                 UNIT
               </th>
+              <th scope="col" className="px-2 py-3 text-primary-text">
+                To Get
+              </th>
               <th scope="col" className=" py-3 text-primary-text px-2">
                 DUE DATE
               </th>
@@ -593,11 +668,8 @@ export default function MaterialComponent({id}) {
               <th scope="col" className=" py-3 text-primary-text">
                 SUPPORTERS
               </th>
-              <th scope="col" className="px-4 py-3 text-primary-text">
+              <th scope="col" className="px-2 py-3 text-primary-text">
                 STATUS
-              </th>
-              <th scope="col" className="px-0 py-3 text-primary-text">
-                NOTE
               </th>
               <th
                 scope="col"
@@ -609,6 +681,7 @@ export default function MaterialComponent({id}) {
           </thead>
 
           <tbody className="drop-shadow rounded-radiusUi text-sm font-normal text-primary-text bg-[#ffffff]">
+            {renderRows()}
             {rows.map((row, index) => (
               <tr
                 key={row.id}
@@ -632,66 +705,30 @@ export default function MaterialComponent({id}) {
                   </div>
                 </td>
                 <td className="text-base text-primary-text pl-1">
-                  {index + 1}
+                  {dataLength + index + 1}
                 </td>
-                {/*  */}
-                <td>
-                  <div style={{ position: "relative", width: "150px" }}>
-                    <input
-                      type="text"
-                      name="asset"
-                      className="border text-primary-text text-base px-2 w-full h-10 rounded-xl font-normal focus:outline-none"
-                      placeholder=""
-                      value={row.inputValue}
-                      onChange={(e) => handleInputChangeForRow(e, row.id)}
-                      onFocus={() => {
-                        // Update the isFocused state htmlFor the specific row
-                        setRows((prevRows) =>
-                          prevRows.map((r) =>
-                            r.id === row.id ? { ...r, isFocused: true } : r
-                          )
-                        );
-                      }}
-                      onBlur={() => {
-                        // Delay to allow click event on suggestion
-                        setTimeout(() => {
-                          setRows((prevRows) =>
-                            prevRows.map((r) =>
-                              r.id === row.id ? { ...r, isFocused: false } : r
-                            )
-                          );
-                        }, 100);
-                      }}
-                    />
-                    {row.isFocused && row.suggestions?.length > 0 && (
-                      <ul
-                        style={{
-                          position: "absolute",
-                          width: "100%",
-                          backgroundColor: "white",
-                          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                          borderRadius: "0 0 10px 10px",
-                          zIndex: 1000,
-                        }}
-                      >
-                        {row.suggestions.map((suggestion, idx) => (
-                          <li
-                            key={idx}
-                            onClick={() => handleSuggestionClickForRow(suggestion, row.id)}
-                            style={{ padding: "10px", cursor: "pointer" }}
-                          >
-                            {suggestion}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
+                <td className="text-sm font-normal text-primary-text px-2 ">
+                  <input
+                    type="text"
+                    name="materialName"
+                    className="border text-primary-text text-base px-2 w-32 h-10 rounded-xl font-normal focus:outline-none"
+                    value={row.materialName}
+                    onChange={(e) =>
+                      setRows((prevRows) =>
+                        prevRows.map((r) =>
+                          r.id === row.id
+                            ? { ...r, materialName: e.target.value }
+                            : r
+                        )
+                      )
+                    }
+                  />
                 </td>
                 <td className="text-sm font-normal text-primary-text px-2 ">
                   <input
                     type="text"
                     name="qty"
-                    className="border text-primary-text text-base px-2 w-16 h-10 rounded-xl font-normal focus:outline-none"
+                    className="border text-primary-text text-base px-2 w-20 h-10 rounded-xl font-normal focus:outline-none"
                     value={row.qty}
                     onChange={(e) =>
                       setRows((prevRows) =>
@@ -706,12 +743,27 @@ export default function MaterialComponent({id}) {
                   <input
                     type="text"
                     name="unit"
-                    className="border text-primary-text text-base px-2 w-20 h-10 rounded-xl font-normal focus:outline-none"
+                    className="border text-primary-text text-base px-2 w-24 h-10 rounded-xl font-normal focus:outline-none"
                     value={row.unit}
                     onChange={(e) =>
                       setRows((prevRows) =>
                         prevRows.map((r) =>
                           r.id === row.id ? { ...r, unit: e.target.value } : r
+                        )
+                      )
+                    }
+                  />
+                </td>
+                <td className="sm:text-sm font-normal px-2 text-base text-primary-text">
+                  <input
+                    type="text"
+                    name="toGet"
+                    className="border text-primary-text text-base sm:text-sm px-2 w-20 h-10 rounded-xl font-normal focus:outline-none"
+                    value={row.toGet}
+                    onChange={(e) =>
+                      setRows((prevRows) =>
+                        prevRows.map((r) =>
+                          r.id === row.id ? { ...r, toGet: e.target.value } : r
                         )
                       )
                     }
@@ -735,7 +787,7 @@ export default function MaterialComponent({id}) {
                     }
                   />
                 </td>
-                <td className="">
+                <td className="px-2">
                   <select
                     id="handler"
                     name="handler"
@@ -747,18 +799,19 @@ export default function MaterialComponent({id}) {
                       setRows(newRows);
                     }}
                   >
-                    <option value="" selected disabled hidden></option>
-                    <option value="menglim">Menglim</option>
-                    <option value="chhun">Kim Chhun</option>
-                    <option value="Ntya">Nyta</option>
-                    <option value="Bros">Bros</option>
+                    <option value=""></option>
+                    {memberData?.map((data, index) => (
+                      <option key={index} value={data.memberId}>
+                        {data?.memberName}
+                      </option>
+                    ))}
                   </select>
                 </td>
-                <td>
+                <td className="px-2">
                   <DropdownSupporter />
                 </td>
-                <td className="px-4 w-36">
-                  <div className="relative bg-white p-[7px] border rounded-xl ">
+                <td className="px-2 w-36">
+                  <div className=" bg-white p-[7px] border rounded-xl ">
                     <div
                       className="cursor-pointer flex items-center"
                       onClick={() => toggleDropdown(row.id)}
@@ -796,30 +849,14 @@ export default function MaterialComponent({id}) {
                     )}
                   </div>
                 </td>
-                <td className="sm:text-sm font-normal px-0 text-base text-primary-text">
-                  <input
-                    type="text"
-                    name="note"
-                    className="border text-primary-text text-base sm:text-sm px-2 w-28 h-10 rounded-xl font-normal focus:outline-none"
-                    value={row.note}
-                    onChange={(e) =>
-                      setRows((prevRows) =>
-                        prevRows.map((r) =>
-                          r.id === row.id ? { ...r, note: e.target.value } : r
-                        )
-                      )
-                    }
-                  />
-                </td>
                 <td className="pl-5 rounded-r-2xl ">
-                  <MaterialActionButton />
+                  {/* <MaterialActionButton id={row.materialId}/> */}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      </>
+    </>
   );
 }
-

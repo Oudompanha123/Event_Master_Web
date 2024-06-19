@@ -1,14 +1,12 @@
-// import { ZCOOL_KuaiLe } from "next/font/google";
+import { headerToken } from "@/app/api/auth/headerToken";
 
 export const getAgendaByEventId = async (id) => {
   try {
-    console.log("The event id is", id);
+    const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}agendas/${id}`, {
+      next: { tags: ['agendas'] },
       cache: "no-store",
-      headers: {
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDIsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6IkQ1Q1VRUiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDIsIm1lbWJlcklkIjo2MCwic3ViIjoicGVuZ2NoaGFpdGl0aEBnbWFpbC5jb20iLCJpYXQiOjE3MTgyNjEwMjksImV4cCI6MTcxOTEyNTAyOX0.YpGls2D8r4NUe0yKLupmuD0YnsrjIMpZOYn-ju7HRaQ",
-        "Content-Type": "application/json",
-      },
+      headers: header
     });
 
     if (!res.ok) {
@@ -24,14 +22,12 @@ export const getAgendaByEventId = async (id) => {
 
 
 export const CreateAgendaService = async (data, id) => {
-  // console.log("event id is :",id)
   try {
+    const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}agendas/${id}`, {
+      next: { tags: ['agendas'] },
       method: "POST",
-      headers: {
-        Authorization : `Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDIsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6IkQ1Q1VRUiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDIsIm1lbWJlcklkIjo2MCwic3ViIjoicGVuZ2NoaGFpdGl0aEBnbWFpbC5jb20iLCJpYXQiOjE3MTgyNjEwMjksImV4cCI6MTcxOTEyNTAyOX0.YpGls2D8r4NUe0yKLupmuD0YnsrjIMpZOYn-ju7HRaQ`, // Assuming you store the token in an environment variable
-        "Content-Type": "application/json",
-      },
+      headers: header,
       body: JSON.stringify({
         data,
       }),
@@ -51,17 +47,12 @@ export const CreateAgendaService = async (data, id) => {
 };
 
 export const DeleteAgendaService = async (id) => {
-  console.log("agenda event id is:", id);
-  // const session = await getServerSession(authOption);
   try {
+    const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}agendas/${id}`, {
-      cache: "no-store",
+      next: { tags: ['agendas'] },
       method: "DELETE",
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDIsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6IkQ1Q1VRUiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDIsIm1lbWJlcklkIjo2MCwic3ViIjoicGVuZ2NoaGFpdGl0aEBnbWFpbC5jb20iLCJpYXQiOjE3MTgyNjEwMjksImV4cCI6MTcxOTEyNTAyOX0.YpGls2D8r4NUe0yKLupmuD0YnsrjIMpZOYn-ju7HRaQ",
-        "Content-Type": "application/json",
-      },
+      headers: header,
     });
     const data = await res.json();
     console.log("Data reponse agenda service ", data);
@@ -72,14 +63,12 @@ export const DeleteAgendaService = async (id) => {
 };
 
 export const UpdateAgendaService = async (data, id) => {
-  // console.log("event id is :",id)
   try {
+    const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}agendas/${id}`, {
       method: "PUT",
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDIsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6IkQ1Q1VRUiIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDIsIm1lbWJlcklkIjo2MCwic3ViIjoicGVuZ2NoaGFpdGl0aEBnbWFpbC5jb20iLCJpYXQiOjE3MTgyNjEwMjksImV4cCI6MTcxOTEyNTAyOX0.YpGls2D8r4NUe0yKLupmuD0YnsrjIMpZOYn-ju7HRaQ`, // Assuming you store the token in an environment variable
-        "Content-Type": "application/json",
-      },
+      next: { tags: ['agendas'] },
+      headers: header,
       body: JSON.stringify({
         data,
       }),

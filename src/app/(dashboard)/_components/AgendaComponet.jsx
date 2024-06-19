@@ -4,7 +4,6 @@ import { DeleteButton } from "./Action/DeleteButton";
 import CreateAgendaButton from "./Action/CreateAgendaButton";
 import { UpdateAgendaButton } from "./UpdateAgendaButton";
 import { useEffect, useState } from "react";
-// import { getAgendaByEventId } from "@/services/dashboard/agenda.service";
 import fetchAgenda from "@/app/actions/fetchAgendaAction";
 
 

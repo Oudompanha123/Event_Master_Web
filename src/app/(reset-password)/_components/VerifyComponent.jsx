@@ -5,7 +5,7 @@ const VerifyComponent = () => {
     return (
         <div className="absolute flex justify-center sm:pt-[700px] sm:mt-[60px] lg:pt-[600px] w-full sm:w-full md:w-[100%] lg:w-[100%] h-[100%]">
             <form>
-                <div className="mt-5">
+                <div className="lg:mt-[-130px] mt-5">
                     <h2 className="text-center text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
                         Congratulations!
                     </h2>

@@ -23,7 +23,7 @@ export const SearchBar = () => {
         event.preventDefault();
         if (search === '' && startTime === '' && endTime === '' && statusValue === '' && dropDownValue === '') {
             setFindData(undefined);
-            router.push(`/`, undefined, { shallow: true });
+            router.push(`/`, { scroll: false });
             return;
         }
         setIsLoading(true)
@@ -37,8 +37,7 @@ export const SearchBar = () => {
         console.log('check search data', searchData)
         const data = await callingServiceAction(searchData); //move to action for cors
         console.log(data.payload, 'check data in search')
-        router.push('/?search=true');
-        router.refresh();
+        router.push('/?search=true', { scroll: false });
         setFindData(data);
         setIsLoading(false)
         setSearch('')

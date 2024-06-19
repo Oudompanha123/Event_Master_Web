@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { FiEdit } from "react-icons/fi";
 import {useForm} from "react-hook-form";
 import { CiLock } from "react-icons/ci";
@@ -9,30 +9,37 @@ import { LiaUserEditSolid } from "react-icons/lia";
 import { useSession } from "next-auth/react"
 import { jwtDecode } from "jwt-decode"
 import { usePathname } from "next/navigation"
+import { updateMemberData, updateMemberDataAction } from '@/actions/profile/memberProfileAction';
 
 
 // import { CiLock } from "react-icons/ci";
-function FormComponent({getAllMemberProfile, className}) {
-
-    const pathname = usePathname();
-    const { data: session, status } = useSession();
-    let userInfo;
-    if (status === 'authenticated' && session?.user?.token) {
-        userInfo = jwtDecode(session.user.token);
-    }
-    console.log(getAllMemberProfile.payload, "Get all member")
-
-    const ref = useRef();
-
-    const [isLock, setLocked] = useState(true);
-
-    const [isChange, setChange] = useState(true);
-
-    const [drop , setDrop] = useState(true);
-
-    const [actionType, setActionType] = useState('');
+function FormComponent({className}) {
     
-    const [userName, setUserName] = useState("UserName");
+    const ref = useRef();
+    const [isLock, setLocked] = useState(true);
+    const [isChange, setChange] = useState(true);
+    
+    const { data: session, status } = useSession();
+    const [profileImage, setProfileImage] = useState("/images/Avatar.png");
+    const [userName, setUserName] = useState("");
+    const [address, setAddress] = useState("")
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("")
+    const [phone, setPhoneNumber] = useState("");
+    const [userInfo, setUserInfo] = useState(null);
+    
+    useEffect(() => {
+    const fetchData = async () => {
+      console.log("Status:", status);
+      console.log("Session:", session);
+      if (status === "authenticated" && session?.user?.token) {
+        const decodedToken = jwtDecode(session.user.token);
+        setUserInfo(decodedToken);
+        const memberdata = decodedToken
+      }
+    };
+    fetchData();
+  }, [status, session]);
 
     const [showPasswords, setShowPasswords] = useState({
         currentPassword: false,
@@ -47,18 +54,8 @@ function FormComponent({getAllMemberProfile, className}) {
         }));
     };
 
-    const setName = (e)=>{
-        e.preventDefault();
-        console.log(userName)
-        setUserName(e.target.value)
-    }
-
     const lock = ()=>{
         setLocked(!isLock)
-    }
-
-    const isDrop = ()=>{
-        setDrop(!drop)
     }
 
     const change = ()=>{
@@ -67,11 +64,6 @@ function FormComponent({getAllMemberProfile, className}) {
 
     function handleUpdateClick(){
         setLocked(!isLock)
-        setActionType('update');
-    }
-
-    function clear (){
-        ref.current.reset()
     }
 
     const initialData = {
@@ -96,20 +88,13 @@ function FormComponent({getAllMemberProfile, className}) {
     });
 
     const onSubmit = (data) => {
-        if (actionType === 'update') {
-            setLocked(true);
-            setActionType(''); // Reset action type
-            return;
-        }
+        setLocked(true);
         console.log("Form submitted", data);
         reset();
     };
 
-     const [profileImage, setProfileImage] = useState(
-    "/images/Avatar.png"
-  );
-
-  const handleImageUpload = (e) => {
+    
+    const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
@@ -132,7 +117,7 @@ function FormComponent({getAllMemberProfile, className}) {
                                 </label>
                             </div>
                             <div className='mt-2 mx-auto mx-w-[100px] flex flex-col items-center'>
-                                <h1 className='text-slate-400 font-semibold'>{userName}</h1>
+                                <h1 className='text-slate-400 font-semibold'>Username</h1>
                                 <p className='underline font-semibold'>User</p>
                             </div>
                             {/* <PictureComponent/> */}
@@ -156,7 +141,7 @@ function FormComponent({getAllMemberProfile, className}) {
                                 <div className="w-full mb-2 group">
                                     <label htmlFor="gender" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Gender <span className='text-red-500'>*</span></label>
                                     <div className='relative'>
-                                        <select onClick={isDrop} className={`${errors.gender ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='gender' disabled={isLock}
+                                        <select className={`${errors.gender ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='gender' disabled={isLock}
                                             {...register('gender', 
                                             { required: 'Gender is required' 
                                         })}>
@@ -196,7 +181,7 @@ function FormComponent({getAllMemberProfile, className}) {
                                 <div className="w-full mb-2 group flex flex-col">
                                     <label htmlFor="phone" className='mb-1 text-sm font-medium'>Phone Number <span className='text-red-500'>*</span></label>
                                     <input type="text" placeholder="Phone number" name='phone' className={`${errors.phoneNumber ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='phone' 
-                                        disabled={isLock}
+                                        disabled={isLock} 
                                         {...register('phoneNumber', { 
                                                     required: 'Phone number is required',
                                                     minLength: {
@@ -285,7 +270,7 @@ function FormComponent({getAllMemberProfile, className}) {
                                         <button className="btn btn-outline border-solid border-1 border-primary-text text-lg w-40 lg:w-32 lg:text-base rounded-2xl" onClick={lock}>
                                             Cancel
                                         </button>
-                                        <button className="btn btn-primary text-white w-40 text-lg lg:w-32 lg:text-base ml-5 rounded-2xl" type='submit' onClick={clear}>
+                                        <button className="btn btn-primary text-white w-40 text-lg lg:w-32 lg:text-base ml-5 rounded-2xl" type='submit'>
                                             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M16.69 2H8.31C4.67 2 2.5 4.17 2.5 7.81V16.18C2.5 19.83 4.67 22 8.31 22H16.68C20.32 22 22.49 19.83 22.49 16.19V7.81C22.5 4.17 20.33 2 16.69 2ZM16.5 12.75H13.25V16C13.25 16.41 12.91 16.75 12.5 16.75C12.09 16.75 11.75 16.41 11.75 16V12.75H8.5C8.09 12.75 7.75 12.41 7.75 12C7.75 11.59 8.09 11.25 8.5 11.25H11.75V8C11.75 7.59 12.09 7.25 12.5 7.25C12.91 7.25 13.25 7.59 13.25 8V11.25H16.5C16.91 11.25 17.25 11.59 17.25 12C17.25 12.41 16.91 12.75 16.5 12.75Z" fill="white"/>
                                             </svg>
