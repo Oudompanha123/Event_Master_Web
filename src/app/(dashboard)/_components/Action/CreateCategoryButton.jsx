@@ -16,17 +16,17 @@ const CreateCategoryButton = () => {
         });
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        setIsSend(true)
         if (categoryName == '') {
             setShowMsg(true)
+            setIsSend(false);
             return
         }
-        setIsSend(true)
         setShowMsg(false)
         addNewCategoryAction(categoryName);
-        setTimeout(() => {
-            setCategoryName('');
-        }, 1000)
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        setCategoryName('');
         setIsSend(false)
         notify()
         document.getElementById("my_modal_category").close()
@@ -62,7 +62,7 @@ const CreateCategoryButton = () => {
                     </div>
                     <div className="flex justify-end space-x-3">
                         <div onClick={() => { document.getElementById("my_modal_category").close(); setCategoryName('') }} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
-                        <button onClick={() => handleSubmit()} type="submit" className="save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
+                        <button onClick={() => handleSubmit()} type="submit" className="save border min-w-32 rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
                             {!isSend ?
                                 <div className="flex justify-center text-center items-center gap-3">
                                     <AddSquare size="20" color="#FFFFFF" variant="Bold" />
