@@ -97,7 +97,7 @@ export const NavbarComponent = ({ className }) => {
                             <Image src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={48} width={48} />
                         </div>
                         <div className="w-[32px] h-[32px] block lg:hidden">
-                            <Image src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} />
+                            <Image src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={32} width={32}/>
                         </div>
                     </div>
                 </Link>
