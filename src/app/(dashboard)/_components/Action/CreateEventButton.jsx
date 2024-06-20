@@ -75,8 +75,6 @@ export const CreateEventButton = () => {
         setImageLink(e.target.files[0]);
         displayPreview(file);
         setHide(true);
-        console.log('check here ', e.target.files[0])
-        console.log("change", imageLink)
     };
 
     const displayPreview = (file) => {
@@ -173,14 +171,10 @@ export const CreateEventButton = () => {
             maxAttendee: data.maxAttendee,
             categoryId: cateId
         }
-        console.log("check image link", imageLink)
-        console.log("check body", submitData)
         const okay = await addNewEventAction(submitData);
-        console.log("data inserted", okay)
         reset();
-        setTimeout(() => {
-            setIsSend(false);
-        }, 10000)
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setIsSend(false);
         notify();
         document.getElementById("my_modal_event_create").close()
     };
@@ -408,7 +402,7 @@ export const CreateEventButton = () => {
                             </div>
                             <div className="flex justify-end space-x-3">
                                 <div onClick={() => handleCloseForm()} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
-                                <button type="submit" className="min-w-24 save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
+                                <button type="submit" className="min-w-32 save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
                                     {!isSend ?
                                         <div className="flex justify-center items-center gap-3">
                                             <AddSquare size="20" color="#FFFFFF" variant="Bold" />

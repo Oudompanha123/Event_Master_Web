@@ -11,7 +11,7 @@ export const EventCardComponent = ({ img, title, location, description, company,
     return (
         <div className="shadow-md rounded-3xl">
             <div className="relative">
-                <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
+                <div className="relative !h-[300px] w-full object-cover rounded-t-3xl">
                     {/* <MegaImage
                         src={img}
                         className={'rounded-t-3xl'}
@@ -19,7 +19,7 @@ export const EventCardComponent = ({ img, title, location, description, company,
                     <Image
                         src={img}
                         fill
-                        className={'rounded-t-3xl'}
+                        className={'rounded-t-3xl !h-full'}
                     />
                 </div>
                 {/* <Image src={img} width={500} height={300} className="rounded-t-3xl h-[300px] w-full object-cover" alt="racingImage" /> */}
