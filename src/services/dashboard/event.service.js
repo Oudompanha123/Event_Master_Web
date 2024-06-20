@@ -80,3 +80,19 @@ export const updateEventService = async (data, id) => {
     };
 }
 
+export const deleteEventById = async (id) => {
+    try {
+      const header = await headerToken();
+      const res = await fetch(`${process.env.API_URL}events/${id}`, {
+        next: { tags: ["materials"] },
+        method: "DELETE",
+        headers: header,
+      });
+      const data = await res.json();
+      console.log("Data response event service ", data);
+      return data;
+    } catch (err) {
+      console.log("error event service", err);
+    }
+  };
+

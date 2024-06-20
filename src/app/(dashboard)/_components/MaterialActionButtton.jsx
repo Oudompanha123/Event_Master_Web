@@ -39,7 +39,7 @@ export function MaterialActionButton({ data }) {
 
   return (
     <div>
-      <div className="inline-block" ref={dropdownRef}>
+      <div className="inline-block " ref={dropdownRef}>
         <button
           type="button"
           className="right-5 w-8 h-8 items-center flex flex-row justify-center z-0"
@@ -89,7 +89,7 @@ export function MaterialActionButton({ data }) {
                 >
                   <Image
                     src="/icons/detail.svg"
-                    alt=""
+                    alt="detail"
                     height={22}
                     width={22}
                   />
@@ -103,7 +103,7 @@ export function MaterialActionButton({ data }) {
                 <a className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg">
                   <Image
                     src="/icons/edit-blue.svg"
-                    alt=""
+                    alt="edit"
                     height={24}
                     width={24}
                   />
@@ -124,7 +124,7 @@ export function MaterialActionButton({ data }) {
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 mt-2 mr-2">
                 <Image
                   src="/icons/cancel.svg"
-                  alt=""
+                  alt="cancel"
                   className="w-7 h-7"
                   width={7}
                   height={7}
@@ -142,7 +142,7 @@ export function MaterialActionButton({ data }) {
                   <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
                     <Image
                       src="/icons/material.svg"
-                      alt=""
+                      alt="headler"
                       className="h-5 w-5"
                       width={5}
                       height={5}
@@ -157,7 +157,7 @@ export function MaterialActionButton({ data }) {
                   <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
                     <Image
                       src="/icons/quantity.svg"
-                      alt=""
+                      alt="qty"
                       className="h-5 w-5"
                       width={5}
                       height={5}
@@ -172,7 +172,7 @@ export function MaterialActionButton({ data }) {
                   <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
                     <Image
                       src="/icons/assign-date.svg"
-                      alt=""
+                      alt="assignDate"
                       className="h-5 w-5"
                       width={5}
                       height={5}
@@ -187,7 +187,7 @@ export function MaterialActionButton({ data }) {
                   <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
                     <Image
                       src="/icons/due-date.svg"
-                      alt=""
+                      alt="DueDate"
                       className="h-5 w-5"
                       width={5}
                       height={5}
@@ -202,7 +202,7 @@ export function MaterialActionButton({ data }) {
                   <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
                     <Image
                       src="/icons/handler.svg"
-                      alt=""
+                      alt="headler"
                       className="h-5 w-5"
                       width={5}
                       height={5}
