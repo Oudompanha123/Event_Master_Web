@@ -6,6 +6,7 @@ import { TextField } from "./TextField";
 import { InputField } from "./InputField";
 import { Title } from "./Title";
 import { BooleanField } from "./BooleanField";
+import { Boolean } from "./Boolean";
 import { EmailField } from "./EmailField";
 import { useState } from "react";
 import Image from "next/image";
@@ -53,7 +54,7 @@ export const CreateDynamicForm = () => {
         setAddFieldNamePopup(false)
     }
     console.log(choosedField, 'choose field')
-    
+
   return (
     <>
       <div className="space-y-6">
@@ -110,7 +111,13 @@ export const CreateDynamicForm = () => {
               {confirmField.map((x, index) => {
                 const [inputType, inputName] = x.fieldType.split(",");
                 return (
-                  <InputField key={index} type={inputType} name={inputName} />
+                  <>
+                    {inputType == 'boolean' ?
+                        <Boolean name={inputName} />
+                        :
+                        <InputField key={index} type={inputType} name={inputName} />
+                    }
+                  </>
                 );
               })}
             </div>
