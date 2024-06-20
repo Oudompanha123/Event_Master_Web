@@ -9,9 +9,9 @@ import { SelectModify } from "./SelectModify";
 import { addNewCategoryAction, addNewEventAction, storeImageAction } from "@/actions/categoryAction";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/lib/firebase";
-import { v4 } from 'uuid';
-import { storeImageService } from "@/services/dashboard/overviewService";
 import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export const CreateEventButton = () => {
     const notify = () => {

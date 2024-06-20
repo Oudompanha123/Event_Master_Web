@@ -36,7 +36,7 @@ export default function CardEventComponent({ eventData }) {
                       {month}
                     </small>
                   </div>
-                  <EventActionButton poster={data.poster} eventName={data.eventName} categoryId={data.categoryId} startDate={data.startDate} endDate={data.endDate}
+                  <EventActionButton poster={data.poster} eventName={data.eventName} category={data.category} startDate={data.startDate} endDate={data.endDate}
                    duration={data.duration} maxAttendee={data.maxAttendee} address={data.address} description={data.description} isPost={data.isPost} eventId={data.eventId} />
                 </div>
               </div>

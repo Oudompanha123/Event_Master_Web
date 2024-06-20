@@ -11,88 +11,73 @@ import { useRouter } from "next/router";
 
 // import { ToogleBtn } from "./Action/ToogleBtn";
 
-export const EventActionButton = ({eventName, startDate,endDate,duration,address,description,poster,isPost,maxAttendee,categoryId ,eventId }) => {
-  console.log("edit Id:",eventId);
+export const EventActionButton = ({ eventName, startDate, endDate, duration, address, description, poster, isPost, maxAttendee, category, eventId }) => {
+  // console.log("edit Id:", eventId);
+  console.log("category:", category.categoryName);
 
   const [handleEventName, setEventName] = useState(eventName);
-  const [eventCategory, setEventCategory] = useState(categoryId);
+  const [eventCategory, setEventCategory] = useState(category);
   const [imageLink, setImageLink] = useState(poster);
   const [eventStartDate, setStartDate] = useState(startDate);
   const [eventEndDate, setEndDate] = useState(endDate);
   const [diffChange, setDiffChange] = useState(duration);
   const [eventMaxAttendee, setMaxAttendee] = useState(maxAttendee);
   const [eventAddress, setAddress] = useState(address);
-  const [eventDescription, setEventDescription] = useState(description);
+  const [eventDescription, setDescription] = useState(description);
   const [isPublic, setIsPublic] = useState(isPost);
-  
 
   const triggerHourChange = () => {
-      const sDate = new Date(`${startDate}`);
-      const eDate = new Date(`${endDate}`)
-      const timeDiff = eDate - sDate;
-      const hoursDiff = timeDiff / (1000 * 60 * 60);
-      const roundedDiff = Math.round(hoursDiff * 100) / 100;
-      setDiffChange(Number(roundedDiff))
-  }
+    const sDate = new Date(`${startDate}`);
+    const eDate = new Date(`${endDate}`);
+    const timeDiff = eDate - sDate;
+    const hoursDiff = timeDiff / (1000 * 60 * 60);
+    const roundedDiff = Math.round(hoursDiff * 100) / 100;
+    setDiffChange(Number(roundedDiff));
+  };
 
-  const handleCategorySelect = (v) => setEventCategory(v)
+  const handleCategorySelect = (selectedCategory) => {
+    setEventCategory(selectedCategory.category);
+  };
+  
+  const handleEventType = (type) => setIsPublic(!type);
 
-  const handleEventType = (type) => setIsPublic(!type)
-
-  //firebase research code
   const [uploading, setUploading] = useState(true);
   const [imageUrl, setImageUrl] = useState(null);
   const [uploadedImage, setUploadedImage] = useState();
 
   const onUpdate = async (imageLink) => {
-      //upload new image
-      onUpload(imageLink)
-      //delete old image with url
-      const desertRef = ref(storage, imageUrl);
-      await deleteObject(desertRef);
-  }
+    onUpload(imageLink);
+    const desertRef = ref(storage, imageUrl);
+    await deleteObject(desertRef);
+  };
+
   const onSubmit = async (data) => {
-    console.log("data", data);
-    let cateId;
-    //if category id = 88888 create new category base on categoryName
-    if (eventCategory.categoryId == 88888) {
-        const res = await addNewCategoryAction(eventCategory.categoryName)
-        cateId = res.payload.categoryId;
-    }
-    //if category id isn't = 88888 calling api 
-    if (eventCategory.categoryId != 88888) {
-        cateId = eventCategory.categoryId;
-    }
-
-    //firebase
-    setUploading(false)
-    if (imageLink == null) return;
-    const imageRef = ref(storage, `${imageLink.name + v4()}`);
-    await uploadBytes(imageRef, imageLink)
-    setUploading(true)
-    const url = await getDownloadURL(imageRef);
-    setUploadedImage(url);
-    //firebase
-
-    const submitData = {
+    try {
+      let categoryId = eventCategory?.categoryName; // Ensure you handle possible null or undefined
+      if (!categoryId || categoryId === 88888) {
+        const res = await addNewCategoryAction(eventCategory.category);
+        categoryId = res.payload.category.categoryId; // Assuming API response contains categoryId
+      }
+      const submitData = {
         eventName: data.name,
         description: data.description,
         startDate: data.startDate,
         endDate: data.endDate,
         duration: diffChange,
         address: data.address,
-        poster: `${url}~.png`,
+        poster: `${imageUrl}~.png`,
         isPost: isPublic,
         maxAttendee: data.maxAttendee,
-        categoryId: cateId
+        category: categoryId,
+      };
+  
+      console.log("Submit Data:", submitData);
+    } catch (error) {
+      console.error("Error during onSubmit:", error);
     }
-    console.log("check image link", imageLink)
-    console.log("check body", submitData)
-    const okay = await handleUpdateEvent(eventId,submitData);
-    console.log("data inserted", okay)
-    document.getElementById(`my_modal_updateEvent${eventId}`).close();
-
-};
+  };
+  
+  
   // const onSubmit = async (e) => {
   //   console.log("data", e);
   //    await handleUpdateEvent(eventId, e);
@@ -139,7 +124,7 @@ export const EventActionButton = ({eventName, startDate,endDate,duration,address
   }, [isOpen]);
 
   const [hide, setHide] = useState(false);
-  const [previewSrc, setPreviewSrc] = useState(""); // Added state htmlFor image preview source
+  const [previewSrc, setPreviewSrc] = useState(""); 
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -159,19 +144,6 @@ export const EventActionButton = ({eventName, startDate,endDate,duration,address
     setHide(true);
   };
 
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   displayPreview(file);
-  //   setHide(true);
-  // };
-
-  // const displayPreview = (file) => {
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   reader.onload = () => {
-  //     setPreviewSrc(reader.result); // Update previewSrc state
-  //   };
-  // };
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setImageLink(e.target.files[0]);
@@ -199,11 +171,6 @@ const displayPreview = (file) => {
   } = useForm();
 
   const start = watch("startDate");
-
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  // };
-
   return (
     <div className="">
       <div className="relative inline-block" ref={dropdownRef}>
@@ -374,12 +341,23 @@ const displayPreview = (file) => {
                   )}
                 </div>
                 <div className="w-full">
-                  <SelectModifyV2
-                    func={handleCategorySelect}
-                    label={`!font-medium`}
-                    height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
-                  />
-                  {errors.category && <span className="text-red-600 text-sm">{errors.category.message}</span>}
+                  
+                <SelectModifyV2
+                  placeholder="Select category"
+                  defaultSelect={eventCategory}
+                  onSelect={handleCategorySelect}
+                  height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                />
+                
+                <div className="bg-white rounded-3xl px-4 py-2 border border-gray-300 flex items-center">
+                  <span className="text-gray-600 mr-2">{eventCategory ? eventCategory.categoryName : "None selected"}</span>
+                  {eventCategory && (
+                    <button className="text-red-600" onClick={() => setEventCategory(null)}>
+                      <RxCross2 className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
 
                 </div>
               </div>
