@@ -7,6 +7,7 @@ import { RxCross2 } from "react-icons/rx";
 import { SelectModifyV2 } from "./Action/SelectModifyV2";
 import deleteEvent from "@/app/actions/deleteEventAction";
 import { handleUpdateEvent } from "@/app/actions/updateEventAction";
+import { useRouter } from "next/router";
 
 // import { ToogleBtn } from "./Action/ToogleBtn";
 
@@ -50,7 +51,6 @@ export const EventActionButton = ({eventName, startDate,endDate,duration,address
       const desertRef = ref(storage, imageUrl);
       await deleteObject(desertRef);
   }
-
   const onSubmit = async (data) => {
     console.log("data", data);
     let cateId;
@@ -88,7 +88,7 @@ export const EventActionButton = ({eventName, startDate,endDate,duration,address
     }
     console.log("check image link", imageLink)
     console.log("check body", submitData)
-    const okay = await handleUpdateEvent(eventId);
+    const okay = await handleUpdateEvent(eventId,submitData);
     console.log("data inserted", okay)
     document.getElementById(`my_modal_updateEvent${eventId}`).close();
 
@@ -272,7 +272,6 @@ const displayPreview = (file) => {
                     Delete
                   </p>
                 </a>
-
               </li>
             </ul>
           </div>
@@ -294,7 +293,7 @@ const displayPreview = (file) => {
               action=""
               className="w-full space-y-6"
               onSubmit={handleSubmit(onSubmit)}
-            >
+              >
               <div
                 className="w-full relative border-2 border-gray-300 border-dashed rounded-lg p-8"
                 id="dropzone"
@@ -500,7 +499,7 @@ const displayPreview = (file) => {
                       } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter maximum attendee"
                     required=""
-                    onChange={(e) => { setEventMaxAttendee(e.target.value); triggerHourChange() }}
+                    onChange={(e) => { setMaxAttendee(e.target.value); triggerHourChange() }}
                   />
                   {errors.maxAttendee && (
                     <div className="text-red-600 text-sm mt-2">
@@ -531,7 +530,7 @@ const displayPreview = (file) => {
                       } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter address"
                     required=""
-                    onChange={(e) => { setEventAddress(e.target.value); triggerHourChange() }}
+                    onChange={(e) => { setAddress(e.target.value); triggerHourChange() }}
                   />
                   {errors.address && (
                     <div className="text-red-600 text-sm mt-2">
