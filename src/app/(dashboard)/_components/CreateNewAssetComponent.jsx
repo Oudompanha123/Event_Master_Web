@@ -5,6 +5,7 @@ import { CreateNewAsset } from "./Action/CreateNewAssetButton";
 import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const AssetPopupComponent = () => {
   const notify = (checkasset) => {
@@ -67,6 +68,10 @@ export const AssetPopupComponent = () => {
                   placeholder="Enter asset name"
                   {...register("assetName", {
                     required: "asset name is required",
+                    maxLength: {
+                      value: 40,
+                      message: "Text cannot exceed 40 characters",
+                    },
                   })}
                 />
                 {errors.assetName && (
@@ -81,12 +86,17 @@ export const AssetPopupComponent = () => {
                   <span className="text-redUi">*</span>
                   <input
                     type="number"
+                    step={0.01}
                     id=""
                     name="qty"
                     className="shadow-sm mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
                     placeholder="Enter quantity"
                     {...register("qty", {
                       required: "quantity is required",
+                      max: {
+                        value: 9999,
+                        message: "Value cannot exceed 9999",
+                      },
                     })}
                   />
                   {errors.qty && (
@@ -106,6 +116,10 @@ export const AssetPopupComponent = () => {
                     placeholder="Enter unit"
                     {...register("unit", {
                       required: "unit is required",
+                      maxLength: {
+                        value: 40,
+                        message: "name cannot more than 40 characters",
+                      },  
                     })}
                   />
                   {errors.unit && (

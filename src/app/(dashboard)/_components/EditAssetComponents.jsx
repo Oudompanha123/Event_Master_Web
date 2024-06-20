@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { AddSquare, Edit } from "iconsax-react";
 import { handleUpdateAsset } from "@/app/actions/assetAction/handleAssetInput";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
   const notify = () => {
@@ -44,11 +45,11 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
     <div>
       <Edit
         className="cursor-pointer"
-        onClick={() =>{
+        onClick={() => {
           document
             .getElementById(`my_modal_updateasset${assetEdit}`)
             .showModal();
-            reset();
+          reset();
         }}
         size="20"
         color="#16AE65"
@@ -79,6 +80,10 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                   placeholder="Enter asset name"
                   {...register("assetName", {
                     required: "asset name is required",
+                    maxLength: {
+                      value: 40,
+                      message: "name cannot more than 40 characters",
+                    },
                   })}
                   onChange={(e) => {
                     setHandleName(e.target.value);
@@ -103,6 +108,10 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                     placeholder="Enter quantity"
                     {...register("qty", {
                       required: "quantity is required",
+                      max: {
+                        value: 9999,
+                        message: "Value cannot more than 9999",
+                      },
                     })}
                     onChange={(e) => setHandleQty(e.target.value)}
                   />
@@ -124,6 +133,10 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                     placeholder="Enter unit"
                     {...register("unit", {
                       required: "unit is required",
+                       maxLength: {
+                      value: 40,
+                      message: "name cannot more than 40 characters",
+                    },
                     })}
                     // onChange={() => setHandleUnit(e.target.value)}
                   />
