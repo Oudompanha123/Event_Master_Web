@@ -6,7 +6,9 @@ export const getAllEvents = async () => {
 }
 
 export const getEventById = async (id) => {
-    const res = await fetch(`${process.env.API_URL}landing-page/${id}`)
+    const res = await fetch(`${process.env.API_URL}landing-page/${id}`,
+        { cache: "no-store" }
+    )
     const data = await res.json();
     return data
 }
@@ -30,13 +32,14 @@ export const getPopularEvent = async () => {
 }
 
 export const findEvent = async (searchData) => {
-    const res = await fetch(`
-        ${process.env.API_URL}landing-page/search?eventName=${searchData.eventName}&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}&status=${searchData.status}`,
-        {
-            method: 'POST',
-        }
-    )
-    const data = await res.json();
+    searchData.categoryName ? console.log('have data') : console.log('no data')
+    let res;
+    if (searchData.categoryName) {
+        res = await fetch(`${process.env.API_URL}landing-page/search?eventName=${searchData.eventName}&categoryName=${searchData.categoryName}&status=${searchData.status}&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}`)
+    } else {
+        res = await fetch(`${process.env.API_URL}landing-page/search?eventName=${searchData.eventName}&status=${searchData.status}&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}`)
+    }
+    const data = await res.json()
     return data
 }
 

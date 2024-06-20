@@ -1,52 +1,24 @@
-export const getEventByIdService = async (id) => {
-    const res = await fetch(`${process.env.API_URL}events`,
-        {
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDcsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImhWZzFsVyIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDcsIm1lbWJlcklkIjo2NSwic3ViIjoibml0YWx5MDg2QGdtYWlsLmNvbSIsImlhdCI6MTcxODIxMTY0NiwiZXhwIjoxNzE5MDc1NjQ2fQ.-8kl8QdWxyr4fWncAhKRUvyDOfWOJpZbQJ62zzIVLZ4',
-                'Content-Type': 'application/json'
-            }
-        }
-    )
-    const data = await res.json();
-    return data
-}
-
+import { headerToken } from "@/app/api/auth/headerToken";
 
 export const getAllEventsService = async () => {
+    const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}events`,
         {
             cache: "no-store",
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDcsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImhWZzFsVyIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDcsIm1lbWJlcklkIjo2NSwic3ViIjoibml0YWx5MDg2QGdtYWlsLmNvbSIsImlhdCI6MTcxODIxMTY0NiwiZXhwIjoxNzE5MDc1NjQ2fQ.-8kl8QdWxyr4fWncAhKRUvyDOfWOJpZbQJ62zzIVLZ4',
-                'Content-Type': 'application/json'
-            }
+            headers: header
         }
     )
     const data = await res.json();
     return data
 }
 
-export const deleteEventById = async (eventId) => {
-    const res = await fetch(`http://34.124.203.109:8081/api/events/${eventId}`,
-        {
-            next: { tags: ['events'] },
-            method: 'DELETE',
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDcsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImhWZzFsVyIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDcsIm1lbWJlcklkIjo2NSwic3ViIjoibml0YWx5MDg2QGdtYWlsLmNvbSIsImlhdCI6MTcxODI2NDIxMiwiZXhwIjoxNzE5MTI4MjEyfQ.dD5WOgQP3q82Uxu2rgqaN0s-qGuGqzwHcbKymRAsKWM',
-            }
-        }
-    )
-}
-
-export const getEventByNameService = async (eventName) => {
-    const res = await fetch(`${process.env.API_URL}events/${eventName}`,
+export const getEventByIdService = async (id) => {
+    const header = await headerToken()
+    const res = await fetch(`${process.env.API_URL}events/${id}`,
         {
             next: { tags: ['events'] },
             cache: "no-store",
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDcsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImhWZzFsVyIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDcsIm1lbWJlcklkIjo2NSwic3ViIjoibml0YWx5MDg2QGdtYWlsLmNvbSIsImlhdCI6MTcxODMyODMwMiwiZXhwIjoxNzE5MTkyMzAyfQ.LKJTmN3ukc1ro9Lq4VW7vQuf7G29mVBV1MKYZwnKPNc',
-                'Content-Type': 'application/json'
-            }
+            headers: header
         }
     )
     const data = await res.json();

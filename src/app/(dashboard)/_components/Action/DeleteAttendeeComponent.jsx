@@ -5,7 +5,7 @@ import { deleteAttendeeAction } from "@/actions/attendeeDeleteAction";
 
 export function DeleteAttendeeComponent({ attendeeId }) {
   const handleDelete = async () => {
-    await deleteAttendeeAction(attendeeId);
+    await deleteAttendeeAction (attendeeId);
   };
   return (
     <>

@@ -1,34 +1,28 @@
-// "use client"
-import React from "react";
-import { DeleteAttendeeComponent } from "../../_components/Action/DeleteAttendeeComponent";
-import { getAttendeeByEventIdService } from "@/services/dashboard/attendeeService";
-// import { Pagination } from "../../_components/Pagination";
-import { getEventById } from "@/services/clientPage/landingService";
+import {getAttendeeByEventIdService} from "@/services/dashboard/attendeeService";
+// import { getEventById } from "@/services/clientPage/landingService";
 import SearchAttendeeComponent from "../../_components/SearchAttendeeComponent";
 import { Pagination } from "../../_components/paginate/Pagination";
-// import { AttendeePageComponent } from "../../_components/AttendeePageComponent";
+import AttendeeTableComponent from "../../_components/AttendeeTableComponent";
+// import { searchAttendeeAction } from "@/actions/attendeeAction";
+// import { getAllEventsService } from "@/services/dashboard/event.service";
+import { getEventById } from "@/services/clientPage/landingService";
+// import { searchAttendeeAction } from "@/actions/attendeeAction";
 
-const AttendeePage = async ({ params: { id } }) => {
-  // const [currentPage,setCurrentPage]=useState(1);
-  // const recordPersPage = 7;
-  // const lastIndex = currentPage*recordPersPage;
-  // const firstIndex= lastIndex - recordPersPage;
-  // const records= attendeeData.slice(firstIndex,lastIndex);
-  // const npage = Math.ceil(attendeeData.length/recordPersPage);
-  // const numbers = [...Array(npage+1).keys].slice(1);
-  let attendeeData = await getAttendeeByEventIdService(id);
+export default async function AttendeePage  ({params: { id }}) {
+  const attendeeData = await getAttendeeByEventIdService(id);
+  // console.log("Search Params:",searchParams)
   const eventData = await getEventById(id);
-
-  // function searchAttendee(attendeeFromSearch){
-  //   attendeeData = attendeeFromSearch;
-  // }
-
+  // console.log("Data of Event:",eventData)
+  // const eventData = await getAllEventsService();
+  // const query = searchParams?.query || '';
+  // const searchAttendee = await searchAttendeeAction(id,searchParams);
+  // console.log("EventData:",eventData)
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
         <div className="lg:w-[650px] md:w-full w-full">
           <a className="md:text-lg xl:text-xl font-semibold text-primary-text">
-            Show All Attendees in {eventData.payload.eventName} Event
+            Show All Attendees in {eventData?.payload?.eventName} Event
           </a>
         </div>
         <SearchAttendeeComponent/>
@@ -49,7 +43,7 @@ const AttendeePage = async ({ params: { id } }) => {
             </tr>
           </thead>
           <tbody>
-            {attendeeData?.payload.map((attendeeWrapper, index) => {
+            {attendeeData?.payload?.map((attendeeWrapper, index) => {
               const attendee = attendeeWrapper?.data;
             
               return (
@@ -86,11 +80,11 @@ const AttendeePage = async ({ params: { id } }) => {
           </tbody>
         </table>
         <div className="w-full flex justify-end mt-8">
-          <Pagination />
+          <Pagination/>
         </div>
       </div>
     </div>
   );
 };
 
-export default AttendeePage;
+// eventData={id} attendeeNameOrPhone={searchParams}

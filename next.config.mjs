@@ -9,8 +9,12 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'firebasestorage.googleapis.com',
             },
+            {
+                protocol: 'http',
+                hostname: '34.124.203.109',
+            },
         ],
-    },
+    }
 };
 
 export default withPlaiceholder(nextConfig)

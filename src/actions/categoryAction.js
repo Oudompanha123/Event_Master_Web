@@ -1,6 +1,6 @@
 'use server'
 
-import { allCategory, createEventService, getAllCategory, insertCategory, updateCategory } from "@/services/dashboard/overviewService";
+import { allCategory, createEventService, getAllCategory, insertCategory, storeImageService, updateCategory } from "@/services/dashboard/overviewService";
 import { deleteCategory } from "@/services/dashboard/overviewService";
 import { getAllMember } from "@/services/notification/notificationService";
 import { revalidateTag } from "next/cache";
@@ -20,9 +20,9 @@ export const addNewCategoryAction = async (name) => {
     const session = await getServerSession(authOption);
     let userInfo = jwtDecode(session?.user?.token);
 
-    const allMember = await getAllMember();
     const data = await insertCategory(name);
     revalidateTag('overview')
+    const allMember = await getAllMember();
     await knockClient.notify('new-workout', {
         actor: userInfo?.sub,
         recipients: allMember.payload.filter(x => x.email !== userInfo?.sub).map(x => x.email),
@@ -54,5 +54,10 @@ export const addNewEventAction = async (data) => {
 
 export const allCategoryAction = async () => {
     const data = await allCategory();
+    return data
+}
+
+export const storeImageAction = async (image) => {
+    const data = await storeImageService(image)
     return data
 }

@@ -4,9 +4,9 @@ import {useForm} from "react-hook-form";
 import Image from "next/image";
 import {useState} from "react";
 import {useRouter} from "next/navigation";
+import { changePasswordAction } from "@/actions/auth/forgetPasswordAction";
 
-const SetNewPasswordComponent = () => {
-
+const SetNewPasswordComponent = ({email, otp}) => {
     const initialData = {
         password: "",
         confirmPassword: "",
@@ -24,27 +24,31 @@ const SetNewPasswordComponent = () => {
 
     const [isLocked, setIsLocked] = useState(true);
     const [isKeyLocked, setIsKeyLocked] = useState(true);
+    const [isLoading, setIsloading] = useState(false);
 
     const handleLockClick = () => setIsLocked(prevState => !prevState);
     const handleKeyLockClick = () => setIsKeyLocked(prevState => !prevState);
 
     const router = useRouter();
 
-    const onSubmit = data => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        setIsloading(true);
+        await changePasswordAction(email, otp, data);
+        setIsloading(false);
+        router.push('/verify');
     };
 
     return (
         <div className="absolute flex justify-center sm:pt-[460px] md:pl-[30%] lg:pl-[50%] lg:pt-[360px] w-full md:w-[70%] lg:w-[39%] h-[100%]">
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mt-5">
+                <div className="lg:mt-[-85px] lg:text-xl mt-5">
                     <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
                         Set New password
                     </h2>
-                    <p className="flex justify-center greyUi mt-4">Please enter your new password</p>
+                    {/* <p className="flex justify-center greyUi mt-4">Please enter your new password</p> */}
                 </div>
 
-                <div className="col-span-6 sm:col-span-3 mt-6">
+                <div className="lg:mt-[-2px] col-span-6 sm:col-span-3 mt-6">
                     <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
                         Password
                     </label>
@@ -113,15 +117,13 @@ const SetNewPasswordComponent = () => {
 
                 <div className="flex justify-center mt-10">
                     <button
-                        onClick={() => router.push('/verify')}
-                        type="button"
                         id="continue"
                         className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 shadow-md shadow-violet-400 ${
                             !isValid ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"
                         }`}
                         disabled={!isValid}
                     >
-                        Continue
+                        {isLoading ? <div className='loader'></div> : <p>Continue</p> } 
                     </button>
                 </div>
             </form>

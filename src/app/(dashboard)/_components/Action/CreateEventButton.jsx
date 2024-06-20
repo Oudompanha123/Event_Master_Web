@@ -4,14 +4,22 @@ import { AddSquare } from "iconsax-react"
 import Image from "next/image";
 import { ToogleBtn } from "./ToogleBtn";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectModify } from "./SelectModify";
-import { addNewCategoryAction, addNewEventAction } from "@/actions/categoryAction";
+import { addNewCategoryAction, addNewEventAction, storeImageAction } from "@/actions/categoryAction";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/lib/firebase";
 import { v4 } from 'uuid';
+import { storeImageService } from "@/services/dashboard/overviewService";
+import { toast } from "react-toastify";
 
 export const CreateEventButton = () => {
+    const notify = () => {
+        toast.success("Sucessfully created event", {
+            position: "top-center"
+        });
+    }
+
     const [events, setEvent] = useState({
         eventName: '',
         startDate: '',
@@ -21,13 +29,12 @@ export const CreateEventButton = () => {
         address: '',
         description: '',
     })
- 
+
 
     const handleInput = (e) => {
         e.persist();
-        setEvent({...events, [e.target.name]: e.target.value});
+        setEvent({ ...events, [e.target.name]: e.target.value });
     }
-    console.log(events);
 
     const saveEvents = (e) => {
         e.preventDefault();
@@ -41,18 +48,9 @@ export const CreateEventButton = () => {
             description: events.description,
         }
     }
-    // axios.post(`http://34.124.203.109:8081/api/events`, data)
-    //     .then(res=>{
-    //         alert(res.data.message);
-    //     })
-    //     .catch(function(error){
-    //         if(error.response.status === 422){
-    //             setInputError.data
-    //         }
-    //     })
-    //     ;
-    
+
     const [hide, setHide] = useState(false);
+    const [isSend, setIsSend] = useState(false);
 
     const handleDragOver = (e) => {
         e.preventDefault();
@@ -95,6 +93,7 @@ export const CreateEventButton = () => {
         watch,
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm();
 
@@ -109,16 +108,18 @@ export const CreateEventButton = () => {
 
     const triggerHourChange = () => {
         const sDate = new Date(`${startDate}`);
-        const eDate = new Date(`${endDate}`)
+        const eDate = new Date(`${endDate}`);
         const timeDiff = eDate - sDate;
         const hoursDiff = timeDiff / (1000 * 60 * 60);
         const roundedDiff = Math.round(hoursDiff * 100) / 100;
-        setDiffChange(Number(roundedDiff))
-    }
+        setDiffChange(Number(roundedDiff));
+    };
 
     const handleCategorySelect = (v) => setEventCategory(v)
 
     const handleEventType = (type) => setIsPublic(!type)
+
+    const currentTime = new Date();
 
     //firebase research code
     const [uploading, setUploading] = useState(true);
@@ -134,6 +135,7 @@ export const CreateEventButton = () => {
     }
 
     const onSubmit = async (data) => {
+        setIsSend(true);
         let cateId;
         //if category id = 88888 create new category base on categoryName
         if (eventCategory.categoryId == 88888) {
@@ -145,24 +147,28 @@ export const CreateEventButton = () => {
             cateId = eventCategory.categoryId;
         }
 
+        let formData = new FormData()
+        formData.append("file", imageLink)
+        const uploadImage = await storeImageAction(formData)
+
         //firebase
-        setUploading(false)
-        if (imageLink == null) return;
-        const imageRef = ref(storage, `${imageLink.name + v4()}`);
-        await uploadBytes(imageRef, imageLink)
-        setUploading(true)
-        const url = await getDownloadURL(imageRef);
-        setUploadedImage(url);
+        // setUploading(false)
+        // if (imageLink == null) return;
+        // const imageRef = ref(storage, `${imageLink.name + v4()}`);
+        // await uploadBytes(imageRef, imageLink)
+        // setUploading(true)
+        // const url = await getDownloadURL(imageRef);
+        // setUploadedImage(url);
         //firebase
 
         const submitData = {
-            eventName: data.name,
+            eventName: data.eventName,
             description: data.description,
             startDate: data.startDate,
             endDate: data.endDate,
             duration: diffChange,
             address: data.address,
-            poster: `${url}~.png`,
+            poster: uploadImage?.payload?.fileUrl,
             isPost: isPublic,
             maxAttendee: data.maxAttendee,
             categoryId: cateId
@@ -171,8 +177,31 @@ export const CreateEventButton = () => {
         console.log("check body", submitData)
         const okay = await addNewEventAction(submitData);
         console.log("data inserted", okay)
+        reset();
+        setTimeout(() => {
+            setIsSend(false);
+        }, 10000)
+        notify();
         document.getElementById("my_modal_event_create").close()
     };
+
+    const handleCloseForm = () => {
+        setEvent({
+            eventName: '',
+            startDate: '',
+            endDate: '',
+            duration: '',
+            maxAttendee: '',
+            address: '',
+            description: '',
+        });
+        document.getElementById("my_modal_event_create").close();
+    }
+
+    useEffect(() => {
+        triggerHourChange();
+    }, [startDate, endDate]);
+
 
     return (
         <>
@@ -246,8 +275,11 @@ export const CreateEventButton = () => {
                                     <input
                                         {...register("startDate", {
                                             required: "start date is required",
+                                            validate: {
+                                                isNotPastDate: value => new Date(value) >= currentTime || "Start date cannot be in the past"
+                                            }
                                         })}
-                                        value={events.startDate}
+                                        value={startDate}
                                         // onChange={handleInput}
                                         type="datetime-local"
                                         name="startDate"
@@ -272,7 +304,7 @@ export const CreateEventButton = () => {
                                                 }
                                             }
                                         })}
-                                        value={events.endDate}
+                                        value={endDate}
                                         // onChange={handleInput}
                                         type="datetime-local"
                                         name="endDate"
@@ -375,10 +407,16 @@ export const CreateEventButton = () => {
                                 </div>
                             </div>
                             <div className="flex justify-end space-x-3">
-                                <div onClick={() => document.getElementById("my_modal_event_create").close()} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
-                                <button type="submit" className="save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
-                                    <AddSquare size="20" color="#FFFFFF" variant="Bold" />
-                                    <span className="h-12 text-white flex justify-center items-center">Create</span>
+                                <div onClick={() => handleCloseForm()} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
+                                <button type="submit" className="min-w-24 save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
+                                    {!isSend ?
+                                        <div className="flex justify-center items-center gap-3">
+                                            <AddSquare size="20" color="#FFFFFF" variant="Bold" />
+                                            <span className="h-12 text-white flex justify-center items-center">Create</span>
+                                        </div>
+                                        :
+                                        <div className="loader"></div>
+                                    }
                                 </button>
                             </div>
                         </form>
