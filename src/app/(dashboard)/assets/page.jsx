@@ -1,9 +1,8 @@
-
 import { AssetPopupComponent } from "../_components/CreateNewAssetComponent";
 import { AssetTableComponent } from "../_components/assetTableComponent";
 import { SearchAssetComponent } from "../_components/SearchAssetComponent";
 import { getAllAssetService, searchAssetByName } from "@/services/assetService/assetService";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 
 export default async function assetPage({ searchParams }) {
   // console.log("search params:", searchParams);
