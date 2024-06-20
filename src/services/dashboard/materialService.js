@@ -43,7 +43,6 @@ export const getMaterialByEventId = async (id) => {
 };
 
 export const countMaterialStatusByEventId = async (id) => {
-  // console.log("the id in service is",id)
   try {
     const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}materials/count-status/${id}`, {
@@ -55,9 +54,7 @@ export const countMaterialStatusByEventId = async (id) => {
     if (!res.ok) {
       throw new Error(`HTTP error! Status: ${res.status}`);
     }
-    // console.log("the data of material is total is ",res)
     const data = await res.json();
-    console.log("the data count is ",data)
     return data;
   } catch (error) {
     console.error("Error fetching the material data:", error);
@@ -92,17 +89,16 @@ export const CreateMultipleMaterialService = async (data) => {
 
 
 export const DeleteMaterialService = async (listId) => {
-  console.log("id to delete is the ",JSON.stringify(listId))
   try {
     const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}materials/deletes`, {
       next: { tags: ["materials"] },
       method: "DELETE",
       headers: header,
-      body:{'materialIds':JSON.stringify(listId)},
+      body: JSON.stringify({'materialIds': listId}),
     });
     const data = await res.json();
-    console.log("Data reponse material service ", data);
+    console.log("Data response material service ", data);
     return data;
   } catch (err) {
     console.log("error material service", err);

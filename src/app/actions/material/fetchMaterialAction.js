@@ -1,6 +1,6 @@
 "use server";
 import { getMaterialByEventId } from "@/services/dashboard/materialService";
-import { revalidateTag } from "next/cache";
+import { revalidateTag} from "next/cache";
 
 async function fetchMaterialData(id) {
   const data = await getMaterialByEventId(id);
@@ -8,9 +8,4 @@ async function fetchMaterialData(id) {
   return data;
 }
 
-
 export default fetchMaterialData;
-
-
-
-

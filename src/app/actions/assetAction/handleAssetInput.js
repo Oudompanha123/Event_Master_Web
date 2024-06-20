@@ -4,6 +4,7 @@ import {
   getAllAssetService,
   insertAssetService,
   updateAssetService,
+  getAllAssetServiceNoPage
 } from "@/services/assetService/assetService";
 import { revalidateTag } from "next/cache";
 import { deleteAssetService } from "@/services/assetService/assetService";
@@ -40,3 +41,9 @@ export async function handleDeleteAsset(id) {
   await deleteAssetService(id);
   revalidateTag("asset");
 }
+
+export const getAllAssetNoPageAction = async () => {
+      const data = await getAllAssetServiceNoPage();
+      revalidateTag('asset');
+      return data
+  }

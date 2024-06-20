@@ -1,7 +1,7 @@
 'use server';
 
-import { createEventService } from "@/services/dashboard/event.service";
 import { revalidateTag } from "next/cache";
+import { createEventService } from '@/services/dashboard/event.service';
 
 async function createAgenda(eventData,id) {
   const data = await createEventService(eventData,id);
