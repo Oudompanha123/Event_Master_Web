@@ -1,17 +1,14 @@
-
 import { headerToken } from "@/app/api/auth/headerToken";
 // Get Attendee By EventId
-export const getAttendeeByEventIdService = async (eventId) => {
-  // console.log("id in event for get attendee by event id:",id)
-  console.log("EVENT ID: ", eventId)
+export const getAttendeeByEventIdService = async (eventId, page) => {
   const header = await headerToken()
-  const res = await fetch(`${process.env.API_URL}attendees/${eventId}`, {
+  const res = await fetch(`${process.env.API_URL}attendees/${eventId}?offset=${page ? page : 1}&limit=8`,
+    {
     cache: "no-store",
     headers: header
   });
-
   const data = await res.json();
-  // console.log("Data in attendee:",data)
+  console.log("data:",data);
   return data;
 };
 
@@ -29,24 +26,18 @@ export const DeleteAttendeeService = async (attendeeId) => {
   return data;
 };
 // Search Attendee service by name or phone number
-export const searchAttendeeByNameOrPhoneService = async (id, attendeeNameOrPhone ) => {
-  // console.log("id in event for search attendee by name or phone:",id)
-  // console.log("Name or Phone: ",attendeeNameOrPhone);
+export const searchAttendeeByNameOrPhoneService = async (id, attendeeNameOrPhone) => {
   const header = await headerToken()
   const res = await fetch(
-    `${process.env.API_URL}attendees/search?eventId=${id}&attendeeNameOrPhone=${attendeeNameOrPhone}&offset=1&limit=8`,
-    // http://34.124.203.109:8081/api/attendees/search?eventId=62&attendeeNameOrPhone=R&offset=1&limit=8
+    `${process.env.API_URL}attendees/search?eventId=${id}&attendeeNameOrPhone=${attendeeNameOrPhone}`,
     {
       method: "GET",
       headers: header,
-      cache: "no-store",
+      // cache: "no-store",
       next: { tags: ["attendee"] },
-      // 
-    
-      // body: JSON.stringify(id, attendeeNameOrPhone ),
     }
   );
   const data = await res.json();
-  console.log("Data Attendee:", data);
+  // console.log("Data Attendee:", data.payload);
   return data;
 };

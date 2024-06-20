@@ -1,25 +1,23 @@
-// "use client";
+"use client";
 import React from "react";
-// import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { IoSearchOutline } from "react-icons/io5";
-// import { useDebouncedCallback } from "use-debounce";
-// import { searchAttendeeAction } from "@/actions/attendeeAction";
-// import { searchAttendeeByNameOrPhoneService } from "@/services/dashboard/attendeeService";
+import { useDebouncedCallback } from "use-debounce";
 
-export default async function SearchAttendeeComponent() {
-  // const searchParams = useSearchParams();
-  // const pathname = usePathname();
-  // const router = useRouter();
-  // const {replace} = useRouter();
-  // const handleSearch = useDebouncedCallback((term) => {
-  //   const params = new URLSearchParams(searchParams);
-  //   if (term) {
-  //     params.set('query', term);
-  //   } else {
-  //     params.delete('query');
-  //   }
-  //   replace(`${pathname}?${params.toString()}`);
-  // }, 300);
+export default function SearchAttendeeComponent() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  const {replace} = useRouter();
+  const handleSearch = useDebouncedCallback((term) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set('query', term);
+    } else {
+      params.delete('query');
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }, 300);
 
   return (
     <div>
@@ -29,10 +27,10 @@ export default async function SearchAttendeeComponent() {
             type="text"
             id="search"
             placeholder="Search by name or phone number"
-            // onChange={(e) => {
-            //   handleSearch(e.target.value);
-            // }}
-            // defaultValue={searchParams.get("query")?.toString() || ""}
+            onChange={(e) => {
+              handleSearch(e.target.value);
+            }}
+            defaultValue={searchParams.get("query")?.toString() || ""}
             className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
           />
           <IoSearchOutline className="w-[24px] h-[24px] -mt-8 ml-3" />

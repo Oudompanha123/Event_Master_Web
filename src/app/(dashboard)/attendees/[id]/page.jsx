@@ -1,22 +1,48 @@
-import {getAttendeeByEventIdService} from "@/services/dashboard/attendeeService";
-// import { getEventById } from "@/services/clientPage/landingService";
+import {
+  getAttendeeByEventIdService,
+  searchAttendeeByNameOrPhoneService,
+} from "@/services/dashboard/attendeeService";
 import SearchAttendeeComponent from "../../_components/SearchAttendeeComponent";
-import { Pagination } from "../../_components/paginate/Pagination";
+// import { Pagination } from "../../_components/paginate/Pagination";
 import AttendeeTableComponent from "../../_components/AttendeeTableComponent";
-// import { searchAttendeeAction } from "@/actions/attendeeAction";
-// import { getAllEventsService } from "@/services/dashboard/event.service";
 import { getEventById } from "@/services/clientPage/landingService";
-// import { searchAttendeeAction } from "@/actions/attendeeAction";
+import { getServerSession } from "next-auth";
+import { authOption } from "@/app/api/auth/[...nextauth]/route";
+import { jwtDecode } from "jwt-decode";
+import { RPaginate } from "../../_components/paginate/RPaginate";
 
-export default async function AttendeePage  ({params: { id }}) {
-  const attendeeData = await getAttendeeByEventIdService(id);
-  // console.log("Search Params:",searchParams)
+export default async function AttendeePage({ params: { id }, searchParams }) {
+  // const page = searchParams?.page;
+  // console.log("page:",page)
+  const query = searchParams?.query || "";
+  const page = searchParams?.page
+
+  // Fetch data of attendees and event
+  const attendeeData = await getAttendeeByEventIdService(id, page);
   const eventData = await getEventById(id);
-  // console.log("Data of Event:",eventData)
-  // const eventData = await getAllEventsService();
-  // const query = searchParams?.query || '';
-  // const searchAttendee = await searchAttendeeAction(id,searchParams);
-  // console.log("EventData:",eventData)
+
+  // search attendees that based on query
+  const searchAttendee = query
+    ? await searchAttendeeByNameOrPhoneService(id, query)
+    : attendeeData;
+
+  // Check role before go to attendee page
+  const session = await getServerSession(authOption);
+  console.log("Session :", session);
+  let userInfo = jwtDecode(session?.user?.token);
+  // console.log("user Info:",userInfo)
+  const userRole = userInfo.role;
+  // console.log("user role:",userRole)
+  if (userRole !== "ROLE_ADMIN" && userRole !== "ROLE_SUB_ADMIN") {
+    return (
+      <div className="mainh-auto p-6 rounded-3xl">
+        <p className="text-center py-10 text-red-600 font-medium text-xl">
+          You do not have access to this page.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
@@ -25,66 +51,14 @@ export default async function AttendeePage  ({params: { id }}) {
             Show All Attendees in {eventData?.payload?.eventName} Event
           </a>
         </div>
-        <SearchAttendeeComponent/>
+        <SearchAttendeeComponent />
       </div>
       <div className="w-full overflow-scroll">
-        <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
-          <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
-            <tr className="text-xs lg:text-base">
-              <th className=" px-5 py-2 font-medium rounded-l-radiusUi">NO</th>
-              <th className=" px-5 py-2 font-medium">NAME</th>
-              <th className=" px-5 py-2 font-medium">GENDER</th>
-              <th className=" px-5 py-2 font-medium">EMAIL</th>
-              <th className=" px-5 py-2 font-medium">ADDRESS</th>
-              <th className=" px-5 py-2 font-medium">PHONE NUMBER</th>
-              <th className=" px-5 py-2 font-medium rounded-r-radiusUi">
-                ACTION
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {attendeeData?.payload?.map((attendeeWrapper, index) => {
-              const attendee = attendeeWrapper?.data;
-            
-              return (
-                <tr
-                  key={attendeeWrapper.attendeeId}
-                  className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
-                >
-                  <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">
-                    {index + 1}
-                  </td>
-                  <td className="px-5 py-2 text-xs lg:text-base">
-                    {attendee.name}
-                  </td>
-                  <td className="px-5 py-2 text-xs lg:text-base">
-                    {attendee.gender}
-                  </td>
-                  <td className="px-5 py-2 text-xs lg:text-base">
-                    {attendee.email}
-                  </td>
-                  <td className="px-5 py-2 text-xs lg:text-base">
-                    {attendee.Address}
-                  </td>
-                  <td className="px-5 py-2 text-xs lg:text-base">
-                    {attendee.Phone}
-                  </td>
-                  <td className="px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
-                    <DeleteAttendeeComponent
-                      attendeeId={attendeeWrapper.attendeeId}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <AttendeeTableComponent parentData={searchAttendee} eventId={id} />
         <div className="w-full flex justify-end mt-8">
-          <Pagination/>
+          <RPaginate totalData={10}/>
         </div>
       </div>
     </div>
   );
-};
-
-// eventData={id} attendeeNameOrPhone={searchParams}
+}
