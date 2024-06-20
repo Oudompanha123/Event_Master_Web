@@ -4,7 +4,7 @@ import { Pagination } from "../_components/paginate/Pagination";
 import { MemberComponent } from "../_components/MemberProfileComponent";
 import { DeleteMemberbutton } from "../_components/DeleteMemberbutton";
 import { getAllMemberService } from "@/services/dashboard/memberService";
-import { MemberRoleConponent } from "../_components/MemberRoleComponent";
+import { MemberRoleComponent } from "../_components/MemberRoleComponent";
 
 const MemberPage = async () => {
   const memberData = await getAllMemberService();
@@ -64,7 +64,7 @@ const MemberPage = async () => {
                   {index + 1}
                 </td>
                 <td className="text-xs xl:text-base sm:text-sm ">
-                  <MemberComponent memberInfo = {member} />
+                  <MemberComponent memberInfo={member} />
                 </td>
                 <td className="px-5 py-2 text-xs xl:text-base border border-x-0 border-member-border sm:text-sm">
                   {member.gender ? member.gender : "No gender"}
@@ -76,12 +76,10 @@ const MemberPage = async () => {
                   {member.address}
                 </td>
                 <td className="px-5 py-2 text-xs xl:text-base border border-x-0 border-member-border sm:text-sm">
-                  <MemberRoleConponent memberRole = {member}/>
+                  <MemberRoleComponent memberId={member.memberId} memberRoles={member.role} />
                 </td>
-
                 <td className="px-5 py-2 xl:text-sm rounded-r-radiusUi border border-l-0 border-member-border">
-                  {/* {member.role !== "ROLE_ADMIN" && <DeleteMemberComponent />} */}
-                  <DeleteMemberbutton memberRole = {member}/>
+                  <DeleteMemberbutton member={member} />
                 </td>
               </tr>
             ))}

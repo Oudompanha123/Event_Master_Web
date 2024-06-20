@@ -1,10 +1,10 @@
 import React from 'react'
 import { DeleteMemberComponent } from './DeleteMemberComponent'
 
-export const DeleteMemberbutton = ({memberRole}) => {
+export const DeleteMemberbutton = ({member}) => {
   return (
     <div>
-        {memberRole.role !== "ROLE_ADMIN" && <DeleteMemberComponent memberId = { memberRole.memberId }/>}
+        {member.role !== "ROLE_ADMIN" && <DeleteMemberComponent memberId = { member.memberId }/>}
     </div>
   )
 }
