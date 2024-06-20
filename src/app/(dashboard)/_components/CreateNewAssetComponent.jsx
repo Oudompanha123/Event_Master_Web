@@ -5,26 +5,37 @@ import { CreateNewAsset } from "./Action/CreateNewAssetButton";
 import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export const AssetPopupComponent = () => {
- const [isLoading, setIsLoading] = useState(false);
+  const notify = (checkasset) => {
+    checkasset == "Duplicate asset name"
+      ? toast.warning("Asset already have !!!!", {
+          position: "top-center",
+        })
+      : toast.success("Created asset successful ", {
+          position: "top-center",
+        });
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const delay = (x) => new Promise((resolve) => setTimeout(resolve, x))
-  const onSubmit =async (e) => {
-  setIsLoading(true);
-  
-   await handleAsset(e);
-   await delay(2000);
+  const delay = (x) => new Promise((resolve) => setTimeout(resolve, x));
+
+  const onSubmit = async (e) => {
+    setIsLoading(true);
+    const dataas = await handleAsset(e);
+    await delay(1000);
     setIsLoading(false);
     reset();
+    notify(dataas.detail);
     document.getElementById("my_modal_new").close();
   };
-
 
   return (
     <div>
@@ -34,7 +45,12 @@ export const AssetPopupComponent = () => {
           <div className="flex flex-row items-center text-primary-text">
             <h2 className="text-lg lg:text-xl font-semibold">Create Asset</h2>
             <form method="dialog">
-              <button onClick={()=>{reset()}} className={`btn btn-sm btn-circle btn-ghost absolute right-2 top-2`} >
+              <button
+                onClick={() => {
+                  reset();
+                }}
+                className={`btn btn-sm btn-circle btn-ghost absolute right-2 top-2`}
+              >
                 ✕
               </button>
             </form>
@@ -45,7 +61,6 @@ export const AssetPopupComponent = () => {
                 <label htmlFor="">Asset Name</label>
                 <span className="text-redUi">*</span>
                 <input
-                  
                   type="text"
                   id="assetName"
                   name="assetName"
@@ -103,26 +118,26 @@ export const AssetPopupComponent = () => {
               </div>
               <div className="flex justify-end space-x-3 bg mt-8">
                 <div
-                  onClick={() =>{ document.getElementById("my_modal_new").close();
-                  reset()
-                   } 
-                  }
-                  
+                  onClick={() => {
+                    document.getElementById("my_modal_new").close();
+                    reset();
+                  }}
                   className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer"
                 >
-
                   Cancel
                 </div>
                 <button
                   type="submit"
-                  className="px-6 py-3 rounded-2xl border-1px border-borderUi flex space-x-2 bg-purple-text text-white"
+                  className="px-6 py-3 rounded-2xl min-w-32 border-1px border-borderUi flex justify-center text-center items-center space-x-2 bg-purple-text text-white"
                 >
-                  <AddSquare size="24" color="#FFFFFF" variant="Bold" />
-                   {!isLoading ? (
+                  {!isLoading ? (
+                    <div className="flex justify-center align-middle gap-3">
+                      <AddSquare size="24" color="#FFFFFF" variant="Bold" />
                       <p>Save</p>
-                    ) : (
-                      <div className="loader"></div>
-                    )}
+                    </div>
+                  ) : (
+                    <div className="loader"></div>
+                  )}
                 </button>
               </div>
             </div>

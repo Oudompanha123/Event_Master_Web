@@ -1,7 +1,7 @@
 import { headerToken } from "@/app/api/auth/headerToken";
 //get all service
 export const getAllAssetService = async (page) => {
-  console.log("page nn", page);
+//  console.log("page nn", page);
   const header = await headerToken() ;
   const res = await fetch(
     `${process.env.API_URL}assets?offset=${page ? page : 1}&limit=8`,

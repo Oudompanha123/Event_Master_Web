@@ -1,12 +1,7 @@
 "use client";
 import { EditAssetComponents } from "./EditAssetComponents";
 import { DeleteAssetComponent } from "./DeleteAssetComponent";
-// import { RPaginate } from "./paginate/RPaginate";
-// import { useEffect, useState } from "react";
-// import { getAllAssetAction } from "@/app/actions/assetAction/handleAssetInput";
-// import { Toast } from "react-toastify/dist/components";
-
-export const AssetTableComponent = ({data}) => {
+export const AssetTableComponent = ({ data }) => {
   // console.log(query, "check query");
   // const [navigate, setNavigate] = useState();
   // const [tableData, setTableDate] = useState(data);
@@ -16,7 +11,7 @@ export const AssetTableComponent = ({data}) => {
   // };
 
   // const navigatePage = (page) => {
-    // console.log(`i trigger ${page}`)
+  // console.log(`i trigger ${page}`)
   //   setNavigate(page + 1);
   // };
   // useEffect(() => {
@@ -31,7 +26,7 @@ export const AssetTableComponent = ({data}) => {
             <th className="py-3 font-medium">ASSET NAME</th>
             <th className="font-medium">QTY</th>
             <th className="font-medium">UNIT</th>
-            <th className="font-medium">CREATED BY</th>
+            <th className="font-medium">CREATED AT</th>
             <th className="font-medium">STATUS</th>
             <th className="font-medium rounded-r-radiusUi px-3  ">ACTION</th>
           </tr>
