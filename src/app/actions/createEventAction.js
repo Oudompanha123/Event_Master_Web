@@ -1,5 +1,6 @@
 'use server';
 
+import { createEventService } from "@/services/dashboard/eventService";
 import { revalidateTag } from "next/cache";
 import { createEventService } from '@/services/dashboard/event.service';
 

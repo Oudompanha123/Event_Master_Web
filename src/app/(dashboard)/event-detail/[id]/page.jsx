@@ -2,7 +2,7 @@ import { EventDetail } from "../../_components/EventDetailComponent";
 import { CreateDynamicForm } from "../../_components/CreateDynamicFormComponent";
 import MaterialComponent from "../../_components/MaterialComponent";
 import AgendaComponent from "../../_components/AgendaComponet";
-import { getEventByIdService } from "@/services/dashboard/event.service";
+import { getEventByIdService } from "@/services/dashboard/eventService";
 import { EventToggle } from "../../_components/toogle/EventToogle";
 import { PushRouter } from "@/components/PushRouter";
 

@@ -9,9 +9,9 @@ import { SelectModify } from "./SelectModify";
 import { addNewCategoryAction, addNewEventAction, storeImageAction } from "@/actions/categoryAction";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/lib/firebase";
-import { v4 } from 'uuid';
-import { storeImageService } from "@/services/dashboard/overviewService";
 import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export const CreateEventButton = () => {
     const notify = () => {
@@ -238,18 +238,16 @@ export const CreateEventButton = () => {
                                         Event Name <span className="text-red-600">*</span>
                                     </label>
                                     <input
-                                        {...register("eventName", {
-                                            required: "event name is required",
+                                        {...register("name", {
+                                            required: "name is required",
                                         })}
-                                        value={events.eventName}
-                                        onChange={handleInput}
                                         type="text"
-                                        name="eventName"
-                                        id="eventName"
-                                        className={`${errors.eventName ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        name="name"
+                                        id="name"
+                                        className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter event name"
                                     />
-                                    {errors.eventName && <div className="text-red-600 text-sm mt-2">{errors.eventName.message}</div>}
+                                    {errors.name && <div className="text-red-600 text-sm mt-2">{errors.name.message}</div>}
                                 </div>
                                 <div className="w-full">
                                     <SelectModify
@@ -302,7 +300,7 @@ export const CreateEventButton = () => {
                                         // onChange={handleInput}
                                         type="datetime-local"
                                         name="endDate"
-                                        id="endDate"
+                                        id="enddate"
                                         className={`${errors.endDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         required=""
@@ -339,11 +337,9 @@ export const CreateEventButton = () => {
                                         {...register("maxAttendee", {
                                             required: "maximum attendees is required",
                                         })}
-                                        value={events.maxAttendee}
-                                        onChange={handleInput}
                                         type="number"
                                         name="maxAttendee"
-                                        id="maxAttendee"
+                                        id="max"
                                         className={`${errors.maxAttendee ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter maximum attendee"
                                         required=""
@@ -360,8 +356,6 @@ export const CreateEventButton = () => {
                                         {...register("address", {
                                             required: "address is required",
                                         })}
-                                        value={events.address}
-                                        onChange={handleInput}
                                         type="test"
                                         name="address"
                                         id="address"
@@ -381,8 +375,6 @@ export const CreateEventButton = () => {
                                         {...register("description", {
                                             required: "description is required",
                                         })}
-                                        value={events.description}
-                                        onChange={handleInput}
                                         rows={5}
                                         type="text"
                                         name="description"

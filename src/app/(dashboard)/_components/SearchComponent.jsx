@@ -12,9 +12,8 @@ export default function SearchComponent({ eventData }) {
 
   useEffect(() => {
     if (query) {
-      const lowercasedQuery = query.toLowerCase();
       setFilteredEvents(eventData.filter(event =>
-        event.eventName.toLowerCase().includes(lowercasedQuery)
+        event.eventName.toLowerCase().includes(query.toLowerCase())
       ));
     } else {
       setFilteredEvents(eventData);
@@ -27,7 +26,6 @@ export default function SearchComponent({ eventData }) {
         <div className="w-full">
           <input
             type="text"
-            value={text}
             onChange={e => setText(e.target.value)}
             placeholder="Search"
             className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-12 border rounded-3xl pl-10"
@@ -40,3 +38,4 @@ export default function SearchComponent({ eventData }) {
     </>
   );
 }
+

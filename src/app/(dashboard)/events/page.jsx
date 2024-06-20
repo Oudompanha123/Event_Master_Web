@@ -1,11 +1,9 @@
-// Import necessary components and services
 import CardEventComponent from "../_components/CardEventComponent";
 import { SelectDropdown } from "../_components/SelectDropdownComponent";
 import { SelectStatus } from "../_components/SelectStatusComponent";
-import { getAllEventsService } from "@/services/dashboard/event.service";
+import { getAllEventsService } from "@/services/dashboard/eventService";
 import SearchComponent from "../_components/SearchComponent";
 
-// Fetch the event data server-side
 export default async function Page() {
   const eventData = await getAllEventsService();
 
@@ -49,8 +47,6 @@ export default async function Page() {
           </div>
         </form>
       </div>
-
-      {/* Pass the event data to the client-side component */}
       <SearchComponent eventData={eventData.payload} />
     </main>
   );
