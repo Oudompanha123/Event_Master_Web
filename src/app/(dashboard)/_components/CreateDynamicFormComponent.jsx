@@ -5,6 +5,9 @@ import { NumberField } from "./NumberField";
 import { TextField } from "./TextField";
 import { InputField } from "./InputField";
 import { Title } from "./Title";
+import { BooleanField } from "./BooleanField";
+import { Boolean } from "./Boolean";
+import { EmailField } from "./EmailField";
 import { useState } from "react";
 import Image from "next/image";
 import { DateField } from "./DateField";
@@ -12,48 +15,45 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 
 export const CreateDynamicForm = () => {
   const [popUp, setPopUp] = useState(false);
-  const [viewField, setViewField] = useState(null);
-  const [choosedField, setChoosedField] = useState([]);
-  const [confirmField, setConfirmField] = useState([]);
-  const [addFieldNamePopup, setAddFieldNamePopup] = useState(false);
-  const [fieldName, setFieldName] = useState("");
-  // set data to view before confirm add btn
-  const parentFunc = (x) => {
-    setViewField(x);
-  };
-  // confirm field we need
-  const handleAddClick = () => {
-    {
-      viewField != null && setAddFieldNamePopup(true);
+    const [viewField, setViewField] = useState(null);
+    const [choosedField, setChoosedField] = useState([]);
+    const [confirmField, setConfirmField] = useState([]);
+    const [addFieldNamePopup, setAddFieldNamePopup] = useState(false);
+    const [fieldName, setFieldName] = useState('')
+    // set data to view before confirm add btn
+    const parentFunc = (x) => {
+        setViewField(x);
     }
-  };
-  // confirm fields, form and create form
-  const handleFinishClick = () => {
-    if (choosedField != []) {
-      setConfirmField(choosedField);
-      setChoosedField([]);
-      setPopUp(false);
+    // confirm field we need 
+    const handleAddClick = () => {
+        { viewField != null && setAddFieldNamePopup(true) }
     }
-  };
-  //another popup
-  const handleResetPopup = () => {
-    // setPopUp(false);
-    setAddFieldNamePopup(false);
-  };
-  const handleAddFieldName = () => {
-    const newField = {
-      fieldType: String(viewField) + "," + String(fieldName),
-    };
-    if (fieldName != "") {
-      {
-        viewField != null && setChoosedField([...choosedField, newField]);
-      }
+    // confirm fields, form and create form 
+    const handleFinishClick = () => {
+        if (choosedField != []) {
+            setConfirmField([...confirmField, ...choosedField])
+            setChoosedField([])
+            console.log('check confirm field', confirmField)
+            setPopUp(false)
+        }
     }
-    setViewField(null);
-    setFieldName("");
-    setAddFieldNamePopup(false);
-  };
-  console.log(choosedField);
+    //another popup
+    const handleResetPopup = () => {
+        // setPopUp(false);
+        setAddFieldNamePopup(false);
+    }
+    const handleAddFieldName = () => {
+        const newField = {
+            fieldType: String(viewField) + ',' + String(fieldName)
+        }
+        if (fieldName != '') {
+            { viewField != null && setChoosedField([...choosedField, newField]) }
+        }
+        setViewField(null);
+        setFieldName('');
+        setAddFieldNamePopup(false)
+    }
+    console.log(choosedField, 'choose field')
 
   return (
     <>
@@ -107,12 +107,17 @@ export const CreateDynamicForm = () => {
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
               {confirmField.map((x, index) => {
-                const inputType = x?.fieldType.split(",")[0];
-                const inputName = x?.fieldType.split(",")[1];
+                const [inputType, inputName] = x.fieldType.split(",");
                 return (
-                  <InputField key={index} type={inputType} name={inputName} />
+                  <>
+                    {inputType == 'boolean' ?
+                        <Boolean name={inputName} />
+                        :
+                        <InputField key={index} type={inputType} name={inputName} />
+                    }
+                  </>
                 );
               })}
             </div>
@@ -160,6 +165,8 @@ export const CreateDynamicForm = () => {
             <TextField parentFunc={parentFunc} />
             <NumberField parentFunc={parentFunc} />
             <DateField parentFunc={parentFunc} />
+            <BooleanField parentFunc={parentFunc} />
+            <EmailField parentFunc={parentFunc} />
           </div>
           <hr />
           <div className="grid grid-cols-2">

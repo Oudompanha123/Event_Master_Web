@@ -17,6 +17,7 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
   // const trigger = async (id) => {
   //  // handleUpdateAsset(id, e)
   // };
+
   const [handleName, setHandleName] = useState(name);
   const [handleQty, setHandleQty] = useState(qty);
   const [handleUnit, setHandleUnit] = useState(unit);
