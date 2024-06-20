@@ -49,7 +49,7 @@ const AttendeePage = async ({ params: { id } }) => {
             </tr>
           </thead>
           <tbody>
-            {attendeeData?.payload.map((attendeeWrapper, index) => {
+            {attendeeData?.payload?.map((attendeeWrapper, index) => {
               const attendee = attendeeWrapper?.data;
             
               return (
