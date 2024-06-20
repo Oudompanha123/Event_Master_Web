@@ -4,8 +4,14 @@ import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import { AddSquare, Edit } from "iconsax-react";
 import { handleUpdateAsset } from "@/app/actions/assetAction/handleAssetInput";
+import { toast } from "react-toastify";
 
 export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
+  const notify = () => {
+    toast.success("Updated Successful", {
+      position: "top-center",
+    });
+  };
   // console.log("edit Id:", assetEdit);
   // const trigger = async (id) => {
   //  // handleUpdateAsset(id, e)
@@ -21,16 +27,16 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
     formState: { errors },
   } = useForm();
 
-  const delay = (x) => new Promise((resolve) => setTimeout(resolve, x))
-   
+  const delay = (x) => new Promise((resolve) => setTimeout(resolve, x));
+
   const onSubmit = async (e) => {
     // console.log("data", e);
     setIsLoading(true);
     await handleUpdateAsset(assetEdit, e);
-    await delay(2000);
+    await delay(1000);
     setIsLoading(false);
+    notify();
     reset();
-
     document.getElementById(`my_modal_updateasset${assetEdit}`).close();
   };
 
@@ -38,11 +44,12 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
     <div>
       <Edit
         className="cursor-pointer"
-        onClick={() =>
+        onClick={() =>{
           document
             .getElementById(`my_modal_updateasset${assetEdit}`)
-            .showModal()
-        }
+            .showModal();
+            reset();
+        }}
         size="20"
         color="#16AE65"
       />
@@ -73,7 +80,9 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                   {...register("assetName", {
                     required: "asset name is required",
                   })}
-                  onChange={(e) => setHandleName(e.target.value)}
+                  onChange={(e) => {
+                    setHandleName(e.target.value);
+                  }}
                 />
                 {errors.assetName && (
                   <div className="text-red-600 text-sm">
@@ -127,11 +136,12 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
               </div>
               <div className="flex justify-end space-x-3 bg mt-8">
                 <div
-                  onClick={() =>
+                  onClick={() => {
+                    reset();
                     document
                       .getElementById(`my_modal_updateasset${assetEdit}`)
-                      .close()
-                  }
+                      .close();
+                  }}
                   className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer"
                 >
                   Cancel
@@ -139,16 +149,18 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                 <button
                   type="submit"
                   //onClick={() => (assetEdit)}
-                  className="save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
+                  className="save border rounded-2xl min-w-32 bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
                 >
-                  <Image src={"/icons/edit.svg"} width={20} height={20} />
-                  <span className="h-12 text-white flex justify-center items-center">
-                    {!isLoading ? (
-                      <p>Update</p>
-                    ) : (
-                      <div className="loader"></div>
-                    )}
-                  </span>
+                  {!isLoading ? (
+                    <div className="flex gap-3">
+                      <Image src={"/icons/edit.svg"} width={20} height={20} />
+                      <span className=" text-white flex justify-center items-center">
+                        <p>Update</p>
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="loader"></div>
+                  )}
                 </button>
               </div>
             </div>
