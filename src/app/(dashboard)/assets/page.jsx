@@ -6,11 +6,21 @@ import {
   searchAssetByName,
 } from "@/services/assetService/assetService";
 import { ToastContainer } from "react-toastify";
+import { getServerSession } from "next-auth";
+import { jwtDecode } from "jwt-decode";
+import { authOption } from "@/app/api/auth/[...nextauth]/route";
+import { RPaginate } from "../_components/paginate/RPaginate";
 export default async function assetPage({ searchParams }) {
   const query = searchParams?.query || "";
-  const dataasset = await getAllAssetService();
+  const page = searchParams?.page;
+  // console.log("page:",page);
+  const dataasset = await getAllAssetService(page);
   const searchasset = await searchAssetByName(query);
+  // console.log("datasearch:",searchasset.totalRecord);
   const data = query == "" || query == null ? dataasset : searchasset;
+  const session = await getServerSession(authOption);
+  let userInfo = jwtDecode(session?.user?.token);
+  const userRole = userInfo.role;
 
   return (
     <>
@@ -21,7 +31,9 @@ export default async function assetPage({ searchParams }) {
           </div>
           <div className="search_bar flex gap-7 lg:w-3/4 justify-between ">
             <SearchAssetComponent />
-            <div className="button_new">
+            <div
+              className={`${userRole == "ROLE_USER" && "hidden"} button_new`}
+            >
               <AssetPopupComponent />
             </div>
           </div>
@@ -31,8 +43,8 @@ export default async function assetPage({ searchParams }) {
             <AssetTableComponent data={data} query={query} />
           </div>
         </div>
-        <ToastContainer autoClose="1000" />
       </div>
+      <ToastContainer autoClose="1000" />
     </>
   );
 }

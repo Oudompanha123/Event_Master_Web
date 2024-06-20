@@ -7,6 +7,8 @@ import { getAllCategoryLandingAction } from "@/actions/landingAction";
 
 export const SelectDropdownLanding = ({ height, label, func }) => {
     const [selected, setSelected] = useState(null);
+    const [value, setValue] = useState();
+    const [clickCount, setClickCount] = useState(0);
     const placeholder = "Choose category";
     const [options, setOptions] = useState([
         { id: 1, name: "Social Event" },
@@ -35,7 +37,22 @@ export const SelectDropdownLanding = ({ height, label, func }) => {
         }
     };
 
-    const handleSelect = (v) => func(v)
+    const handleSelect = (v) => {
+        setValue(v)
+        setClickCount(clickCount + 1);
+        if (clickCount <= 3) {
+            if (v === value) {
+                func('')
+                setValue('')
+            } else {
+                func(v)
+            }
+        } else {
+            func(v)
+            setClickCount(0)
+        }
+        // { v === value ? func('') : func(v) }
+    }
 
     return (
         <div className="w-auto">

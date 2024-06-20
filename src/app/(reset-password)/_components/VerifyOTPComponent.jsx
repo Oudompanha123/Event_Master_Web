@@ -53,13 +53,13 @@ const VerifyOTPComponent = ({email}) => {
 
     function error(message){
         toast.error(message, {
-            position: "bottom-right"
+            position: "top-center"
           });
     };
 
     function successSendingOTP(message){
         toast.success(message, {
-            position: "bottom-right"
+            position: "top-center"
           });
     }
 
@@ -76,42 +76,46 @@ const VerifyOTPComponent = ({email}) => {
     }
 
     return (
-        <div className="absolute flex justify-center sm:pt-[500px] md:pl-[30%] lg:pl-0 lg:pt-[400px] w-full md:w-[70%] lg:w-[39%] lg:left-[30%] h-[100%]">
+        <div className="absolute flex justify-center sm:pt-[200px] md:pl-[30%] lg:pl-0 lg:pt-[330px] w-full md:w-[70%] lg:w-[39%] lg:left-[30%] h-[100%]">
             <ToastContainer autoClose={2000}/>
-            <form className="mt-[220px] lg:mt-[20px] 2xl:mt-[100px]">
-                <div className="lg:mt-[-110px] text-md mt-3 mb-5">
-                    <h2 className=" text-center text-[20px] leading-9 font-extrabold text-purple-text-head flex justify-center">
+            <form className="mt-[235px] lg:mt-[20px] 2xl:mt-[100px]">
+                <div className="lg:mt-[-100px] text-md mt-3 mb-8">
+                    <h2 className=" text-center text-[20px] md:text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
                         Enter 4 Digits Code
                     </h2>
-                    <p className="flex justify-center greyUi mt-6">Enter the 4 digits code that received your email.</p>
+                    <p className="flex justify-center greyUi mt-4">Enter the 4 digits code that received your email.</p>
                 </div>
 
-                <OtpInput 
-                          inputStyle={styles.inputStyle}
-                          value={otp}
-                          onChange={handleChange}
-                          onKeyDown={handleKeyDown}
-                          numInputs={4}
-                />
+                <div className="pr-[4px]">
+                    <OtpInput 
+                        inputStyle={styles.inputStyle}
+                        value={otp}
+                        onChange={handleChange}
+                        onKeyDown={handleKeyDown}
+                        numInputs={4}
+                    />
+                </div>
+
+                
 
                 {errorMessage && <p className="text-red-600 mt-3 ml-4">{errorMessage}</p>}
-                <div className="flex justify-center">
+                <div className="flex justify-center pr-[8px] sm:mt-7 lg:mt-0">
                     <button
                         onClick={handleSubmit}
                         type="button"
                         id="continue"
-                        className={`flex justify-center w-[330px] sm:w-full bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 mt-10 ml-2 shadow-md shadow-violet-400 ${otp.length !== 4 ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}
+                        className={`flex justify-center w-[320px] sm:w-full bg-purple-text text-white font-medium text-sm rounded-3xl px-[165px] py-3.5 mt-10 ml-2 shadow-md shadow-violet-400 ${otp.length !== 4 ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}
                         disabled={otp.length !== 4}
                     >
-                        {isLoading ? <div className='loader'></div> : <p>Continue</p> } 
+                        {isLoading ? <div className='loader'></div> : <p>Continue</p> }  
                     </button>
                 </div>
                 
-                    <p className="mb-2 mr-6 cursor-pointer flex justify-end text-blueUi mt-5">
-                        <u onClick={handleResendOtp}>
-                        {isLoadingResendOTP ? <div className='loader'></div> : <p>Resned OTP</p> } 
-                        </u>
-                    </p>
+                    <div className="mb-2 mr-6 cursor-pointer flex justify-end text-blueUi mt-3">
+                        <div onClick={handleResendOtp}>
+                        {isLoadingResendOTP ? <div className="flex gap-2">OTP is Sending <p className='loader_purple'></p> </div> : <span>Resend OTP</span> } 
+                        </div>
+                    </div>
             </form>
 
 

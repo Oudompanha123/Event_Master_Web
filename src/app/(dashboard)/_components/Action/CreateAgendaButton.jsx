@@ -4,6 +4,8 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { AddSquare } from "iconsax-react";
 import createAgenda from "@/app/actions/createAgendaAction";
+import { useForm } from "react-hook-form";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddmoreInput({ inputList, setInputList, errors, setErrors }) {
   const handleAddClick = () => {
@@ -179,14 +181,19 @@ function AddmoreInput({ inputList, setInputList, errors, setErrors }) {
 }
 
 export function CreateAgendaButton({ id }) {
-  console.log("event id is", id);
   const [inputList, setInputList] = useState([
     { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
   ]);
   const [errors, setErrors] = useState([{ topic: "", startTime: "", endTime: "" }]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const resetInputs = () => {
+    setInputList([{ topic: "", startTime: "", endTime: "", speaker: "", description: "" }]);
+    setErrors([{ topic: "", startTime: "", endTime: "" }]);
+  };
 
   async function handleCreate() {
-    const newErrors = inputList.map((item, index) => {
+    const newErrors = inputList.map((item) => {
       const error = { topic: "", startTime: "", endTime: "" };
       if (!item.topic) {
         error.topic = "Topic is required.";
@@ -214,15 +221,17 @@ export function CreateAgendaButton({ id }) {
     }));
 
     const requestBody = { agenda };
-
-    console.log("Request Body:", requestBody);
     document.getElementById("my_modal_4").close();
 
     try {
+      setIsLoading(true);
       const data = await createAgenda(requestBody, id);
       console.log("API Response:", data);
+      setIsLoading(false);
+      resetInputs();
     } catch (error) {
       console.error("Error creating agenda:", error);
+      setIsLoading(false);
     }
   }
 
@@ -256,7 +265,11 @@ export function CreateAgendaButton({ id }) {
               onClick={handleCreate}
             >
               <AddSquare size="24" variant="Bold" className="text-white" />
-              <p className="text-white">Save</p>
+              {!isLoading ? (
+                <p className="text-white">Save</p>
+              ) : (
+                <div className="loader"></div>
+              )}
             </button>
           </div>
         </div>

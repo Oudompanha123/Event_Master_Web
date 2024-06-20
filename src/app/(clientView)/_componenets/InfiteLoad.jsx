@@ -34,7 +34,7 @@ export const InfiniteLoad = ({ name }) => {
             <EventInCategory data={event} />
             {!stopLoad &&
                 <div
-                    className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"
+                    className="flex invisible justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"
                     ref={ref}
                 >
                     <div

@@ -12,6 +12,28 @@ const formatDate = (dateString) => {
 };
 
 export default function CardEventComponent({ eventData }) {
+  if (!eventData || eventData.length === 0) {
+    return (
+      <div className="justify-center w-full content-center space-y-4 pb-10 mt-20">
+            <div className="justify-center flex items-center">
+              <Image
+                className=""
+                src="/images/Events-empty.png"
+                alt="empty image"
+                width={300}
+                height={300}
+                priority
+              />
+            </div>
+            <p className="text-center text-2xl font-semibold text-primary-text">
+              You don’t have event!
+            </p>
+            <p className="text-center text-xl font-medium text-gray-500">
+              Let's create your event!
+            </p>
+          </div>
+    );
+  }
   return (
     <div className="gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:gap-6 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2 2xl:grid-cols-4">
       {eventData.map((data, index) => {
@@ -19,11 +41,14 @@ export default function CardEventComponent({ eventData }) {
         return (
           <div key={index}>
             <div className="rounded-2xl overflow-hidden shadow-lg">
+              {/* <MegaImage
+                src={data.poster}
+              /> */}
               <div
                 className="w-auto h-60 bg-cover bg-center sm:h-[200px] md:h-[220px] lg:h-[220px] xl:h-[230px] 2xl:[250px]"
                 style={{
                   backgroundImage:
-                    `url(${data.poster})` ||
+                    `url(${data.poster})` ??
                     `url(https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg)`,
                 }}
                 alt="Event Photo"
@@ -45,9 +70,8 @@ export default function CardEventComponent({ eventData }) {
                     {data.eventName}
                   </div>
                   <span
-                    className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${
-                      data.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
-                    }`}
+                    className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${data.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
+                      }`}
                   >
                     {data.isOpen ? "Open" : "Closed"}
                   </span>
