@@ -48,7 +48,7 @@ const ForgotPasswordComponent = () => {
     return (
         <div className="absolute flex justify-center sm:pt-[200px] sm:pl-0 md:pl-[30%] lg:pl-[50%] lg:pt-[350px] w-full md:w-[70%] lg:w-[39%]">
             <ToastContainer autoClose={2000}/>
-            <form className='mt-[220px] lg:mt-[20px] 2xl:mt-[50px] ' onSubmit={handleSubmit(onSubmit)}>
+            <form className='mt-[238px] lg:mt-[20px] 2xl:mt-[50px] ' onSubmit={handleSubmit(onSubmit)}>
                 <div className="mt-5">
                 
                     <h2 className="text-[20px] flex justify-center lg:mt-[-100px] mt-[10px] md:mt-6  text-center md:text-3xl leading-9 font-extrabold text-purple-text-head">
