@@ -1,25 +1,16 @@
-"use client";
 import { EditAssetComponents } from "./EditAssetComponents";
 import { DeleteAssetComponent } from "./DeleteAssetComponent";
-export const AssetTableComponent = ({ data }) => {
-  // console.log(query, "check query");
-  // const [navigate, setNavigate] = useState();
-  // const [tableData, setTableDate] = useState(data);
-  // const getdata = async () => {
-  //   const data1 = await getAllAssetAction(navigate);
-  //   setTableDate(data1);
-  // };
-
-  // const navigatePage = (page) => {
-  // console.log(`i trigger ${page}`)
-  //   setNavigate(page + 1);
-  // };
-  // useEffect(() => {
-  //   getdata();
-  // }, [navigate]);
+import { getServerSession } from "next-auth";
+import { authOption } from "@/app/api/auth/[...nextauth]/route";
+import { jwtDecode } from "jwt-decode";
+import { RPaginate } from "./paginate/RPaginate";
+export const AssetTableComponent = async ({ data }) => {
+  const session = await getServerSession(authOption);
+  let userInfo = jwtDecode(session?.user?.token);
+  const userRole = userInfo.role;
   return (
-    <>
-      <table className="w-full px-1 border-separate border-spacing-y-3 mt-0">
+    <div className="flex flex-col w-full">
+      <table className="w-full px-1 border-separate border-spacing-y-3 mt-0 ">
         <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-tableBg uppercase">
           <tr className="w-full overflow-auto text-xs lg:text-base px-4">
             <th className="py-3 font-medium px-2 rounded-l-radiusUi">NO</th>
@@ -27,8 +18,20 @@ export const AssetTableComponent = ({ data }) => {
             <th className="font-medium">QTY</th>
             <th className="font-medium">UNIT</th>
             <th className="font-medium">CREATED AT</th>
-            <th className="font-medium">STATUS</th>
-            <th className="font-medium rounded-r-radiusUi px-3  ">ACTION</th>
+            <th
+              className={`${
+                userRole == "ROLE_USER" && "px-3 rounded-r-radiusUi"
+              } font-medium `}
+            >
+              STATUS
+            </th>
+            <th
+              className={`${
+                userRole == "ROLE_USER" && "hidden"
+              } font-medium rounded-r-radiusUi px-3 `}
+            >
+              ACTION
+            </th>
           </tr>
         </thead>
         <tbody className="border rounded-radiusUi w-full bg-white ">
@@ -64,7 +67,7 @@ export const AssetTableComponent = ({ data }) => {
                   {asset.createdAt}
                 </div>
               </td>
-              <td className="w-14">
+              <td className={`${userRole == "ROLE_USER" && "px-3"} w-14`}>
                 <div
                   className={`text-xs xl:text-base border rounded-radiusUi py-1
                   ${asset.qty <= 0 ? "bg-softRedUi" : "bg-softGreenUi"} `}
@@ -73,7 +76,11 @@ export const AssetTableComponent = ({ data }) => {
                   {asset.qty <= 0 ? "Out of stock" : "In stock"}
                 </div>
               </td>
-              <td className="rounded-r-radiusUi w-20">
+              <td
+                className={`${
+                  userRole == "ROLE_USER" && "hidden"
+                } rounded-r-radiusUi w-20`}
+              >
                 <div className="flex justify-center items-center gap-3 mx-3">
                   <div className="cursor-pointer">
                     <DeleteAssetComponent assetIdprop={asset.assetId} />
@@ -92,9 +99,25 @@ export const AssetTableComponent = ({ data }) => {
           ))}
         </tbody>
       </table>
-      {/* <div className="pagination flex justify-end px-8 pb-8 mt-8">
-        <RPaginate totalData={data?.totalRecord} func={navigatePage} />
-      </div> */}
-    </>
+      <div className="w-full h-full flex justify-end mt-8 mb-8">
+        <RPaginate totalData={data?.totalRecord} />
+      </div>
+      {/* {data.length === 0 } 
+        <div className="justify-center w-full content-center space-y-2 pb-10 flex flex-col items-center bg-red-500">
+          <Image
+            src="/images/Search.gif"
+            alt="empty image"
+            width={400}
+            height={400}
+            priority
+          />
+          <p className="text-center text-4xl font-semibold text-primary-text">
+            No results found
+          </p>
+          <p className="text-center text-xl text-gray-500">
+            Please try another search!
+          </p>
+        </div> */}
+    </div>
   );
 };

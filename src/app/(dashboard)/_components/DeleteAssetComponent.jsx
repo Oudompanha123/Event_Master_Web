@@ -5,6 +5,7 @@ import Image from "next/image";
 import React from "react";
 import { RxCross2 } from "react-icons/rx";
 import { handleDeleteAsset } from "@/app/actions/assetAction/handleAssetInput";
+import 'react-toastify/dist/ReactToastify.css';
 import { toast } from "react-toastify";
 
 export const DeleteAssetComponent = ({ assetIdprop }) => {
