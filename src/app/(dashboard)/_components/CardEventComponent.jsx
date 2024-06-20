@@ -19,6 +19,9 @@ export default function CardEventComponent({ eventData }) {
         return (
           <div key={index}>
             <div className="rounded-2xl overflow-hidden shadow-lg">
+              {/* <MegaImage
+                src={data.poster}
+              /> */}
               <div
                 className="w-auto h-60 bg-cover bg-center sm:h-[200px] md:h-[220px] lg:h-[220px] xl:h-[230px] 2xl:[250px]"
                 style={{
@@ -45,9 +48,8 @@ export default function CardEventComponent({ eventData }) {
                     {data.eventName}
                   </div>
                   <span
-                    className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${
-                      data.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
-                    }`}
+                    className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${data.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
+                      }`}
                   >
                     {data.isOpen ? "Open" : "Closed"}
                   </span>

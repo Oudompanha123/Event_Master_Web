@@ -40,14 +40,10 @@ export const SearchBar = () => {
         console.log('check search data', searchData)
         const data = await callingServiceAction(searchData); //move to action for cors
         console.log(data.payload, 'check data in search')
-        router.push('/?search=true', { scroll: false });
+        router.replace('/?search=true', { scroll: false });
+        console.log('router pushed')
         setFindData(data);
         setIsLoading(false)
-        setSearch('')
-        setStartTime('')
-        setEndTime('')
-        setDropDownValue('')
-        setStatusValue('')
     };
 
     const getDropDownValue = (v) => setDropDownValue(v)
@@ -55,15 +51,21 @@ export const SearchBar = () => {
 
     useEffect(() => {
         const allInputsEmpty = [
-            search.trim(),
-            startTime.trim(),
-            endTime.trim(),
-            statusValue.trim(),
-            dropDownValue.trim()
+            search,
+            startTime,
+            endTime,
+            statusValue,
+            dropDownValue
         ].every(value => value === '');
 
         if (allInputsEmpty) {
             router.push('/', { scroll: false });
+            setSearch('')
+            setStartTime('')
+            setEndTime('')
+            setDropDownValue('')
+            setStatusValue('')
+            setFindData(undefined)
             return;
         }
     }, [search, startTime, endTime, statusValue, dropDownValue]);
@@ -204,10 +206,10 @@ export const SearchBar = () => {
                     <div className="w-full">
                         <Image
                             className="mx-auto mt-8"
-                            src="/images/empty-amico.png"
+                            src="/images/Search-pana.svg"
                             alt="empty image"
-                            width={360}
-                            height={360}
+                            width={512}
+                            height={512}
                             priority
                         />
                     </div>

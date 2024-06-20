@@ -44,7 +44,9 @@ export const findEvent = async (searchData) => {
 }
 
 export const getAllCategory = async () => {
-    const res = await fetch(`${process.env.API_URL}landing-page/getAllCategoryNames`)
+    const res = await fetch(`${process.env.API_URL}landing-page/getAllCategoryNames`, {
+        cache: "no-store"
+    })
     const data = await res.json()
     return data
 }

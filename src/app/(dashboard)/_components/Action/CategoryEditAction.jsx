@@ -8,7 +8,7 @@ import { toast } from "react-toastify"
 
 export const CategoryEditAction = ({ cateId, name }) => {
     const notify = () => {
-        toast.warning("Duplicated Category Name", {
+        toast.success("Category has been modify successfully", {
             position: "top-center"
         });
     }

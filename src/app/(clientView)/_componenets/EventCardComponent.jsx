@@ -1,7 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
 import image from "../../../../public/images/event-master-logo.png"
-// import { MegaImage } from "@/components/MegaImage";
 
 export const EventCardComponent = ({ img, title, location, description, company, date, id, status }) => {
     const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
@@ -14,12 +13,12 @@ export const EventCardComponent = ({ img, title, location, description, company,
                 <div className="relative !h-[300px] w-full object-cover rounded-t-3xl">
                     {/* <MegaImage
                         src={img}
-                        className={'rounded-t-3xl'}
+                        className={'rounded-t-3xl !h-full object-cover'}
                     /> */}
                     <Image
                         src={img}
                         fill
-                        className={'rounded-t-3xl !h-full'}
+                        className={'rounded-t-3xl !h-full object-cover'}
                     />
                 </div>
                 {/* <Image src={img} width={500} height={300} className="rounded-t-3xl h-[300px] w-full object-cover" alt="racingImage" /> */}
