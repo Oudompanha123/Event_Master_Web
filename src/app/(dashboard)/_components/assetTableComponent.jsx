@@ -120,7 +120,7 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
         </div>
       )}
 
-      <div className="w-full h-full flex justify-end mt-8 mb-8">
+      <div className={`w-full h-full flex justify-end mt-8 mb-8`}>
         <RPaginate totalData={data?.totalRecord} />
       </div>
     </div>
