@@ -95,7 +95,7 @@ export const AssetPopupComponent = () => {
                       required: "quantity is required",
                       max: {
                         value: 9999,
-                        message: "Value cannot exceed 9999",
+                        message: "value cannot exceed 9999.99",
                       },
                     })}
                   />
