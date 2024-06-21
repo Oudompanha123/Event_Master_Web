@@ -15,6 +15,8 @@ import fetchMaterialCount from "@/app/actions/material/fetchCountMaterialAction"
 import { CountMaterialComponent } from "./CountMaterailComponent";
 import { getAllAssetServiceNoPage } from "@/services/assetService/assetService";
 import { getAllAssetNoPageAction } from "@/app/actions/assetAction/handleAssetInput";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const getStatusColor = (status) => {
   switch (status) {
@@ -93,7 +95,7 @@ export default function MaterialComponent({ id }) {
 
   const updateSuggestionsForRow = (value, rowId) => {
     const filteredSuggestions = asset
-      .filter((assetItem) =>
+      ?.filter((assetItem) =>
         assetItem.assetName.toLowerCase().includes(value.toLowerCase())
       )
       .map((assetItem) => assetItem.assetName);
@@ -145,20 +147,19 @@ export default function MaterialComponent({ id }) {
   // };
   const handleSelectAllChange = (event) => {
     setSelectAllChecked(event.target.checked);
-  
+
     if (event.target.checked) {
       // Combine rows and data only if they are defined
       const allRowIds = [
         ...(data || []), // Use empty array if data is null or undefined
-        ...(rows || []) // Use empty array if rows is null or undefined
+        ...(rows || []), // Use empty array if rows is null or undefined
       ].map((row) => row.id || row.materialId);
-  
+
       setCheckedRows(allRowIds);
     } else {
       setCheckedRows([]);
     }
   };
-  
 
   const handleStatusChange = (id, newStatus) => {
     setRows((prevRows) =>
@@ -209,13 +210,12 @@ export default function MaterialComponent({ id }) {
     );
   };
 
-
   const deleteSelectedRows = async () => {
     const idsToDelete = checkedRows.filter(
       (id) => !id.toString().startsWith("new_")
     );
     const newIds = checkedRows.filter((id) => id.toString().startsWith("new_"));
-  
+
     try {
       if (idsToDelete.length > 0) {
         await deleteMaterialMultiple(idsToDelete);
@@ -233,15 +233,14 @@ export default function MaterialComponent({ id }) {
       // alert("Failed to delete materials.");
     }
   };
-  
 
-  
   //handler save create new material in multiple in save button
   const handleSave = async () => {
     const materials = rows.map((row) => ({
       materialName: row.materialName,
       qty: row.qty,
-      toGet: row.toGet,
+      // toGet: row.toGet,
+      toGet: 20,
       unit: row.unit,
       status: row.status,
       assignDate: new Date().toISOString().split("T")[0],
@@ -250,22 +249,36 @@ export default function MaterialComponent({ id }) {
       eventId: id,
       supporters: {},
     }));
-    console.log("the data to post is ", materials);
+    //console.log("the data to post is ", materials);
     // Validation to ensure materialName is not null or empty
     const invalidRows = materials.filter((material) => !material.materialName);
     if (invalidRows.length > 0) {
-      alert("Material name cannot be null or empty");
+      // alert("Material name cannot be null or empty");
       return;
     }
 
     try {
       await CreateMultipleMaterial(materials);
+      success("Create Materail succussfully!");
       setSaveSuccess(true);
       setRows([]);
     } catch (error) {
-      console.error("Error creating materials:", error);
+      error("Unsuccussfully! input data is invalid!");
+      console.log(error);
     }
   };
+
+  // function error(message) {
+  //   toast.error(message, {
+  //     position: "top-center",
+  //   });
+  // }
+
+  function success(message) {
+    toast.success(message, {
+      position: "top-center",
+    });
+  }
 
   //find the length of material data to create the no index of new material
   const dataLength = data ? data.length : 0;
@@ -301,9 +314,9 @@ export default function MaterialComponent({ id }) {
             <th scope="col" className="py-3 text-primary-text px-2">
               UNIT
             </th>
-            <th scope="col" className="px-2 py-3 text-primary-text">
+            {/* <th scope="col" className="px-2 py-3 text-primary-text">
               To Get
-            </th>
+            </th> */}
             <th scope="col" className="py-3 text-primary-text px-2">
               DUE DATE
             </th>
@@ -377,7 +390,7 @@ export default function MaterialComponent({ id }) {
             readOnly
           />
         </td>
-        <td className="sm:text-sm font-normal px-2 text-base text-primary-text">
+        {/* <td className="sm:text-sm font-normal px-2 text-base text-primary-text">
           <input
             type="text"
             name={`toGet-${index}`}
@@ -385,7 +398,7 @@ export default function MaterialComponent({ id }) {
             value={data.toGet}
             readOnly
           />
-        </td>
+        </td> */}
         <td className="px-2">
           <input
             type="date"
@@ -597,6 +610,7 @@ export default function MaterialComponent({ id }) {
   //return when there have material or create new material
   return (
     <>
+      <ToastContainer autoClose={2000} />
       <div className="text-primary-text font-semibold text-2xl mb-5 mt-10 ">
         Material Management
       </div>
@@ -789,7 +803,7 @@ export default function MaterialComponent({ id }) {
                     required
                   />
                 </td>
-                <td className="sm:text-sm font-normal px-2 text-base text-primary-text">
+                {/* <td className="sm:text-sm font-normal px-2 text-base text-primary-text">
                   <input
                     type="text"
                     name="toGet"
@@ -806,7 +820,7 @@ export default function MaterialComponent({ id }) {
                     min="0.01"
                     step="0.01"
                   />
-                </td>
+                </td> */}
                 <td className="px-2">
                   <input
                     type="date"

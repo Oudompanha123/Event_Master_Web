@@ -44,12 +44,12 @@
     "yarn": "^1.22.22"
   },
   "devDependencies": {
-    "next": "14.2.3",
-    "react": "^18.3.1",
-    "next-auth": "^4.24.7",
     "autoprefixer": "^10.4.19",
     "daisyui": "^4.12.2",
+    "next": "14.2.3",
+    "next-auth": "^4.24.7",
     "postcss": "^8.4.38",
+    "react": "^18.3.1",
     "tailwindcss": "^3.4.4"
   },
   "description": "<p align=\"center\"><a href=\"#\" target=\"_blank\"><img src=\"https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/image_237-removebg%204.png?alt=media&token=a6cbd8a5-a874-49b9-8659-36579def7a84\" width=\"400\" alt=\"Laravel Logo\"></a></p>",
