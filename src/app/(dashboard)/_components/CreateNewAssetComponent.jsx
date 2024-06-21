@@ -1,7 +1,7 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { AddSquare } from "iconsax-react";
-import { CreateNewAsset } from "./Action/CreateNewAssetButton";
+// import { CreateNewAsset } from "./Action/CreateNewAssetButton";
 import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
 import { useState } from "react";
 import { toast } from "react-toastify";
