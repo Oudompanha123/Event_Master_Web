@@ -38,6 +38,12 @@ export default function MaterialComponent({ id }) {
   const [data, setData] = useState(null);
   const [dataCount, setDataCount] = useState();
   const [asset, setDataAsset] = useState();
+  const [rows, setRows] = useState([]);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [checkedRows, setCheckedRows] = useState([]);
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
+  const [memberData, setMemberData] = useState(null);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   const fetchMaterial = async () => {
     const res = await fetchMaterialData(id);
@@ -66,6 +72,15 @@ export default function MaterialComponent({ id }) {
     fetchCountMaterial();
   }, [id]);
 
+  const fetchData = async () => {
+    const res = await getAllMemberService();
+    setMemberData(res.payload);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const handleInputChange = (event) => {
     const value = event.target.value;
     setInputValue(value);
@@ -77,7 +92,6 @@ export default function MaterialComponent({ id }) {
     setSuggestions([]);
   };
 
-  const [rows, setRows] = useState([]);
   const updateSuggestionsForRow = (value, rowId) => {
     const filteredSuggestions = asset
       .filter((assetItem) =>
@@ -96,7 +110,9 @@ export default function MaterialComponent({ id }) {
     const value = event.target.value;
     setRows((prevRows) =>
       prevRows.map((row) =>
-        row.id === rowId ? { ...row, inputValue: value } : row
+        row.id === rowId
+          ? { ...row, inputValue: value, materialName: value }
+          : row
       )
     );
     updateSuggestionsForRow(value, rowId);
@@ -106,33 +122,51 @@ export default function MaterialComponent({ id }) {
     setRows((prevRows) =>
       prevRows.map((row) =>
         row.id === rowId
-          ? { ...row, inputValue: suggestion, suggestions: [] }
+          ? {
+              ...row,
+              inputValue: suggestion,
+              materialName: suggestion,
+              suggestions: [],
+            }
           : row
       )
     );
   };
 
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const [checkedRows, setCheckedRows] = useState([]);
-  const [selectAllChecked, setSelectAllChecked] = useState(false);
-
+  // const handleSelectAllChange = (event) => {
+  //   setSelectAllChecked(event.target.checked);
+  //   if (event.target.checked) {
+  //     const allRowIds = [...data, ...rows].map(
+  //       (row) => row.id || row.materialId
+  //     );
+  //     setCheckedRows(allRowIds);
+  //   } else {
+  //     setCheckedRows([]);
+  //   }
+  // };
   const handleSelectAllChange = (event) => {
     setSelectAllChecked(event.target.checked);
+  
     if (event.target.checked) {
-      const allRowIds = [...data, ...rows].map(
-        (row) => row.id || row.materialId
-      );
+      // Combine rows and data only if they are defined
+      const allRowIds = [
+        ...(data || []), // Use empty array if data is null or undefined
+        ...(rows || []) // Use empty array if rows is null or undefined
+      ].map((row) => row.id || row.materialId);
+  
       setCheckedRows(allRowIds);
     } else {
       setCheckedRows([]);
     }
   };
+  
 
   const handleStatusChange = (id, newStatus) => {
-    const newRows = rows.map((row) =>
-      row.id === id ? { ...row, status: newStatus } : row
+    setRows((prevRows) =>
+      prevRows.map((row) =>
+        row.id === id ? { ...row, status: newStatus } : row
+      )
     );
-    setRows(newRows);
     setActiveDropdown(null);
   };
 
@@ -176,26 +210,34 @@ export default function MaterialComponent({ id }) {
     );
   };
 
+
   const deleteSelectedRows = async () => {
     const idsToDelete = checkedRows.filter(
       (id) => !id.toString().startsWith("new_")
     );
     const newIds = checkedRows.filter((id) => id.toString().startsWith("new_"));
+  
     try {
       if (idsToDelete.length > 0) {
         await deleteMaterialMultiple(idsToDelete);
       }
-      setData(data.filter((row) => !idsToDelete.includes(row.materialId)));
+      // Filter out deleted IDs from data, if data exists
+      if (data) {
+        setData(data.filter((row) => !idsToDelete.includes(row.materialId)));
+      }
+      // Filter out new rows with 'new_' prefix from rows
       setRows(rows.filter((row) => !newIds.includes(row.id)));
       setCheckedRows([]);
       // alert("Selected materials deleted successfully!");
     } catch (error) {
       console.error("Error deleting materials:", error);
-      alert("Failed to delete materials.");
+      // alert("Failed to delete materials.");
     }
   };
+  
 
-  //handler save create new material in mulitple in save button
+  
+  //handler save create new material in multiple in save button
   const handleSave = async () => {
     const materials = rows.map((row) => ({
       materialName: row.materialName,
@@ -209,23 +251,22 @@ export default function MaterialComponent({ id }) {
       eventId: id,
       supporters: {},
     }));
+    console.log("the data to post is ", materials);
+    // Validation to ensure materialName is not null or empty
+    const invalidRows = materials.filter((material) => !material.materialName);
+    if (invalidRows.length > 0) {
+      alert("Material name cannot be null or empty");
+      return;
+    }
 
     try {
       await CreateMultipleMaterial(materials);
+      setSaveSuccess(true);
+      setRows([]);
     } catch (error) {
       console.error("Error creating materials:", error);
     }
   };
-
-  //get member data to loop in select option handler and supporter
-  const [memberData, setMemberData] = useState(null);
-  const fetchData = async () => {
-    const res = await getAllMemberService();
-    setMemberData(res.payload);
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   //find the length of material data to create the no index of new material
   const dataLength = data ? data.length : 0;
@@ -641,27 +682,8 @@ export default function MaterialComponent({ id }) {
                 <td className="text-base text-primary-text pl-1">
                   {dataLength + index + 1}
                 </td>
-                {/* <td className="text-sm font-normal text-primary-text px-2 ">
-                  <input
-                    type="text"
-                    name="materialName"
-                    className="border text-primary-text text-base px-2 w-32 h-10 rounded-xl font-normal focus:outline-none"
-                    value={row.materialName}
-                    onChange={(e) =>
-                      setRows((prevRows) =>
-                        prevRows.map((r) =>
-                          r.id === row.id
-                            ? { ...r, materialName: e.target.value }
-                            : r
-                        )
-                      )
-                    }
-                    required
-                  />
-                </td> */}
-                {/* test  */}
-                <td>
-                  <div style={{ position: "relative", width: "150px" }}>
+                <td className="px-2 py-0">
+                  <div style={{ position: "relative", width: "128px" }}>
                     <input
                       type="text"
                       name="materialName"
