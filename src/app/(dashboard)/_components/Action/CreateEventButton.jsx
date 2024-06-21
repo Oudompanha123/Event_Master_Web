@@ -160,7 +160,7 @@ export const CreateEventButton = () => {
         //firebase
 
         const submitData = {
-            eventName: data.eventName,
+            eventName: data.name,
             description: data.description,
             startDate: data.startDate,
             endDate: data.endDate,
@@ -171,7 +171,9 @@ export const CreateEventButton = () => {
             maxAttendee: data.maxAttendee,
             categoryId: cateId
         }
+        console.log('cheeck body', submitData)
         const okay = await addNewEventAction(submitData);
+        console.log('create event', okay)
         reset();
         await new Promise(resolve => setTimeout(resolve, 1000));
         setIsSend(false);
