@@ -3,25 +3,23 @@ import {
   searchAttendeeByNameOrPhoneService,
 } from "@/services/dashboard/attendeeService";
 import SearchAttendeeComponent from "../../_components/SearchAttendeeComponent";
-// import { Pagination } from "../../_components/paginate/Pagination";
 import AttendeeTableComponent from "../../_components/AttendeeTableComponent";
 import { getEventById } from "@/services/clientPage/landingService";
 import { getServerSession } from "next-auth";
 import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { jwtDecode } from "jwt-decode";
 import { RPaginate } from "../../_components/paginate/RPaginate";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default async function AttendeePage({ params: { id }, searchParams }) {
-  // const page = searchParams?.page;
-  // console.log("page:",page)
   const query = searchParams?.query || "";
   const page = searchParams?.page
 
-  // Fetch data of attendees and event
   const attendeeData = await getAttendeeByEventIdService(id, page);
   const eventData = await getEventById(id);
+  const attendeeInEvent = attendeeData?.payload?.length || 0;
 
-  // search attendees that based on query
+  // search attendees
   const searchAttendee = query
     ? await searchAttendeeByNameOrPhoneService(id, query)
     : attendeeData;
@@ -30,18 +28,9 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
   const session = await getServerSession(authOption);
   console.log("Session :", session);
   let userInfo = jwtDecode(session?.user?.token);
-  // console.log("user Info:",userInfo)
+  console.log("user Info:",userInfo)
   const userRole = userInfo.role;
-  // console.log("user role:",userRole)
-  if (userRole !== "ROLE_ADMIN" && userRole !== "ROLE_SUB_ADMIN") {
-    return (
-      <div className="mainh-auto p-6 rounded-3xl">
-        <p className="text-center py-10 text-red-600 font-medium text-xl">
-          You do not have access to this page.
-        </p>
-      </div>
-    );
-  }
+  console.log("user role:",userRole)
 
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
@@ -54,11 +43,13 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
         <SearchAttendeeComponent />
       </div>
       <div className="w-full overflow-scroll">
-        <AttendeeTableComponent parentData={searchAttendee} eventId={id} />
+        <AttendeeTableComponent parentData={searchAttendee} eventId={id} userRole={userRole} attendeeInEvent={attendeeInEvent} isSearch={!!query}/>
         <div className="w-full flex justify-end mt-8">
-          <RPaginate totalData={10}/>
+          <RPaginate totalData={attendeeData?.totalRecord}/>
         </div>
       </div>
+      <ToastContainer/>
     </div>
+    
   );
 }

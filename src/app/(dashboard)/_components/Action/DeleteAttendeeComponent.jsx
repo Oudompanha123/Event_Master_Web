@@ -2,11 +2,17 @@
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
 import { deleteAttendeeAction } from "@/actions/attendeeDeleteAction";
-
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 export function DeleteAttendeeComponent({ attendeeId }) {
+  const notify = () => {
+    toast.success("Deleted Successful", {
+    position: "top-center"
+    });}
   const handleDelete = async () => {
     await deleteAttendeeAction (attendeeId);
   };
+  
   return (
     <>
       <button
@@ -14,6 +20,7 @@ export function DeleteAttendeeComponent({ attendeeId }) {
         value="delete"
         onClick={() => {
           document.getElementById(`attendee_action_${attendeeId}`).showModal();
+          
         }}
       >
         <Image
@@ -48,7 +55,8 @@ export function DeleteAttendeeComponent({ attendeeId }) {
           </p>
           <div className="modal-action">
             <form method="dialog" className="flex justify-around w-full mb-4 mt-3 px-3">
-              <button onClick={handleDelete} className="h-9 rounded-3xl bg-red-600 w-[100px] hover:bg-red-700" value="yes">
+              <button onClick = {()=>{handleDelete();notify()} }
+              className="h-9 rounded-3xl bg-red-600 w-[100px] hover:bg-red-700" value="yes">
                 <p className="text-white font-semibold">Yes</p>
               </button>
               <button className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500" value="cancel">
