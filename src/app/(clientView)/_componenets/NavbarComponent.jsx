@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import image from "../../../../public/images/event-master-logo.png"
+import image from "../../../../public/images/event-master.png"
 import { usePathname } from "next/navigation";
 import { HambergerMenu } from "iconsax-react";
 
@@ -11,8 +11,8 @@ export const NavbarComponent = () => {
     return (
         <div className="flex justify-between py-4 container items-center sticky top-0 z-50 bg-white">
             <Link className="flex items-center gap-4" href={'/'}>
-                <Image src={image} height={54} width={54} alt="logoImage" />
-                <h2 className="text-xl hidden lg:block font-bold">EventMaster</h2>
+                <Image src={image} height={192} width={192} alt="logoImage" />
+                {/* <h2 className="text-xl hidden lg:block font-bold">EventMaster</h2> */}
             </Link>
             <div className="gap-8 items-center hidden lg:flex">
                 <div className="space-x-8">

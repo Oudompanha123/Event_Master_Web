@@ -1,7 +1,7 @@
 'use client'
 import React, { useRef, useState, useEffect } from 'react'
 import { FiEdit } from "react-icons/fi";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { CiLock } from "react-icons/ci";
 import { CiUnlock } from "react-icons/ci";
 import styles from "./MyComponent.module.css"
@@ -10,90 +10,117 @@ import { useSession } from "next-auth/react"
 import { jwtDecode } from "jwt-decode"
 import { usePathname } from "next/navigation"
 import { updateMemberData, updateMemberDataAction } from '@/actions/profile/memberProfileAction';
+import { getAllMemberProfile } from '@/services/profile/profile.service';
 
 
 // import { CiLock } from "react-icons/ci";
-function FormComponent({className}) {
-    
+function FormComponent({className, getAllMember}) {
+    console.log("Get all member in prop", getAllMember)
+
     const ref = useRef();
     const [isLock, setLocked] = useState(true);
     const [isChange, setChange] = useState(true);
     
-    const { data: session, status } = useSession();
     const [profileImage, setProfileImage] = useState("/images/Avatar.png");
-    const [userName, setUserName] = useState("");
-    const [address, setAddress] = useState("")
-    const [email, setEmail] = useState("");
+    const [userName, setUserName] = useState(getAllMember.memberName);
+    const [address, setAddress] = useState(getAllMember.address)
+    const [email, setEmail] = useState(getAllMember.email);
     const [password, setPassword] = useState("")
-    const [phone, setPhoneNumber] = useState("");
-    const [userInfo, setUserInfo] = useState(null);
+    const [phone, setPhoneNumber] = useState(getAllMember.phone);
     
-    useEffect(() => {
-    const fetchData = async () => {
-      console.log("Status:", status);
-      console.log("Session:", session);
-      if (status === "authenticated" && session?.user?.token) {
-        const decodedToken = jwtDecode(session.user.token);
-        setUserInfo(decodedToken);
-        const memberdata = decodedToken
-      }
+    const { data: session, status } = useSession();
+    let userInfo;
+    
+    if (status === 'authenticated' && session?.user?.token) {
+        userInfo = jwtDecode(session.user.token);
+    }
+    const userRole = userInfo?.role
+    console.log("User role: ", userRole)
+
+    const displayRole = (userRole) => {
+        if(userRole == "ROLE_ADMIN"){
+            return "Admin"
+        }
+        else if(userRole == "ROLE_USER"){
+            return "User"
+        }
+        else {
+            return "Unknow"
+        }
+    }
+
+    const handleSaveChange = async ()=>{
+        const memberData = {
+            memberName: userName,
+            address: address,
+            logo: profileImage,
+            email : email,
+            phoneNumber: phone,
+            password: password
     };
-    fetchData();
-  }, [status, session]);
-
-    const [showPasswords, setShowPasswords] = useState({
-        currentPassword: false,
-        newPassword: false,
-        confirmPassword: false
-    });
-
-    const toggleShowPassword = (field) => {
-        setShowPasswords((prevState) => ({
-            ...prevState,
-            [field]: !prevState[field]
-        }));
-    };
-
-    const lock = ()=>{
-        setLocked(!isLock)
+        try {
+            const updatedMember = await updateProfileMemberById(getAllMember.memberId, memberData); // Assuming getAllMember.id is the member ID
+            console.log("Updated member data:", updatedMember);
+            setLocked(true);
+        } catch (errors) {
+            console.error(errors);
+        }
+        
     }
 
-    const change = ()=>{
-        setChange(!isChange)
-    }
+  const [showPasswords, setShowPasswords] = useState({
+    currentPassword: false,
+    newPassword: false,
+    confirmPassword: false
+  });
 
-    function handleUpdateClick(){
-        setLocked(!isLock)
-    }
+  const toggleShowPassword = (field) => {
+    setShowPasswords((prevState) => ({
+      ...prevState,
+      [field]: !prevState[field]
+    }));
+  };
+
+  const lock = () => {
+    setLocked(!isLock)
+  }
+
+  const change = () => {
+    setChange(!isChange)
+  }
+
+  function handleUpdateClick() {
+    setLocked(!isLock)
+  }
 
     const initialData = {
-        name: "",
-        gender: "other",
-        email: "",
-        date: "",
-        phoneNumber: "",
-        address: "",
+        name: getAllMember.memberName,
+        gender: getAllMember.gender || "other",
+        email: getAllMember.email,
+        date: getAllMember.dateOfBirth,
+        phoneNumber:  getAllMember.phone,
+        address: getAllMember.address,
         currentPassword:"1234",
         newPassword:"12345678",
         confirmPassword:"12345678"
     };
 
-    const {
-        register, handleSubmit,
-        formState: {errors},
-        watch,
-        reset
-    } = useForm({
-        defaultValues: initialData
-    });
+  const {
+    register, handleSubmit,
+    formState: { errors },
+    watch,
+    reset
+  } = useForm({
+    defaultValues: initialData
+  });
 
     const onSubmit = (data) => {
-        setLocked(true);
+        // setLocked(isLock);
         console.log("Form submitted", data);
+        handleSaveChange()
         reset();
     };
 
-    
     const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -117,47 +144,48 @@ function FormComponent({className}) {
                                 </label>
                             </div>
                             <div className='mt-2 mx-auto mx-w-[100px] flex flex-col items-center'>
-                                <h1 className='text-slate-400 font-semibold'>Username</h1>
-                                <p className='underline font-semibold'>User</p>
+                                <h1 className='text-slate-400 font-semibold'>{getAllMember.memberName}</h1>
+                                <p className='underline font-semibold'>{displayRole(userRole)}</p>
                             </div>
                             {/* <PictureComponent/> */}
                         </div>
 
-                        {/* Form */}
+          {/* Form */}
 
-                        <div className='w-[75%]'>
-                            <div className='grid md:grid-cols-2 gap-2 gap-x-6 w-full sm:grid-cols-1'>
+          <div className='w-[75%]'>
+            <div className='grid md:grid-cols-2 gap-2 gap-x-6 w-full sm:grid-cols-1'>
 
                                 <div className="w-full mb-2 group flex flex-col">
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name <span className='text-red-500'>*</span></label>
                                     <input type="text" id="name" name='name' className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                                        placeholder="Enter your name" onChange={(e)=> setUserName(e.target.value)}
+                                        placeholder="Enter your name" onChange={(e)=> setUserName(e.target.value)} value={userName}
                                         disabled={isLock}
                                         {...register('name', { required: 'Name is required' })}
                                     />
                                     {errors.name && <span className='text-red-500 text-sm'>{errors.name.message}</span>}
                                 </div>
 
-                                <div className="w-full mb-2 group">
-                                    <label htmlFor="gender" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Gender <span className='text-red-500'>*</span></label>
-                                    <div className='relative'>
-                                        <select className={`${errors.gender ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='gender' disabled={isLock}
-                                            {...register('gender', 
-                                            { required: 'Gender is required' 
-                                        })}>
-                                            <option value="female">Female</option>
-                                            <option value="male">Male</option>
-                                            <option value="other" selected>Other</option>
-                                        </select>
-                                    </div>
-                                    {errors.gender && <span className='text-red-500 text-sm'>{errors.gender.message}</span>}
-                                </div>
+              <div className="w-full mb-2 group">
+                <label htmlFor="gender" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Gender <span className='text-red-500'>*</span></label>
+                <div className='relative'>
+                  <select className={`${errors.gender ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='gender' disabled={isLock}
+                    {...register('gender',
+                      {
+                        required: 'Gender is required'
+                      })}>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="other" selected>Other</option>
+                  </select>
+                </div>
+                {errors.gender && <span className='text-red-500 text-sm'>{errors.gender.message}</span>}
+              </div>
 
                                 <div className="w-full mb-2 group flex flex-col">
                                     <label htmlFor="email-address-icon" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email <span className='text-red-500'>*</span></label>
                                     <div className="relative">
                                         <input type="email" id="email" name='email' className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                                        placeholder="Enter your email" disabled={isLock} 
+                                        placeholder="Enter your email" disabled={isLock} value={getAllMember.email}
                                         {...register("email", {
                                             required: "Email is required",
                                             pattern: {
@@ -172,7 +200,7 @@ function FormComponent({className}) {
                                 <div className="w-full mb-2 group flex flex-col">
                                     <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date <span className='text-red-500'>*</span></label>
                                     <input type="date" id="date" name='date' className={`${errors.date ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                                        placeholder="Enter your name" disabled={isLock}
+                                        disabled={isLock} value={getAllMember.dateOfBirth}
                                         {...register('date', { required: 'Date is required' })}
                                     />
                                     {errors.date && <span className='text-red-500 text-sm'>{errors.date.message}</span>}
@@ -181,7 +209,7 @@ function FormComponent({className}) {
                                 <div className="w-full mb-2 group flex flex-col">
                                     <label htmlFor="phone" className='mb-1 text-sm font-medium'>Phone Number <span className='text-red-500'>*</span></label>
                                     <input type="text" placeholder="Phone number" name='phone' className={`${errors.phoneNumber ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='phone' 
-                                        disabled={isLock} 
+                                        disabled={isLock} value={getAllMember.phone}
                                         {...register('phoneNumber', { 
                                                     required: 'Phone number is required',
                                                     minLength: {
@@ -197,72 +225,72 @@ function FormComponent({className}) {
                                 <div className="w-full mb-2 group flex flex-col">
                                     <label htmlFor="address" className='mb-1 text-sm font-medium'>Address <span className='text-red-500'>*</span></label>
                                     <input type="text" placeholder="" name='address' className={`${errors.address ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id='address' 
-                                        disabled={isLock}
+                                        disabled={isLock} value={getAllMember.address}
                                         {...register('address', { required: 'Address is required' })}
                                     />
                                     {errors.address && <span className='text-red-500 text-sm'>{errors.address.message}</span>}
                                 </div>
                             </div>
 
-                            {/* Change Password Fields */}
-                            <div className='change-field'>
-                                <div className='block mb-5 mt-4'>
-                                    <button type='button' className='btn bg-purple text-white rounded-3xl hover:bg-purple-text-head' onClick={change}>
-                                        Change Password
-                                    </button> 
-                                </div>
-                            </div>
+            {/* Change Password Fields */}
+            <div className='change-field'>
+              <div className='block mb-5 mt-4'>
+                <button type='button' className='btn bg-purple text-white rounded-3xl hover:bg-purple-text-head' onClick={change}>
+                  Change Password
+                </button>
+              </div>
+            </div>
 
-                            <div className="w-full mb-5 group flex flex-col">   
-                                <label htmlFor="current-password" className='mb-1 text-sm font-medium'>Current Password <span className='text-red-500'>*</span></label>
-                                <div className='relative'>
-                                    <input type={showPasswords.currentPassword ? "text" : "password"} className={`${errors.currentPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} placeholder="Enter your current password"  id='current-password' 
-                                    disabled={isChange}
-                                    {...register('currentPassword', { required: 'Current password is required' })}
-                                    />
-                                    <div className={"absolute top-4 right-3 cursor-pointer"} onClick={()=> toggleShowPassword("currentPassword")}>
-                                        {showPasswords.currentPassword ? <CiUnlock /> : <CiLock/> }
-                                    </div>
-                                </div>
-                                {errors.currentPassword && <span className='text-red-500 text-sm'>{errors.currentPassword.message}</span>}   
-                            </div>
+            <div className="w-full mb-5 group flex flex-col">
+              <label htmlFor="current-password" className='mb-1 text-sm font-medium'>Current Password <span className='text-red-500'>*</span></label>
+              <div className='relative'>
+                <input type={showPasswords.currentPassword ? "text" : "password"} className={`${errors.currentPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} placeholder="Enter your current password" id='current-password'
+                  disabled={isChange}
+                  {...register('currentPassword', { required: 'Current password is required' })}
+                />
+                <div className={"absolute top-4 right-3 cursor-pointer"} onClick={() => toggleShowPassword("currentPassword")}>
+                  {showPasswords.currentPassword ? <CiUnlock /> : <CiLock />}
+                </div>
+              </div>
+              {errors.currentPassword && <span className='text-red-500 text-sm'>{errors.currentPassword.message}</span>}
+            </div>
 
-                            <div className="w-full mb-5 group flex flex-col">
-                                <label htmlFor="new-password" className='mb-1 text-sm font-medium'>New Password <span className='text-red-500'>*</span></label>
-                                <div className='relative'>
-                                    <input type={showPasswords.newPassword ? "text" : "password"} className={`${errors.newPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} 
-                                        placeholder="Enter your new password" disabled={isChange} 
-                                        {...register('newPassword', { required: 'New password is required' })}
-                                    />
-                                    <div className={"absolute top-4 right-3 cursor-pointer"} onClick={()=> toggleShowPassword("newPassword")}>
-                                        {showPasswords.newPassword ? <CiUnlock /> :<CiLock/>}
-                                    </div>
-                                </div>
-                                {errors.newPassword && <span className='text-red-500 text-sm'>{errors.newPassword.message}</span>}
-                            </div>
+            <div className="w-full mb-5 group flex flex-col">
+              <label htmlFor="new-password" className='mb-1 text-sm font-medium'>New Password <span className='text-red-500'>*</span></label>
+              <div className='relative'>
+                <input type={showPasswords.newPassword ? "text" : "password"} className={`${errors.newPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                  placeholder="Enter your new password" disabled={isChange}
+                  {...register('newPassword', { required: 'New password is required' })}
+                />
+                <div className={"absolute top-4 right-3 cursor-pointer"} onClick={() => toggleShowPassword("newPassword")}>
+                  {showPasswords.newPassword ? <CiUnlock /> : <CiLock />}
+                </div>
+              </div>
+              {errors.newPassword && <span className='text-red-500 text-sm'>{errors.newPassword.message}</span>}
+            </div>
 
-                            <div className="w-full md:mb-10 group flex flex-col">
-                                <label htmlFor="confirm-password" className='mb-1 text-sm font-medium'>Confirm Password <span className='text-red-500'>*</span></label>
-                                <div className='relative'>
-                                    <input type={showPasswords.confirmPassword ? "text" : "password"}  className={`${errors.confirmPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} placeholder="Confirm your new password" id='confirm-password'
-                                    disabled={isChange} 
-                                    {...register('confirmPassword', {
-                                        required: 'Confirm password is required',
-                                        validate: (value) => value === watch('newPassword') || 'Passwords do not match'
-                                    })}
-                                    />
-                                    <div className={"absolute top-4 right-3 cursor-pointer"} onClick={()=> toggleShowPassword("confirmPassword")}>
-                                        {showPasswords.confirmPassword ? <CiUnlock /> :<CiLock/>}
-                                    </div>
-                                </div>
-                                {errors.confirmPassword && <span className='text-red-500 text-sm'>{errors.confirmPassword.message}</span>}
-                            </div>
+            <div className="w-full md:mb-10 group flex flex-col">
+              <label htmlFor="confirm-password" className='mb-1 text-sm font-medium'>Confirm Password <span className='text-red-500'>*</span></label>
+              <div className='relative'>
+                <input type={showPasswords.confirmPassword ? "text" : "password"} className={`${errors.confirmPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} placeholder="Confirm your new password" id='confirm-password'
+                  disabled={isChange}
+                  {...register('confirmPassword', {
+                    required: 'Confirm password is required',
+                    validate: (value) => value === watch('newPassword') || 'Passwords do not match'
+                  })}
+                />
+                <div className={"absolute top-4 right-3 cursor-pointer"} onClick={() => toggleShowPassword("confirmPassword")}>
+                  {showPasswords.confirmPassword ? <CiUnlock /> : <CiLock />}
+                </div>
+              </div>
+              {errors.confirmPassword && <span className='text-red-500 text-sm'>{errors.confirmPassword.message}</span>}
+            </div>
 
                             <div className='flex justify-end my-3 w-full'>
                                 {isLock ? (
                                     <>
                                         <button type='submit' className='btn btn-success text-white flex items-center rounded-2xl text-lg sm:text-sm w-40 lg:w-32 lg:text-base ' onClick={handleUpdateClick}>
-                                            <FiEdit/>Update
+                                            <FiEdit/>Edit
                                         </button>
                                     </>
                                 ) : (

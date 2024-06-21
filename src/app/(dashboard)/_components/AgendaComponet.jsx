@@ -16,6 +16,7 @@ const convertTo12HourFormat = (time) => {
 };
 
 export default function AgendaComponent({id}) {
+  console.log('the id of event is ',id)
 
   const [data, setData] = useState(null);
 
@@ -30,7 +31,7 @@ export default function AgendaComponent({id}) {
 
   if (data == null) {
     return (
-      <div className="mb-5 mt-12">
+      <div className="mb-5 mt-10">
         <div className="flex justify-between align-middle content-center mb-4 ">
           <div className="flex items-center justify-center">
             <p className="text-primary-text font-semibold text-2xl">
@@ -69,7 +70,7 @@ export default function AgendaComponent({id}) {
   }
 
   return (
-    <div className="space-y-4 mb-5 mt-14">
+    <div className="space-y-4 mb-5 mt-10">
       <div className="flex justify-between align-middle content-center mb-5">
         <div className="flex items-center justify-center">
           <p className="text-primary-text font-semibold text-2xl">

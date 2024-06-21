@@ -2,7 +2,7 @@
 
 import { callingServiceAction } from "@/actions/findEventAction"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { SelectDropdownLanding } from "./SelectDropDownLanding"
 import { SelectStatusLanding } from "./SelectStatusLanding"
 import { useRouter } from "next/navigation"
@@ -40,20 +40,35 @@ export const SearchBar = () => {
         console.log('check search data', searchData)
         const data = await callingServiceAction(searchData); //move to action for cors
         console.log(data.payload, 'check data in search')
-        router.push('/?search=true', { scroll: false });
+        router.replace('/?search=true', { scroll: false });
+        console.log('router pushed')
         setFindData(data);
         setIsLoading(false)
-        setSearch('')
-        setStartTime('')
-        setEndTime('')
-        setDropDownValue('')
-        setStatusValue('')
     };
 
     const getDropDownValue = (v) => setDropDownValue(v)
     const getStatusValue = (v) => setStatusValue(v)
 
-    console.log('opopop', findData?.payload?.length)
+    useEffect(() => {
+        const allInputsEmpty = [
+            search,
+            startTime,
+            endTime,
+            statusValue,
+            dropDownValue
+        ].every(value => value === '');
+
+        if (allInputsEmpty) {
+            router.push('/', { scroll: false });
+            setSearch('')
+            setStartTime('')
+            setEndTime('')
+            setDropDownValue('')
+            setStatusValue('')
+            setFindData(undefined)
+            return;
+        }
+    }, [search, startTime, endTime, statusValue, dropDownValue]);
 
     return (
         <div>
@@ -148,7 +163,7 @@ export const SearchBar = () => {
                                                 <div key={index} className="shadow-md rounded-3xl">
                                                     <div className="relative">
                                                         <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
-                                                            <img src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`} alt="event-image" className="rounded-t-3xl" />
+                                                            <img src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`} alt="event-image" className="rounded-t-3xl h-full object-cover" />
                                                         </div>
                                                         <div className="absolute top-0 right-0 p-6 ">
                                                             <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${x.isOpen ? 'text-blueUi' : 'text-redUi'}`}>
@@ -191,10 +206,10 @@ export const SearchBar = () => {
                     <div className="w-full">
                         <Image
                             className="mx-auto mt-8"
-                            src="/images/empty-amico.png"
+                            src="/images/Search-pana.svg"
                             alt="empty image"
-                            width={360}
-                            height={360}
+                            width={512}
+                            height={512}
                             priority
                         />
                     </div>

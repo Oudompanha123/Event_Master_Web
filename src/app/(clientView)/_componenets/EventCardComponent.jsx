@@ -1,7 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
 import image from "../../../../public/images/event-master-logo.png"
-// import { MegaImage } from "@/components/MegaImage";
 
 export const EventCardComponent = ({ img, title, location, description, company, date, id, status }) => {
     const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
@@ -11,15 +10,15 @@ export const EventCardComponent = ({ img, title, location, description, company,
     return (
         <div className="shadow-md rounded-3xl">
             <div className="relative">
-                <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
+                <div className="relative !h-[300px] w-full object-cover rounded-t-3xl">
                     {/* <MegaImage
                         src={img}
-                        className={'rounded-t-3xl'}
+                        className={'rounded-t-3xl !h-full object-cover'}
                     /> */}
                     <Image
                         src={img}
                         fill
-                        className={'rounded-t-3xl'}
+                        className={'rounded-t-3xl !h-full object-cover'}
                     />
                 </div>
                 {/* <Image src={img} width={500} height={300} className="rounded-t-3xl h-[300px] w-full object-cover" alt="racingImage" /> */}
@@ -36,7 +35,7 @@ export const EventCardComponent = ({ img, title, location, description, company,
                         <p className="text-sm font-medium">{company}</p>
                     </div>
                     <div className="flex text-sm justify-between font-medium">
-                        <p>{location}</p>
+                        <p className="max-w-64 line-clamp-1">{location}</p>
                         <p>{formated}</p>
                     </div>
                     <div className="flex flex-col gap-3">

@@ -101,7 +101,7 @@ export const SelectModify = ({ height, label, func }) => {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >
-                            <Listbox.Options className="absolute z-10 mt-1 h-[250px] overflow-auto rounded-2xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                            <Listbox.Options className="absolute z-10 mt-1 h-fit max-h-[250px] overflow-auto rounded-2xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                 {options?.map((option) => (
                                     <Listbox.Option
                                         key={option.categoryId}

@@ -8,7 +8,7 @@ export const metadata = {
   title: "EventMaster",
   description: "EventMaster is a comprehensive, user-friendly event management system that streamlines every aspect of event planning and execution.",
   icons: {
-    icon: "/images/event-master-logo.png"
+    icon: "/images/event-master-2.png"
   }
 };
 

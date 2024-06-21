@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image"
-import defaultProfile from "../../public/images/default-profile.png"
+import defaultProfile from "../../public/images/default-profile.jpg"
 import { usePathname, useSearchParams } from "next/navigation"
 import { NotificationMenu } from "./NotificationMenu"
 import { CreateEventButton } from "@/app/(dashboard)/_components/Action/CreateEventButton"
@@ -94,10 +94,10 @@ export const NavbarComponent = ({ className }) => {
                             <p className="text-xs text-greyUi">{userInfo?.sub}</p>
                         </div>
                         <div className="w-[48px] h-48px] hidden lg:block">
-                            <Image src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={48} width={48} />
+                            <Image className="rounded-full" src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={48} width={48} />
                         </div>
                         <div className="w-[32px] h-[32px] block lg:hidden">
-                            <Image src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} />
+                            <Image className="rounded-full" src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={32} width={32} />
                         </div>
                     </div>
                 </Link>

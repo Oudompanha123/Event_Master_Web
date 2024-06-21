@@ -12,7 +12,7 @@ const nextConfig = {
             {
                 protocol: 'http',
                 hostname: '34.124.203.109',
-            },
+            }
         ],
     }
 };

@@ -3,7 +3,7 @@
 
 import { Line } from "react-chartjs-2"
 import { Chart as ChartJS, LinearScale, CategoryScale, LineElement, PointElement, Legend, Title, plugins, Tooltip } from 'chart.js'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 ChartJS.register(
     LinearScale,
@@ -19,15 +19,15 @@ export const BarChartComponent = ({ data }) => {
     const [labelsName, setLabelsName] = useState([]);
     const [chartNumber, setChartNumber] = useState();
 
-    useState(() => {
+    useEffect(() => {
         const labels = data.map(x => x.cateName);
         setLabelsName(labels);
     }, [data]);
 
-    useState(() => {
+    useEffect(() => {
         const numberChart = data.map(x => Math.floor(x.count));
         setChartNumber(numberChart);
-    })
+    }, [data]);
 
     const chartData = {
         labels: labelsName,
@@ -64,7 +64,6 @@ export const BarChartComponent = ({ data }) => {
                 display: false,
             },
         },
-
     }
 
     return (
