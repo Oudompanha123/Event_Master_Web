@@ -16,6 +16,7 @@ const convertTo12HourFormat = (time) => {
 };
 
 export default function AgendaComponent({id}) {
+  console.log('the id of event is ',id)
 
   const [data, setData] = useState(null);
 

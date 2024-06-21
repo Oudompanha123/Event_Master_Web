@@ -35,7 +35,7 @@ export const EventCardComponent = ({ img, title, location, description, company,
                         <p className="text-sm font-medium">{company}</p>
                     </div>
                     <div className="flex text-sm justify-between font-medium">
-                        <p>{location}</p>
+                        <p className="max-w-64 line-clamp-1">{location}</p>
                         <p>{formated}</p>
                     </div>
                     <div className="flex flex-col gap-3">
