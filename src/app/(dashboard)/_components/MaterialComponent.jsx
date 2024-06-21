@@ -13,7 +13,6 @@ import { getAllMemberService } from "@/services/dashboard/memberService";
 import deleteMaterialMultiple from "@/app/actions/material/deleteMaterialMultipleAction";
 import fetchMaterialCount from "@/app/actions/material/fetchCountMaterialAction";
 import { CountMaterialComponent } from "./CountMaterailComponent";
-// import MaterialSelectFromAsset from "./MaterialSelectFromAsset";
 import { getAllAssetServiceNoPage } from "@/services/assetService/assetService";
 import { getAllAssetNoPageAction } from "@/app/actions/assetAction/handleAssetInput";
 
@@ -21,7 +20,7 @@ const getStatusColor = (status) => {
   switch (status) {
     case "Pending":
       return "#FBBC04";
-    case "On Going":
+    case "OnGoing":
       return "#551FFF";
     case "Done":
       return "#038446";
@@ -871,7 +870,7 @@ export default function MaterialComponent({ id }) {
                         className="absolute z-10 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg"
                         style={{ width: "150px" }}
                       >
-                        {["Pending", "On Going", "Done", "Issue"].map(
+                        {["Pending", "OnGoing", "Done", "Issue"].map(
                           (statusOption) => (
                             <div
                               key={statusOption}
