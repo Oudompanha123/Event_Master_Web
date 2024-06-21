@@ -531,13 +531,13 @@ export default function MaterialComponent({ id }) {
                     className="border text-primary-text text-base px-2 w-24 h-10 rounded-xl font-normal focus:outline-none"
                   />
                 </td>
-                <td className="sm:text-sm font-normal px-2 text-base text-primary-text">
+                {/* <td className="sm:text-sm font-normal px-2 text-base text-primary-text">
                   <input
                     type="text"
                     name="toGet"
                     className="border text-primary-text text-base sm:text-sm px-2 w-20 h-10 rounded-xl font-normal focus:outline-none"
                   />
-                </td>
+                </td> */}
                 <td className="px-2">
                   <input
                     type="date"
