@@ -11,6 +11,23 @@ export const getAllEventsService = async () => {
     const data = await res.json();
     return data
 }
+export const getAllCategory = async () => {
+    const res = await fetch(`${process.env.API_URL}events/getAllCategoryNames`)
+    const data = await res.json()
+    return data
+}
+
+export const getEventByCateNameLoading = async ({ name, page }) => {
+    const res = await fetch(`${process.env.API_URL}events/filter/${name}?offset=${page}&limit=8`)
+    const data = await res.json();
+    return data
+}
+
+export const getEventByCateName = async (name) => {
+    const res = await fetch(`${process.env.API_URL}events/filter/${name}`)
+    const data = await res.json();
+    return data
+}
 
 export const getEventByIdService = async (id) => {
     const header = await headerToken()
@@ -26,14 +43,14 @@ export const getEventByIdService = async (id) => {
 }
 
 export const findEvent = async (searchData) => {
-    const res = await fetch(`
-        ${process.env.API_URL}events/search?&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}`,
-        {
-            cache: "no-store",
-            method: 'POST',
-        }
-    )
-    const data = await res.json();
+    searchData.categoryName ? console.log('have data') : console.log('no data')
+    let res;
+    if (searchData.categoryName) {
+        res = await fetch(`${process.env.API_URL}events/search?eventName=${searchData.eventName}&categoryName=${searchData.categoryName}&status=${searchData.status}&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}`)
+    } else {
+        res = await fetch(`${process.env.API_URL}events/search?eventName=${searchData.eventName}&status=${searchData.status}&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}`)
+    }
+    const data = await res.json()
     return data
 }
 

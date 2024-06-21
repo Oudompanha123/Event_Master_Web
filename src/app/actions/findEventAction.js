@@ -1,6 +1,7 @@
 'use server'
 
-import { findEventService } from "@/services/dashboard/eventService";
+import { findEvent } from "@/services/clientPage/landingService";
+import { getEventByIdService } from "@/services/dashboard/event.service";
 
 export const handleSearch = async (input) => {
     const searchData = {
@@ -9,7 +10,7 @@ export const handleSearch = async (input) => {
     }
 
     try {
-        const findData = await findEventService(searchData);
+        const findData = await findEvent(searchData);
         console.log(findData)
         return findData;
     } catch (error) {
@@ -17,8 +18,12 @@ export const handleSearch = async (input) => {
     }
 }
 
-export const callingEventService = async (searchData) => {
-    const data = await findEventService(searchData);
+export const callingServiceAction = async (searchData) => {
+    const data = await findEvent(searchData);
     return data
 }
-  
+
+export const getEventDetailByIdAction = async (id) => {
+    const data = await getEventByIdService(id);
+    return data
+}
