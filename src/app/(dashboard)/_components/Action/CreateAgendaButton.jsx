@@ -5,6 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { AddSquare } from "iconsax-react";
 import createAgenda from "@/app/actions/createAgendaAction";
 import { useForm } from "react-hook-form";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function AddmoreInput({ inputList, setInputList, errors, setErrors }) {
@@ -206,6 +207,13 @@ export function CreateAgendaButton({ id }) {
 
     setErrors(newErrors);
 
+    function success(message) {
+      toast.success(message, {
+        position: "top-center",
+      });
+    }
+  
+
     // Check if there are any errors
     const hasErrors = newErrors.some((error) => error.topic || error.startTime || error.endTime);
     if (hasErrors) {
@@ -226,7 +234,8 @@ export function CreateAgendaButton({ id }) {
     try {
       setIsLoading(true);
       const data = await createAgenda(requestBody, id);
-      console.log("API Response:", data);
+      success("Create Materail succussfully!");
+      // console.log("API Response:", data);
       setIsLoading(false);
       resetInputs();
     } catch (error) {
@@ -237,6 +246,7 @@ export function CreateAgendaButton({ id }) {
 
   return (
     <>
+     <ToastContainer autoClose={2000} />
       <button
         className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-11 justify-center text-purple-text rounded-3xl md:py-2.5 flex items-center gap-1"
         onClick={() => document.getElementById("my_modal_4").showModal()}
