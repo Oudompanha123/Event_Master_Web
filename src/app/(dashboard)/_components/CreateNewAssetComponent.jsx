@@ -6,6 +6,7 @@ import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CreateNewAsset } from "./Action/CreateNewAssetButton";
 
 export const AssetPopupComponent = () => {
   const notify = (checkasset) => {
