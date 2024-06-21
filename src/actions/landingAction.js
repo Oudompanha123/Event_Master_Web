@@ -1,6 +1,6 @@
 'use server'
 
-import { getAllCategory, getEventByCateNameLoading } from "@/services/clientPage/landingService";
+import { getAllCategory, getEventByCateNameLoading, getFormById } from "@/services/clientPage/landingService";
 
 
 export const getAllCategoryLandingAction = async () => {
@@ -8,8 +8,13 @@ export const getAllCategoryLandingAction = async () => {
     return res
 }
 
-export const getEventByCategoryNameAction = async ({name, page}) => {
+export const getEventByCategoryNameAction = async ({ name, page }) => {
     const res = await getEventByCateNameLoading({ name, page });
     const data = res.payload
     return data
+}
+
+export const getFormAction = async (id) => {
+    const res = await getFormById(id);
+    return res
 }

@@ -7,6 +7,7 @@ import SessionProvider from "../../components/SessionProvider"
 import { Knock } from "@knocklabs/node"
 import { authOption } from "../api/auth/[...nextauth]/route";
 import { jwtDecode } from "jwt-decode";
+import { ToastContainer } from "react-toastify";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={jakarta.className}>
+        <ToastContainer autoClose={2000} />
         <SessionProvider session={session}>
           <div className="flex">
             <SidebarComponent className={`w-[13%] xl:w-[19%] 2xl:w-[17%]`} />

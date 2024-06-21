@@ -13,7 +13,7 @@ const Page = async ({ params: { id } }) => {
     const imageUrl = data?.payload?.poster;
     const isValidUrl = imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://');
 
-    console.log(data?.payload?.agenda, 'detail data')
+    console.log(data, 'detail data landing')
 
     return (
         <div className="container">
@@ -56,7 +56,7 @@ const Page = async ({ params: { id } }) => {
                     />
                 ))}
                 <div className="w-full text-end pt-8">
-                    <Link href={'/register'} className="text-sm lg:text-base px-9 font-bold py-4 rounded-full bg-purple-text text-white">Join Event</Link>
+                    <Link href={`/register/${id}`} className="text-sm lg:text-base px-9 font-bold py-4 rounded-full bg-purple-text text-white">Join Event</Link>
                 </div>
             </section>
         </div>
