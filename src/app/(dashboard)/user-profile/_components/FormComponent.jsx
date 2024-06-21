@@ -17,46 +17,39 @@ import { getAllMemberProfile } from '@/services/profile/profile.service';
 function FormComponent({className, getAllMember}) {
     console.log("Get all member in prop", getAllMember)
 
-    const getRoleDisplayName = (role) => {
-        switch (role) {
-            case "ROLE_ADMIN":
-                return "Admin";
-            case "ROLE_USER":
-                return "User";
-            case "ROLE_SUB_ADMIN":
-                return "Sub Admin";
-            default:
-                return "Unknown";
-        }
-    };
-
     const ref = useRef();
     const [isLock, setLocked] = useState(true);
     const [isChange, setChange] = useState(true);
     
-    const { data: session, status } = useSession();
     const [profileImage, setProfileImage] = useState("/images/Avatar.png");
-    const [userName, setUserName] = useState("Username");
-    const [address, setAddress] = useState("")
-    const [email, setEmail] = useState("");
+    const [userName, setUserName] = useState(getAllMember.memberName);
+    const [address, setAddress] = useState(getAllMember.address)
+    const [email, setEmail] = useState(getAllMember.email);
     const [password, setPassword] = useState("")
-    const [phone, setPhoneNumber] = useState("");
-    const [userInfo, setUserInfo] = useState(null);
+    const [phone, setPhoneNumber] = useState(getAllMember.phone);
     
-    useEffect(() => {
-    const fetchData = async () => {
-      console.log("Status:", status);
-      console.log("Session:", session);
-      if (status === "authenticated" && session?.user?.token) {
-        const decodedToken = jwtDecode(session.user.token);
-        setUserInfo(decodedToken);
-        const memberdata = decodedToken
-      }
-    };
-    fetchData();
-  }, [status, session]);
+    const { data: session, status } = useSession();
+    let userInfo;
+    
+    if (status === 'authenticated' && session?.user?.token) {
+        userInfo = jwtDecode(session.user.token);
+    }
+    const userRole = userInfo?.role
+    console.log("User role: ", userRole)
 
-    const handleSaveChange = ()=>{
+    const displayRole = (userRole) => {
+        if(userRole == "ROLE_ADMIN"){
+            return "Admin"
+        }
+        else if(userRole == "ROLE_USER"){
+            return "User"
+        }
+        else {
+            return "Unknow"
+        }
+    }
+
+    const handleSaveChange = async ()=>{
         const memberData = {
             memberName: userName,
             address: address,
@@ -65,11 +58,12 @@ function FormComponent({className, getAllMember}) {
             phoneNumber: phone,
             password: password
     };
-        try{
-            setLocked(isLock)
-            setChange(isChange)  
-        }catch (errors){
-            console.log(errors)
+        try {
+            const updatedMember = await updateProfileMemberById(getAllMember.memberId, memberData); // Assuming getAllMember.id is the member ID
+            console.log("Updated member data:", updatedMember);
+            setLocked(true);
+        } catch (errors) {
+            console.error(errors);
         }
         
     }
@@ -100,12 +94,12 @@ function FormComponent({className, getAllMember}) {
     }
 
     const initialData = {
-        name: "",
-        gender: "other",
-        email: "",
-        date: "",
-        phoneNumber: "",
-        address: "",
+        name: getAllMember.memberName,
+        gender: getAllMember.gender || "other",
+        email: getAllMember.email,
+        date: getAllMember.dateOfBirth,
+        phoneNumber:  getAllMember.phone,
+        address: getAllMember.address,
         currentPassword:"1234",
         newPassword:"12345678",
         confirmPassword:"12345678"
@@ -121,12 +115,12 @@ function FormComponent({className, getAllMember}) {
     });
 
     const onSubmit = (data) => {
-        setLocked(true);
+        // setLocked(isLock);
         console.log("Form submitted", data);
+        handleSaveChange()
         reset();
     };
 
-    
     const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -151,7 +145,7 @@ function FormComponent({className, getAllMember}) {
                             </div>
                             <div className='mt-2 mx-auto mx-w-[100px] flex flex-col items-center'>
                                 <h1 className='text-slate-400 font-semibold'>{getAllMember.memberName}</h1>
-                                <p className='underline font-semibold'>User</p>
+                                <p className='underline font-semibold'>{displayRole(userRole)}</p>
                             </div>
                             {/* <PictureComponent/> */}
                         </div>
@@ -164,7 +158,7 @@ function FormComponent({className, getAllMember}) {
                                 <div className="w-full mb-2 group flex flex-col">
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name <span className='text-red-500'>*</span></label>
                                     <input type="text" id="name" name='name' className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                                        placeholder="Enter your name" onChange={(e)=> setUserName(e.target.value)} value={getAllMember.memberName}
+                                        placeholder="Enter your name" onChange={(e)=> setUserName(e.target.value)} value={userName}
                                         disabled={isLock}
                                         {...register('name', { required: 'Name is required' })}
                                     />
@@ -295,7 +289,7 @@ function FormComponent({className, getAllMember}) {
                                 {isLock ? (
                                     <>
                                         <button type='submit' className='btn btn-success text-white flex items-center rounded-2xl text-lg sm:text-sm w-40 lg:w-32 lg:text-base ' onClick={handleUpdateClick}>
-                                            <FiEdit/>Update
+                                            <FiEdit/>Edit
                                         </button>
                                     </>
                                 ) : (
@@ -305,7 +299,7 @@ function FormComponent({className, getAllMember}) {
                                         </button>
                                         <button className="btn btn-primary text-white w-40 text-lg lg:w-32 lg:text-base ml-5 rounded-2xl" type='submit'>
                                             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M16.69 2H8.31C4.67 2 2.5 4.17 2.5 7.81V16.18C2.5 19.83 4.67 22 8.31 22H16.68C20.32 22 22.49 19.83 22.49 16.19V7.81C22.5 4.17 20.33 2 16.69 2ZM16.5 12.75H13.25V16C13.25 16.41 12.91 16.75 12.5 16.75C12.09 16.75 11.75 16.41 11.75 16V12.75H8.5C8.09 12.75 7.75 12.41 7.75 12C7.75 11.59 8.09 11.25 8.5 11.25H11.75V8C11.75 7.59 12.09 7.25 12.5 7.25C12.91 7.25 13.25 7.59 13.25 8V11.25H16.5C16.91 11.25 17.25 11.59 17.25 12C17.25 12.41 16.91 12.75 16.5 12.75Z" fill="white" onClick={handleSaveChange}/>
+                                                <path d="M16.69 2H8.31C4.67 2 2.5 4.17 2.5 7.81V16.18C2.5 19.83 4.67 22 8.31 22H16.68C20.32 22 22.49 19.83 22.49 16.19V7.81C22.5 4.17 20.33 2 16.69 2ZM16.5 12.75H13.25V16C13.25 16.41 12.91 16.75 12.5 16.75C12.09 16.75 11.75 16.41 11.75 16V12.75H8.5C8.09 12.75 7.75 12.41 7.75 12C7.75 11.59 8.09 11.25 8.5 11.25H11.75V8C11.75 7.59 12.09 7.25 12.5 7.25C12.91 7.25 13.25 7.59 13.25 8V11.25H16.5C16.91 11.25 17.25 11.59 17.25 12C17.25 12.41 16.91 12.75 16.5 12.75Z" fill="white"/>
                                             </svg>
                                             Save
                                         </button>
