@@ -9,14 +9,16 @@ import { ToastContainer } from "react-toastify";
 import { getServerSession } from "next-auth";
 import { jwtDecode } from "jwt-decode";
 import { authOption } from "@/app/api/auth/[...nextauth]/route";
-import { RPaginate } from "../_components/paginate/RPaginate";
+// import { RPaginate } from "../_components/paginate/RPaginate";
 export default async function assetPage({ searchParams }) {
   const query = searchParams?.query || "";
   const page = searchParams?.page;
   // console.log("page:",page);
   const dataasset = await getAllAssetService(page);
+  // console.log("data:::",dataasset);
   const searchasset = await searchAssetByName(query);
   // console.log("datasearch:",searchasset.totalRecord);
+  const nullsearch= searchasset.totalRecord;
   const data = query == "" || query == null ? dataasset : searchasset;
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
@@ -40,7 +42,7 @@ export default async function assetPage({ searchParams }) {
         </div>
         <div className="px-6">
           <div className="box-border mt-0 overflow-scroll">
-            <AssetTableComponent data={data} query={query} />
+            <AssetTableComponent data={data} query={query} nullsearch={nullsearch}/>
           </div>
         </div>
       </div>
