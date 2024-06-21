@@ -60,7 +60,6 @@ export const updateCategory = async (id, categoryName) => {
 }
 
 export const createEventService = async (data) => {
-    console.log("triggered?")
     const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}events`,
         {

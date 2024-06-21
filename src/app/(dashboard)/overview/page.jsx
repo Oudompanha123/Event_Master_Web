@@ -7,7 +7,6 @@ import { getServerSession } from "next-auth"
 import { authOption } from "@/app/api/auth/[...nextauth]/route"
 import { jwtDecode } from "jwt-decode"
 import { Suspense} from "react"
-import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { RPaginate } from "../_components/paginate/RPaginate"
 import { CategoryDeleteAction } from "../_components/Action/CategoryDeleteAction"
@@ -47,7 +46,6 @@ const Page = async ({ searchParams }) => {
 
     return (
         <div className="space-y-4 xl:space-y-7">
-            <ToastContainer autoClose={2000} />
             <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 xl:gap-6">
                 <Suspense>
                     {topCardData.payload.map((x, index) => (

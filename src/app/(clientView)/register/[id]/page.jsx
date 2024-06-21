@@ -1,22 +1,39 @@
 'use client'
 
-import { RedirectBackComponent } from "../_componenets/RedirectButtonComponent"
+import { useEffect, useState } from "react";
+import { RedirectBackComponent } from "../../_componenets/RedirectButtonComponent"
 
 import { useForm } from "react-hook-form"
+import { getFormAction } from "@/actions/landingAction";
+import { InputField } from "@/app/(dashboard)/_components/InputField";
+import { Boolean } from "@/app/(dashboard)/_components/Boolean";
 
-const Page = () => {
+const Page = ({ params: { id } }) => {
     const {
         watch,
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
+    const [registerForm, setRegisterForm] = useState();
 
     const gen = watch("gender");
 
     const onSubmit = (data) => {
         console.log(data);
     };
+
+    const getData = async (id) => {
+        const res = await getFormAction(id);
+        console.log(res, 'checking form')
+        setRegisterForm(res?.payload?.data["form "])
+    }
+
+    useEffect(() => {
+        getData(id)
+    }, [])
+
+    console.log('checking form data', registerForm)
     return (
         <div className="container">
             <RedirectBackComponent link={'/'} />
@@ -24,7 +41,7 @@ const Page = () => {
                 <h2 className="font-bold text-2xl mb-8">Register Form</h2>
                 <form action="" className="space-y-4 lg:space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     {/* first row  */}
-                    <div className="flex flex-col lg:flex-row w-full gap-8 lg:gap-16">
+                    {/* <div className="flex flex-col lg:flex-row w-full gap-8 lg:gap-16">
                         <div className="flex flex-col w-full gap-2">
                             <label className="font-semibold" htmlFor="">Full Name</label>
                             <input
@@ -54,9 +71,9 @@ const Page = () => {
                             </select>
                             {errors.gender && <span className="text-red-600 text-sm">{errors.gender.message}</span>}
                         </div>
-                    </div>
+                    </div> */}
                     {/* second row  */}
-                    <div className="flex flex-col lg:flex-row w-full gap-8 lg:gap-16">
+                    {/* <div className="flex flex-col lg:flex-row w-full gap-8 lg:gap-16">
                         <div className="flex flex-col w-full gap-2">
                             <label className="font-semibold" htmlFor="">Phone Number</label>
                             <input
@@ -89,9 +106,9 @@ const Page = () => {
                             />
                             {errors.email && <span className="text-red-600 text-sm">{errors.email.message}</span>}
                         </div>
-                    </div>
+                    </div> */}
                     {/* third row  */}
-                    <div className="flex flex-col lg:flex-row w-full gap-8 lg:gap-16">
+                    {/* <div className="flex flex-col lg:flex-row w-full gap-8 lg:gap-16">
                         <div className="flex flex-col w-full gap-2">
                             <label className="font-semibold" htmlFor="">Company Name</label>
                             <input
@@ -116,6 +133,17 @@ const Page = () => {
                                 placeholder="Enter title / position"
                             />
                         </div>
+                    </div> */}
+                    <div className="grid grid-cols-2 gap-8">
+                        {registerForm?.map((x, index) => (
+                            <>
+                                {x.type == 'boolean' ?
+                                    <Boolean name={inputName} />
+                                    :
+                                    <InputField key={index} type={x.type} name={x.label} />
+                                }
+                            </>
+                        ))}
                     </div>
                     <div className="w-full text-end">
                         <button type="submit" className="rounded-full text-sm lg:text-base px-8 py-4 bg-purple-text text-white font-bold">Submit</button>
