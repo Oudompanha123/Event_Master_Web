@@ -134,12 +134,12 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                     placeholder="Enter unit"
                     {...register("unit", {
                       required: "unit is required",
-                       maxLength: {
-                      value: 40,
-                      message: "name cannot more than 40 characters",
-                    },
+                      maxLength: {
+                        value: 40,
+                        message: "name cannot more than 40 characters",
+                      },
                     })}
-                    // onChange={() => setHandleUnit(e.target.value)}
+                    onChange={(e) => setHandleUnit(e.target.value)}
                   />
                   {errors.unit && (
                     <div className="text-red-600 text-sm">
