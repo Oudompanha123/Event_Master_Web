@@ -7,21 +7,29 @@ import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 
 export const CategoryEditAction = ({ cateId, name }) => {
-    const notify = () => {
-        toast.success("Category has been modify successfully", {
-            position: "top-center"
-        });
+    const notify = (status, detail) => {
+        if (status == "OK") {
+            toast.success("Category has been modify successfully", {
+                position: "top-center"
+            });
+        }
+        if (status == 400) {
+            toast.error(`Can't update category, ${detail}`, {
+                position: "top-center"
+            });
+        }
     }
     const [categoryName, setCategoryName] = useState();
     const [isSend, setIsSend] = useState(false);
     const handleUpdate = async () => {
         setIsSend(true)
-        await updateCategoryAction(cateId, categoryName);
+        const res = await updateCategoryAction(cateId, categoryName);
+        console.log('checking res', res)
         await new Promise(resolve => setTimeout(resolve, 1000));
         setCategoryName('');
         setIsSend(false)
         document.getElementById(`update_category_${cateId}`).close()
-        notify();
+        notify(res?.status, res?.detail);
     }
     useEffect(() => {
         setCategoryName(name)

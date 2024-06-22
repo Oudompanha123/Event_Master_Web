@@ -1,59 +1,66 @@
 "use client";
 
 // import { DateField } from "./DateField"
-import { NumberField } from "./NumberField";
-import { TextField } from "./TextField";
-import { InputField } from "./InputField";
+import { NumberField } from "./Fields/NumberField";
+import { TextField } from "./Fields/TextField";
+import { InputField } from "./FieldsType/InputField";
 import { Title } from "./Title";
-import { BooleanField } from "./BooleanField";
-import { Boolean } from "./Boolean";
-import { EmailField } from "./EmailField";
+import { BooleanField } from "./Fields/BooleanField";
+import { Boolean } from "./FieldsType/Boolean";
+import { EmailField } from "./Fields/EmailField";
 import { useState } from "react";
 import Image from "next/image";
-import { DateField } from "./DateField";
+import { DateField } from "./Fields/DateField";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
 export const CreateDynamicForm = () => {
   const [popUp, setPopUp] = useState(false);
-    const [viewField, setViewField] = useState(null);
-    const [choosedField, setChoosedField] = useState([]);
-    const [confirmField, setConfirmField] = useState([]);
-    const [addFieldNamePopup, setAddFieldNamePopup] = useState(false);
-    const [fieldName, setFieldName] = useState('')
-    // set data to view before confirm add btn
-    const parentFunc = (x) => {
-        setViewField(x);
+  const [viewField, setViewField] = useState(null);
+  const [choosedField, setChoosedField] = useState([]);
+  const [confirmField, setConfirmField] = useState([]);
+  const [addFieldNamePopup, setAddFieldNamePopup] = useState(false);
+  const [fieldName, setFieldName] = useState('')
+  // set data to view before confirm add btn
+  const parentFunc = (x) => {
+    setViewField(x);
+  }
+  // confirm field we need 
+  const handleAddClick = () => {
+    { viewField != null && setAddFieldNamePopup(true) }
+  }
+  // confirm fields, form and create form 
+  const handleFinishClick = () => {
+    if (choosedField != []) {
+      setConfirmField([...confirmField, ...choosedField])
+      setChoosedField([])
+      console.log('check confirm field', confirmField)
+      setPopUp(false)
     }
-    // confirm field we need 
-    const handleAddClick = () => {
-        { viewField != null && setAddFieldNamePopup(true) }
+  }
+  //another popup
+  const handleResetPopup = () => {
+    // setPopUp(false);
+    setAddFieldNamePopup(false);
+  }
+  const handleAddFieldName = () => {
+    const newField = {
+      fieldType: String(viewField) + ',' + String(fieldName)
     }
-    // confirm fields, form and create form 
-    const handleFinishClick = () => {
-        if (choosedField != []) {
-            setConfirmField([...confirmField, ...choosedField])
-            setChoosedField([])
-            console.log('check confirm field', confirmField)
-            setPopUp(false)
-        }
+    if (fieldName != '') {
+      { viewField != null && setConfirmField([...confirmField, newField]) }
     }
-    //another popup
-    const handleResetPopup = () => {
-        // setPopUp(false);
-        setAddFieldNamePopup(false);
-    }
-    const handleAddFieldName = () => {
-        const newField = {
-            fieldType: String(viewField) + ',' + String(fieldName)
-        }
-        if (fieldName != '') {
-            { viewField != null && setChoosedField([...choosedField, newField]) }
-        }
-        setViewField(null);
-        setFieldName('');
-        setAddFieldNamePopup(false)
-    }
-    console.log(choosedField, 'choose field')
+    setViewField(null);
+    setFieldName('');
+    setAddFieldNamePopup(false)
+    setPopUp(false)
+  }
+
+  const handleCreateForm = async () => {
+    alert("i got triggered")
+  }
+
+  console.log(choosedField, 'choose field')
+  console.log(confirmField, 'confirm field')
 
   return (
     <>
@@ -113,9 +120,9 @@ export const CreateDynamicForm = () => {
                 return (
                   <>
                     {inputType == 'boolean' ?
-                        <Boolean name={inputName} />
-                        :
-                        <InputField key={index} type={inputType} name={inputName} />
+                      <Boolean name={inputName} />
+                      :
+                      <InputField key={index} type={inputType} name={inputName} />
                     }
                   </>
                 );
@@ -123,14 +130,14 @@ export const CreateDynamicForm = () => {
             </div>
           </div>
 
-          <button
-            onClick={() => setPopUp(true)}
-            className="border-none btn w-full font-medium text-sm bg-blue-100 text-blue-700 rounded-radiusUi justify-start hover:bg-blue-200 mt-5"
-          >
-            {" "}
-            <IoIosAddCircleOutline size={24} color="blue" />
-            Add One more activity
-          </button>
+          <div className="flex items-center gap-4 justify-end">
+            <button onClick={() => setPopUp(true)} className="rounded-2xl w-32 border-purple-text border-[1px] text-purple-text font-semibold antialiased py-3 h-full">
+              Add field
+            </button>
+            <button onClick={() => handleCreateForm()} className="rounded-2xl w-32 border-purple-text border-[1px] text-white bg-purple-text font-semibold antialiased py-3 h-full">
+              Save
+            </button>
+          </div>
         </div>
       </div>
       {/* popup form */}
@@ -169,38 +176,10 @@ export const CreateDynamicForm = () => {
             <EmailField parentFunc={parentFunc} />
           </div>
           <hr />
-          <div className="grid grid-cols-2">
-            {!choosedField?.length == 0 ? (
-              <table className="table-auto">
-                <thead>
-                  <tr className="text-sm">
-                    <th className="font-medium text-start">Field Type</th>
-                    <th className="font-medium text-start">Field Name</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {choosedField?.map((x, index) => {
-                    const inputType = x?.fieldType.split(",")[0];
-                    const inputName = x?.fieldType.split(",")[1];
-                    return (
-                      <tr key={index}>
-                        <td className="text-sm font-normal">{inputType}</td>
-                        <td className="text-sm font-normal">{inputName}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            ) : (
-              <p className="text-xs text-neutral-400">
-                You haven't chosen any field yet
-              </p>
-            )}
-          </div>
           <div className="space-x-3 flex justify-end">
             <button
               onClick={() => handleAddClick()}
-              className="flex items-center justify-center gap-2 rounded-xl w-32 bg-[#551FFF] text-white py-2"
+              className="flex items-center justify-center gap-2 rounded-2xl w-32 bg-purple-text text-white py-3"
             >
               <Image
                 src="/icons/add.svg"
@@ -211,12 +190,6 @@ export const CreateDynamicForm = () => {
               />
               Add
             </button>
-            <button
-              onClick={() => handleFinishClick()}
-              className="rounded-xl w-32 border-[#551FFF] border-[1px] text-[#551FFF] font-semibold antialiased py-2"
-            >
-              Save
-            </button>
           </div>
         </div>
 
@@ -226,7 +199,7 @@ export const CreateDynamicForm = () => {
             } bg-white w-1/4 h-auto py-6 px-8 rounded-2xl mx-auto space-y-6 z-50`}
         >
           <div className="flex justify-between">
-            <Title title={"Add name htmlFor your choosed field"} />
+            <Title title={"Add name for your choosed field"} />
             <svg
               onClick={() => handleResetPopup()}
               xmlns="http://www.w3.org/2000/svg"

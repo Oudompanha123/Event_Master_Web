@@ -14,7 +14,9 @@ export const getEventById = async (id) => {
 }
 
 export const getEventByCateNameLoading = async ({ name, page }) => {
-    const res = await fetch(`${process.env.API_URL}landing-page/filter/${name}?offset=${page}&limit=8`)
+    const res = await fetch(`${process.env.API_URL}landing-page/filter/${name}?offset=${page}&limit=8`, {
+        next: { tags: ['overview_event'] },
+    })
     const data = await res.json();
     return data
 }
@@ -47,8 +49,8 @@ export const findEvent = async (searchData) => {
 
 export const getAllCategory = async () => {
     const res = await fetch(`${process.env.API_URL}landing-page/getAllCategoryNames`, {
+        next: { tags: ['overview'] },
         cache: "no-store",
-        next: { revalidate: 30 }
     })
     const data = await res.json()
     return data

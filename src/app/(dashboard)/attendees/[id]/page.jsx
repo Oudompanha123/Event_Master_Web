@@ -9,28 +9,32 @@ import { getServerSession } from "next-auth";
 import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { jwtDecode } from "jwt-decode";
 import { RPaginate } from "../../_components/paginate/RPaginate";
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from "react-toastify";
 
 export default async function AttendeePage({ params: { id }, searchParams }) {
   const query = searchParams?.query || "";
-  const page = searchParams?.page
+  const page = searchParams?.page;
 
   const attendeeData = await getAttendeeByEventIdService(id, page);
   const eventData = await getEventById(id);
   const attendeeInEvent = attendeeData?.payload?.length || 0;
 
-  // search attendees
   const searchAttendee = query
     ? await searchAttendeeByNameOrPhoneService(id, query)
     : attendeeData;
 
-  // Check role before go to attendee page
   const session = await getServerSession(authOption);
   console.log("Session :", session);
   let userInfo = jwtDecode(session?.user?.token);
-  console.log("user Info:",userInfo)
+  console.log("user Info:", userInfo);
   const userRole = userInfo.role;
-  console.log("user role:",userRole)
+  console.log("user role:", userRole);
+
+  const isSearch = !!query;
+  const noAttendees = !isSearch && attendeeInEvent === 0;
+  const noSearchResults =
+    isSearch &&
+    (!searchAttendee.payload || searchAttendee.payload.length === 0);
 
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
@@ -43,13 +47,20 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
         <SearchAttendeeComponent />
       </div>
       <div className="w-full overflow-scroll">
-        <AttendeeTableComponent parentData={searchAttendee} eventId={id} userRole={userRole} attendeeInEvent={attendeeInEvent} isSearch={!!query}/>
-        <div className="w-full flex justify-end mt-8">
-          <RPaginate totalData={attendeeData?.totalRecord}/>
-        </div>
+        <AttendeeTableComponent
+          parentData={searchAttendee}
+          eventId={id}
+          userRole={userRole}
+          attendeeInEvent={attendeeInEvent}
+          isSearch={isSearch}
+        />
+        {!noAttendees && !noSearchResults && (
+          <div className="w-full flex justify-end mt-8">
+            <RPaginate totalData={attendeeData?.totalRecord} />
+          </div>
+        )}
       </div>
-      <ToastContainer/>
+      {/* <ToastContainer /> */}
     </div>
-    
   );
 }

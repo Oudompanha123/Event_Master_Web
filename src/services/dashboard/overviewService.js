@@ -57,6 +57,8 @@ export const updateCategory = async (id, categoryName) => {
             headers: header
         }
     )
+    const data = res.json();
+    return data
 }
 
 export const createEventService = async (data) => {

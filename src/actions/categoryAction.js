@@ -53,7 +53,7 @@ export const updateCategoryAction = async (id, categoryName) => {
     const session = await getServerSession(authOption);
     let userInfo = jwtDecode(session?.user?.token);
 
-    await updateCategory(id, categoryName);
+    const res = await updateCategory(id, categoryName);
     const allMember = await getAllMember();
     await knockClient.notify('new-workout', {
         actor: userInfo?.sub,
@@ -65,6 +65,7 @@ export const updateCategoryAction = async (id, categoryName) => {
         }
     })
     revalidateTag('overview');
+    return res
 }
 
 export const getAllCategoryAction = async (page) => {

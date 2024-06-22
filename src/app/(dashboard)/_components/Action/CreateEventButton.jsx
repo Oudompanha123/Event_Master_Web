@@ -14,10 +14,17 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export const CreateEventButton = () => {
-    const notify = () => {
-        toast.success("Sucessfully created event", {
-            position: "top-center"
-        });
+    const notify = (status) => {
+        if (status == "CREATED") {
+            toast.success("Sucessfully created event", {
+                position: "top-center"
+            });
+        }
+        if (status == 400) {
+            toast.error("Can't create event, please check each field carefully.", {
+                position: "top-center"
+            });
+        }
     }
 
     const [events, setEvent] = useState({
@@ -174,11 +181,13 @@ export const CreateEventButton = () => {
         console.log('cheeck body', submitData)
         const okay = await addNewEventAction(submitData);
         console.log('create event', okay)
-        reset();
         await new Promise(resolve => setTimeout(resolve, 1000));
         setIsSend(false);
-        notify();
+        notify(okay?.status);
         document.getElementById("my_modal_event_create").close()
+        setStartDate('')
+        setEndDate('')
+        reset();
     };
 
     const handleCloseForm = () => {

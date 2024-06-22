@@ -26,7 +26,7 @@ const Page = ({ params: { id } }) => {
     const getData = async (id) => {
         const res = await getFormAction(id);
         console.log(res, 'checking form')
-        setRegisterForm(res?.payload?.data["form "])
+        setRegisterForm(res?.payload?.data?.form)
     }
 
     useEffect(() => {
