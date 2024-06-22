@@ -10,10 +10,17 @@ const CreateCategoryButton = () => {
     const [isSend, setIsSend] = useState(false);
     const [showMsg, setShowMsg] = useState(false);
 
-    const notify = () => {
-        toast.success("Sucessfully created category", {
-            position: "top-center"
-        });
+    const notify = (status, detail) => {
+        if (status == "CREATED") {
+            toast.success("Sucessfully created category", {
+                position: "top-center"
+            });
+        }
+        if (status == 400) {
+            toast.error(`Can't create category, ${detail}`, {
+                position: "top-center"
+            });
+        }
     }
 
     const handleSubmit = async () => {
@@ -24,11 +31,11 @@ const CreateCategoryButton = () => {
             return
         }
         setShowMsg(false)
-        addNewCategoryAction(categoryName);
+        const res = await addNewCategoryAction(categoryName);
         await new Promise(resolve => setTimeout(resolve, 2000));
         setCategoryName('');
         setIsSend(false)
-        notify()
+        notify(res?.status, res?.detail)
         document.getElementById("my_modal_category").close()
     }
     return (
