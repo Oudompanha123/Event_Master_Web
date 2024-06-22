@@ -27,7 +27,7 @@ const AttendeeTableComponent = ({
           {isSearch && attendees.length === 0 && (
             <tr>
               <td colSpan="6">
-                <div className="justify-center w-full content-center space-y-2 pb-10 flex flex-col items-center">
+                <div className="justify-center w-full h-[595px] content-center space-y-2 pb-10 flex flex-col items-center">
                   <Image
                     src="/images/Search.gif"
                     alt="empty image"
@@ -35,7 +35,7 @@ const AttendeeTableComponent = ({
                     height={180}
                     priority
                   />
-                  <p className="text-center text-4xl font-semibold text-primary-text">
+                  <p className="text-center text-2xl font-semibold text-primary-text">
                     No results found
                   </p>
                   <p className="text-center text-xl text-gray-500">
@@ -48,7 +48,7 @@ const AttendeeTableComponent = ({
           {!isSearch && attendeeInEvent === 0 && (
             <tr>
               <td colSpan="6">
-                <div className="justify-center w-full content-center space-y-2 pb-10 flex flex-col items-center">
+                <div className="justify-center w-full h-[595px] content-center space-y-2 pb-10 flex flex-col items-center">
                   <Image
                     src="/images/Search.gif"
                     alt="empty image"
@@ -59,7 +59,6 @@ const AttendeeTableComponent = ({
                   <p className="text-center text-2xl font-semibold text-primary-text">
                     No attendees found for this event
                   </p>
-
                 </div>
               </td>
             </tr>
@@ -88,13 +87,10 @@ const AttendeeTableComponent = ({
                     {attendee.phone}
                   </td>
                   <td className="px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
-                    {(userRole === "ROLE_ADMIN" ||
-                      userRole === "ROLE_SUB_ADMIN") && (
-                      <DeleteAttendeeComponent
-                        attendeeId={attendeeWrapper.attendeeId}
-                        userRole={userRole}
-                      />
-                    )}
+                    <DeleteAttendeeComponent
+                      attendeeId={attendeeWrapper.attendeeId}
+                      userRole={userRole}
+                    />
                   </td>
                 </tr>
               );
