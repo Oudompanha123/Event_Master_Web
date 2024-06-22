@@ -1,7 +1,7 @@
 'use server'
 
-import { findEvent } from "@/services/clientPage/landingService";
-import { getEventByIdService } from "@/services/dashboard/event.service";
+import { findEvent } from "@/services/dashboard/eventService";
+import { getCategoryName } from "@/services/dashboard/eventService";
 
 export const handleSearch = async (input) => {
     const searchData = {
@@ -18,12 +18,13 @@ export const handleSearch = async (input) => {
     }
 }
 
-export const callingServiceAction = async (searchData) => {
+export const callingEventServiceAction = async (searchData) => {
+    console.log("searching: " , searchData)
     const data = await findEvent(searchData);
     return data
 }
 
-export const getEventDetailByIdAction = async (id) => {
-    const data = await getEventByIdService(id);
+export const handleCategoryName = async (cateName) => {
+    const data = await getCategoryName(cateName);
     return data
 }

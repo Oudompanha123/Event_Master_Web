@@ -1,9 +1,9 @@
 'use server'
 
-import { getAllCategory, getAllEventsService, getEventByCateNameLoading } from "@/services/dashboard/eventService";
+import {getAllEventCategory, getEventByCateNameLoading } from "@/services/dashboard/eventService";
 
 export const getAllCategoryEventAction = async () => {
-    const res = await getAllEventsService();
+    const res = await getAllEventCategory();
     return res
 }
 

@@ -1,16 +1,16 @@
 "use client";
 
 // import { DateField } from "./DateField"
-import { NumberField } from "./NumberField";
-import { TextField } from "./TextField";
-import { InputField } from "./InputField";
+import { NumberField } from "./Fields/NumberField";
+import { TextField } from "./Fields/TextField";
+import { InputField } from "./FieldsType/InputField";
 import { Title } from "./Title";
-import { BooleanField } from "./BooleanField";
-import { Boolean } from "./Boolean";
-import { EmailField } from "./EmailField";
+import { BooleanField } from "./Fields/BooleanField";
+import { Boolean } from "./FieldsType/Boolean";
+import { EmailField } from "./Fields/EmailField";
 import { useState } from "react";
 import Image from "next/image";
-import { DateField } from "./DateField";
+import { DateField } from "./Fields/DateField";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
 export const CreateDynamicForm = () => {
@@ -43,17 +43,18 @@ export const CreateDynamicForm = () => {
         setAddFieldNamePopup(false);
     }
     const handleAddFieldName = () => {
-        const newField = {
-            fieldType: String(viewField) + ',' + String(fieldName)
-        }
-        if (fieldName != '') {
-            { viewField != null && setChoosedField([...choosedField, newField]) }
-        }
-        setViewField(null);
-        setFieldName('');
-        setAddFieldNamePopup(false)
-    }
-    console.log(choosedField, 'choose field')
+      const newField = {
+          fieldType: String(viewField) + ',' + String(fieldName)
+      }
+      if (fieldName != '') {
+          { viewField != null && setChoosedField([...choosedField, newField]) }
+      }
+      setViewField(null);
+      setFieldName('');
+      setAddFieldNamePopup(false)
+      setPopUp(false)
+  }
+  console.log(choosedField, 'choose field')
 
   return (
     <>

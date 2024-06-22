@@ -1,56 +1,29 @@
 import CardEventComponent from "../_components/CardEventComponent";
 import { SelectDropdown } from "../_components/SelectDropdownComponent";
 import { SelectStatus } from "../_components/SelectStatusComponent";
-import { getAllCategory, getAllEventsService, getEventByCateName } from "@/services/dashboard/eventService";
+import { getAllCategory, getAllEventCategory, getAllEventsService, getCategoryName} from "@/services/dashboard/eventService";
 import SearchComponent from "../_components/SearchComponent";
-import { SelectDropdownLanding } from "@/app/(clientView)/_componenets/SelectDropDownLanding";
-import { SearchBar } from "@/app/(clientView)/_componenets/SearchBar";
-import { SelectStatusLanding } from "@/app/(clientView)/_componenets/SelectStatusLanding";
+import FilterComponent from "../_components/FilterComponent";
+import { EventList } from "@/app/(clientView)/_componenets/EventList";
+import { EventCardComponent } from "@/app/(clientView)/_componenets/EventCardComponent";
+import { Suspense } from "react";
 
 export default async function Page({ searchParams }) {
   const eventData = await getAllEventsService();
-  const allCategory = await getAllCategory();
-  console.log(searchParams.search, 'check param')
+  const allCategory = await getCategoryName();
+      // console.log('Event Data:', eventData);
+      console.log('All Categories:', allCategory);
 
   return (
     <main>
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        <SelectDropdown/>
-        <SelectStatusLanding/>
-        <form>
-          <div className="mb-5">
-            <label
-              htmlFor="start date"
-              className="text-sm font-semibold text-primary-text block mb-2"
-            >
-              Start Date
-            </label>
-            <input
-              type="date"
-              name="start date"
-              id="date"
-              className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none"
-            />
-          </div>
-        </form>
-
-        <form>
-          <div className="mb-5">
-            <label
-              htmlFor="end date"
-              className="text-sm font-semibold text-primary-text block mb-2"
-            >
-              End Date
-            </label>
-            <input
-              type="date"
-              name="end date"
-              id="date"
-              className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none"
-            />
-          </div>
-        </form>
-      </div>
+      <FilterComponent/>
+      <section id="content" className={`space-y-16 ${searchParams.search ? 'hidden' : 'block'}`}>
+        {allCategory?.payload?.map(async (x, index) => (
+          <Suspense >
+            {/* <EventList key={index} title={x} /> */}
+          </Suspense>
+        ))}
+      </section>
       <SearchComponent eventData={eventData.payload} />
     </main>
   );
