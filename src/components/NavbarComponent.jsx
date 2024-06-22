@@ -8,6 +8,7 @@ import { CreateEventButton } from "@/app/(dashboard)/_components/Action/CreateEv
 import Link from "next/link"
 import { useSession } from "next-auth/react"
 import { jwtDecode } from "jwt-decode"
+import { NotificationCard } from "@/app/(dashboard)/_components/NotificationCard"
 
 export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
@@ -82,10 +83,10 @@ export const NavbarComponent = ({ className }) => {
                     {/* <NotificationMenu /> */}
                     <Image src={'/icons/icon.svg'} width={24} height={24} />
                 </div>
-                {/* <NotificationCard /> */}
-                <div tabIndex={0} role="button" className="bg-[#F7F9FB] p-1 rounded-full hidden cursor-pointer lg:block">
+                <NotificationCard />
+                {/* <div tabIndex={0} role="button" className="bg-[#F7F9FB] p-1 rounded-full hidden cursor-pointer lg:block">
                     <NotificationMenu />
-                </div>
+                </div> */}
                 {userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN" ? <CreateEventButton /> : ''}
                 <Link href={'/user-profile'}>
                     <div className="flex items-center gap-4">

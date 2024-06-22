@@ -1,7 +1,7 @@
 "use server";
 
 export const loginService = async (userInfo) => {
-    const res = await fetch('http://34.124.203.109:8081/api/auth/login', {
+    const res = await fetch(`${process.env.API_URL}auth/login`, {
         method: 'POST',
         headers: {
             'accept': ' */*',
@@ -20,7 +20,7 @@ export const loginService = async (userInfo) => {
 
 export const registerService = async (userInfo) => {
     console.log("Admin : ", userInfo)
-    const res1 = await fetch('http://34.124.203.109:8081/api/auth/admin-register', {
+    const res1 = await fetch(`${process.env.API_URL}auth/admin-register`, {
         method: 'POST',
         headers: {
             'accept': ' */*',
@@ -36,7 +36,7 @@ export const registerService = async (userInfo) => {
 
 export const registerUserService = async (userInfo) => {
     console.log("User : ", userInfo)
-    const res2 = await fetch('http://34.124.203.109:8081/api/auth/verify?otp=9421&email=pokhengly%40gmail.com', {
+    const res2 = await fetch(`${process.env.API_URL}auth/verify?otp=9421&email=pokhengly%40gmail.com`, {
         method: 'POST',
         headers: {
             'accept': ' */*',
