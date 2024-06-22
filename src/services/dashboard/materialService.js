@@ -68,10 +68,7 @@ export const CreateMultipleMaterialService = async (data) => {
     const res = await fetch(`${process.env.API_URL}materials/multipleCreate`, {
       next: { tags: ["materials"] },
       method: "POST",
-      headers: {
-        ...header,
-        'Content-Type': 'application/json' // Ensure the content type is set to application/json
-      },
+      headers: header,
       body: JSON.stringify(data), // Stringify the data
     });
 
@@ -96,7 +93,7 @@ export const DeleteMaterialService = async (listId) => {
       next: { tags: ["materials"] },
       method: "DELETE",
       headers: header,
-      body: JSON.stringify({'materialIds': listId}),
+      body: JSON.stringify({ 'materialIds': listId }),
     });
     const data = await res.json();
     console.log("Data response material service ", data);
