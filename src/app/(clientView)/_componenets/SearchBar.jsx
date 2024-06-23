@@ -192,7 +192,7 @@ export const SearchBar = () => {
                                                         </div>
                                                         <div className="flex justify-between">
                                                             <Link href={`/detail/${x.eventId}`} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
-                                                            <Link href={'/register'} className="text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text">Join Event</Link>
+                                                            <Link href={'/register'} className={`${!x.isOpen && 'hidden'} text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text`}>Join Event</Link>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -42,7 +42,7 @@ export const InputField = ({ type, name }) => {
                 onChange={handleChange}
                 onBlur={handleBlur}
             />
-            {error && <span className="text-red-500">{error}</span>}
+            {error && <span className="text-red-500 text-sm">{error}</span>}
         </div>
     );
 };

@@ -2,7 +2,7 @@
 
 import { LiaUserEditSolid } from "react-icons/lia";
 import Image from "next/image";
-import defaultProfile from "../../../../../public/images/default-profile.png";
+import defaultProfile from "../../../../../public/images/default-profile.jpg";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { jwtDecode } from "jwt-decode";

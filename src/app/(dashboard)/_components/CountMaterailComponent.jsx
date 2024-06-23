@@ -6,21 +6,8 @@ import { TiFlashOutline } from "react-icons/ti";
 import { IoSearchOutline } from "react-icons/io5";
 import { AddSquare } from "iconsax-react";
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
-import fetchMaterialCount from "@/app/actions/material/fetchCountMaterialAction";
 
-export function CountMaterialComponent({id}) {
-  const [dataCount, setDataCount] = useState();
-
-  const fetchCountMaterial = async () => {
-    const res = await fetchMaterialCount(id);
-    setDataCount(res?.payload);
-  };
-
-  useEffect(() => {
-    fetchCountMaterial();
-  }, [id]);
-
+export function CountMaterialComponent({data}) {
   return (
     <div className="grid grid-cols-1 py-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
     <div className="w-auto bg-white rounded-3xl drop-shadow flex px-3.5 py-1">
@@ -40,7 +27,7 @@ export function CountMaterialComponent({id}) {
             Total Material
           </p>
           <p className="text-primary-text text-xs lg:text-sm font-bold">
-            {dataCount?.total ?? 0}
+            {data?.total ?? 0}
           </p>
         </div>
       </div>
@@ -56,7 +43,7 @@ export function CountMaterialComponent({id}) {
             Pending Material
           </p>
           <p className="text-primary-text text-xs lg:text-sm font-bold">
-            {dataCount?.pending ?? 0}
+            {data?.pending ?? 0}
           </p>
         </div>
       </div>
@@ -72,7 +59,7 @@ export function CountMaterialComponent({id}) {
             On Going Material
           </p>
           <p className="text-primary-text text-xs lg:text-sm font-bold">
-            {dataCount?.onGoing ?? 0}
+            {data?.onGoing ?? 0}
           </p>
         </div>
       </div>
@@ -95,7 +82,7 @@ export function CountMaterialComponent({id}) {
             Done Material
           </p>
           <p className="text-primary-text text-xs lg:text-sm font-bold">
-            {dataCount?.done ?? 0}
+            {data?.done ?? 0}
           </p>
         </div>
       </div>
@@ -118,7 +105,7 @@ export function CountMaterialComponent({id}) {
             Issue Material
           </p>
           <p className="text-primary-text text-xs lg:text-sm font-bold">
-            {dataCount?.issue ?? 0}
+            {data?.issue ?? 0}
           </p>
         </div>
       </div>
