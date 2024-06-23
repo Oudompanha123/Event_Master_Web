@@ -107,3 +107,14 @@ export const getEventById = async (id) => {
     const data = await res.json();
     return data;
 }
+
+export const addAttendeeToEvent = async (data) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}attendees/create`, {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify(data),
+    });
+    const val = await res.json();
+    return val;
+}
