@@ -45,7 +45,7 @@ export default function Dropdown() {
       {({ open }) => (
         <>
           <div className="relative">
-            <ListboxButton className="relative h-[42px] cursor-default rounded-xl bg-white pl-2 w-[150px] pr-8 text-left text-black ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6">
+            <ListboxButton className="relative h-[42px] cursor-default rounded-xl bg-white pl-2 w-[150px] pr-8 text-left text-black ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 z-50">
               <span className="flex items-center gap-2">
                 {selected.map((person) => (
                   <span key={person.id} className="flex items-center gap-2 py-[1px] rounded-xl">
