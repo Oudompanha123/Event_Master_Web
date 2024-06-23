@@ -9,7 +9,6 @@ import { getServerSession } from "next-auth";
 import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { jwtDecode } from "jwt-decode";
 import { RPaginate } from "../../_components/paginate/RPaginate";
-// import { ToastContainer, toast } from "react-toastify";
 
 export default async function AttendeePage({ params: { id }, searchParams }) {
   const query = searchParams?.query || "";
@@ -35,6 +34,8 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
   const noSearchResults =
     isSearch &&
     (!searchAttendee.payload || searchAttendee.payload.length === 0);
+
+    console.log('checking name', eventData)
 
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">

@@ -1,6 +1,6 @@
 'use server'
 
-import { getEventForm, updateEventForm } from "@/services/dashboard/eventService";
+import { getEventById, getEventForm, updateEventForm } from "@/services/dashboard/eventService";
 
 
 export const updateEventFormAction = async (data, id) => {
@@ -10,5 +10,10 @@ export const updateEventFormAction = async (data, id) => {
 
 export const getEventFormAction = async (id) => {
     const res = await getEventForm(id)
+    return res
+}
+
+export const getEventByIdAction = async (id) => {
+    const res = await getEventById(id);
     return res
 }

@@ -99,4 +99,11 @@ export const getEventForm = async (id) => {
     return data;
 }
 
-
+export const getEventById = async (id) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}events/${id}`, {
+        headers: header,
+    });
+    const data = await res.json();
+    return data;
+}

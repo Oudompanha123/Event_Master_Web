@@ -10,7 +10,7 @@ const Page = async ({ params: { id } }) => {
   const eventData = await getEventByIdService(id)
   return (
     <main className="space-y-8">
-      <PushRouter name={`/event-detail/${id}?name=${eventData?.payload?.eventName}`} />
+      {/* <PushRouter name={`/event-detail/${id}?name=${eventData?.payload?.eventName}`} /> */}
       <div className=" rounded-3xl bg-white  z-0">
         <EventDetail eventData={eventData.payload} />
       </div>
