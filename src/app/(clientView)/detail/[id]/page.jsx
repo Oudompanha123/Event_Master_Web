@@ -56,7 +56,7 @@ const Page = async ({ params: { id } }) => {
                     />
                 ))}
                 <div className="w-full text-end pt-8">
-                    <Link href={`/register/${id}`} className="text-sm lg:text-base px-9 font-bold py-4 rounded-full bg-purple-text text-white">Join Event</Link>
+                    <Link href={`/register/${id}`} className={`${!data?.payload?.isOpen && 'hidden'} text-sm lg:text-base px-9 font-bold py-4 rounded-full bg-purple-text text-white`}>Join Event</Link>
                 </div>
             </section>
         </div>

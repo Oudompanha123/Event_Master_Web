@@ -18,7 +18,7 @@ const Page = async ({ params: { id } }) => {
         <p className="text-primary-text font-semibold text-2xl mb-5">
           Registratioin form
         </p>
-        <CreateDynamicForm />
+        <CreateDynamicForm id={id} />
       </div>
       {/* <RegisterFormConferrence /> */}
       {/* <MaterialComponent id={id}/>
