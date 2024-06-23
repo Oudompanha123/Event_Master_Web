@@ -129,7 +129,7 @@ export const CreateDynamicForm = () => {
           >
             {" "}
             <IoIosAddCircleOutline size={24} color="blue" />
-            Add One more activity
+            Add more field 
           </button>
         </div>
       </div>
@@ -144,7 +144,7 @@ export const CreateDynamicForm = () => {
             } bg-white w-1/2 h-auto py-6 px-8 rounded-3xl mx-auto space-y-6`}
         >
           <div className="flex justify-between">
-            <Title title={"Choose field htmlFor your form"} />
+            <Title title={"Choose field For your form"} />
             <svg
               onClick={() => setPopUp(false)}
               xmlns="http://www.w3.org/2000/svg"

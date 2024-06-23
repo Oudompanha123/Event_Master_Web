@@ -4,7 +4,6 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { AddSquare } from "iconsax-react";
 import createAgenda from "@/app/actions/createAgendaAction";
-import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -13,6 +12,7 @@ function AddmoreInput({ inputList, setInputList, errors, setErrors }) {
     setInputList([
       ...inputList,
       { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
+   
     ]);
     setErrors([...errors, {}]);
   };
@@ -31,6 +31,21 @@ function AddmoreInput({ inputList, setInputList, errors, setErrors }) {
     const list = [...inputList];
     list[index][name] = value;
     setInputList(list);
+    validateInputs(list);
+  };
+
+  const validateInputs = (list) => {
+    const newErrors = list.map((item) => {
+      const error = { topic: "", startTime: "", endTime: "" };
+      if (!item.topic) {
+        error.topic = "Topic is required.";
+      }
+      if (item.startTime && item.endTime && item.startTime >= item.endTime) {
+        error.startTime = "Start time must be before end time.";
+      }
+      return error;
+    });
+    setErrors(newErrors);
   };
 
   return (
@@ -181,7 +196,7 @@ function AddmoreInput({ inputList, setInputList, errors, setErrors }) {
   );
 }
 
-export function CreateAgendaButton({ id }) {
+export function CreateAgendaButton({ id, onSaveSuccess }) {
   const [inputList, setInputList] = useState([
     { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
   ]);
@@ -193,29 +208,26 @@ export function CreateAgendaButton({ id }) {
     setErrors([{ topic: "", startTime: "", endTime: "" }]);
   };
 
-  async function handleCreate() {
-    const newErrors = inputList.map((item) => {
+  const validateInputs = (list) => {
+    const newErrors = list.map((item) => {
       const error = { topic: "", startTime: "", endTime: "" };
       if (!item.topic) {
         error.topic = "Topic is required.";
       }
-      if (item.startTime >= item.endTime) {
+      if (item.startTime && item.endTime && item.startTime >= item.endTime) {
         error.startTime = "Start time must be before end time.";
       }
       return error;
     });
 
     setErrors(newErrors);
+  };
 
-    function success(message) {
-      toast.success(message, {
-        position: "top-center",
-      });
-    }
-  
+  const handleCreate = async () => {
+    validateInputs(inputList); // Validate before submission
 
     // Check if there are any errors
-    const hasErrors = newErrors.some((error) => error.topic || error.startTime || error.endTime);
+    const hasErrors = errors.some((error) => error.topic || error.startTime || error.endTime);
     if (hasErrors) {
       return;
     }
@@ -234,19 +246,21 @@ export function CreateAgendaButton({ id }) {
     try {
       setIsLoading(true);
       const data = await createAgenda(requestBody, id);
-      success("Create Materail succussfully!");
-      // console.log("API Response:", data);
+      toast.success("Create Material successfully!", {
+        position: "top-center",
+      });
       setIsLoading(false);
       resetInputs();
+      onSaveSuccess(true); // Notify parent of the save success
     } catch (error) {
       console.error("Error creating agenda:", error);
       setIsLoading(false);
+      onSaveSuccess(false); // Notify parent of the failure
     }
-  }
+  };
 
   return (
     <>
-     <ToastContainer autoClose={2000} />
       <button
         className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-11 justify-center text-purple-text rounded-3xl md:py-2.5 flex items-center gap-1"
         onClick={() => document.getElementById("my_modal_4").showModal()}
