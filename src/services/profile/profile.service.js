@@ -13,6 +13,7 @@ export async function getAllMemberProfile(){
         next: { tags: ["customer"] }
     })
     const data = await res.json();
+    // console.log("get :",data);
     return data;
 }
 
@@ -21,15 +22,10 @@ export async function updateProfileMemberById(memberId, updateMemberData){
     try {
         const res = await fetch(`${process.env.API_URL}profiles/update-member/${memberId}`, {
             method: "PUT",
-            body: JSON.stringify(updateMemberData),
-            headers: header
+            body: JSON.stringify({updateMemberData}),
+            headers: header,
+            next : {tags : ["member"]}
         });
-
-        if (!res.ok) {
-            const errorDetails = await res.text(); 
-            throw new Error(`HTTP error! Status: ${res.status} ${res.statusText}, Details: ${errorDetails}`);
-        }
-
         const data = await res.json();
         return data;
     } catch (error) {

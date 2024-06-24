@@ -30,7 +30,6 @@ export default async function assetPage({ searchParams }) {
         <div className="px-6">
           <div className="box-border mt-0 overflow-scroll">
             <AssetTableComponent data={data} query={query} />
-           
           </div>
         </div>
       </div>

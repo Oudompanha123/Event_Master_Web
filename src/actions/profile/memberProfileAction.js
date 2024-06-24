@@ -4,6 +4,10 @@ import { getAllProfileMember, updateProfileMemberById } from "@/services/profile
 import { revalidateTag } from "next/cache";
 
 export const updateMemberDataAction = async (memberId, updateMemberData) =>{
-    await updateProfileMemberById(memberId, updateMemberData);
-    revalidateTag("customer");
+    const updateMember = {
+             
+    }
+    const data =  await updateProfileMemberById(memberId, updateMember);
+    revalidateTag("member");
+    return data;
 }
