@@ -7,10 +7,11 @@ import Image from "next/image";
 import { Add, AddSquare } from "iconsax-react";
 import { allCategoryAction } from "@/actions/categoryAction";
 
-export const SelectModify = ({ height, label, func }) => {
+export const SelectModify = ({ height, label, func, more }) => {
 
     const [selected, setSelected] = useState(null);
     const [newCategory, setNewCategory] = useState();
+    const [trigger, setTrigger] = useState(false);
     const [options, setOptionData] = useState([
         { id: 1, name: "Social Event" },
         { id: 2, name: "Conferece" },
@@ -34,12 +35,6 @@ export const SelectModify = ({ height, label, func }) => {
         setOptionData([...res.payload, { categoryId: 999, categoryName: "Create Category" }])
     }
 
-    //call get all cagetory from api
-    useEffect(() => {
-        callApi();
-        removeCategory();
-    }, [])
-
     //remove create catgory and add back, just to make it behind all category.
     const removeCategory = () => {
         const updatedOptions = options.filter(option => option.categoryId !== 999);
@@ -59,12 +54,19 @@ export const SelectModify = ({ height, label, func }) => {
         removeCategory()
         document.getElementById('my_modal_create_new_category').close()
         document.getElementById('my_modal_event_create').showModal();
+        setTrigger(!trigger)
     }
 
     const handlePassToParent = (v) => {
         func(v)
-        console.log('gg', v)
     }
+
+    //call get all cagetory from api
+    useEffect(() => {
+        callApi();
+        removeCategory();
+        setSelected(null)
+    }, [more])
 
     return (
         <div className="w-auto">

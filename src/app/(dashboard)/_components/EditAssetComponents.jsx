@@ -13,15 +13,17 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
       position: "top-center",
     });
   };
-  // console.log("edit Id:", assetEdit);
-  // const trigger = async (id) => {
-  //  // handleUpdateAsset(id, e)
-  // };
 
   const [handleName, setHandleName] = useState(name);
   const [handleQty, setHandleQty] = useState(qty);
   const [handleUnit, setHandleUnit] = useState(unit);
   const [isLoading, setIsLoading] = useState(false);
+
+  const cancle = () => {
+    setHandleName( name);
+    setHandleQty (qty);
+    setHandleUnit (unit);
+  };
   const {
     register,
     handleSubmit,
@@ -134,12 +136,12 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                     placeholder="Enter unit"
                     {...register("unit", {
                       required: "unit is required",
-                       maxLength: {
-                      value: 40,
-                      message: "name cannot more than 40 characters",
-                    },
+                      maxLength: {
+                        value: 40,
+                        message: "name cannot more than 40 characters",
+                      },
                     })}
-                    // onChange={() => setHandleUnit(e.target.value)}
+                    onChange={(e) => setHandleUnit(e.target.value)}
                   />
                   {errors.unit && (
                     <div className="text-red-600 text-sm">
@@ -152,6 +154,8 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                 <div
                   onClick={() => {
                     reset();
+                    cancle();
+                    // checkchange;
                     document
                       .getElementById(`my_modal_updateasset${assetEdit}`)
                       .close();

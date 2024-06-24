@@ -7,10 +7,11 @@ const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export const metadata = {
   title: "EventMaster",
-  description: "EventMaster is a comprehensive, user-friendly event management system that streamlines every aspect of event planning and execution.",
+  description:
+    "EventMaster is a comprehensive, user-friendly event management system that streamlines every aspect of event planning and execution.",
   icons: {
-    icon: "/images/event-master-2.png"
-  }
+    icon: "/images/event-master-2.png",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
           easing="ease"
           speed={200}
           shadow="0 0 10px #7939EF,0 0 8px #7939EF"
+         
         />
         {children}
       </body>

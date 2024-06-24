@@ -112,10 +112,21 @@ export const NavbarComponent = ({ className }) => {
                             <p className="text-xs text-greyUi">{userInfo?.sub}</p>
                         </div>
                         <div className="w-[48px] h-48px] hidden lg:block">
-                            <Image className="rounded-full" src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={48} width={48} />
+                            <Image
+                                className="rounded-full"
+                                src={userInfo?.organization?.logo && /^(http|https):\/\//.test(userInfo.organization.logo) ? userInfo.organization.logo : defaultProfile}
+                                height={48}
+                                width={48}
+                            />
                         </div>
                         <div className="w-[32px] h-[32px] block lg:hidden">
-                            <Image className="rounded-full" src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={32} width={32} />
+                            <Image
+                                className="rounded-full"
+                                src={userInfo?.organization?.logo && /^(http|https):\/\//.test(userInfo.organization.logo) ? userInfo.organization.logo : defaultProfile}
+                                height={48}
+                                width={48}
+                            />
+                            {/* <Image className="rounded-full" src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={32} width={32} /> */}
                         </div>
                     </div>
                 </Link>

@@ -96,8 +96,6 @@ const VerifyOTPComponent = ({email}) => {
                     />
                 </div>
 
-                
-
                 {errorMessage && <p className="text-red-600 mt-3 ml-4">{errorMessage}</p>}
                 <div className="flex justify-center pr-[8px] sm:mt-7 lg:mt-0">
                     <button
