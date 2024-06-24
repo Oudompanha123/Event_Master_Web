@@ -1,7 +1,7 @@
 "use server";
 
 export const getOrganizationDetails = async (orgCode) => {
-    const res = await fetch(`http://34.124.203.109:8081/api/auth/org/${orgCode}`, {
+    const res = await fetch(`${process.env.API_URL}auth/org/${orgCode}`, {
         method: 'GET',
         headers: {
             'accept': '*/*'
