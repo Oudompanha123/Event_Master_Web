@@ -18,13 +18,14 @@ export async function getAllMemberProfile(){
 }
 
 export async function updateProfileMemberById(memberId, updateMemberData){
+    console.log("Member ID: ", memberId);
+    console.log("Data of member: ", updateMemberData)
     const header = await headerToken();
     try {
         const res = await fetch(`${process.env.API_URL}profiles/update-member/${memberId}`, {
             method: "PUT",
-            body: JSON.stringify({updateMemberData}),
+            body: JSON.stringify(updateMemberData),
             headers: header,
-            next : {tags : ["member"]}
         });
         const data = await res.json();
         return data;

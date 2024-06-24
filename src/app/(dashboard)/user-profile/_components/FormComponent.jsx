@@ -24,12 +24,12 @@ function FormComponent({ className, getAllMember }) {
   const [isLock, setLocked] = useState(true);
 
   const [profileImage, setProfileImage] = useState("/images/Avatar.png");
-  const [userName, setUserName] = useState("");
-  const [address, setAddress] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhoneNumber] = useState("");
-  const [gender, setGender] = useState("");
-  const [date, setDate] = useState("");
+  const [userName, setUserName] = useState(getAllMember.memberName);
+  const [address, setAddress] = useState(getAllMember.address);
+  const [email, setEmail] = useState(getAllMember.email);
+  const [phone, setPhoneNumber] = useState(getAllMember.phone);
+  const [gender, setGender] = useState(getAllMember.gender);
+  const [date, setDate] = useState(getAllMember.dateOfBirth);
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -66,7 +66,6 @@ function FormComponent({ className, getAllMember }) {
         gender: gender,
         email: email,
         address: address,
-        picture: "",
         phoneNumber: phone,
         date: date,     
     };
@@ -81,10 +80,14 @@ function FormComponent({ className, getAllMember }) {
     defaultValues: initialData,
   });
 
+  const delay = (x) => new Promise((resolve) => setTimeout(resolve, x))
+
   const onSubmit = async(data) => {
-    console.log("MemberId: ", getAllMember.memberId)
-    console.log("Form submitted", data);
+    // console.log("MemberId: ", getAllMember.memberId)
+    // console.log("Form submitted", data);
+    setIsLoading(true);
     await updateMemberDataAction(getAllMember.memberId ,data)
+    await delay(2000);
     setIsLoading(false);
     reset();
   };
@@ -128,7 +131,7 @@ function FormComponent({ className, getAllMember }) {
                 <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Name <span className="text-red-500">*</span>
                 </label>
-                <input type="text" id="name" className={`${errors.name? "border-red-700 focus:border-red-600": "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                <input type="text" id="name" name="name" className={`${errors.name? "border-red-700 focus:border-red-600": "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                     placeholder="Enter your name" onChange={(e) => setUserName(e.target.value)}
                     disabled={isLock}
                     {...register("name", { required: "Name is required" })}
@@ -194,7 +197,7 @@ function FormComponent({ className, getAllMember }) {
                 <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Date <span className="text-red-500">*</span>
                 </label>
-                <input type="date" id="date" className={`${ errors.date? "border-red-700 focus:border-red-600": "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                <input type="date" id="date" name="date" className={`${ errors.date? "border-red-700 focus:border-red-600": "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                     disabled={isLock} onChange={(e)=>setDate(e.target.value)}
                     {...register("date", { required: "Date is required" })}
                 />
@@ -209,7 +212,7 @@ function FormComponent({ className, getAllMember }) {
                 <label htmlFor="phone" className="mb-1 text-sm font-medium">
                   Phone Number <span className="text-red-500">*</span>
                 </label>
-                <input type="text" placeholder="Phone number" name="phone" className={`${ errors.phoneNumber? "border-red-700 focus:border-red-600": "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id="phone"
+                <input type="text" placeholder="Phone number" name="phoneNumber" className={`${ errors.phoneNumber? "border-red-700 focus:border-red-600": "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id="phone"
                     disabled={isLock} onChange={(e)=>setPhoneNumber(e.target.value)}
                     {...register("phoneNumber", {
                         required: "Phone number is required",
