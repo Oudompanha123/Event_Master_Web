@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Data from "../../../../data/asset.json";
-import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 export const Pagination = () => {
@@ -30,11 +29,8 @@ export const Pagination = () => {
         }
     }
 
-    const notify = () => toast("wow")
-
     return (
         <div>
-            <h2 onClick={notify}>click me</h2>
             <nav>
                 <ul className="flex items-center">
                     <li className="cursor-pointer text-sm mr-2 font-medium">

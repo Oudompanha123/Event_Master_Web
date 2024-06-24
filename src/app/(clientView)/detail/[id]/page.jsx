@@ -7,13 +7,13 @@ import { getEventById } from "@/services/clientPage/landingService"
 const Page = async ({ params: { id } }) => {
     const data = await getEventById(id);
     const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-    const inputDate = data.payload.startDateTime;
+    const inputDate = data?.payload?.startDateTime;
     const formattedDate = formatDate(inputDate);
     const formated = formattedDate;
     const imageUrl = data?.payload?.poster;
     const isValidUrl = imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://');
 
-    console.log(data?.payload?.agenda, 'detail data')
+    console.log(data, 'detail data landing')
 
     return (
         <div className="container">
@@ -28,16 +28,16 @@ const Page = async ({ params: { id } }) => {
                 </div>
                 <div className="space-y-6 mt-6">
                     <div className="flex justify-between items-center">
-                        <h2 className="text-xl lg:text-2xl font-semibold">{data.payload.eventName}</h2>
-                        <button className={`text-sm lg:text-base ${data.payload.isOpen ? 'bg-blue-200 text-blue-800' : 'bg-red-200 text-red-800'} px-6 py-1.5 rounded-full`}>
-                            {data.payload.isOpen ? 'Open' : 'Close'}
+                        <h2 className="text-xl lg:text-2xl font-semibold">{data?.payload?.eventName}</h2>
+                        <button className={`text-sm lg:text-base ${data?.payload?.isOpen ? 'bg-blue-200 text-blue-800' : 'bg-red-200 text-red-800'} px-6 py-1.5 rounded-full`}>
+                            {data?.payload?.isOpen ? 'Open' : 'Close'}
                         </button>
                     </div>
                     <p className="text-sm lg:text-base w-full lg:w-2/3 font-light">
-                        {data.payload.description}
+                        {data?.payload?.description}
                     </p>
                     <p>
-                        <span className="text-sm lg:text-base font-semibold">Location:</span>   {data.payload.location}
+                        <span className="text-sm lg:text-base font-semibold">Location:</span>   {data?.payload?.location}
                     </p>
                     <button className="bg-blue-200 text-blue-800 text-sm lg:text-base px-6 py-3 rounded-full">{formated}</button>
                 </div>
@@ -56,7 +56,7 @@ const Page = async ({ params: { id } }) => {
                     />
                 ))}
                 <div className="w-full text-end pt-8">
-                    <Link href={'/register'} className="text-sm lg:text-base px-9 font-bold py-4 rounded-full bg-purple-text text-white">Join Event</Link>
+                    <Link href={`/register/${id}`} className={`${!data?.payload?.isOpen && 'hidden'} text-sm lg:text-base px-9 font-bold py-4 rounded-full bg-purple-text text-white`}>Join Event</Link>
                 </div>
             </section>
         </div>

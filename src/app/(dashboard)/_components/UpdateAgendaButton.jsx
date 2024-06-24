@@ -193,7 +193,7 @@ function UpdateAgenda({ inputList, setInputList, errors, setErrors, id }) {
   );
 }
 
-export function UpdateAgendaButton({ id }) {
+export function UpdateAgendaButton({ id, onUpdateSuccess }) {
   // console.log("event id is", id);
   const [inputList, setInputList] = useState([
     { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
@@ -236,6 +236,7 @@ export function UpdateAgendaButton({ id }) {
     try {
       const data = await updateAgenda(requestBody, id);
       console.log("API Response:", data);
+      onUpdateSuccess(true); // Call the onUpdateSuccess callback with true
     } catch (error) {
       console.error("Error creating agenda:", error);
     }

@@ -2,7 +2,7 @@ import { headerToken } from "@/app/api/auth/headerToken";
 
 export const getAllEventsService = async () => {
     const header = await headerToken()
-    const res = await fetch(`${process.env.API_URL}events`,
+    const res = await fetch(`${process.env.API_URL}events?offset=1&limit=1000`,
         {
             cache: "no-store",
             headers: header
@@ -11,7 +11,6 @@ export const getAllEventsService = async () => {
     const data = await res.json();
     return data
 }
-
 export const getEventByIdService = async (id) => {
     const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}events/${id}`,
@@ -24,71 +23,98 @@ export const getEventByIdService = async (id) => {
     const data = await res.json();
     return data
 }
+export const getCategoryName = async (cateName) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}categories/${cateName}`, {
+        next: { tags: ["category"] },
+        method: 'GET',
+        cache: "no-store",
+        headers: header
+
+    }
+    );
+
+    const data = await res.json()
+    return data
+}
 
 export const findEvent = async (searchData) => {
-    const res = await fetch(`
-        ${process.env.API_URL}events/search?&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}`,
-        {
-            cache: "no-store",
-            method: 'POST',
-        }
-    )
-    const data = await res.json();
+    console.log("searching event in :", searchData);
+    const header = await headerToken();
+    const handerToken = {
+        next: { tags: ["events"] },
+        method: 'GET',
+        cache: "no-store",
+        headers: header
+
+    }
+    searchData.categoryId ? console.log('have data') : console.log('no data')
+    let res;
+    if (searchData.categoryId) {
+        res = await fetch(`${process.env.API_URL}events/search?eventName=${searchData.eventName}&categoryId=${searchData.categoryName}&status=${searchData.status}&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}, ${handerToken}`)
+    } else {
+        res = await fetch(`${process.env.API_URL}events/search?eventName=${searchData.eventName}&status=${searchData.status}&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}, ${handerToken}`)
+    }
+    const data = await res.json()
     return data
 }
 
 export const deleteEventById = async (eventId) => {
-    const res = await fetch(`http://34.124.203.109:8081/api/events/${eventId}`,
-        {
-            next: { tags: ['events'] },
-            method: 'DELETE',
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDcsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImhWZzFsVyIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDcsIm1lbWJlcklkIjo2NSwic3ViIjoibml0YWx5MDg2QGdtYWlsLmNvbSIsImlhdCI6MTcxODY5MzYzOCwiZXhwIjoxNzE5NTU3NjM4fQ.EttT3JP5mo8plVzXkHILfkfeghmo0K0UFC9KEGlad0s',
-            }
-        }
-    ) 
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}events/${eventId}`, {
+        next: { tags: ["materials"] },
+        method: "DELETE",
+        headers: header,
+    });
+    const data = await res.json();
+    console.log("Data response event service ", data);
+    return data;
 }
 
-export const createEventService = async (newEvent) => {
-    console.log("new event", newEvent)
-    const res = await fetch(`${process.env.API_URL}events`,
-        {
-            next: { tags: 'events' },
-            method: "POST",
-            body: JSON.stringify(newEvent),
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDcsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImhWZzFsVyIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDcsIm1lbWJlcklkIjo2NSwic3ViIjoibml0YWx5MDg2QGdtYWlsLmNvbSIsImlhdCI6MTcxODI0MzE2MSwiZXhwIjoxNzE5MTA3MTYxfQ.wfXJ-AcYZ08shSfRfszEqNin4mHeq0wEaVGnA1nHSG4',
-                'Content-Type': 'application/json'
-            }
-        }
-    )
+export const updateEventService = async (id, data) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}events/update/${id}`, {
+        method: "PUT",
+        headers: header,
+        body: JSON.stringify(data),
+    });
+    const dataEvent = await res.json();
+    return dataEvent;
+};
+
+export const updateEventForm = async (data, id) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}events/registration-form/${id}`, {
+        method: "PUT",
+        headers: header,
+        body: JSON.stringify(data),
+    });
+    const dataEvent = await res.json();
+    return dataEvent;
+}
+
+export const getEventForm = async (id) => {
+    const res = await fetch(`${process.env.API_URL}landing-page/form/${id}`);
     const data = await res.json();
     return data;
 }
 
-
-export const updateEventService = async (data, id) => {
-    try {
-        const res = await fetch(`${process.env.API_URL}events/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDcsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImhWZzFsVyIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDcsIm1lbWJlcklkIjo2NSwic3ViIjoibml0YWx5MDg2QGdtYWlsLmNvbSIsImlhdCI6MTcxODI0MzE2MSwiZXhwIjoxNzE5MTA3MTYxfQ.wfXJ-AcYZ08shSfRfszEqNin4mHeq0wEaVGnA1nHSG4',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                data
-            }),
-        })
-        if (!res.ok) {
-            const errorText = await res.text();
-            throw (`Error: ${errorText}`);
-        }
-
-        const dataAgenda = await res.json();
-        return dataAgenda;
-    } catch (error) {
-        console.error("There was an error updating the event:", error);
-        throw error;
-    };
+export const getEventById = async (id) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}events/${id}`, {
+        headers: header,
+    });
+    const data = await res.json();
+    return data;
 }
 
+export const addAttendeeToEvent = async (data) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}attendees/create`, {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify(data),
+    });
+    const val = await res.json();
+    return val;
+}

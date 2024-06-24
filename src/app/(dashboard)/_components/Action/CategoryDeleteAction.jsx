@@ -3,10 +3,14 @@
 import { deleteCategoryAction } from "@/actions/categoryAction"
 import { Trash } from "iconsax-react"
 import { RxCross2 } from "react-icons/rx"
+import { toast } from "react-toastify"
 
 export const CategoryDeleteAction = ({ cateId }) => {
     const handleDelete = async () => {
         await deleteCategoryAction(cateId)
+        toast.success("Category has been deleted successfully", {
+            position: "top-center"
+        });
     }
 
     return (

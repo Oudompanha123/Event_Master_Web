@@ -8,6 +8,7 @@ import { SelectStatusLanding } from "./SelectStatusLanding"
 import { useRouter } from "next/navigation"
 import { TitleComponent } from "./TitleComponent"
 import Image from "next/image"
+import { SelectDropdown } from "@/app/(dashboard)/_components/SelectDropdownComponent"
 
 export const SearchBar = () => {
     const [findData, setFindData] = useState();
@@ -74,6 +75,7 @@ export const SearchBar = () => {
         <div>
             <form onSubmit={fetchData}>
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                    {/* <SelectDropdown func={getDropDownValue}/> */}
                     <SelectDropdownLanding func={getDropDownValue} />
                     <SelectStatusLanding func={getStatusValue} />
                     <div className="mb-5">
@@ -163,7 +165,7 @@ export const SearchBar = () => {
                                                 <div key={index} className="shadow-md rounded-3xl">
                                                     <div className="relative">
                                                         <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
-                                                            <img src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`} alt="event-image" className="rounded-t-3xl h-full object-cover" />
+                                                            <img src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`} alt="event-image" className="rounded-t-3xl h-full object-cover !w-full" />
                                                         </div>
                                                         <div className="absolute top-0 right-0 p-6 ">
                                                             <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${x.isOpen ? 'text-blueUi' : 'text-redUi'}`}>
@@ -190,7 +192,7 @@ export const SearchBar = () => {
                                                         </div>
                                                         <div className="flex justify-between">
                                                             <Link href={`/detail/${x.eventId}`} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
-                                                            <Link href={'/register'} className="text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text">Join Event</Link>
+                                                            <Link href={'/register'} className={`${!x.isOpen && 'hidden'} text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text`}>Join Event</Link>
                                                         </div>
                                                     </div>
                                                 </div>

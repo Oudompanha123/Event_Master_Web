@@ -1,6 +1,7 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import NextTopLoader from "nextjs-toploader";
+import NextTopLoader from 'nextjs-toploader';
+import { ToastContainer } from "react-toastify";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 

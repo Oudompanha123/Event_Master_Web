@@ -36,7 +36,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
   };
 
   const handleCategorySelect = (selectedCategory) => {
-    setEventCategory(selectedCategory.category);
+    setEventCategory(selectedCategory.categoryName);
   };
   
   const handleEventType = (type) => setIsPublic(!type);
@@ -341,22 +341,12 @@ const displayPreview = (file) => {
                   )}
                 </div>
                 <div className="w-full">
-                  
                 <SelectModifyV2
                   placeholder="Select category"
                   defaultSelect={eventCategory}
                   onSelect={handleCategorySelect}
                   height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
                 />
-                
-                <div className="bg-white rounded-3xl px-4 py-2 border border-gray-300 flex items-center">
-                  <span className="text-gray-600 mr-2">{eventCategory ? eventCategory.categoryName : "None selected"}</span>
-                  {eventCategory && (
-                    <button className="text-red-600" onClick={() => setEventCategory(null)}>
-                      <RxCross2 className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
 
 
                 </div>

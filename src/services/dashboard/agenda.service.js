@@ -1,3 +1,4 @@
+"use server"
 import { headerToken } from "@/app/api/auth/headerToken";
 
 export const getAgendaByEventId = async (id) => {
