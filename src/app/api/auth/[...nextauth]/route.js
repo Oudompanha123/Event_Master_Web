@@ -1,6 +1,6 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import {loginService} from "@/services/login-signup/auth.service";
+import { loginService } from "@/services/login-signup/auth.service";
 
 export const authOption = {
     providers: [
@@ -18,6 +18,7 @@ export const authOption = {
     // secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
+        maxAge: 10 * 24 * 60 * 60,
     },
     pages: {
         signIn: "/login",
@@ -25,10 +26,10 @@ export const authOption = {
 
     // used to set token into cookies
     callbacks: {
-        async jwt({token, user}) {
-            return {...token, ...user};
+        async jwt({ token, user }) {
+            return { ...token, ...user };
         },
-        async session({session, token}) {
+        async session({ session, token }) {
             session.user = token;
             return session;
         },
@@ -36,4 +37,4 @@ export const authOption = {
 };
 
 const handler = NextAuth(authOption);
-export { handler as GET, handler as POST};
+export { handler as GET, handler as POST };
