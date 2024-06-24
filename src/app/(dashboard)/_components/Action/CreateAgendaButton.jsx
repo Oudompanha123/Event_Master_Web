@@ -40,7 +40,8 @@ function AddmoreInput({ inputList, setInputList, errors, setErrors }) {
       if (!item.topic) {
         error.topic = "Topic is required.";
       }
-      if (item.startTime && item.endTime && item.startTime >= item.endTime) {
+      // && item.endTime && item.startTime
+      if (item.startTime  >= item.endTime) {
         error.startTime = "Start time must be before end time.";
       }
       return error;
@@ -196,6 +197,7 @@ function AddmoreInput({ inputList, setInputList, errors, setErrors }) {
   );
 }
 
+
 export function CreateAgendaButton({ id, onSaveSuccess }) {
   const [inputList, setInputList] = useState([
     { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
@@ -214,7 +216,8 @@ export function CreateAgendaButton({ id, onSaveSuccess }) {
       if (!item.topic) {
         error.topic = "Topic is required.";
       }
-      if (item.startTime && item.endTime && item.startTime >= item.endTime) {
+      // && item.endTime && item.startTime
+      if (item.startTime >= item.endTime) {
         error.startTime = "Start time must be before end time.";
       }
       return error;
@@ -279,7 +282,10 @@ export function CreateAgendaButton({ id, onSaveSuccess }) {
           <div className="modal-action gap-2 mb-4">
             <button
               className="px-6 py-3 rounded-2xl border-1px border-borderUi bg-white hover:border-gray-500 hover:bg-white"
-              onClick={() => document.getElementById("my_modal_4").close()}
+              onClick={() => {
+                document.getElementById("my_modal_4").close();
+                resetInputs();
+              }}
             >
               Cancel
             </button>
