@@ -1,4 +1,5 @@
 import { headerToken } from "@/app/api/auth/headerToken";
+
 export const resendOtp = async (email) => {
     const res = await fetch(`${process.env.API_URL}auth/resend?email=${email}`,
         {   
