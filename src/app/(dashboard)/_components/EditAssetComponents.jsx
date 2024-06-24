@@ -13,15 +13,17 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
       position: "top-center",
     });
   };
-  // console.log("edit Id:", assetEdit);
-  // const trigger = async (id) => {
-  //  // handleUpdateAsset(id, e)
-  // };
 
   const [handleName, setHandleName] = useState(name);
   const [handleQty, setHandleQty] = useState(qty);
   const [handleUnit, setHandleUnit] = useState(unit);
   const [isLoading, setIsLoading] = useState(false);
+
+  const cancle = () => {
+    setHandleName( name);
+    setHandleQty (qty);
+    setHandleUnit (unit);
+  };
   const {
     register,
     handleSubmit,
@@ -152,6 +154,8 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                 <div
                   onClick={() => {
                     reset();
+                    cancle();
+                    // checkchange;
                     document
                       .getElementById(`my_modal_updateasset${assetEdit}`)
                       .close();

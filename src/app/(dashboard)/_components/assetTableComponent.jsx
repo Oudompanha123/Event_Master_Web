@@ -119,10 +119,15 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
           </p>
         </div>
       )}
-
-      <div className={`w-full h-full flex justify-end mt-8 mb-8`}>
-        <RPaginate totalData={data?.totalRecord} />
-      </div>
+      {nullsearch > 0 && (
+        <div
+          className={`w-full  ${
+            nullsearch > 0 ? "flex" : "hidden"
+          } h-full  justify-end mt-8 mb-8`}
+        >
+          <RPaginate totalData={data?.totalRecord} />
+        </div>
+      )}
     </div>
   );
 };

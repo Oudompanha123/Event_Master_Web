@@ -3,8 +3,8 @@ import "../globals.css";
 import { SidebarComponent } from "@/components/SidebarComponent";
 import { NavbarComponent } from "@/components/NavbarComponent";
 import { getServerSession } from "next-auth";
-import SessionProvider from "../../components/SessionProvider"
-import { Knock } from "@knocklabs/node"
+import SessionProvider from "../../components/SessionProvider";
+import { Knock } from "@knocklabs/node";
 import { authOption } from "../api/auth/[...nextauth]/route";
 import { jwtDecode } from "jwt-decode";
 
@@ -22,15 +22,20 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
-  const knockClient = new Knock("sk_test_hguX-GMQzOK3VFeVkAPJLbNITMjkY_mxDc0H2IO35_g");
+  const knockClient = new Knock(
+    "sk_test_hguX-GMQzOK3VFeVkAPJLbNITMjkY_mxDc0H2IO35_g"
+  );
   const knockUser = await knockClient.users.identify(userInfo?.sub, {
     name: userInfo?.role,
-    email: userInfo?.sub
-  })
+    email: userInfo?.sub,
+  });
 
   return (
     <html lang="en">
-      <body className={jakarta.className}>
+      <body
+        className={jakarta.className}
+        
+      >
         <SessionProvider session={session}>
           <div className="flex">
             <SidebarComponent className={`w-[13%] xl:w-[19%] 2xl:w-[17%]`} />
