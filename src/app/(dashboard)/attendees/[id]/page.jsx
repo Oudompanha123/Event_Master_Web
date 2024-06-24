@@ -22,12 +22,13 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
     ? await searchAttendeeByNameOrPhoneService(id, query)
     : attendeeData;
 
+  let header = await searchAttendeeByNameOrPhoneService(id, "");
+  header = Object.keys(header.payload[0].data);
+
   const session = await getServerSession(authOption);
-  console.log("Session :", session);
   let userInfo = jwtDecode(session?.user?.token);
-  console.log("user Info:", userInfo);
   const userRole = userInfo.role;
-  console.log("user role:", userRole);
+  console.log("Role:",userRole)
 
   const isSearch = !!query;
   const noAttendees = !isSearch && attendeeInEvent === 0;
@@ -54,6 +55,7 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
           userRole={userRole}
           attendeeInEvent={attendeeInEvent}
           isSearch={isSearch}
+          header={header}
         />
         {!noAttendees && !noSearchResults && (
           <div className="w-full flex justify-end mt-8">
@@ -61,7 +63,6 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
           </div>
         )}
       </div>
-      {/* <ToastContainer /> */}
     </div>
   );
 }

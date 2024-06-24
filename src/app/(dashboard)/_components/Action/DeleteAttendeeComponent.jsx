@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
 import { deleteAttendeeAction } from "@/actions/attendeeDeleteAction";
@@ -8,17 +9,13 @@ import "react-toastify/dist/ReactToastify.css";
 export function DeleteAttendeeComponent({ attendeeId, userRole }) {
   const isDeletable = userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN";
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const notifySuccess = () => {
     toast.success("Deleted Successfully", {
       position: "top-center",
     });
   };
-
-  // const notifyNotAllowed = () => {
-  //   toast.error("You cannot delete this attendee", {
-  //     position: "top-center",
-  //   });
-  // };
 
   const notifyUserCannotDelete = () => {
     toast.error("You can not delete this attendee", {
@@ -28,6 +25,7 @@ export function DeleteAttendeeComponent({ attendeeId, userRole }) {
 
   const handleDelete = async () => {
     if (isDeletable) {
+      setIsLoading(true);
       try {
         await deleteAttendeeAction(attendeeId);
         notifySuccess();
@@ -37,6 +35,8 @@ export function DeleteAttendeeComponent({ attendeeId, userRole }) {
         toast.error("Failed to delete attendee. Please try again.", {
           position: "top-center",
         });
+      } finally {
+        setIsLoading(false);
       }
     } else {
       notifyUserCannotDelete();
@@ -90,13 +90,15 @@ export function DeleteAttendeeComponent({ attendeeId, userRole }) {
             <div className="modal-action">
               <div className="flex justify-around w-full mb-4 mt-3 px-3">
                 <button
-                  onClick={() => {
-                    handleDelete();
-                  }}
-                  className="h-9 rounded-3xl bg-red-600 w-[100px] hover:bg-red-700"
+                  onClick={handleDelete}
+                  className="h-9 rounded-3xl bg-red-600 w-[100px] hover:bg-red-700 flex justify-center items-center"
                   value="yes"
                 >
-                  <p className="text-white font-semibold">Yes</p>
+                  {!isLoading ? (
+                    <p className="text-white font-semibold">Yes</p>
+                  ) : (
+                    <div className="loader"></div>
+                  )}
                 </button>
                 <button
                   onClick={() => {

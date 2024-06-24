@@ -11,7 +11,7 @@ export const getAttendeeByEventIdService = async (eventId, page) => {
     }
   );
   const data = await res.json();
-  console.log("data:", data);
+  // console.log("data:", data);
   return data;
 };
 export const DeleteAttendeeService = async (attendeeId) => {
@@ -41,3 +41,27 @@ export const searchAttendeeByNameOrPhoneService = async (
   const data = await res.json();
   return data;
 };
+export const getRegistrationFormService = async (eventId) => {
+  console.log("eventId:>>>>>", eventId);
+  const header = await headerToken();
+  const res = await fetch(
+    `${process.env.API_URL}events/registration-form/${eventId}`,
+    // http://34.124.203.109:8081/api/events/registration-form/62
+    {
+      method: "GET",
+      headers: header,
+    }
+  );
+  const data = await res.json();
+  return data;
+};
+
+// export const getRegistrationForm = async (eventId) => {
+//   try {
+//     const response = await axios.get(`${BASE_URL}/events/registration-form/${eventId}`);
+//     return response.data; // Assuming this returns JSON with form fields
+//   } catch (error) {
+//     console.error('Error fetching registration form:', error);
+//     throw error;
+//   }
+// };
