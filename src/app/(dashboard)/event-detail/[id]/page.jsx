@@ -10,7 +10,7 @@ const Page = async ({ params: { id } }) => {
   const eventData = await getEventByIdService(id)
   return (
     <main className="space-y-8">
-      <PushRouter name={`/event-detail/${id}?name=${eventData?.payload?.eventName}`} />
+      {/* <PushRouter name={`/event-detail/${id}?name=${eventData?.payload?.eventName}`} /> */}
       <div className=" rounded-3xl bg-white  z-0">
         <EventDetail eventData={eventData.payload} />
       </div>
@@ -18,7 +18,7 @@ const Page = async ({ params: { id } }) => {
         <p className="text-primary-text font-semibold text-2xl mb-5">
           Registratioin form
         </p>
-        <CreateDynamicForm />
+        <CreateDynamicForm id={id} />
       </div>
       {/* <RegisterFormConferrence /> */}
       {/* <MaterialComponent id={id}/>

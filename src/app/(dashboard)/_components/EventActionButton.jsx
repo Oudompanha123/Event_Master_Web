@@ -6,14 +6,8 @@ import { ToogleBtn } from "../_components/Action/ToogleBtn";
 import { RxCross2 } from "react-icons/rx";
 import { SelectModifyV2 } from "./Action/SelectModifyV2";
 import deleteEvent from "@/app/actions/deleteEventAction";
-import { handleUpdateEvent } from "@/app/actions/updateEventAction";
-import { useRouter } from "next/router";
-
-// import { ToogleBtn } from "./Action/ToogleBtn";
 
 export const EventActionButton = ({ eventName, startDate, endDate, duration, address, description, poster, isPost, maxAttendee, category, eventId }) => {
-  // console.log("edit Id:", eventId);
-  console.log("category:", category.categoryName);
 
   const [handleEventName, setEventName] = useState(eventName);
   const [eventCategory, setEventCategory] = useState(category);
@@ -36,9 +30,9 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
   };
 
   const handleCategorySelect = (selectedCategory) => {
-    setEventCategory(selectedCategory.category);
+    setEventCategory(selectedCategory.categoryName);
   };
-  
+
   const handleEventType = (type) => setIsPublic(!type);
 
   const [uploading, setUploading] = useState(true);
@@ -70,32 +64,23 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
         maxAttendee: data.maxAttendee,
         category: categoryId,
       };
-  
+
       console.log("Submit Data:", submitData);
     } catch (error) {
       console.error("Error during onSubmit:", error);
     }
   };
-  
-  
-  // const onSubmit = async (e) => {
-  //   console.log("data", e);
-  //    await handleUpdateEvent(eventId, e);
-  //    reset();
-  //    document.getElementById(`my_modal_updateEvent${eventId}`).close();
-  //  };
 
-  const handleDelete = async () => {
-      try {
-          await deleteEvent(eventId);
-      } catch (error) {
-          console.error("Failed to delete event:", error);
-      }
+  const handleDelete = async (eventId) => {
+    try {
+      await deleteEvent(eventId);
+    } catch (error) {
+      console.error("Failed to delete event:", error);
+    }
   };
 
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null); // Reference htmlFor dropdown
-  // console.log("data of event is ",id)
+  const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -124,7 +109,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
   }, [isOpen]);
 
   const [hide, setHide] = useState(false);
-  const [previewSrc, setPreviewSrc] = useState(""); 
+  const [previewSrc, setPreviewSrc] = useState("");
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -151,17 +136,17 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
     setHide(true);
     console.log('check here ', e.target.files[0])
     console.log("change", imageLink)
-};
+  };
 
-const displayPreview = (file) => {
+  const displayPreview = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-        const preview = document.getElementById("preview");
-        preview.src = reader.result;
-        preview.classList.remove("hidden");
+      const preview = document.getElementById("preview");
+      preview.src = reader.result;
+      preview.classList.remove("hidden");
     };
-};
+  };
 
   const {
     watch,
@@ -260,7 +245,7 @@ const displayPreview = (file) => {
               action=""
               className="w-full space-y-6"
               onSubmit={handleSubmit(onSubmit)}
-              >
+            >
               <div
                 className="w-full relative border-2 border-gray-300 border-dashed rounded-lg p-8"
                 id="dropzone"
@@ -341,22 +326,12 @@ const displayPreview = (file) => {
                   )}
                 </div>
                 <div className="w-full">
-                  
-                <SelectModifyV2
-                  placeholder="Select category"
-                  defaultSelect={eventCategory}
-                  onSelect={handleCategorySelect}
-                  height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
-                />
-                
-                <div className="bg-white rounded-3xl px-4 py-2 border border-gray-300 flex items-center">
-                  <span className="text-gray-600 mr-2">{eventCategory ? eventCategory.categoryName : "None selected"}</span>
-                  {eventCategory && (
-                    <button className="text-red-600" onClick={() => setEventCategory(null)}>
-                      <RxCross2 className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
+                  <SelectModifyV2
+                    placeholder="Select category"
+                    defaultSelect={eventCategory}
+                    onSelect={handleCategorySelect}
+                    height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                  />
 
 
                 </div>
@@ -605,7 +580,7 @@ const displayPreview = (file) => {
               method="dialog"
               className=" flex justify-around w-full mb-4 mt-3 px-3"
             >
-              <button onClick={handleDelete}
+              <button onClick={() => handleDelete(eventId)}
                 className="h-9 rounded-3xl bg-red-600 w-[100px] hover:bg-red-700 flex items-center justify-center"
                 value="yes"
               >

@@ -39,7 +39,7 @@ export const EventCardComponent = ({ img, title, location, description, company,
                         <p>{formated}</p>
                     </div>
                     <div className="flex flex-col gap-3">
-                        <h2 className="text-lg lg:text-xl font-bold">{title}</h2>
+                        <h2 className="text-lg lg:text-xl font-bold max-w-64 line-clamp-1">{title}</h2>
                         <p className="text-sm lg:text-base line-clamp-2 font-medium">
                             {description}
                         </p>
@@ -47,7 +47,7 @@ export const EventCardComponent = ({ img, title, location, description, company,
                 </div>
                 <div className="flex justify-between">
                     <Link href={`/detail/${id}`} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
-                    <Link href={`/register/${id}`} className="text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text">Join Event</Link>
+                    <Link href={`/register/${id}`} className={`${!status && 'hidden'} text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text`}>Join Event</Link>
                 </div>
             </div>
         </div>

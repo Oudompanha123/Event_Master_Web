@@ -36,7 +36,8 @@ export const registerService = async (userInfo) => {
 
 export const registerUserService = async (userInfo) => {
     console.log("User : ", userInfo)
-    const res2 = await fetch(`${process.env.API_URL}auth/verify?otp=9421&email=pokhengly%40gmail.com`, {
+    // const res2 = await fetch('http://34.124.203.109:8081/api/auth/verify?otp=9421&email=pokhengly%40gmail.com', {
+    const res2 = await fetch(`${process.env.API_URL}auth/user-register`, {
         method: 'POST',
         headers: {
             'accept': ' */*',

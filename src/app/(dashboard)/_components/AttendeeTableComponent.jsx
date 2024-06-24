@@ -7,27 +7,60 @@ const AttendeeTableComponent = ({
   userRole,
   attendeeInEvent,
   isSearch,
+  header,
 }) => {
-  const attendees = parentData?.payload || [];
+  let attendees = parentData?.payload || [];
+  let temp = header;
+
+  if (attendees.length > 0) {
+    let nameIndex = temp.indexOf("name");
+    if (nameIndex !== -1) {
+      [temp[0], temp[nameIndex]] = [temp[nameIndex], temp[0]];
+    }
+  }
+  let tableHeaders = ["NO", ...temp];
+  if (userRole !== "ROLE_USER") {
+    tableHeaders.push("ACTION");
+  }
+
+  header = attendees.length > 0 ? Object.keys(attendees[0].data) : [];
+
+  if (attendees.length > 0) {
+    let nameIndex = header.indexOf("name");
+    if (nameIndex !== -1) {
+      [header[0], header[nameIndex]] = [header[nameIndex], header[0]];
+    }
+  }
+
+  // Limit header  only 5 fields
+  // header = header.slice(0, 6);
 
   return (
-    <div>
+    <div className="overflow-y-auto h-[600px]">
       <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
         <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
           <tr className="text-xs lg:text-base">
-            <th className="px-5 py-2 font-medium rounded-l-radiusUi">NO</th>
-            <th className="px-5 py-2 font-medium">NAME</th>
-            <th className="px-5 py-2 font-medium">GENDER</th>
-            <th className="px-5 py-2 font-medium">EMAIL</th>
-            <th className="px-5 py-2 font-medium">PHONE NUMBER</th>
-            <th className="px-5 py-2 font-medium rounded-r-radiusUi">ACTION</th>
+            {tableHeaders.map((header, index) => (
+              <th
+                key={index}
+                className={`px-5 py-2 font-medium ${
+                  index === 0
+                    ? "rounded-l-radiusUi"
+                    : index === tableHeaders.length - 1
+                    ? "rounded-r-radiusUi"
+                    : ""
+                }`}
+              >
+                {header.toUpperCase()}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
           {isSearch && attendees.length === 0 && (
             <tr>
-              <td colSpan="6">
-                <div className="justify-center w-full content-center space-y-2 pb-10 flex flex-col items-center">
+              <td colSpan={tableHeaders.length}>
+                <div className="justify-center w-full h-[595px] content-center space-y-2 pb-10 flex flex-col items-center">
                   <Image
                     src="/images/Search.gif"
                     alt="empty image"
@@ -35,7 +68,7 @@ const AttendeeTableComponent = ({
                     height={180}
                     priority
                   />
-                  <p className="text-center text-4xl font-semibold text-primary-text">
+                  <p className="text-center text-2xl font-semibold text-primary-text">
                     No results found
                   </p>
                   <p className="text-center text-xl text-gray-500">
@@ -47,8 +80,8 @@ const AttendeeTableComponent = ({
           )}
           {!isSearch && attendeeInEvent === 0 && (
             <tr>
-              <td colSpan="6">
-                <div className="justify-center w-full content-center space-y-2 pb-10 flex flex-col items-center">
+              <td colSpan={tableHeaders.length}>
+                <div className="justify-center w-full h-[595px] content-center space-y-2 pb-10 flex flex-col items-center">
                   <Image
                     src="/images/Search.gif"
                     alt="empty image"
@@ -59,7 +92,6 @@ const AttendeeTableComponent = ({
                   <p className="text-center text-2xl font-semibold text-primary-text">
                     No attendees found for this event
                   </p>
-
                 </div>
               </td>
             </tr>
@@ -75,27 +107,22 @@ const AttendeeTableComponent = ({
                   <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">
                     {index + 1}
                   </td>
-                  <td className="px-5 py-2 text-xs lg:text-base">
-                    {attendee.name}
-                  </td>
-                  <td className="px-5 py-2 text-xs lg:text-base">
-                    {attendee.gender}
-                  </td>
-                  <td className="px-5 py-2 text-xs lg:text-base">
-                    {attendee.email}
-                  </td>
-                  <td className="px-5 py-2 text-xs lg:text-base">
-                    {attendee.phone}
-                  </td>
-                  <td className="px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
-                    {(userRole === "ROLE_ADMIN" ||
-                      userRole === "ROLE_SUB_ADMIN") && (
+                  {header.map((field, fieldIndex) => (
+                    <td
+                      key={fieldIndex}
+                      className="px-5 py-2 text-xs lg:text-base"
+                    >
+                      {attendee[field]}
+                    </td>
+                  ))}
+                  {userRole !== "ROLE_USER" && (
+                    <td className="px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
                       <DeleteAttendeeComponent
                         attendeeId={attendeeWrapper.attendeeId}
                         userRole={userRole}
                       />
-                    )}
-                  </td>
+                    </td>
+                  )}
                 </tr>
               );
             })}
@@ -104,5 +131,4 @@ const AttendeeTableComponent = ({
     </div>
   );
 };
-
 export default AttendeeTableComponent;

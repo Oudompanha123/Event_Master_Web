@@ -12,11 +12,13 @@ import { authOption } from "@/app/api/auth/[...nextauth]/route";
 
 import "@knocklabs/react/dist/index.css";
 import { jwtDecode } from "jwt-decode";
+import { redirect } from "next/navigation";
 
 export const NotificationMenu = () => {
     const [isVisible, setIsVisible] = useState(false);
     const notifButtonRef = useRef(null);
     const { status, data } = useSession(authOption);
+    if (!data?.user?.token) redirect('/login')
     let userInfo = jwtDecode(data?.user?.token);
     const [isClient, setIsClient] = useState(false);
 

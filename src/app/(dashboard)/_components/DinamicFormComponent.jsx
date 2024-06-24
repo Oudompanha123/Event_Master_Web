@@ -11,7 +11,7 @@ const DinamicFormComponent = () => {
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
                     <div className="content">
-                        <div className="title font-semibold text-2xl">Choose field htmlFor your form</div>
+                        <div className="title font-semibold text-2xl">Choose input field your form</div>
                         <div className="mb-4 mt-12 grid grid-cols-6 gap-6">
                             <div className="col-span-6 sm:col-span-3">
                                 <label htmlFor="text" className="font-semibold text-base">Text</label>
@@ -69,7 +69,7 @@ export function UpdateButton() {
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
                     <div className="content">
-                        <div className="title font-semibold text-2xl">Add name htmlFor your chosen field</div>
+                        <div className="title font-semibold text-2xl">Add name For your chosen field</div>
 
                         <div className="mt-8 w-[48%]">
                             <div className="w-full">

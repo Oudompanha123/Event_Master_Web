@@ -8,10 +8,17 @@ import { CreateEventButton } from "@/app/(dashboard)/_components/Action/CreateEv
 import Link from "next/link"
 import { useSession } from "next-auth/react"
 import { jwtDecode } from "jwt-decode"
+import { getEventByIdAction } from "@/actions/eventAction"
+import { useEffect, useState } from "react"
 import { NotificationCard } from "@/app/(dashboard)/_components/NotificationCard"
 
 export const NavbarComponent = ({ className }) => {
+    const [eventName, setEventName] = useState();
     const pathname = usePathname();
+    let url = pathname;
+    let eId = url.split('/').pop()
+    console.log(eId, 'check path')
+
     const param = useSearchParams()
     const eName = param.get('name')
     // searchParam for server 
@@ -22,6 +29,17 @@ export const NavbarComponent = ({ className }) => {
     if (status === 'authenticated' && session?.user?.token) {
         userInfo = jwtDecode(session.user.token);
     }
+
+    const getEventById = async (id) => {
+        const res = await getEventByIdAction(id);
+        setEventName(res?.payload?.eventName)
+    }
+
+    useEffect(() => {
+        if (pathname.startsWith('/event-detail') || pathname.startsWith('/attendees')) {
+            getEventById(eId)
+        }
+    }, [pathname])
 
     const userRole = userInfo?.role;
 
@@ -52,7 +70,7 @@ export const NavbarComponent = ({ className }) => {
                     <div className="hidden lg:flex text-sm breadcrumbs">
                         <ul className="">
                             <li>
-                                <Link href={'/event-detail/1'}>{eName ? eName : '...'}</Link>
+                                <Link href={'/event-detail/1'}>{eventName ? eventName : '...'}</Link>
                             </li>
                             <li>
                                 <Link href={`/attendees/${eventId}`}>Attendees</Link>
@@ -95,10 +113,21 @@ export const NavbarComponent = ({ className }) => {
                             <p className="text-xs text-greyUi">{userInfo?.sub}</p>
                         </div>
                         <div className="w-[48px] h-48px] hidden lg:block">
-                            <Image className="rounded-full" src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={48} width={48} />
+                            <Image
+                                className="rounded-full"
+                                src={userInfo?.organization?.logo && /^(http|https):\/\//.test(userInfo.organization.logo) ? userInfo.organization.logo : defaultProfile}
+                                height={48}
+                                width={48}
+                            />
                         </div>
                         <div className="w-[32px] h-[32px] block lg:hidden">
-                            <Image className="rounded-full" src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={32} width={32} />
+                            <Image
+                                className="rounded-full"
+                                src={userInfo?.organization?.logo && /^(http|https):\/\//.test(userInfo.organization.logo) ? userInfo.organization.logo : defaultProfile}
+                                height={48}
+                                width={48}
+                            />
+                            {/* <Image className="rounded-full" src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={32} width={32} /> */}
                         </div>
                     </div>
                 </Link>

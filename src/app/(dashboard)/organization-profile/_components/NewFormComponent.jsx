@@ -2,8 +2,7 @@
 
 import { LiaUserEditSolid } from "react-icons/lia";
 import Image from "next/image";
-import defaultProfile from "../../../../../public/images/default-profile.png";
-import { usePathname } from "next/navigation";
+import defaultProfile from "../../../../../public/images/default-profile.jpg";
 import { useSession } from "next-auth/react";
 import { jwtDecode } from "jwt-decode";
 import { useState, useEffect } from "react";
@@ -11,8 +10,6 @@ import { FaRegCopy } from "react-icons/fa6";
 import { CgAddR } from "react-icons/cg";
 import { TbEdit } from "react-icons/tb";
 import { updateOrganization } from "@/services/profile/org";
-import useSWR from "swr";
-import axios from "axios";
 
 const NewFormComponent = () => {
   // fetch data
@@ -82,7 +79,7 @@ const NewFormComponent = () => {
       }
     }
   };
-  
+
 
   const handleCancelChanges = () => {
     setOrganizationName(userInfo?.organization?.orgName || "");
@@ -96,14 +93,12 @@ const NewFormComponent = () => {
       orgName: organizationName,
       address: address,
       logo: imageSrc,
+      // logo: "/string.jpg"
     };
 
     try {
       console.log("Saving changes...", organizationData);
-      const updatedOrganization = await updateOrganization(
-        organizationData.orgId,
-        organizationData
-      );
+      const updatedOrganization = await updateOrganization(organizationData.orgId, organizationData);
       console.log("Changes saved successfully: ", updatedOrganization);
       setIsEditing(false);
     } catch (error) {
@@ -135,33 +130,22 @@ const NewFormComponent = () => {
     <form action="">
       <div className="rounded-2xl w-full h-[800px] flex flex-col shadow-md relative">
         <div className="bg-purple-text h-[20%] rounded-t-2xl flex items-center justify-center">
-          <img
-            // src={
-            //   userInfo?.organization?.logo != ""
-            //     ? userInfo?.organization?.logo
-            //     : defaultProfile
-            // }
-            src={imageSrc !== defaultProfile ? imageSrc : defaultProfile}
+          <Image
+            src={imageSrc && /^(http|https):\/\//.test(imageSrc) ? imageSrc : defaultProfile}
             alt="logo"
             width={130}
             height={130}
             className="rounded-full mt-48 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-52 lg:h-52 xl:w-60 xl:h-60 2xl:w-64 2xl:h-64"
           />
-          <div className=" absolute transform translate-x-10 translate-y-36 sm:translate-x-10 sm:translate-y-36 md:translate-x-16 md:translate-y-36 lg:translate-x-20 lg:translate-y-40 xl:translate-x-20 xl:translate-y-44 2xl:translate-x-20 2xl:translate-y-48">
+          <div className="absolute transform translate-x-10 translate-y-36 sm:translate-x-10 sm:translate-y-36 md:translate-x-16 md:translate-y-36 lg:translate-x-20 lg:translate-y-40 xl:translate-x-20 xl:translate-y-44 2xl:translate-x-20 2xl:translate-y-48">
             <label
               htmlFor="image-upload"
               className="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center bg-gray-300 duration-300 hover:bg-gray-200 cursor-pointer"
             >
-              <LiaUserEditSolid className="w-6 h-6 text-gray-800" />
+              <LiaUserEditSolid className="w-6 h-6 text-gray-800 relative" />
+              <input id="file-upload" name="file-upload" type="file" class="sr-only w-14 h-14 cursor-pointer z-50" />
             </label>
           </div>
-          <input
-            id="image-upload"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handleImageChange}
-          />
         </div>
         <div className="absolute text-center w-full top-64 sm:top-64 md:top-64 lg:top-72 xl:top-80 2xl:top-[330px]">
           <p className="text-primary-text font-bold text-xl sm:text-xl md:text-xl lg:text-2xl xl:text-3xl 2xl:text-3xl">
@@ -259,11 +243,10 @@ const NewFormComponent = () => {
                 </button>
                 <button
                   className={`flex justify-center align-middle items-center rounded-lg bg-purple-text text-white text-lg ml-5 w-28 sm:w-32 md:w-32 lg:w-32 xl:w-32 2xl:w-32 
-                  ${
-                    !organizationName || !address
+                  ${!organizationName || !address
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:bg-violet-500"
-                  }`}
+                    }`}
                   onClick={handleSaveChanges}
                   type="button"
                   disabled={!organizationName.trim() || !address.trim()}

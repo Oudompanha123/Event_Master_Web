@@ -5,7 +5,6 @@ import {
   getAllAssetService,
   searchAssetByName,
 } from "@/services/assetService/assetService";
-import { ToastContainer } from "react-toastify";
 import { getServerSession } from "next-auth";
 import { jwtDecode } from "jwt-decode";
 import { authOption } from "@/app/api/auth/[...nextauth]/route";
@@ -46,7 +45,6 @@ export default async function assetPage({ searchParams }) {
           </div>
         </div>
       </div>
-      <ToastContainer autoClose="1000" />
     </>
   );
 }
