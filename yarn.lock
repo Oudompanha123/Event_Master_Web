@@ -1623,6 +1623,11 @@ commander@^4.0.0:
   resolved "https://registry.npmjs.org/commander/-/commander-4.1.1.tgz"
   integrity sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==
 
+compute-scroll-into-view@^3.0.2:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/compute-scroll-into-view/-/compute-scroll-into-view-3.1.0.tgz"
+  integrity sha512-rj8l8pD4bJ1nx+dAkMhV1xB5RuZEyVysfxJqB1pRchh1KVvwOv9b7CGB8ZfjTImVv2oF+sYMUkMZq6Na5Ftmbg==
+
 convert-source-map@^1.5.0:
   version "1.9.0"
   resolved "https://registry.npmjs.org/convert-source-map/-/convert-source-map-1.9.0.tgz"
@@ -2701,7 +2706,7 @@ react-chartjs-2@^5.2.0:
   resolved "https://registry.npmjs.org/react-chartjs-2/-/react-chartjs-2-5.2.0.tgz"
   integrity sha512-98iN5aguJyVSxp5U3CblRLH67J8gkfyGNbiK3c+l1QI/G4irHMPQw44aEPmjVag+YKTyQ260NcF82GTQ3bdscA==
 
-"react-dom@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^16 || ^17 || ^18", "react-dom@^16.11.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^16.8.0 || ^17 || ^18", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.2 || ^16.0.2 || ^18.0.0", "react-dom@^17.0.2 || ^18", react-dom@^18, react-dom@^18.2.0, react-dom@^18.3.1, "react-dom@>= 16.0.0", "react-dom@>= 16.8.0", react-dom@>=16.6.0, react-dom@>=16.8.0, react-dom@>=18, "react-dom@16.2.0 - 18":
+"react-dom@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^16 || ^17 || ^18", "react-dom@^16.11.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^16.8.0 || ^17 || ^18", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.2 || ^16.0.2 || ^18.0.0", "react-dom@^17.0.2 || ^18", react-dom@^18, react-dom@^18.2.0, react-dom@^18.3.1, "react-dom@>= 16.0.0", "react-dom@>= 16.8.0", react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0, react-dom@>=18, "react-dom@16.2.0 - 18":
   version "18.3.1"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz"
   integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
@@ -2718,6 +2723,13 @@ react-hook-form@^7.51.5:
   version "7.51.5"
   resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.51.5.tgz"
   integrity sha512-J2ILT5gWx1XUIJRETiA7M19iXHlG74+6O3KApzvqB/w8S5NQR7AbU8HVZrMALdmDgWpRPYiZJl0zx8Z4L2mP6Q==
+
+react-horizontal-scrolling-menu@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.npmjs.org/react-horizontal-scrolling-menu/-/react-horizontal-scrolling-menu-7.1.1.tgz"
+  integrity sha512-g93/9RM4io8CHoyiZO+KBlBg5k/zlmzYe+d1Wln2XcTG7TKq60gwqR9toyBFnYW8x6Xk2tmvEXi5Y8dE40YkEw==
+  dependencies:
+    smooth-scroll-into-view-if-needed "^2.0.2"
 
 react-icons@^5.2.1:
   version "5.2.1"
@@ -2936,6 +2948,13 @@ scheduler@^0.23.2:
   dependencies:
     loose-envify "^1.1.0"
 
+scroll-into-view-if-needed@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/scroll-into-view-if-needed/-/scroll-into-view-if-needed-3.1.0.tgz"
+  integrity sha512-49oNpRjWRvnU8NyGVmUaYG4jtTkNonFZI86MmGRDqBphEK2EXT9gdEUoQPZhuBM8yWHxCWbobltqYO5M4XrUvQ==
+  dependencies:
+    compute-scroll-into-view "^3.0.2"
+
 semver@^6.3.1:
   version "6.3.1"
   resolved "https://registry.npmjs.org/semver/-/semver-6.3.1.tgz"
@@ -3003,6 +3022,13 @@ simple-swizzle@^0.2.2:
   integrity sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==
   dependencies:
     is-arrayish "^0.3.1"
+
+smooth-scroll-into-view-if-needed@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/smooth-scroll-into-view-if-needed/-/smooth-scroll-into-view-if-needed-2.0.2.tgz"
+  integrity sha512-z54WzUSlM+xHHvJu3lMIsh+1d1kA4vaakcAtQvqzeGJ5Ffau7EKjpRrMHh1/OBo5zyU2h30ZYEt77vWmPHqg7Q==
+  dependencies:
+    scroll-into-view-if-needed "^3.1.0"
 
 source-map-js@^1.0.2, source-map-js@^1.2.0:
   version "1.2.0"
