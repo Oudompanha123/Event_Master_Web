@@ -17,7 +17,7 @@ export async function handleAsset(assetInput) {
   };
   const data = await insertAssetService(newAsset);
   
-  console.log("return insert asset:",data);
+ // console.log("return insert asset:",data);
   revalidateTag("asset");
   
   return data;

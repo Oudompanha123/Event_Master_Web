@@ -4,14 +4,14 @@ import { Trash } from "iconsax-react";
 import Image from "next/image";
 import React from "react";
 import { RxCross2 } from "react-icons/rx";
-import { handleDeleteAsset } from "@/app/actions/assetAction/handleAssetInput";
-import 'react-toastify/dist/ReactToastify.css';
+import { handleDeleteAsset } from "@/actions/assetAction/handleAssetInput";
+import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
 export const DeleteAssetComponent = ({ assetIdprop }) => {
   const notify = () => {
     toast.success("Deleted Successful", {
-    position: "top-center"
+      position: "top-center",
     });
   };
   //console.log("asset:", assetIdprop);
@@ -21,7 +21,6 @@ export const DeleteAssetComponent = ({ assetIdprop }) => {
   //handleDeleteAsset(assetIdprop);
   return (
     <div>
-    
       <Trash
         onClick={() =>
           document.getElementById(`category_action_${assetIdprop}`).showModal()
@@ -61,13 +60,11 @@ export const DeleteAssetComponent = ({ assetIdprop }) => {
               <button
                 onClick={() => {
                   trigger(assetIdprop);
-                 notify();
+                  notify();
                 }}
-                
                 className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700"
                 value="Yes"
-               
-              > 
+              >
                 <p className="text-white font-semibold">Yes</p>
               </button>
               <button

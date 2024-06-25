@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import { AddSquare, Edit } from "iconsax-react";
-import { handleUpdateAsset } from "@/app/actions/assetAction/handleAssetInput";
+import { handleUpdateAsset } from "@/actions/assetAction/handleAssetInput";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -20,9 +20,9 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const cancle = () => {
-    setHandleName( name);
-    setHandleQty (qty);
-    setHandleUnit (unit);
+    setHandleName(name);
+    setHandleQty(qty);
+    setHandleUnit(unit);
   };
   const {
     register,

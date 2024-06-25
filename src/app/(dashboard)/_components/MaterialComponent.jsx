@@ -12,7 +12,7 @@ import { getAllMemberService } from "@/services/dashboard/memberService";
 import deleteMaterialMultiple from "@/app/actions/material/deleteMaterialMultipleAction";
 import fetchMaterialCount from "@/app/actions/material/fetchCountMaterialAction";
 import { CountMaterialComponent } from "./CountMaterailComponent";
-import { getAllAssetNoPageAction } from "@/app/actions/assetAction/handleAssetInput";
+import { getAllAssetNoPageAction } from "@/actions/assetAction/handleAssetInput";
 import { toast } from "react-toastify";
 import DeleteDialog from "./DeleteDialog";
 import EmptyMaterialRow from "./EmptyMaterialRow";
@@ -317,9 +317,12 @@ export default function MaterialComponent({ id }) {
         {(rows ?? []).length === 0 && dataLength === 0 ? (
           <>
             <table className="overflow-x-auto w-full text-sm text-left rtl:text-right text-gray-500 border-separate dark:text-gray-400 border-spacing-y-3 table">
-                {/* Render the table head */}
-            <TableHeadMaterial selectAllChecked={selectAllChecked} handleSelectAllChange={handleSelectAllChange} />
-              <EmptyMaterialRow/>
+              {/* Render the table head */}
+              <TableHeadMaterial
+                selectAllChecked={selectAllChecked}
+                handleSelectAllChange={handleSelectAllChange}
+              />
+              <EmptyMaterialRow />
             </table>
             <div className="justify-center w-full content-center space-y-6 pb-10">
               <div className="justify-center flex items-center">
@@ -343,8 +346,11 @@ export default function MaterialComponent({ id }) {
         ) : (
           <table className="overflow-x-auto w-full text-sm text-left rtl:text-right text-gray-500 border-separate dark:text-gray-400 border-spacing-y-3 table">
             {/* Render the table head */}
-            <TableHeadMaterial selectAllChecked={selectAllChecked} handleSelectAllChange={handleSelectAllChange} />          
-         
+            <TableHeadMaterial
+              selectAllChecked={selectAllChecked}
+              handleSelectAllChange={handleSelectAllChange}
+            />
+
             <tbody className="drop-shadow rounded-radiusUi text-sm font-normal text-primary-text bg-[#ffffff]">
               {/* Render show the material fetch from api (material created) */}
               {data?.map((rowData, index) => (
@@ -590,7 +596,7 @@ export default function MaterialComponent({ id }) {
           </table>
         )}
       </div>
-      
+
       <DeleteDialog
         isOpen={isDeleteDialogOpen}
         onClose={() => setIsDeleteDialogOpen(false)}
@@ -599,7 +605,6 @@ export default function MaterialComponent({ id }) {
           setIsDeleteDialogOpen(false);
         }}
       />
-
     </>
   );
 }

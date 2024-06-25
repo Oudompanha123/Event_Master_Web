@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { Form, useForm } from "react-hook-form";
-import { handleSearchAsset } from "@/app/actions/assetAction/handleAssetInput";
+import { handleSearchAsset } from "@/actions/assetAction/handleAssetInput";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 export const SearchAssetComponent = () => {
