@@ -6,6 +6,10 @@ import { ToogleBtn } from "../_components/Action/ToogleBtn";
 import { RxCross2 } from "react-icons/rx";
 import { SelectModifyV2 } from "./Action/SelectModifyV2";
 import deleteEvent from "@/app/actions/deleteEventAction";
+import { Additem } from "iconsax-react";
+import { getEventByIdAction, updateEventFormAction } from "@/actions/eventAction";
+import { addNewEventAction } from "@/actions/categoryAction";
+import { toast } from "react-toastify";
 
 export const EventActionButton = ({ eventName, startDate, endDate, duration, address, description, poster, isPost, maxAttendee, category, eventId }) => {
 
@@ -19,6 +23,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
   const [eventAddress, setAddress] = useState(address);
   const [eventDescription, setDescription] = useState(description);
   const [isPublic, setIsPublic] = useState(isPost);
+  const [loading, setLoading] = useState(false);
 
   const triggerHourChange = () => {
     const sDate = new Date(`${startDate}`);
@@ -89,6 +94,68 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
   const closeDropdown = () => {
     setIsOpen(false);
   };
+
+  const notify = (status, message) => {
+    if (status == "CREATED") {
+      toast.success("Sucessfully clone a event", {
+        position: "top-center"
+      });
+    }
+    if (status == 400) {
+      toast.error(`Can't clone a event, please check ${message != undefined ? message : ''}`, {
+        position: "top-center"
+      });
+    }
+    if (status == 404) {
+      toast.error(`Please select category again ${message != undefined ? message : ''}`, {
+        position: "top-center"
+      });
+    }
+  }
+
+  const handleCloseClone = () => document.getElementById(`event_action_copy_${eventId}`).close()
+
+  const handleClone = async (id) => {
+    setLoading(true);
+    const res = await getEventByIdAction(id);
+    const eventData = res?.payload;
+    let start = new Date();
+    start.setMinutes(start.getMinutes() + 2);
+    let end = new Date();
+    end.setMinutes(end.getMinutes() + 5);
+
+    //clone event
+    const cloneData = {
+      eventName: eventData?.eventName,
+      description: eventData?.description,
+      startDate: start.toISOString(),
+      endDate: end.toISOString(),
+      duration: eventData?.duration,
+      address: eventData?.address,
+      poster: eventData?.poster,
+      isPost: eventData?.isPost,
+      maxAttendee: eventData?.maxAttendee,
+      categoryId: eventData?.category?.categoryId,
+    }
+
+    const resInsert = await addNewEventAction(cloneData);
+
+    //clone form
+    const pushData = {
+      data: {
+        form: res?.payload?.form?.form//confirmField is array
+      }
+    };
+
+    await updateEventFormAction(pushData, resInsert?.payload?.eventId)
+
+    setTimeout(() => {
+      setLoading(false)
+    }, 1500)
+
+    handleCloseClone()
+    notify(resInsert?.status)
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -222,6 +289,23 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                   />{" "}
                   <p className="text-primary-text text-base font-semibold ">
                     Delete
+                  </p>
+                </a>
+              </li>
+              <hr />
+              <li>
+                <a
+                  className="gap-5 flex px-5 py-3 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-xl "
+                  role="menuitem"
+                  tabIndex="-1"
+                  onClick={() =>
+                    document.getElementById(`event_action_copy_${eventId}`).showModal()
+                  }
+                >
+                  <Additem size="24" color="#2962FF" />
+                  {" "}
+                  <p className="text-primary-text text-base font-semibold ">
+                    Clone
                   </p>
                 </a>
               </li>
@@ -594,6 +678,50 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                 <p className="text-white font-semibold al">No</p>
               </button>
             </form>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog id={`event_action_copy_${eventId}`} className="modal">
+        <div className="modal-box w-[310px] justity-center  ">
+          <form method="dialog" className="justify-end flex">
+            <button type="submit">
+              <RxCross2 className="absolute right-[20px] top-[20px] w-6 h-6 " />
+            </button>
+          </form>
+          <div className="justify-center flex">
+            <img
+              src="images/clone-illu.svg"
+              alt="delete"
+              className="w-[58%] mb-3"
+            />
+          </div>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            Are you sure,you want to
+          </p>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            clone this event?
+          </p>
+          <div className="modal-action ">
+            <div
+              className=" flex justify-around w-full mb-4 mt-3 px-3"
+            >
+              <button onClick={() => handleClone(eventId)}
+                className="h-9 rounded-3xl bg-blue-600 w-[100px] hover:bg-blue-700 flex items-center justify-center"
+                value="yes"
+              >
+                <p className={`text-white font-semibold al ${loading && 'hidden'}`}>Yes</p>
+                <div className={`loader ${!loading && '!hidden'}`}></div>
+              </button>
+
+              <button
+                onClick={() => handleCloseClone()}
+                className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500 flex items-center justify-center"
+                value="cancel"
+              >
+                <p className="text-white font-semibold al">No</p>
+              </button>
+            </div>
           </div>
         </div>
       </dialog>
