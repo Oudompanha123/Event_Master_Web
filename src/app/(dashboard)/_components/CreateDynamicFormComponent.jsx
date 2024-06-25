@@ -20,8 +20,8 @@ export const CreateDynamicForm = ({ id }) => {
   const [viewField, setViewField] = useState(null);
   const [choosedField, setChoosedField] = useState([]);
   const [confirmField, setConfirmField] = useState([
-    { fieldType: "name,Full Name" },
-    { fieldType: "number,Phone Number" }
+    { fieldType: "name,Name" },
+    { fieldType: "number,Phone" }
   ]);
   const [addFieldNamePopup, setAddFieldNamePopup] = useState(false);
   const [fieldName, setFieldName] = useState('');

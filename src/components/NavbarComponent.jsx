@@ -104,7 +104,7 @@ export const NavbarComponent = ({ className }) => {
                 <div tabIndex={0} role="button" className="bg-[#F7F9FB] p-1 rounded-full hidden cursor-pointer lg:block">
                     <NotificationMenu />
                 </div>
-                {userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN" ? <CreateEventButton /> : ''}
+                {userRole === "ROLE_ADMIN" ? <CreateEventButton /> : ''}
                 <Link href={'/user-profile'}>
                     <div className="flex items-center gap-4">
                         <div className="hidden lg:block">
