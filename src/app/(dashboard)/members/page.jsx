@@ -12,22 +12,16 @@ import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { SearchMemberComponent } from "../_components/SearchMemberComponent";
 import { RPaginate } from "../_components/paginate/RPaginate";
 import Image from "next/image";
-
-// console.log("ROLE::", userRole);
-
 const MemberPage = async ({ searchParams }) => {
-  console.log("param:", searchParams);
   const query = searchParams?.query || "";
   const page = searchParams?.page;
-  console.log("page:", page);
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
   const memberData = await getAllMembersAction(page);
   const search = await searchMemberAction(query, page);
   const data = query == "" || query == null ? memberData : search;
-     const nullsearch= data.totalRecord;
-  console.log("recive data:", data);
+  const nullsearch = data.totalRecord;
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
@@ -134,7 +128,11 @@ const MemberPage = async ({ searchParams }) => {
             </p>
           </div>
         )}
-        <div className="w-full flex justify-end mt-8">
+        <div
+          className={`${
+            nullsearch > 0 ? "flex" : "hidden"
+          } w-full flex justify-end mt-8`}
+        >
           <RPaginate totalData={data?.totalRecord} />
         </div>
       </div>

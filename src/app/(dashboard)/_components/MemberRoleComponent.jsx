@@ -32,9 +32,7 @@ const getRoleDisplayName = (role) => {
   }
 };
 
-export const MemberRoleComponent = ({ memberId, memberRoles }) => {
-//   console.log(memberId,"memberid");
-//   console.log(memberRoles,"roles");
+export const MemberRoleComponent = ({ memberId, memberRoles }) => {  
   const [currentRole, setCurrentRole] = useState(memberRoles);
   const [activeDropdown, setActiveDropdown] = useState(false);
   const [confirmingRoleChange, setConfirmingRoleChange] = useState(null);
@@ -88,7 +86,6 @@ export const MemberRoleComponent = ({ memberId, memberRoles }) => {
   const handleConfirmRoleChange = () => {
     handleRoleChange(confirmingRoleChange.role);
   };
-
   return (
     <div>
       <div
@@ -109,7 +106,13 @@ export const MemberRoleComponent = ({ memberId, memberRoles }) => {
           {currentRole !== "ROLE_ADMIN" && <FaAngleDown className=" right-0" />}
         </div>
         {activeDropdown && currentRole !== "ROLE_ADMIN" && (
-          <div className="origin-top-right -ml-14 mt-1 absolute w-44 cursor-pointer rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+          <div
+            className={`${
+              (userRole == "ROLE_USER" || userRole == "ROLE_SUB_ADMIN") && (
+                <FaAngleDown className=" right-0" />
+              )
+            }  origin-top-right -ml-14 mt-1 absolute w-44 cursor-pointer rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5`}
+          >
             <ul
               role="menu"
               aria-orientation="vertical"
