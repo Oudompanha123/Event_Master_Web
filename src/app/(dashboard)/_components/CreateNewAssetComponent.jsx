@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import { AddSquare } from "iconsax-react";
 // import { CreateNewAsset } from "./Action/CreateNewAssetButton";
-import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
+import { handleAsset } from "@/actions/assetAction/handleAssetInput";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -120,7 +120,7 @@ export const AssetPopupComponent = () => {
                       maxLength: {
                         value: 40,
                         message: "name cannot more than 40 characters",
-                      },  
+                      },
                     })}
                   />
                   {errors.unit && (
