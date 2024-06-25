@@ -2,28 +2,27 @@
 import { useForm } from "react-hook-form";
 import { AddSquare } from "iconsax-react";
 import { CreateNewAsset } from "./Action/CreateNewAssetButton";
-import { handleAsset } from "@/app/actions/assetAction/handleAssetInput";
+import { handleAsset } from "@/actions/assetAction/handleAssetInput";
 import { useState } from "react";
 
 export const PopUpChangeComponent = () => {
- const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const delay = (x) => new Promise((resolve) => setTimeout(resolve, x))
-  const onSubmit =async (e) => {
-  setIsLoading(true);
-  
-   await handleAsset(e);
-   await delay(2000);
+  const delay = (x) => new Promise((resolve) => setTimeout(resolve, x));
+  const onSubmit = async (e) => {
+    setIsLoading(true);
+
+    await handleAsset(e);
+    await delay(2000);
     setIsLoading(false);
     reset();
     document.getElementById("my_modal_new").close();
   };
-
 
   return (
     <div>
@@ -33,7 +32,12 @@ export const PopUpChangeComponent = () => {
           <div className="flex flex-row items-center text-primary-text">
             <h2 className="text-lg lg:text-xl font-semibold">Create Asset</h2>
             <form method="dialog">
-              <button onClick={()=>{reset()}} className={`btn btn-sm btn-circle btn-ghost absolute right-2 top-2`} >
+              <button
+                onClick={() => {
+                  reset();
+                }}
+                className={`btn btn-sm btn-circle btn-ghost absolute right-2 top-2`}
+              >
                 ✕
               </button>
             </form>
@@ -44,7 +48,6 @@ export const PopUpChangeComponent = () => {
                 <label htmlFor="">Asset Name</label>
                 <span className="text-redUi">*</span>
                 <input
-                  
                   type="text"
                   id="assetName"
                   name="assetName"
@@ -102,14 +105,12 @@ export const PopUpChangeComponent = () => {
               </div>
               <div className="flex justify-end space-x-3 bg mt-8">
                 <div
-                  onClick={() =>{ document.getElementById("my_modal_new").close();
-                  reset()
-                   } 
-                  }
-                  
+                  onClick={() => {
+                    document.getElementById("my_modal_new").close();
+                    reset();
+                  }}
                   className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer"
                 >
-
                   Cancel
                 </div>
                 <button
@@ -117,11 +118,7 @@ export const PopUpChangeComponent = () => {
                   className="px-6 py-3 rounded-2xl border-1px border-borderUi flex space-x-2 bg-purple-text text-white"
                 >
                   <AddSquare size="24" color="#FFFFFF" variant="Bold" />
-                   {!isLoading ? (
-                      <p>Save</p>
-                    ) : (
-                      <div className="loader"></div>
-                    )}
+                  {!isLoading ? <p>Save</p> : <div className="loader"></div>}
                 </button>
               </div>
             </div>
