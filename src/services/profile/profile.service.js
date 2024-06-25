@@ -27,6 +27,7 @@ export async function updateProfileMemberById(memberId, updateMemberData){
             body: JSON.stringify(updateMemberData),
             headers: header,
         });
+        console.log("Json ", JSON.stringify(updateMemberData))
         const data = await res.json();
         return data;
     } catch (error) {

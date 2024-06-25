@@ -10,7 +10,7 @@ export const updateMemberDataAction = async (memberId, updateMemberData) =>{
         email : updateMemberData.email,
         address : updateMemberData.address,
         dateOfBirth : updateMemberData.date,
-        phone : updateMemberData.phoneNumber
+        phone : updateMemberData.phoneNumber 
     };
     // console.log("Update Member data: ", updateMember)
     // console.log("Member ID: ", memberId)
