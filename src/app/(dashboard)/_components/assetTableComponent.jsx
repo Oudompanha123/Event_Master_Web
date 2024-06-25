@@ -6,7 +6,6 @@ import { jwtDecode } from "jwt-decode";
 import { RPaginate } from "./paginate/RPaginate";
 import Image from "next/image";
 export const AssetTableComponent = async ({ data, nullsearch }) => {
-  // console.log("null::" ,nullsearch);
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
@@ -103,12 +102,13 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
         </tbody>
       </table>
       {nullsearch === 0 && (
-        <div className="justify-center w-full content-center space-y-2 pb-10 flex flex-col items-center">
+        <div className="justify-center h-[60vh] w-full content-center space-y-2 pb-10 flex flex-col items-center">
           <Image
-            src="/images/Search.gif"
+            className=""
+            src="/images/empty-amico.png"
             alt="empty image"
-            width={400}
-            height={400}
+            width={180}
+            height={180}
             priority
           />
           <p className="text-center text-4xl font-semibold text-primary-text">

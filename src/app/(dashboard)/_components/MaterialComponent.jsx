@@ -12,7 +12,7 @@ import { getAllMemberService } from "@/services/dashboard/memberService";
 import deleteMaterialMultiple from "@/app/actions/material/deleteMaterialMultipleAction";
 import fetchMaterialCount from "@/app/actions/material/fetchCountMaterialAction";
 import { CountMaterialComponent } from "./CountMaterailComponent";
-import { getAllAssetNoPageAction } from "@/app/actions/assetAction/handleAssetInput";
+import { getAllAssetNoPageAction } from "@/actions/assetAction/handleAssetInput";
 import { toast } from "react-toastify";
 import DeleteDialog from "./DeleteDialog";
 import EmptyMaterialRow from "./EmptyMaterialRow";

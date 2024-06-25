@@ -32,30 +32,31 @@ const AttendeeTableComponent = ({
     }
   }
 
-  // Limit header  only 5 fields
-  // header = header.slice(0, 6);
-
+  // Limit header to only 5 fields
+  // header = header.slice(0, 5);
   return (
     <div className="overflow-y-auto h-[600px]">
       <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
-        <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
-          <tr className="text-xs lg:text-base">
-            {tableHeaders.map((header, index) => (
-              <th
-                key={index}
-                className={`px-5 py-2 font-medium ${
-                  index === 0
-                    ? "rounded-l-radiusUi"
-                    : index === tableHeaders.length - 1
-                    ? "rounded-r-radiusUi"
-                    : ""
-                }`}
-              >
-                {header.toUpperCase()}
-              </th>
-            ))}
-          </tr>
-        </thead>
+        {(attendees.length > 0 || (isSearch && attendees.length === 0)) && (
+          <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
+            <tr className="text-xs lg:text-base">
+              {tableHeaders.map((header, index) => (
+                <th
+                  key={index}
+                  className={`px-5 py-2 font-medium ${
+                    index === 0
+                      ? "rounded-l-radiusUi"
+                      : index === tableHeaders.length - 1
+                      ? "rounded-r-radiusUi"
+                      : ""
+                  }`}
+                >
+                  {header.toUpperCase()}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        )}
         <tbody>
           {isSearch && attendees.length === 0 && (
             <tr>
@@ -131,4 +132,5 @@ const AttendeeTableComponent = ({
     </div>
   );
 };
+
 export default AttendeeTableComponent;
