@@ -5,7 +5,7 @@ import Image from "next/image";
 import { CiCircleRemove } from "react-icons/ci";
 import { IoSearchOutline } from "react-icons/io5";
 import { AddSquare } from "iconsax-react";
-import DropdownSupporter from "./DropdownSupporterComponent";
+import Dropdown from "./DropdownSupporterComponent";
 import fetchMaterialData from "@/app/actions/material/fetchMaterialAction";
 import CreateMultipleMaterial from "@/app/actions/material/createMaterialMultipleAction";
 import { getAllMemberService } from "@/services/dashboard/memberService";
@@ -44,9 +44,10 @@ export default function MaterialComponent({ id }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [checkedRows, setCheckedRows] = useState([]);
   const [selectAllChecked, setSelectAllChecked] = useState(false);
-  const [memberData, setMemberData] = useState(null);
+  const [memberData, setMemberData] = useState();
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const fetchMaterial = async () => {
     const res = await fetchMaterialData(id);
@@ -70,7 +71,7 @@ export default function MaterialComponent({ id }) {
 
   useEffect(() => {
     fetchMaterial(), fetchData(), fatchAsset(), fetchCountMaterial();
-  }, [saveSuccess, checkedRows]);
+  }, [saveSuccess, checkedRows, isDeleteDialogOpen]);
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -213,6 +214,23 @@ export default function MaterialComponent({ id }) {
     }
   };
 
+  const validateInputs = (list) => {
+    const newErrors = list.map((item) => {
+      const error = { name: "", qty: "", unit: "" };
+      if (!item.materialName) {
+        error.name = "Name is required.";
+      }
+      if (!item.qty || isNaN(item.qty)) {
+        error.qty = "Quantity must be a number.";
+      }
+      if (!item.unit) {
+        error.unit = "Unit is required.";
+      }
+      return error;
+    });
+
+    setErrors(newErrors);
+  };
   //handler save create new material in multiple in save button
   const handleSave = async () => {
     const materials = rows.map((row) => ({
@@ -224,13 +242,25 @@ export default function MaterialComponent({ id }) {
       dueDate: row.dueDate,
       handlerId: row.handler,
       eventId: id,
-      supporters: {},
+      supporters: {
+        data: row.supporterIds.map((supporter) => ({
+          name: supporter.name,
+          profile: supporter.avatar, // Assuming avatar URL is used as profile
+        })),
+      },
     }));
 
-    // Validation to ensure materialName is not null or empty
-    const invalidRows = materials.filter((material) => !material.materialName);
-    if (invalidRows.length > 0) {
-      // alert("Material name cannot be null or empty");
+    const invalidField = materials.find(
+      (material) =>
+        !material ||
+        !material.materialName ||
+        !material.qty ||
+        !material.unit 
+    );
+
+    if (invalidField) {
+      validateInputs(rows);
+      error("Invalid! Please input all required fields.");
       return;
     }
 
@@ -250,6 +280,19 @@ export default function MaterialComponent({ id }) {
       position: "top-center",
     });
   }
+
+  function error(message) {
+    toast.error(message, {
+      position: "top-center",
+    });
+  }
+
+  // Function to handle supporter change for a specific row
+  const handleSupporterChange = (supporterIds, rowId) => {
+    setRows((prevRows) =>
+      prevRows.map((row) => (row.id === rowId ? { ...row, supporterIds } : row))
+    );
+  };
 
   //find the length of material data to create the no index of new material
   const dataLength = data ? data.length : 0;
@@ -395,7 +438,11 @@ export default function MaterialComponent({ id }) {
                       <input
                         type="text"
                         name="materialName"
-                        className="border text-primary-text text-base px-2 w-full h-10 rounded-xl font-normal focus:outline-none"
+                        className={`border text-primary-text text-base px-2 w-full h-10 rounded-xl font-normal focus:outline-none ${
+                          errors[index]?.name
+                            ? "border-red-600 shake-animation"
+                            : ""
+                        }`}
                         placeholder=""
                         value={row.inputValue}
                         onChange={(e) => handleInputChangeForRow(e, row.id)}
@@ -468,7 +515,12 @@ export default function MaterialComponent({ id }) {
                     <input
                       type="text"
                       name="qty"
-                      className="border text-primary-text text-base px-2 w-20 h-10 rounded-xl font-normal focus:outline-none"
+                      className={`border text-primary-text text-base px-2 w-20 h-10 rounded-xl font-normal focus:outline-none ${
+                        errors[index]?.qty
+                          ? "border-red-600 shake-animation"
+                          : ""
+                      }`}
+                      placeholder=""
                       value={row.qty}
                       onChange={(e) =>
                         setRows((prevRows) =>
@@ -486,7 +538,11 @@ export default function MaterialComponent({ id }) {
                     <input
                       type="text"
                       name="unit"
-                      className="border text-primary-text text-base px-2 w-24 h-10 rounded-xl font-normal focus:outline-none"
+                      className={`border text-primary-text text-base px-2 w-24 h-10 rounded-xl font-normal focus:outline-none ${
+                        errors[index]?.unit
+                          ? "border-red-600 shake-animation"
+                          : ""
+                      }`}
                       value={row.unit}
                       onChange={(e) =>
                         setRows((prevRows) =>
@@ -502,7 +558,7 @@ export default function MaterialComponent({ id }) {
                     <input
                       type="date"
                       name="dueDate"
-                      className="border text-gray-900 sm:text-sm rounded-xl block w-22 p-2 focus:outline-none placeholder:text-opacity-50"
+                      className=' border text-gray-900 sm:text-sm rounded-xl block w-22 p-2 focus:outline-none placeholder:text-opacity-50 ' 
                       placeholder="dd/mm/yyyy"
                       value={row.dueDate}
                       onChange={(e) =>
@@ -520,7 +576,7 @@ export default function MaterialComponent({ id }) {
                     <select
                       id="handler"
                       name="handler"
-                      className="border text-black text-base sm:text-sm rounded-xl block w-28 p-2.5 focus:outline-none"
+                      className=' border text-black text-base sm:text-sm rounded-xl block w-28 p-2.5 focus:outline-none ' 
                       value={row.handler}
                       onChange={(e) => {
                         const newRows = [...rows];
@@ -536,8 +592,8 @@ export default function MaterialComponent({ id }) {
                       ))}
                     </select>
                   </td>
-                  <td className="px-2">
-                    <DropdownSupporter />
+                  <td className="px-2 ">
+                  <Dropdown key={index} onSupporterChange={(selectedSupporters) => handleSupporterChange(selectedSupporters, row.id)} />
                   </td>
                   <td className="px-2 w-36">
                     <div className="bg-white p-[7px] border rounded-xl">
@@ -587,7 +643,7 @@ export default function MaterialComponent({ id }) {
                         )
                       }
                     >
-                      <CiCircleRemove color="red" className="w-8 h-8" />
+                      <CiCircleRemove color="red" className="w-6 h-6" />
                     </button>
                   </td>
                 </tr>

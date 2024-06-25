@@ -30,7 +30,9 @@ export const getEventByCateName = async (name) => {
 }
 
 export const getPopularEvent = async () => {
-    const res = await fetch(`${process.env.API_URL}landing-page/getAllPopularEvent`)
+    const res = await fetch(`${process.env.API_URL}landing-page/getAllPopularEvent`, {
+        cache: "no-store"
+    })
     const data = await res.json();
     return data
 }

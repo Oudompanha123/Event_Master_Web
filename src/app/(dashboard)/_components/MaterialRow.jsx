@@ -1,7 +1,7 @@
 // MaterialRow.js
 
 import React from "react";
-import DropdownSupporter from "./DropdownSupporterComponent"; // Ensure to import any necessary components
+import Dropdown from "./DropdownSupporterComponent"; // Ensure to import any necessary components
 import { FaAngleDown } from "react-icons/fa";
 import { MaterialActionButton } from "./MaterialActionButtton"; // Import your action button component here
 
@@ -21,8 +21,9 @@ const getStatusColor = (status) => {
   };
   
 const MaterialRow = ({ data, index, checkedRows, handleCheckboxChange, memberData }) => {
+  const selectedSupporters = data.supporters || [];
   return (
-    <tr key={data.materialId} className="bg-white border-b hover:bg-gray-50 border border-black w-full">
+    <tr key={data?.materialId} className="bg-white border-b hover:bg-gray-50 border border-black w-full">
       <td className="w-4 p-4 rounded-l-2xl">
         <div className="flex items-center">
           <input
@@ -79,10 +80,10 @@ const MaterialRow = ({ data, index, checkedRows, handleCheckboxChange, memberDat
         <select
           name={`handler-${index}`}
           className="border text-black text-base sm:text-sm rounded-xl block w-28 p-2.5 focus:outline-none"
-          value={data.handlerId}
+          value={data?.handlerId}
           readOnly
         >
-          <option value="">Select handler</option>
+          <option value=""></option>
           {memberData?.map((member, idx) => (
             <option key={idx} value={member.memberId}>
               {member?.memberName}
@@ -91,7 +92,7 @@ const MaterialRow = ({ data, index, checkedRows, handleCheckboxChange, memberDat
         </select>
       </td>
       <td className="px-2">
-        <DropdownSupporter />
+      <Dropdown selectedSupporters={selectedSupporters} />
       </td>
       <td className="px-2 w-36">
         <div className="bg-white p-[7px] border rounded-xl">

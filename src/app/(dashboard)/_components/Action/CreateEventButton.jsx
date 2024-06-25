@@ -14,14 +14,19 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export const CreateEventButton = () => {
-    const notify = (status) => {
+    const notify = (status, message) => {
         if (status == "CREATED") {
             toast.success("Sucessfully created event", {
                 position: "top-center"
             });
         }
         if (status == 400) {
-            toast.error("Can't create event, please check each field carefully.", {
+            toast.error(`Can't create event, please check each field carefully ${message != undefined ? message : ''}`, {
+                position: "top-center"
+            });
+        }
+        if (status == 404) {
+            toast.error(`Please select category again ${message != undefined ? message : ''}`, {
                 position: "top-center"
             });
         }
@@ -110,6 +115,7 @@ export const CreateEventButton = () => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const [diffChange, setDiffChange] = useState();
+    const [random, setRandom] = useState(false);
 
     const triggerHourChange = () => {
         const sDate = new Date(`${startDate}`);
@@ -143,6 +149,7 @@ export const CreateEventButton = () => {
         setIsSend(true);
         let cateId;
         //if category id = 88888 create new category base on categoryName
+        console.log(eventCategory, 'checking event from select')
         if (eventCategory.categoryId == 88888) {
             const res = await addNewCategoryAction(eventCategory.categoryName)
             cateId = res.payload.categoryId;
@@ -183,11 +190,15 @@ export const CreateEventButton = () => {
         console.log('create event', okay)
         await new Promise(resolve => setTimeout(resolve, 1000));
         setIsSend(false);
-        notify(okay?.status);
+        notify(okay?.status, okay?.Errors?.description || okay?.Errors?.poster);
         document.getElementById("my_modal_event_create").close()
         setStartDate('')
         setEndDate('')
+        setHide(false)
+        preview.src = ""
+        preview.classList.add("hidden")
         reset();
+        setRandom(!random);
     };
 
     const handleCloseForm = () => {
@@ -205,7 +216,7 @@ export const CreateEventButton = () => {
 
     useEffect(() => {
         triggerHourChange();
-    }, [startDate, endDate]);
+    }, [startDate, endDate, random]);
 
 
     return (
@@ -228,7 +239,7 @@ export const CreateEventButton = () => {
                                 onDragOver={handleDragOver}
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDrop}>
-                                <input {...register("image")} type="file" className="absolute inset-0 w-full h-full opacity-0 z-50" id="file-upload" onChange={(e) => handleFileChange(e)} />
+                                <input {...register("image")} accept="image/png,image/jpeg" type="file" className="absolute inset-0 w-full h-full opacity-0 z-50" id="file-upload" onChange={(e) => handleFileChange(e)} />
                                 <div className={`text-center ${hide && 'hidden'}`}>
                                     <Image src={'/icons/upload-icon.svg'} className="mx-auto h-16 w-16" height={48} width={48} />
                                     <h3 className="mt-2 text-lg font-medium">
@@ -263,6 +274,7 @@ export const CreateEventButton = () => {
                                 <div className="w-full">
                                     <SelectModify
                                         func={handleCategorySelect}
+                                        more={random}
                                         {...register("category")}
                                         label={`!font-medium`}
                                         height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
@@ -335,7 +347,7 @@ export const CreateEventButton = () => {
                                         name="duration"
                                         id="duration"
                                         className={`${errors.duration ? "border-red-700 focus:border-red-600" : "border-gray-300"} cursor-not-allowed shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
-                                        placeholder="Enter duration"
+                                        placeholder="Duration in hours"
                                         required=""
                                     />
                                     {errors.duration && <div className="text-red-600 text-sm mt-2">{errors.duration.message}</div>}

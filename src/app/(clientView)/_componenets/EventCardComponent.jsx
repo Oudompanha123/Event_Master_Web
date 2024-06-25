@@ -39,7 +39,7 @@ export const EventCardComponent = ({ img, title, location, description, company,
                         <p>{formated}</p>
                     </div>
                     <div className="flex flex-col gap-3">
-                        <h2 className="text-lg lg:text-xl font-bold">{title}</h2>
+                        <h2 className="text-lg lg:text-xl font-bold max-w-64 line-clamp-1">{title}</h2>
                         <p className="text-sm lg:text-base line-clamp-2 font-medium">
                             {description}
                         </p>
