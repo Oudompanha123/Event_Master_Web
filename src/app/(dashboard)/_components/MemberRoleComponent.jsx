@@ -32,19 +32,21 @@ const getRoleDisplayName = (role) => {
   }
 };
 
-export const MemberRoleComponent = ({ memberId, memberRoles }) => {
-//   console.log(memberId,"memberid");
-//   console.log(memberRoles,"roles");
+export const MemberRoleComponent = ({ memberId, memberRoles, userRole }) => {
+  const [userInfo, setUserInfo] = useState();
   const [currentRole, setCurrentRole] = useState(memberRoles);
   const [activeDropdown, setActiveDropdown] = useState(false);
   const [confirmingRoleChange, setConfirmingRoleChange] = useState(null);
   const dropdownRefs = useRef([]);
 
   const handleRoleChange = async (newRole) => {
+    const response = await updateMemberAction(memberId, newRole);
     try {
-      const response = await updateMemberAction(memberId, newRole);
-      if (response.success) {
+      if (response.success && newRole == "ROLE_ADMIN") {
         setCurrentRole(newRole);
+        // userRole = "ROLE_USER";
+        // console.log("newrole:", newRole);
+        // console.log("Admin:", userRole);
       } else {
         console.error("Failed to update role:", response.message);
       }
@@ -88,7 +90,6 @@ export const MemberRoleComponent = ({ memberId, memberRoles }) => {
   const handleConfirmRoleChange = () => {
     handleRoleChange(confirmingRoleChange.role);
   };
-
   return (
     <div>
       <div
@@ -106,92 +107,99 @@ export const MemberRoleComponent = ({ memberId, memberRoles }) => {
           }}
         >
           {getRoleDisplayName(currentRole)}
-          {currentRole !== "ROLE_ADMIN" && <FaAngleDown className=" right-0" />}
+          {currentRole !== "ROLE_ADMIN" && userRole == "ROLE_ADMIN" && (
+            <FaAngleDown className=" right-0" />
+          )}
         </div>
-        {activeDropdown && currentRole !== "ROLE_ADMIN" && (
-          <div className="origin-top-right -ml-14 mt-1 absolute w-44 cursor-pointer rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-            <ul
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="options-menu"
+        {activeDropdown &&
+          currentRole !== "ROLE_ADMIN" &&
+          userRole == "ROLE_ADMIN" && (
+            <div
+              className={`
+              origin-top-right -ml-14 mt-1 absolute w-44 cursor-pointer rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5`}
             >
-              <li>
-                <a
-                  className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg"
-                  role="menuitem"
-                  tabIndex="-1"
-                  onClick={() =>
-                    setConfirmingRoleChange({
-                      id: memberRoles,
-                      role: "ROLE_ADMIN",
-                    })
-                  }
-                >
-                  <Image
-                    src="/icons/Admin.svg"
-                    alt="Admin"
-                    height={22}
-                    width={22}
-                    property=" "
-                  />
-                  <p className="text-primary-text text-base font-semibold">
-                    Admin
-                  </p>
-                </a>
-              </li>
-              <hr />
-              <li>
-                <a
-                  className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg"
-                  role="menuitem"
-                  tabIndex="-1"
-                  onClick={() =>
-                    setConfirmingRoleChange({
-                      id: memberRoles,
-                      role: "ROLE_USER",
-                    })
-                  }
-                >
-                  <Image
-                    src="/icons/User.svg"
-                    alt="User"
-                    height={22}
-                    width={22}
-                    property=" "
-                  />
-                  <p className="text-primary-text text-base font-semibold">
-                    User
-                  </p>
-                </a>
-              </li>
-              <hr />
-              <li>
-                <a
-                  className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg"
-                  role="menuitem"
-                  tabIndex="-1"
-                  onClick={() =>
-                    setConfirmingRoleChange({
-                      id: memberRoles,
-                      role: "ROLE_SUB_ADMIN",
-                    })
-                  }
-                >
-                  <Image
-                    src="/icons/Sub Admin.svg"
-                    alt="Sub Admin"
-                    height={22}
-                    width={22}
-                    property=" "
-                  />
-                  <p className="text-primary-text text-base font-semibold">
-                    Sub Admin
-                  </p>
-                </a>
-              </li>
-            </ul>
-          </div>
-        )}
+              <ul
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="options-menu"
+              >
+                <li>
+                  <a
+                    className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg"
+                    role="menuitem"
+                    tabIndex="-1"
+                    onClick={() =>
+                      setConfirmingRoleChange({
+                        id: memberRoles,
+                        role: "ROLE_ADMIN",
+                      })
+                    }
+                  >
+                    <Image
+                      src="/icons/Admin.svg"
+                      alt="Admin"
+                      height={22}
+                      width={22}
+                      property=" "
+                    />
+                    <p className="text-primary-text text-base font-semibold">
+                      Admin
+                    </p>
+                  </a>
+                </li>
+                <hr />
+                <li>
+                  <a
+                    className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg"
+                    role="menuitem"
+                    tabIndex="-1"
+                    onClick={() =>
+                      setConfirmingRoleChange({
+                        id: memberRoles,
+                        role: "ROLE_USER",
+                      })
+                    }
+                  >
+                    <Image
+                      src="/icons/User.svg"
+                      alt="User"
+                      height={22}
+                      width={22}
+                      property=" "
+                    />
+                    <p className="text-primary-text text-base font-semibold">
+                      User
+                    </p>
+                  </a>
+                </li>
+                <hr />
+                <li>
+                  <a
+                    className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg"
+                    role="menuitem"
+                    tabIndex="-1"
+                    onClick={() =>
+                      setConfirmingRoleChange({
+                        id: memberRoles,
+                        role: "ROLE_SUB_ADMIN",
+                      })
+                    }
+                  >
+                    <Image
+                      src="/icons/Sub Admin.svg"
+                      alt="Sub Admin"
+                      height={22}
+                      width={22}
+                      property=" "
+                    />
+                    <p className="text-primary-text text-base font-semibold">
+                      Sub Admin
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          )}
       </div>
       {confirmingRoleChange && (
         <ChangeRoleComponent

@@ -54,10 +54,11 @@ export async function updateMemberService(memberId, role) {
     }
   );
   const data = await res.json();
+  console.log("dataupdate:", data);
   return data;
 }
 
-export async function searchMemberService(name,page) {
+export async function searchMemberService(name, page) {
   console.log("member search");
   const header = await headerToken();
   const res = await fetch(
