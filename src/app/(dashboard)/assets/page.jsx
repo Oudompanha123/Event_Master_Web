@@ -39,6 +39,7 @@ export default async function assetPage({ searchParams }) {
               data={data}
               query={query}
               nullsearch={nullsearch}
+              page={page}
             />
           </div>
         </div>

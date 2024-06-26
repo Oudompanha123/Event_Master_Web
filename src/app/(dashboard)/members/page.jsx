@@ -1,4 +1,3 @@
-"use server";
 import { MemberComponent } from "../_components/MemberProfileComponent";
 import { DeleteMemberbutton } from "../_components/DeleteMemberbutton";
 import { MemberRoleComponent } from "../_components/MemberRoleComponent";
@@ -94,9 +93,10 @@ const MemberPage = async ({ searchParams }) => {
                   } px-5 py-2 text-xs xl:text-base border border-x-0 border-member-border sm:text-sm `}
                 >
                   <MemberRoleComponent
+                    member={member}
                     memberId={member.memberId}
                     memberRoles={member.role}
-                    userRole ={userRole}
+                    userRole={userRole}
                   />
                 </td>
                 <td

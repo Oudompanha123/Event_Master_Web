@@ -32,7 +32,13 @@ const getRoleDisplayName = (role) => {
   }
 };
 
-export const MemberRoleComponent = ({ memberId, memberRoles, userRole }) => {
+export const MemberRoleComponent = ({
+  memberId,
+  memberRoles,
+  userRole,
+  member,
+}) => {
+  console.log("Member  ", member);
   const [userInfo, setUserInfo] = useState();
   const [currentRole, setCurrentRole] = useState(memberRoles);
   const [activeDropdown, setActiveDropdown] = useState(false);
@@ -41,8 +47,9 @@ export const MemberRoleComponent = ({ memberId, memberRoles, userRole }) => {
 
   const handleRoleChange = async (newRole) => {
     const response = await updateMemberAction(memberId, newRole);
+    console.log("Role : ", response);
     try {
-      if (response.success && newRole == "ROLE_ADMIN") {
+      if (response.status === "OK") {
         setCurrentRole(newRole);
         // userRole = "ROLE_USER";
         // console.log("newrole:", newRole);
@@ -88,8 +95,13 @@ export const MemberRoleComponent = ({ memberId, memberRoles, userRole }) => {
   }, [activeDropdown]);
 
   const handleConfirmRoleChange = () => {
-    handleRoleChange(confirmingRoleChange.role);
+    handleRoleChange(confirmingRoleChange?.role);
   };
+
+  useEffect(() => {
+    handleConfirmRoleChange();
+  }, [currentRole]);
+  
   return (
     <div>
       <div
