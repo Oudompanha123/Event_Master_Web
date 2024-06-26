@@ -15,6 +15,20 @@ export async function getAllMemberService(){
     return data;
 }
 
+export async function getAllMemberForMaterialCreateService(){
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}members?offset=1&limit=1000`,
+        {
+            next: { tags: ["get_member"] },
+            method: "GET",
+            cache: "no-store",
+            headers: header
+        }
+    );
+    const data = await res.json();
+    return data;
+}
+
 export async function deleteMemberByIdService(memberId){
     const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}members/${memberId}`,

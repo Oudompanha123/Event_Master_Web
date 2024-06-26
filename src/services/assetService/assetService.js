@@ -17,7 +17,7 @@ export const getAllAssetService = async (page) => {
 export const getAllAssetServiceNoPage = async () => {
   const header = await headerToken() ;
   const res = await fetch(
-    `${process.env.API_URL}assets`,
+    `${process.env.API_URL}assets?offset=1&limit=1000`,
     {
       next: { tags: ["asset"] },
       headers: header,

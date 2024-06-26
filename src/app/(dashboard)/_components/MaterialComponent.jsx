@@ -8,7 +8,7 @@ import { AddSquare } from "iconsax-react";
 import Dropdown from "./DropdownSupporterComponent";
 import fetchMaterialData from "@/app/actions/material/fetchMaterialAction";
 import CreateMultipleMaterial from "@/app/actions/material/createMaterialMultipleAction";
-import { getAllMemberService } from "@/services/dashboard/memberService";
+import { getAllMemberForMaterialCreateService } from "@/services/dashboard/memberService";
 import deleteMaterialMultiple from "@/app/actions/material/deleteMaterialMultipleAction";
 import fetchMaterialCount from "@/app/actions/material/fetchCountMaterialAction";
 import { CountMaterialComponent } from "./CountMaterailComponent";
@@ -18,6 +18,8 @@ import DeleteDialog from "./DeleteDialog";
 import EmptyMaterialRow from "./EmptyMaterialRow";
 import MaterialRow from "./MaterialRow";
 import TableHeadMaterial from "./TableHeadOfMaterial";
+import { SearchMaterialComponent } from "../_components/SearchMaterialComponent";
+import { searchMaterialByName } from "@/services/dashboard/materialService";
 
 const getStatusColor = (status) => {
   switch (status) {
@@ -34,7 +36,7 @@ const getStatusColor = (status) => {
   }
 };
 
-export default function MaterialComponent({ id }) {
+export default function MaterialComponent({ id, searchParams }) {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [data, setData] = useState(null);
@@ -48,6 +50,18 @@ export default function MaterialComponent({ id }) {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [searchMaterial, setSearchMaterial] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(searchParams?.query || "");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const query = searchQuery;
+  const nullsearch = searchMaterial.length;
+  const dataOfMaterial = query === "" || query == null ? data : searchMaterial;
+
+  const searchNameMaterial = async () => {
+    const res = await searchMaterialByName(query, id);
+    setSearchMaterial(res?.payload);
+  };
 
   const fetchMaterial = async () => {
     const res = await fetchMaterialData(id);
@@ -65,13 +79,21 @@ export default function MaterialComponent({ id }) {
   };
 
   const fetchData = async () => {
-    const res = await getAllMemberService();
+    const res = await getAllMemberForMaterialCreateService();
     setMemberData(res.payload);
   };
 
   useEffect(() => {
     fetchMaterial(), fetchData(), fatchAsset(), fetchCountMaterial();
   }, [saveSuccess, checkedRows, isDeleteDialogOpen]);
+
+  useEffect(() => {
+    searchNameMaterial();
+  }, [query]);
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -198,7 +220,9 @@ export default function MaterialComponent({ id }) {
 
     try {
       if (idsToDelete.length > 0) {
+        setIsLoading(true);
         await deleteMaterialMultiple(idsToDelete);
+        setIsLoading(false);
       }
       // Filter out deleted IDs from data, if data exists
       if (data) {
@@ -210,6 +234,7 @@ export default function MaterialComponent({ id }) {
       // alert("Selected materials deleted successfully!");
     } catch (error) {
       console.error("Error deleting materials:", error);
+      setIsLoading(false);
       // alert("Failed to delete materials.");
     }
   };
@@ -252,10 +277,7 @@ export default function MaterialComponent({ id }) {
 
     const invalidField = materials.find(
       (material) =>
-        !material ||
-        !material.materialName ||
-        !material.qty ||
-        !material.unit 
+        !material || !material.materialName || !material.qty || !material.unit
     );
 
     if (invalidField) {
@@ -265,11 +287,14 @@ export default function MaterialComponent({ id }) {
     }
 
     try {
+      setIsLoading(true);
       await CreateMultipleMaterial(materials);
       success("Create Materail succussfully!");
+      setIsLoading(false);
       setSaveSuccess(true);
       setRows([]);
     } catch (error) {
+      setIsLoading(false);
       error("Unsuccussfully! input data is invalid!");
       console.log(error);
     }
@@ -306,14 +331,10 @@ export default function MaterialComponent({ id }) {
       {/* Render show Count material card component */}
       <CountMaterialComponent data={dataCount} />
       <div className="flex justify-between mt-5 h-14 w-full gap-1">
-        <div className="w-full lg:w-[730px]">
-          <input
-            type="text"
-            placeholder="Search by name"
-            className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-[52px] border rounded-3xl pl-10"
-          />
-          <IoSearchOutline className="w-[24px] h-[24px] -mt-9 ml-3" />
-        </div>
+        <SearchMaterialComponent
+          handleSearch={handleSearch}
+          initialQuery={searchQuery}
+        />
         {/* Delete both material in Database and new row for create new material */}
         <div className="gap-2 flex">
           {checkedRows.length > 0 && (
@@ -322,15 +343,21 @@ export default function MaterialComponent({ id }) {
                 onClick={() => setIsDeleteDialogOpen(true)}
                 className="flex bg-red-600 hover:duration-300 transition-all text-white border w-28 h-11 rounded-2xl font-medium text-xs lg:text-base justify-center items-center gap-1"
               >
-                <Image
-                  className=""
-                  src="/icons/delete.svg"
-                  alt="Delete"
-                  width={25}
-                  height={25}
-                  priority
-                />
-                Delete
+                {!isLoading ? (
+                  <>
+                    <Image
+                      className=""
+                      src="/icons/delete.svg"
+                      alt="Delete"
+                      width={25}
+                      height={25}
+                      priority
+                    />
+                    <p className="text-white">Delete</p>
+                  </>
+                ) : (
+                  <div className="loader"></div>
+                )}
               </button>
             </>
           )}
@@ -342,17 +369,25 @@ export default function MaterialComponent({ id }) {
               className="px-6 h-11 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-3 bg-blue-700 w-32 hover:border-blueUi hover:bg-blue-800"
               onClick={handleSave}
             >
-              <p className="text-white">Save</p>
+              {/* <AddSquare size="24" variant="Bold" className="text-white" /> */}
+              {!isLoading ? (
+                <p className="text-white">Save</p>
+              ) : (
+                <div className="loader"></div>
+              )}
             </button>
           )}
 
           {/* Create new Material button */}
           <button
+            // type="submit"
             onClick={addNewRow}
-            className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-12 justify-center text-purple-text rounded-3xl md:py-2.5 flex items-center gap-1"
+            className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text h-11 w-12 justify-center text-purple-text rounded-3xl md:px-4 md:py-2.5 flex items-center space-x-3 md:w-40"
           >
             <AddSquare size="24" variant="Bold" className="" />
-            <p className="text-base w-[100px]">New Material</p>
+            <p className="text-xs lg:text-base hidden md:block  lg:w-[140px]">
+              New Material
+            </p>
           </button>
         </div>
       </div>
@@ -396,7 +431,7 @@ export default function MaterialComponent({ id }) {
 
             <tbody className="drop-shadow rounded-radiusUi text-sm font-normal text-primary-text bg-[#ffffff]">
               {/* Render show the material fetch from api (material created) */}
-              {data?.map((rowData, index) => (
+              {dataOfMaterial?.map((rowData, index) => (
                 <MaterialRow
                   key={rowData.materialId}
                   data={rowData}
@@ -404,6 +439,9 @@ export default function MaterialComponent({ id }) {
                   checkedRows={checkedRows}
                   handleCheckboxChange={handleCheckboxChange}
                   memberData={memberData}
+                  query={query}
+                  nullsearch={nullsearch}
+                  id={id}
                 />
               ))}
 
@@ -558,7 +596,7 @@ export default function MaterialComponent({ id }) {
                     <input
                       type="date"
                       name="dueDate"
-                      className=' border text-gray-900 sm:text-sm rounded-xl block w-22 p-2 focus:outline-none placeholder:text-opacity-50 ' 
+                      className=" border text-gray-900 sm:text-sm rounded-xl block w-22 p-2 focus:outline-none placeholder:text-opacity-50 "
                       placeholder="dd/mm/yyyy"
                       value={row.dueDate}
                       onChange={(e) =>
@@ -576,7 +614,7 @@ export default function MaterialComponent({ id }) {
                     <select
                       id="handler"
                       name="handler"
-                      className=' border text-black text-base sm:text-sm rounded-xl block w-28 p-2.5 focus:outline-none ' 
+                      className=" border text-black text-base sm:text-sm rounded-xl block w-28 p-2.5 focus:outline-none "
                       value={row.handler}
                       onChange={(e) => {
                         const newRows = [...rows];
@@ -593,9 +631,14 @@ export default function MaterialComponent({ id }) {
                     </select>
                   </td>
                   <td className="px-2 ">
-                  <Dropdown key={index} onSupporterChange={(selectedSupporters) => handleSupporterChange(selectedSupporters, row.id)} />
+                    <Dropdown
+                      key={index}
+                      onSupporterChange={(selectedSupporters) =>
+                        handleSupporterChange(selectedSupporters, row.id)
+                      }
+                    />
                   </td>
-                  <td className="px-2 w-36">
+                  <td className="px-2 w-32">
                     <div className="bg-white p-[7px] border rounded-xl">
                       <div
                         className="cursor-pointer flex items-center"
@@ -615,7 +658,7 @@ export default function MaterialComponent({ id }) {
                       {activeDropdown === row.id && (
                         <div
                           className="absolute z-10 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg"
-                          style={{ width: "150px" }}
+                          style={{ width: "130px" }}
                         >
                           {["Pending", "OnGoing", "Done", "Issue"].map(
                             (statusOption) => (
