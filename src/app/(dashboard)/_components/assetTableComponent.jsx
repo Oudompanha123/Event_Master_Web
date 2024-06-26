@@ -9,8 +9,6 @@ export const AssetTableComponent = async ({ data, nullsearch, page }) => {
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
-
-  console.log("Page : ", page);
   return (
     <div className="flex flex-col w-full">
       <table className="w-full px-1 border-separate border-spacing-y-3 mt-0 ">
@@ -45,7 +43,7 @@ export const AssetTableComponent = async ({ data, nullsearch, page }) => {
                 className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border"
               >
                 <td className="py-3 rounded-l-radiusUi items-center ml-1   text-xs xl:text-base w-20">
-                  {index + 1}
+                  {page > 1 ? index + 1 + 8 * (page - 1) : index + 1}
                 </td>
                 <td className="w-28">
                   <div className="text-xs xl:text-base border rounded-radiusUi mx-3.5 py-1 w-auto">

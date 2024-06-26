@@ -19,7 +19,7 @@ export const SelectModify = ({ height, label, func, more }) => {
         { id: 999, name: "Create Category" }
     ])
     const placeholder = "Choose category";
-    const lastArray = options[options.length - 2];
+     const lastArray = options[options.length - 2];
 
     const handleChange = (option) => {
         if (selected?.categoryId === option.categoryId) {

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from '@headlessui/react';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
-import { getAllMemberService } from "@/services/dashboard/memberService";
+import { getAllMemberForMaterialCreateService } from "@/services/dashboard/memberService";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -15,7 +15,7 @@ export default function Dropdown({ onSupporterChange }) {
   const [memberData, setMemberData] = useState([]);
 
   const fetchData = async () => {
-    const res = await getAllMemberService();
+    const res = await getAllMemberForMaterialCreateService();
     setMemberData(res?.payload?.map(member => ({
       id: member.memberId,
       name: member.memberName,
