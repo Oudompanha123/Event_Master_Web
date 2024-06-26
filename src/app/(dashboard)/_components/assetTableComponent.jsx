@@ -9,6 +9,7 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
+  
   return (
     <div className="flex flex-col w-full">
       <table className="w-full px-1 border-separate border-spacing-y-3 mt-0 ">
@@ -21,14 +22,14 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
             <th className="font-medium">CREATED AT</th>
             <th
               className={`${
-                userRole == "ROLE_USER" && "px-3 rounded-r-radiusUi"
+                userRole === "ROLE_USER" && "px-3 rounded-r-radiusUi"
               } font-medium `}
             >
               STATUS
             </th>
             <th
               className={`${
-                userRole == "ROLE_USER" && "hidden"
+                userRole === "ROLE_USER" && "hidden"
               } font-medium rounded-r-radiusUi px-3 `}
             >
               ACTION
@@ -80,7 +81,7 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
                 </td>
                 <td
                   className={`${
-                    userRole == "ROLE_USER" && "hidden"
+                    userRole === "ROLE_USER" && "hidden"
                   } rounded-r-radiusUi w-20`}
                 >
                   <div className="flex justify-center items-center gap-3 mx-3">
@@ -129,5 +130,5 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
         </div>
       )}
     </div>
-  );
+  );  
 };

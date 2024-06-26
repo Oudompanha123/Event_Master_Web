@@ -21,8 +21,8 @@ const Page = async ({ params: { id } }) => {
         <CreateDynamicForm id={id} />
       </div>
       {/* <RegisterFormConferrence /> */}
-      {/* <MaterialComponent id={id}/>
-        <AgendaComponent id={id}/> */}
+      {/* {/* <MaterialComponent id={id}/> */}
+        {/* <AgendaComponent id={id}/> */} 
       <div className="rounded-3xl bg-white  z-0 py-[2%] px-[2%]">
         <EventToggle id={id} />
       </div>

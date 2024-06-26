@@ -11,6 +11,7 @@ import { jwtDecode } from "jwt-decode";
 import { RPaginate } from "../../_components/paginate/RPaginate";
 
 export default async function AttendeePage({ params: { id }, searchParams }) {
+  console.log("Search Param:",searchParams)
   const query = searchParams?.query || "";
   const page = searchParams?.page;
 
@@ -21,13 +22,18 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
   const searchAttendee = query
     ? await searchAttendeeByNameOrPhoneService(id, query)
     : attendeeData;
+    console.log("log Ateendee;",searchAttendee)
 
     let headerResponse = await searchAttendeeByNameOrPhoneService(id, "");
+    console.log("header resone:",headerResponse)
     let header = headerResponse?.payload?.[0]?.data
       ? Object.keys(headerResponse.payload[0].data)
       : [];
+    // let header = Object.keys(headerResponse.payload[0].data);
+    // console.log("headeerrrrrr:",header)
 
   const session = await getServerSession(authOption);
+  
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
 
