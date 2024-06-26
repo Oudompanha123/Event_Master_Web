@@ -37,7 +37,7 @@ export async function updateProfileMemberById(memberId, updateMemberData){
 }
 
 export async function changePassword(updatePassword){
-    console.log("Update data: ", updatePassword)
+    console.log("Update data service : ", updatePassword)
     // const session = await getServerSession(authOption());
     const header = await headerToken();
     try{
@@ -51,7 +51,7 @@ export async function changePassword(updatePassword){
         console.log("data: ", data);
         return data;
     }catch (error){
-        console.error("Error: ", error.message);
+        console.error("Error: ", error);
         throw error;
     }
    

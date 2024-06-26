@@ -18,11 +18,11 @@ export const updateMemberDataAction = async (memberId, updateMemberData) =>{
 }
 
 export const changePasswordAction = async(updatePassword)=>{
-    // console.log("Update password: ", updatePassword)
+    console.log("Update password action: ", updatePassword)
     const changePasswordMember = {
         oldPassword : updatePassword.currentPassword,
         password : updatePassword.newPassword,
-        confrimPassword : updatePassword.confirmPassword
+        confirmPassword : updatePassword.confirmPassword
     }
     // console.log("data update: ", changePasswordMember);
     await changePassword(changePasswordMember);

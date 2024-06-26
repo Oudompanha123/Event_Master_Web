@@ -105,7 +105,7 @@ function ProfileComponent() {
                     {...register("confirmPassword", {
                       required: "Confirm password is required",
                       validate: (value) =>
-                      value === watch("newPassword") || "Passwords do not match",
+                      value === watch("newPassword") ||"Passwords do not match",
                     })}
                   />
                   <div className={"absolute top-4 right-3 cursor-pointer"} onClick={() => toggleShowPassword("confirmPassword")}>
