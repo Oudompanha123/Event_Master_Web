@@ -2,6 +2,19 @@ import React from "react";
 import { DeleteAttendeeComponent } from "./Action/DeleteAttendeeComponent";
 import Image from "next/image";
 
+// name or fullname first
+const reorderFields = (fields) => {
+  const priorityFields = ["name", "fullname"];
+  const priorityField = priorityFields.find((field) => fields.includes(field));
+  if (priorityField) {
+    return [
+      priorityField,
+      ...fields.filter((field) => field !== priorityField),
+    ];
+  }
+  return fields;
+};
+
 const AttendeeTableComponent = ({
   parentData,
   userRole,
@@ -13,12 +26,11 @@ const AttendeeTableComponent = ({
   let temp = header;
 
   if (attendees.length > 0) {
-    let nameIndex = temp.indexOf("name");
-    if (nameIndex !== -1) {
-      [temp[0], temp[nameIndex]] = [temp[nameIndex], temp[0]];
-    }
+    temp = reorderFields(temp);
   }
+
   let tableHeaders = ["NO", ...temp];
+  console.log("th:", tableHeaders);
   if (userRole !== "ROLE_USER") {
     tableHeaders.push("ACTION");
   }
@@ -26,17 +38,17 @@ const AttendeeTableComponent = ({
   header = attendees.length > 0 ? Object.keys(attendees[0].data) : [];
 
   if (attendees.length > 0) {
-    let nameIndex = header.indexOf("name");
-    if (nameIndex !== -1) {
-      [header[0], header[nameIndex]] = [header[nameIndex], header[0]];
-    }
+    header = reorderFields(header);
   }
 
-  // Limit header to only 5 fields
-  // header = header.slice(0, 5);
+  const hasManyColumns = tableHeaders.length > 6;
   return (
     <div className="overflow-y-auto h-[600px]">
-      <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
+      <table
+        className={`table min-w-full border-separate border-spacing-y-3 mt-5 p-1 ${
+          hasManyColumns ? "w-screen table-auto" : "w-auto table-fixed"
+        }`}
+      >
         {(attendees.length > 0 || (isSearch && attendees.length === 0)) && (
           <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
             <tr className="text-xs lg:text-base">
@@ -49,7 +61,7 @@ const AttendeeTableComponent = ({
                       : index === tableHeaders.length - 1
                       ? "rounded-r-radiusUi"
                       : ""
-                  }`}
+                  } ${hasManyColumns ? "w-auto" : "w-1/6"}`}
                 >
                   {header.toUpperCase()}
                 </th>
@@ -100,6 +112,13 @@ const AttendeeTableComponent = ({
           {attendees.length > 0 &&
             attendees.map((attendeeWrapper, index) => {
               const attendee = attendeeWrapper?.data;
+              const reorderedAttendee = reorderFields(
+                Object.keys(attendee)
+              ).reduce((acc, key) => {
+                acc[key] = attendee[key];
+                return acc;
+              }, {});
+
               return (
                 <tr
                   key={attendeeWrapper.attendeeId}
@@ -111,13 +130,13 @@ const AttendeeTableComponent = ({
                   {header.map((field, fieldIndex) => (
                     <td
                       key={fieldIndex}
-                      className="px-5 py-2 text-xs lg:text-base"
+                      className="px-5 py-2 text-xs lg:text-base  "
                     >
-                      {attendee[field]}
+                      {reorderedAttendee[field]}
                     </td>
                   ))}
                   {userRole !== "ROLE_USER" && (
-                    <td className="px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
+                    <td className="px-5 py-2 text-xs lg:text-base rounded-r-radiusUi ">
                       <DeleteAttendeeComponent
                         attendeeId={attendeeWrapper.attendeeId}
                         userRole={userRole}
@@ -132,5 +151,4 @@ const AttendeeTableComponent = ({
     </div>
   );
 };
-
 export default AttendeeTableComponent;
