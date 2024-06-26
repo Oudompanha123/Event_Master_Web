@@ -9,6 +9,7 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
+  
   return (
     <div className="flex flex-col w-full">
       <table className="w-full px-1 border-separate border-spacing-y-3 mt-0 ">

@@ -1,16 +1,32 @@
 "use server";
 import { headerToken } from "@/app/api/auth/headerToken";
 
-export async function getAllMemberService() {
-  const header = await headerToken();
-  const res = await fetch(`${process.env.API_URL}members?offset=1&limit=8`, {
-    next: { tags: ["member"] },
-    method: "GET",
-    cache: "no-store",
-    headers: header,
-  });
-  const data = await res.json();
-  return data;
+export async function getAllMemberService(){
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}members?offset=1&limit=8`,
+        {
+            next: { tags: ["get_member"] },
+            method: "GET",
+            cache: "no-store",
+            headers: header
+        }
+    );
+    const data = await res.json();
+    return data;
+}
+
+export async function getAllMemberForMaterialCreateService(){
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}members?offset=1&limit=1000`,
+        {
+            next: { tags: ["get_member"] },
+            method: "GET",
+            cache: "no-store",
+            headers: header
+        }
+    );
+    const data = await res.json();
+    return data;
 }
 
 export async function deleteMemberByIdService(memberId) {
