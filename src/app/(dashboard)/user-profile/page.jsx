@@ -1,17 +1,12 @@
 import React from 'react'
-import Image from 'next/image'
-import { CgProfile } from "react-icons/cg";
-import ProfileComponent from './_components/ProfileComponent';
 import PictureComponent from './_components/PictureComponent';
 import FormComponent from './_components/FormComponent';
-
-import { getAllProfileMemberAction } from '@/actions/profile/memberProfileAction';
 import { getAllMemberProfile } from '@/services/profile/profile.service';
+import ProfileComponent from './_components/ProfileComponent';
 
 
 async function page() {
   const getAllMember = await getAllMemberProfile();
-  // console.log("Get All data", getAllMember.payload)
   return (
     <>
       <div className='p-2 rounded-2xl relative'>
@@ -26,7 +21,7 @@ async function page() {
         </div>
       </div>   
     </>
-    
+
   )
 }
 

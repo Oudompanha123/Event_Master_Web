@@ -1,10 +1,23 @@
 import { headerToken } from "@/app/api/auth/headerToken";
 //get all service
 export const getAllAssetService = async (page) => {
-  console.log("page nn", page);
+//  console.log("page nn", page);
   const header = await headerToken() ;
   const res = await fetch(
     `${process.env.API_URL}assets?offset=${page ? page : 1}&limit=8`,
+    {
+      next: { tags: ["asset"] },
+      headers: header,
+    }
+  );
+  const assetData = await res.json();
+  return assetData;
+};
+
+export const getAllAssetServiceNoPage = async () => {
+  const header = await headerToken() ;
+  const res = await fetch(
+    `${process.env.API_URL}assets`,
     {
       next: { tags: ["asset"] },
       headers: header,
@@ -50,10 +63,10 @@ export const updateAssetService = async (id, newAsset) => {
 };
 
 //search asseet by name
-export const searchAssetByName = async (name) => {
+export const searchAssetByName = async (name,page) => {
   const header = await headerToken();
   const res = await fetch(
-    `${process.env.API_URL}assets/search?name=${name}&offset=1&limit=8`,
+    `${process.env.API_URL}assets/search?name=${name}&offset=${page ? page : 1}&limit=8`,
     {
       next: { tags: ["asset"] },
       headers: header,

@@ -1,7 +1,8 @@
 'use client'
 
 import Image from "next/image"
-import logo from "../../public/images/event-master-logo.png"
+// import logo from "../../public/images/event-master-logo.png"
+import logo from "../../public/images/event-master.png"
 import { ArrowDown2, Buildings2, Calendar1, I3Dcube, Layer, LogoutCurve, Notification, People, Personalcard, Setting2 } from "iconsax-react"
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -58,8 +59,8 @@ export const SidebarComponent = ({ className }) => {
         <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-5 border-r-1px sticky top-0 h-screen`}>
             <Link prefetch={true} href={'/overview'}>
                 <div className="p-2 lg:p-2 flex items-center gap-4">
-                    <Image src={logo} height={60} width={60} />
-                    <h2 className="hidden xl:block text-xl font-semibold">EventMaster</h2>
+                    <Image src={logo} height={192} width={192} />
+                    {/* <h2 className="hidden xl:block text-xl font-semibold">EventMaster</h2> */}
                 </div>
             </Link>
             <hr />

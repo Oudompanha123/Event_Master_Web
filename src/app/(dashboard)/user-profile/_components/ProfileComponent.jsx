@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import React, { useState } from 'react';
 import { CiLock } from "react-icons/ci";
 import { CiUnlock } from "react-icons/ci";
+import { changePassword } from "@/services/profile/profile.service";
+import { changePasswordAction } from "@/actions/profile/memberProfileAction";
 
 function ProfileComponent() {
   const initialData = {       
@@ -21,6 +23,7 @@ function ProfileComponent() {
 
   const onSubmit = async(data) => {
     console.log("Form submitted", data);
+    await changePasswordAction(data)
     reset();
   };
 
@@ -46,7 +49,7 @@ function ProfileComponent() {
                 </label>
                 <div className="relative">
                   <input type={showPasswords.currentPassword ? "text" : "password"} className={`${ errors.currentPassword? "border-red-700 focus:border-red-600": "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                    placeholder="Enter your current password" id="current-password" 
+                    placeholder="Enter your current password" id="current-password" name="currentPassword"
                     {...register("currentPassword", {
                       required: "Current password is required",
                       minLength: {
@@ -72,7 +75,7 @@ function ProfileComponent() {
                 </label>
                 <div className="relative">
                   <input type={showPasswords.newPassword ? "text" : "password"} className={`${errors.newPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                    placeholder="Enter your new password"
+                    placeholder="Enter your new password" name="newPassword"
                       {...register("newPassword", {
                       required: "New password is required",
                       minLength: {
@@ -98,12 +101,11 @@ function ProfileComponent() {
                 </label>
                 <div className="relative">
                   <input type={showPasswords.confirmPassword ? "text" : "password"} className={`${ errors.confirmPassword ? "border-red-700 focus:border-red-600" : "border-gray-300" } shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                    placeholder="Confirm your new password" id="confirm-password"
+                    placeholder="Confirm your new password" id="confirm-password" name="confirmPassword"
                     {...register("confirmPassword", {
                       required: "Confirm password is required",
                       validate: (value) =>
-                      value === watch("newPassword") ||
-                      "Passwords do not match",
+                      value === watch("newPassword") || "Passwords do not match",
                     })}
                   />
                   <div className={"absolute top-4 right-3 cursor-pointer"} onClick={() => toggleShowPassword("confirmPassword")}>

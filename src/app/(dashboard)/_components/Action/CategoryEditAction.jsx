@@ -7,22 +7,29 @@ import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 
 export const CategoryEditAction = ({ cateId, name }) => {
-    const notify = () => {
-        toast.warning("Duplicated Category Name", {
-            position: "top-center"
-        });
+    const notify = (status, detail) => {
+        if (status == "OK") {
+            toast.success("Category has been modify successfully", {
+                position: "top-center"
+            });
+        }
+        if (status == 400) {
+            toast.error(`Can't update category, ${detail}`, {
+                position: "top-center"
+            });
+        }
     }
     const [categoryName, setCategoryName] = useState();
     const [isSend, setIsSend] = useState(false);
     const handleUpdate = async () => {
         setIsSend(true)
-        await updateCategoryAction(cateId, categoryName);
-        setTimeout(() => {
-            setCategoryName('');
-        }, 1000);
+        const res = await updateCategoryAction(cateId, categoryName);
+        console.log('checking res', res)
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setCategoryName('');
         setIsSend(false)
         document.getElementById(`update_category_${cateId}`).close()
-        notify();
+        notify(res?.status, res?.detail);
     }
     useEffect(() => {
         setCategoryName(name)
@@ -49,7 +56,7 @@ export const CategoryEditAction = ({ cateId, name }) => {
                     />
                     <div className="flex justify-end space-x-3">
                         <div onClick={() => document.getElementById(`update_category_${cateId}`).close()} className="flex items-center px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
-                        <button onClick={() => handleUpdate()} type="submit" className="min-w-24 save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3">
+                        <button onClick={() => handleUpdate()} type="submit" className="min-w-32 save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3">
                             {!isSend ?
                                 <div className="flex justify-center text-center items-center gap-3">
                                     <Image

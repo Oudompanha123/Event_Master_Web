@@ -11,9 +11,23 @@ import { jwtDecode } from "jwt-decode";
 
 const knockClient = new Knock(process.env.KNOCK_SECRET_API_KEY);
 
+
 export const deleteCategoryAction = async (id) => {
+    const session = await getServerSession(authOption);
+    let userInfo = jwtDecode(session?.user?.token);
+
     await deleteCategory(id);
-    revalidateTag('event')
+    const allMember = await getAllMember();
+    await knockClient.notify('new-workout', {
+        actor: userInfo?.sub,
+        recipients: allMember.payload.filter(x => x.email !== userInfo?.sub).map(x => x.email),
+        data: {
+            workoutText: {
+                value: "has been deleted a category."
+            }
+        }
+    })
+    revalidateTag('overview')
 }
 
 export const addNewCategoryAction = async (name) => {
@@ -36,8 +50,22 @@ export const addNewCategoryAction = async (name) => {
 }
 
 export const updateCategoryAction = async (id, categoryName) => {
-    await updateCategory(id, categoryName);
+    const session = await getServerSession(authOption);
+    let userInfo = jwtDecode(session?.user?.token);
+
+    const res = await updateCategory(id, categoryName);
+    const allMember = await getAllMember();
+    await knockClient.notify('new-workout', {
+        actor: userInfo?.sub,
+        recipients: allMember.payload.filter(x => x.email !== userInfo?.sub).map(x => x.email),
+        data: {
+            workoutText: {
+                value: "has been updated a category."
+            }
+        }
+    })
     revalidateTag('overview');
+    return res
 }
 
 export const getAllCategoryAction = async (page) => {
@@ -47,13 +75,27 @@ export const getAllCategoryAction = async (page) => {
 }
 
 export const addNewEventAction = async (data) => {
+    const session = await getServerSession(authOption);
+    let userInfo = jwtDecode(session?.user?.token);
+
     const res = await createEventService(data);
     revalidateTag('overview_event');
+    const allMember = await getAllMember();
+    await knockClient.notify('new-workout', {
+        actor: userInfo?.sub,
+        recipients: allMember.payload.filter(x => x.email !== userInfo?.sub).map(x => x.email),
+        data: {
+            workoutText: {
+                value: "just created a new event."
+            }
+        }
+    })
     return res
 }
 
 export const allCategoryAction = async () => {
     const data = await allCategory();
+    revalidateTag('overview');
     return data
 }
 

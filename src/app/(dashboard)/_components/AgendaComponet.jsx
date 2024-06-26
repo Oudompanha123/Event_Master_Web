@@ -16,28 +16,46 @@ const convertTo12HourFormat = (time) => {
 };
 
 export default function AgendaComponent({id}) {
-
+  // console.log('the id of event is ',id)
   const [data, setData] = useState(null);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
 
   const fetchData = async () => {
     const res = await fetchAgenda(id);
-    setData(res?.payload?.data?.agenda );
+    setData(res?.payload?.data?.agenda);
   };
+
+
   useEffect(() => {
     fetchData();
-  }, [id]);
+  }, [saveSuccess, updateSuccess, deleteSuccess]);
+
+  const handleSaveSuccess = (success) => {
+    setSaveSuccess(success);
+  };
+
+  const handleUpdateSuccess = (success) => {
+    setUpdateSuccess(success);
+  };
+
+  const handleDeleteSuccess = (success) => {
+    setDeleteSuccess(success);
+  };
+
   
 
   if (data == null) {
     return (
-      <div className="mb-5 mt-12">
+      <div className="mb-5 mt-10">
         <div className="flex justify-between align-middle content-center mb-4 ">
           <div className="flex items-center justify-center">
             <p className="text-primary-text font-semibold text-2xl">
               Agenda Management
             </p>
           </div>
-          <CreateAgendaButton id={id} />
+          <CreateAgendaButton id={id} onSaveSuccess={handleSaveSuccess} />
         </div>
 
         <div className=" justify-center w-full content-center space-y-6 py-24">
@@ -69,7 +87,7 @@ export default function AgendaComponent({id}) {
   }
 
   return (
-    <div className="space-y-4 mb-5 mt-14">
+    <div className="space-y-4 mb-5 mt-10">
       <div className="flex justify-between align-middle content-center mb-5">
         <div className="flex items-center justify-center">
           <p className="text-primary-text font-semibold text-2xl">
@@ -77,8 +95,9 @@ export default function AgendaComponent({id}) {
           </p>
         </div>
         <div className="lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex">
-          <DeleteButton id={id} />
-          <UpdateAgendaButton id={id} />
+        <DeleteButton id={id} onDeleteSuccess={handleDeleteSuccess} />
+            <UpdateAgendaButton id={id} onUpdateSuccess={handleUpdateSuccess} />
+        
         </div>
       </div>
       {data?.map((data, index) => (

@@ -44,10 +44,7 @@ export const createEventService = async (newEvent) => {
             next: { tags: 'events' },
             method: "POST",
             body: JSON.stringify(newEvent),
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDcsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImhWZzFsVyIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDcsIm1lbWJlcklkIjo2NSwic3ViIjoibml0YWx5MDg2QGdtYWlsLmNvbSIsImlhdCI6MTcxODI0MzE2MSwiZXhwIjoxNzE5MTA3MTYxfQ.wfXJ-AcYZ08shSfRfszEqNin4mHeq0wEaVGnA1nHSG4',
-                'Content-Type': 'application/json'
-            }
+            headers: header
         }
     )
     const data = await res.json();
@@ -59,10 +56,7 @@ export const updateEventService = async (data, id) => {
     try {
         const res = await fetch(`${process.env.API_URL}events/${id}`, {
             method: 'PUT',
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsIm9yZ2FuaXphdGlvbiI6eyJvcmdJZCI6NDcsIm9yZ05hbWUiOiJObyBOYW1lIiwiY29kZSI6ImhWZzFsVyIsImFkZHJlc3MiOiJObyBBZGRyZXNzIiwibG9nbyI6IiJ9LCJvcmdJZCI6NDcsIm1lbWJlcklkIjo2NSwic3ViIjoibml0YWx5MDg2QGdtYWlsLmNvbSIsImlhdCI6MTcxODI0MzE2MSwiZXhwIjoxNzE5MTA3MTYxfQ.wfXJ-AcYZ08shSfRfszEqNin4mHeq0wEaVGnA1nHSG4',
-                'Content-Type': 'application/json'
-            },
+            headers: header,
             body: JSON.stringify({
                 data
             }),
@@ -79,4 +73,20 @@ export const updateEventService = async (data, id) => {
         throw error;
     };
 }
+
+export const deleteEventById = async (id) => {
+    try {
+      const header = await headerToken();
+      const res = await fetch(`${process.env.API_URL}events/${id}`, {
+        next: { tags: ["materials"] },
+        method: "DELETE",
+        headers: header,
+      });
+      const data = await res.json();
+      console.log("Data response event service ", data);
+      return data;
+    } catch (err) {
+      console.log("error event service", err);
+    }
+  };
 

@@ -27,11 +27,32 @@ export async function updateProfileMemberById(memberId, updateMemberData){
             body: JSON.stringify(updateMemberData),
             headers: header,
         });
-        console.log("Json ", JSON.stringify(updateMemberData))
         const data = await res.json();
+        console.log("data :",data);
         return data;
     } catch (error) {
         console.error("Error updating member:", error);
         throw error;
     }
+}
+
+export async function changePassword(updatePassword){
+    console.log("Update data: ", updatePassword)
+    // const session = await getServerSession(authOption());
+    const header = await headerToken();
+    try{
+        const res = await fetch(`${process.env.API_URL}profiles/change-password`, {
+            method: "PUT",
+            body: JSON.stringify(updatePassword),
+            headers: header,
+            
+    });
+        const data = await res.json();
+        console.log("data: ", data);
+        return data;
+    }catch (error){
+        console.error("Error: ", error.message);
+        throw error;
+    }
+   
 }

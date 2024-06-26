@@ -1,20 +1,30 @@
-
 import { AssetPopupComponent } from "../_components/CreateNewAssetComponent";
 import { AssetTableComponent } from "../_components/assetTableComponent";
 import { SearchAssetComponent } from "../_components/SearchAssetComponent";
-import { getAllAssetService, searchAssetByName } from "@/services/assetService/assetService";
-import { ToastContainer } from "react-toastify";
-
+import {
+  getAllAssetService,
+  searchAssetByName,
+} from "@/services/assetService/assetService";
+import { getServerSession } from "next-auth";
+import { jwtDecode } from "jwt-decode";
+import { authOption } from "@/app/api/auth/[...nextauth]/route";
+// import { RPaginate } from "../_components/paginate/RPaginate";
 export default async function assetPage({ searchParams }) {
-  // console.log("search params:", searchParams);
   const query = searchParams?.query || "";
-  const dataasset = await getAllAssetService();
-  const searchasset =await  searchAssetByName(query);
+  const page = searchParams?.page;
+  // console.log("page:",page);
+  const dataasset = await getAllAssetService(page);
+  // console.log("data:::",dataasset);
+  const searchasset = await searchAssetByName(query);
+  // console.log("datasearch:",searchasset.totalRecord);
+  const nullsearch= searchasset.totalRecord;
   const data = query == "" || query == null ? dataasset : searchasset;
+  const session = await getServerSession(authOption);
+  let userInfo = jwtDecode(session?.user?.token);
+  const userRole = userInfo.role;
 
   return (
     <>
-      <ToastContainer/>
       <div className="contain bg-white w-full lg:w-full rounded-3xl box-border">
         <div className="head flex flex-col gap-2 lg:flex-row lg:justify-between p-6 ">
           <div className="md:text-lg xl:text-xl font-semibold text-primary-text">
@@ -22,7 +32,9 @@ export default async function assetPage({ searchParams }) {
           </div>
           <div className="search_bar flex gap-7 lg:w-3/4 justify-between ">
             <SearchAssetComponent />
-            <div className="button_new">
+            <div
+              className={`${userRole == "ROLE_USER" && "hidden"} button_new`}
+            >
               <AssetPopupComponent />
             </div>
           </div>
@@ -30,6 +42,7 @@ export default async function assetPage({ searchParams }) {
         <div className="px-6">
           <div className="box-border mt-0 overflow-scroll">
             <AssetTableComponent data={data} query={query} />
+           
           </div>
         </div>
       </div>

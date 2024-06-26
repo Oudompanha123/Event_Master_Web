@@ -7,10 +7,11 @@ import Image from "next/image";
 import { Add, AddSquare } from "iconsax-react";
 import { allCategoryAction } from "@/actions/categoryAction";
 
-export const SelectModify = ({ height, label, func }) => {
+export const SelectModify = ({ height, label, func, more }) => {
 
     const [selected, setSelected] = useState(null);
     const [newCategory, setNewCategory] = useState();
+    const [trigger, setTrigger] = useState(false);
     const [options, setOptionData] = useState([
         { id: 1, name: "Social Event" },
         { id: 2, name: "Conferece" },
@@ -34,12 +35,6 @@ export const SelectModify = ({ height, label, func }) => {
         setOptionData([...res.payload, { categoryId: 999, categoryName: "Create Category" }])
     }
 
-    //call get all cagetory from api
-    useEffect(() => {
-        callApi();
-        removeCategory();
-    }, [])
-
     //remove create catgory and add back, just to make it behind all category.
     const removeCategory = () => {
         const updatedOptions = options.filter(option => option.categoryId !== 999);
@@ -59,12 +54,19 @@ export const SelectModify = ({ height, label, func }) => {
         removeCategory()
         document.getElementById('my_modal_create_new_category').close()
         document.getElementById('my_modal_event_create').showModal();
+        setTrigger(!trigger)
     }
 
     const handlePassToParent = (v) => {
         func(v)
-        console.log('gg', v)
     }
+
+    //call get all cagetory from api
+    useEffect(() => {
+        callApi();
+        removeCategory();
+        setSelected(null)
+    }, [more])
 
     return (
         <div className="w-auto">
@@ -101,7 +103,7 @@ export const SelectModify = ({ height, label, func }) => {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >
-                            <Listbox.Options className="absolute z-10 mt-1 h-[250px] overflow-auto rounded-2xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                            <Listbox.Options className="absolute z-10 mt-1 h-fit max-h-[250px] overflow-auto rounded-2xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                 {options?.map((option) => (
                                     <Listbox.Option
                                         key={option.categoryId}

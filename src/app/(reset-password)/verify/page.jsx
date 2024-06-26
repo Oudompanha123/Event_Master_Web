@@ -20,7 +20,7 @@ const VerifyPage = () => {
         <div>
             <div>
                 <Image
-                    className="absolute left-[50%] top-[40%] transform -translate-x-[50%] lg:size-[200px]"
+                    className="absolute left-[50%] top-[35%] sm:top-[40%] lg:top-[32%] transform -translate-x-[50%] size-[230px] sm:size-[290px] 2xl:size-[300px]"
                     src="/images/verify-success.gif"
                     alt="Verification success image"
                     width={400}

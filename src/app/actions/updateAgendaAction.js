@@ -1,4 +1,4 @@
-"use server";
+'use server';
 import { revalidateTag } from "next/cache";
 import { UpdateAgendaService } from "@/services/dashboard/agenda.service";
 

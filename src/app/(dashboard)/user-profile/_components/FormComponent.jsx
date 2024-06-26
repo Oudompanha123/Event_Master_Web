@@ -7,6 +7,7 @@ import { CiUnlock } from "react-icons/ci";
 import styles from "./MyComponent.module.css";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { useSession } from "next-auth/react";
+import Image from 'next/image';
 import { jwtDecode } from "jwt-decode";
 import { usePathname } from "next/navigation";
 import {
@@ -18,12 +19,12 @@ import ProfileComponent from "./ProfileComponent";
 
 // import { CiLock } from "react-icons/ci";
 function FormComponent({ className, getAllMember }) {
-    // console.log("Get all member in prop", getAllMember);
+  // console.log("Get all member in prop", getAllMember.picture);
 
   const ref = useRef();
   const [isLock, setLocked] = useState(true);
 
-  const [profileImage, setProfileImage] = useState("/images/Avatar.png");
+  const [profileImage, setProfileImage] = useState(getAllMember.picture);
   const [userName, setUserName] = useState(getAllMember.memberName);
   const [address, setAddress] = useState(getAllMember.address);
   const [email, setEmail] = useState(getAllMember.email);
@@ -31,9 +32,10 @@ function FormComponent({ className, getAllMember }) {
   const [gender, setGender] = useState(getAllMember.gender);
   const [date, setDate] = useState(getAllMember.dateOfBirth);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null)
 
 
-  let myArr = [userName, gender, email, address, email, phone, date]
+// let myArr = [userName, gender, email, address, email, phone, date]
 //   console.log('My Array:', myArr)  
 
   const { data: session, status } = useSession();
@@ -62,42 +64,38 @@ function FormComponent({ className, getAllMember }) {
   }
 
     const initialData = {
-        name: userName,
-        gender: gender,
-        email: email,
-        address: address,
-        phoneNumber: phone,
+        name : userName,
+        gender : gender,
+        email : email,
+        address : address,
+        picture : profileImage,
+        phoneNumber : phone,
         date: date,     
     };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-    reset,
-  } = useForm({
-    defaultValues: initialData,
+  const { register, handleSubmit, formState: { errors }, watch, reset, } = useForm({ 
+    defaultValues: initialData, 
   });
 
-  const delay = (x) => new Promise((resolve) => setTimeout(resolve, x))
-
   const onSubmit = async(data) => {
-    // console.log("MemberId: ", getAllMember.memberId)
-    // console.log("Form submitted", data);
+    console.log("Form data: ", data.picture)
     setIsLoading(true);
     await updateMemberDataAction(getAllMember.memberId ,data)
-    await delay(2000);
     setIsLoading(false);
     reset();
   };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    console.log("File Upload", file);
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
+      const imageUrl = URL.createObjectURL(file); 
       setProfileImage(imageUrl);
+      setSelectedFile(file);
+      console.log("File details:", {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      });
     }
   };
 
@@ -106,13 +104,17 @@ function FormComponent({ className, getAllMember }) {
       <form action="#" className="mx-auto mt-5 w-[92%] z-20" ref={ref} method="post" onSubmit={handleSubmit(onSubmit)}>
         <div className={`flex justify-between ${styles.container}`}>
           {/* Profile  */}
-          <div className={`profile rounded-full w-[20%] ${styles.profile}`}>
+          <div className={`profile rounded-full  w-[20%] ${styles.profile}`}>
             <div className={`rounded-full sm:mt-10  mx-auto min-w-[80px] max-w-[150px] relative`}>
-              <img src={profileImage} alt="logo" className="rounded-full" id="picture"/>
-              <label htmlFor="image-upload" className={`${styles.icon} absolute top-28 right-3 w-8 h-8 bg-slate-100  rounded-full flex justify-center items-center p-1 duration-300 hover:bg-slate-200 cursor-pointer`}>
-                <LiaUserEditSolid className="w-7 h-7 text-gray-700" />
-                <input type="file" id="image-upload" name="picture" className="hidden" onChange={handleImageUpload}/>
-              </label>
+              <Image src={profileImage} alt="logo" className="rounded-full overflow-hidden" id="picture" width={200} height={200}/>
+              {!isLock && (
+                <>
+                  <label htmlFor="image-upload" className={`${styles.icon} absolute top-28 right-3 w-8 h-8 bg-slate-100  rounded-full flex justify-center items-center p-1 duration-300 hover:bg-slate-200 cursor-pointer`}>
+                    <LiaUserEditSolid className="w-7 h-7 text-gray-700" />
+                    <input type="file" id="image-upload" name="picture" className="hidden" onChange={handleImageUpload} disabled={isLock}/>
+                  </label>
+                </>
+              )}
             </div>
             <div className="mt-2 mx-auto mx-w-[100px] flex flex-col items-center">
               <h1 className="text-slate-400 font-semibold">
@@ -151,9 +153,9 @@ function FormComponent({ className, getAllMember }) {
                   <select className={`${ errors.gender? "border-red-700 focus:border-red-600": "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id="gender"
                     disabled={isLock} onChange={(e)=> setGender(e.target.value)}
                     {...register("gender", { required: "Gender is required" })}>
-                    <option value="female">Female</option>
-                    <option value="male">Male</option>
-                    <option value="other" selected>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Other" selected>
                       Other
                     </option>
                   </select>
@@ -166,15 +168,12 @@ function FormComponent({ className, getAllMember }) {
               </div>
 
               <div className="w-full mb-2 group flex flex-col">
-                <label
-                  htmlFor="email-address-icon"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                <label htmlFor="email-address-icon" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Your Email <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <input type="email" id="email" name="email" className={`${ errors.email? "border-red-700 focus:border-red-600": "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                    placeholder="Enter your email" disabled={isLock} onChange={(e)=> setEmail(e.target.value)}
+                    placeholder="Enter your email" value={email} disabled={isLock} onChange={(e)=> setEmail(e.target.value)} readOnly
                     // value={getAllMember.email}
                     {...register("email", {
                       required: "Email is required",

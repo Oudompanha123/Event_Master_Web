@@ -17,7 +17,7 @@ export async function getAllUserRequestService(){
     return data;
 }
 
-export const RejectUserRequestByIdService = async (memberId) => {
+export const rejectUserRequestByIdService = async (memberId) => {
     const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}user-requests/reject/${memberId}`,
         {
@@ -32,7 +32,7 @@ export const RejectUserRequestByIdService = async (memberId) => {
     return data;
 }
 
-export async function ApproveUserRequestByIdService(memberId){
+export async function approveUserRequestByIdService(memberId){
     const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}user-requests/approve/${memberId}`,
         {

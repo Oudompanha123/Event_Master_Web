@@ -11,6 +11,8 @@ const options = [
 
 export const SelectStatusLanding = ({ func }) => {
     const [selected, setSelected] = useState(null);
+    const [value, setValue] = useState();
+    const [clickCount, setClickCount] = useState(0);
     const placeholder = "Choose status";
 
     const handleChange = (option) => {
@@ -23,7 +25,19 @@ export const SelectStatusLanding = ({ func }) => {
 
     const handleSelect = (v) => {
         let status = v.name == "Open" ? true : false
-        func(status)
+        setClickCount(clickCount + 1);
+        setValue(status)
+        if (clickCount <= 2) {
+            if (status === value) {
+                func('')
+                setValue('')
+            } else {
+                func(status)
+            }
+        } else {
+            func(status)
+            setClickCount(0)
+        }
     }
 
     return (

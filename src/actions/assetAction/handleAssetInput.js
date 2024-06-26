@@ -1,9 +1,9 @@
 "use server";
-
 import {
   getAllAssetService,
   insertAssetService,
   updateAssetService,
+  getAllAssetServiceNoPage
 } from "@/services/assetService/assetService";
 import { revalidateTag } from "next/cache";
 import { deleteAssetService } from "@/services/assetService/assetService";
@@ -15,14 +15,18 @@ export async function handleAsset(assetInput) {
     qty: assetInput.qty,
     unit: assetInput.unit,
   };
-  await insertAssetService(newAsset);
+  const data = await insertAssetService(newAsset);
+  
+ // console.log("return insert asset:",data);
   revalidateTag("asset");
+  
+  return data;
 }
 export const getAllAssetAction = async (page) => {
-console.log('pages:',page);
+//console.log('pages:',page);
     const data = await getAllAssetService(page);
     revalidateTag('overview');
-    return data
+    return data;
 }
 //update
 export async function handleUpdateAsset(id, newAsset) {
@@ -40,3 +44,9 @@ export async function handleDeleteAsset(id) {
   await deleteAssetService(id);
   revalidateTag("asset");
 }
+
+export const getAllAssetNoPageAction = async () => {
+      const data = await getAllAssetServiceNoPage();
+      revalidateTag('asset');
+      return data
+  }

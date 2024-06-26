@@ -1,6 +1,6 @@
 "use server"
 
-import { deleteEventById } from "@/services/dashboard/event.service";
+import { deleteEventById } from "@/services/dashboard/eventService";
 import { revalidateTag } from "next/cache";
 
 async function deleteEvent(eventId) {
