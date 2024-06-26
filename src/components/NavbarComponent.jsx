@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react"
 import { jwtDecode } from "jwt-decode"
 import { getEventByIdAction } from "@/actions/eventAction"
 import { useEffect, useState } from "react"
+import { NotificationCard } from "@/app/(dashboard)/_components/NotificationCard"
 
 export const NavbarComponent = ({ className }) => {
     const [eventName, setEventName] = useState();
@@ -100,8 +101,8 @@ export const NavbarComponent = ({ className }) => {
                     {/* <NotificationMenu /> */}
                     <Image src={'/icons/icon.svg'} width={24} height={24} />
                 </div>
-                {/* <NotificationCard /> */}
-                <div tabIndex={0} role="button" className="bg-[#F7F9FB] p-1 rounded-full hidden cursor-pointer lg:block">
+                <NotificationCard />
+                {/* <div tabIndex={0} role="button" className="bg-[#F7F9FB] p-1 rounded-full hidden cursor-pointer lg:block">
                     <NotificationMenu />
                 </div>
                 {userRole === "ROLE_ADMIN" ? <CreateEventButton /> : ''}
