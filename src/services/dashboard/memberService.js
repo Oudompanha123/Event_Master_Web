@@ -1,14 +1,17 @@
 "use server";
 import { headerToken } from "@/app/api/auth/headerToken";
 
-export async function getAllMemberService() {
+export async function getAllMemberService(page) {
   const header = await headerToken();
-  const res = await fetch(`${process.env.API_URL}members?offset=1&limit=8`, {
-    next: { tags: ["member"] },
-    method: "GET",
-    cache: "no-store",
-    headers: header,
-  });
+  const res = await fetch(
+    `${process.env.API_URL}members?offset=${page ? page : 1}&limit=8`,
+    {
+      next: { tags: ["member"] },
+      method: "GET",
+      cache: "no-store",
+      headers: header,
+    }
+  );
   const data = await res.json();
   return data;
 }
@@ -38,10 +41,11 @@ export async function updateMemberService(memberId, role) {
     }
   );
   const data = await res.json();
+  console.log("dataupdate:", data);
   return data;
 }
 
-export async function searchMemberService(name,page) {
+export async function searchMemberService(name, page) {
   console.log("member search");
   const header = await headerToken();
   const res = await fetch(

@@ -96,6 +96,7 @@ const MemberPage = async ({ searchParams }) => {
                   <MemberRoleComponent
                     memberId={member.memberId}
                     memberRoles={member.role}
+                    userRole ={userRole}
                   />
                 </td>
                 <td

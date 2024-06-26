@@ -13,7 +13,7 @@ export default async function assetPage({ searchParams }) {
   const page = searchParams?.page;
   const dataasset = await getAllAssetService(page);
   const searchasset = await searchAssetByName(query);
-  const nullsearch= searchasset.totalRecord;
+  const nullsearch = searchasset.totalRecord;
   const data = query == "" || query == null ? dataasset : searchasset;
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
@@ -28,16 +28,18 @@ export default async function assetPage({ searchParams }) {
           </div>
           <div className="search_bar flex gap-7 lg:w-3/4 justify-between ">
             <SearchAssetComponent />
-            <div
-              className={`${userRole == "ROLE_USER" && "hidden"} button_new`}
-            >
+            <div className={`${userRole === "ROLE_USER" && "hidden"}`}>
               <AssetPopupComponent />
             </div>
           </div>
         </div>
         <div className="px-6">
           <div className="box-border mt-0 overflow-scroll">
-            <AssetTableComponent data={data} query={query} nullsearch={nullsearch}/>
+            <AssetTableComponent
+              data={data}
+              query={query}
+              nullsearch={nullsearch}
+            />
           </div>
         </div>
       </div>

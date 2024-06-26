@@ -21,14 +21,14 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
             <th className="font-medium">CREATED AT</th>
             <th
               className={`${
-                userRole == "ROLE_USER" && "px-3 rounded-r-radiusUi"
+                userRole === "ROLE_USER" && "px-3 rounded-r-radiusUi"
               } font-medium `}
             >
               STATUS
             </th>
             <th
               className={`${
-                userRole == "ROLE_USER" && "hidden"
+                userRole === "ROLE_USER" && "hidden"
               } font-medium rounded-r-radiusUi px-3 `}
             >
               ACTION
@@ -80,7 +80,7 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
                 </td>
                 <td
                   className={`${
-                    userRole == "ROLE_USER" && "hidden"
+                    userRole === "ROLE_USER" && "hidden"
                   } rounded-r-radiusUi w-20`}
                 >
                   <div className="flex justify-center items-center gap-3 mx-3">
@@ -129,5 +129,5 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
         </div>
       )}
     </div>
-  );
+  );  
 };
