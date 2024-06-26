@@ -14,6 +14,7 @@ import {
   updateMemberData,
   updateMemberDataAction,
 } from "@/actions/profile/memberProfileAction";
+import defaultProfile from "../../../../../public/images/default-profile.jpg";
 import { getAllMemberProfile } from "@/services/profile/profile.service";
 import ProfileComponent from "./ProfileComponent";
 
@@ -35,8 +36,8 @@ function FormComponent({ className, getAllMember }) {
   const [selectedFile, setSelectedFile] = useState(null)
 
 
-// let myArr = [userName, gender, email, address, email, phone, date]
-//   console.log('My Array:', myArr)  
+  // let myArr = [userName, gender, email, address, email, phone, date]
+  //   console.log('My Array:', myArr)  
 
   const { data: session, status } = useSession();
   let userInfo;
@@ -45,7 +46,7 @@ function FormComponent({ className, getAllMember }) {
     userInfo = jwtDecode(session.user.token);
   }
   const userRole = userInfo?.role;
-//   console.log("User role: ", userRole);
+  //   console.log("User role: ", userRole);
 
   const displayRole = (userRole) => {
     if (userRole == "ROLE_ADMIN") {
@@ -63,24 +64,24 @@ function FormComponent({ className, getAllMember }) {
     setLocked(!isLock);
   }
 
-    const initialData = {
-        name : userName,
-        gender : gender,
-        email : email,
-        address : address,
-        picture : profileImage,
-        phoneNumber : phone,
-        date: date,     
-    };
+  const initialData = {
+    name: userName,
+    gender: gender,
+    email: email,
+    address: address,
+    picture: profileImage,
+    phoneNumber: phone,
+    date: date,
+  };
 
-  const { register, handleSubmit, formState: { errors }, watch, reset, } = useForm({ 
-    defaultValues: initialData, 
+  const { register, handleSubmit, formState: { errors }, watch, reset, } = useForm({
+    defaultValues: initialData,
   });
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     console.log("Form data: ", data.picture)
     setIsLoading(true);
-    await updateMemberDataAction(getAllMember.memberId ,data)
+    await updateMemberDataAction(getAllMember.memberId, data)
     setIsLoading(false);
     reset();
   };
@@ -88,7 +89,7 @@ function FormComponent({ className, getAllMember }) {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file); 
+      const imageUrl = URL.createObjectURL(file);
       setProfileImage(imageUrl);
       setSelectedFile(file);
       console.log("File details:", {
@@ -106,12 +107,13 @@ function FormComponent({ className, getAllMember }) {
           {/* Profile  */}
           <div className={`profile rounded-full  w-[20%] ${styles.profile}`}>
             <div className={`rounded-full sm:mt-10  mx-auto min-w-[80px] max-w-[150px] relative`}>
-              <Image src={profileImage} alt="logo" className="rounded-full overflow-hidden" id="picture" width={200} height={200}/>
+              <Image
+                src={profileImage && /^(http|https):\/\//.test(profileImage) ? profileImage : defaultProfile} alt="logo" className="rounded-full overflow-hidden" id="picture" width={200} height={200} />
               {!isLock && (
                 <>
                   <label htmlFor="image-upload" className={`${styles.icon} absolute top-28 right-3 w-8 h-8 bg-slate-100  rounded-full flex justify-center items-center p-1 duration-300 hover:bg-slate-200 cursor-pointer`}>
                     <LiaUserEditSolid className="w-7 h-7 text-gray-700" />
-                    <input type="file" id="image-upload" name="picture" className="hidden" onChange={handleImageUpload} disabled={isLock}/>
+                    <input type="file" id="image-upload" name="picture" className="hidden" onChange={handleImageUpload} disabled={isLock} />
                   </label>
                 </>
               )}
@@ -133,10 +135,10 @@ function FormComponent({ className, getAllMember }) {
                 <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Name <span className="text-red-500">*</span>
                 </label>
-                <input type="text" id="name" name="name" className={`${errors.name? "border-red-700 focus:border-red-600": "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                    placeholder="Enter your name" onChange={(e) => setUserName(e.target.value)}
-                    disabled={isLock}
-                    {...register("name", { required: "Name is required" })}
+                <input type="text" id="name" name="name" className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                  placeholder="Enter your name" onChange={(e) => setUserName(e.target.value)}
+                  disabled={isLock}
+                  {...register("name", { required: "Name is required" })}
                 />
                 {errors.name && (
                   <span className="text-red-500 text-sm">
@@ -150,8 +152,8 @@ function FormComponent({ className, getAllMember }) {
                   Gender <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <select className={`${ errors.gender? "border-red-700 focus:border-red-600": "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id="gender"
-                    disabled={isLock} onChange={(e)=> setGender(e.target.value)}
+                  <select className={`${errors.gender ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id="gender"
+                    disabled={isLock} onChange={(e) => setGender(e.target.value)}
                     {...register("gender", { required: "Gender is required" })}>
                     <option value="Female">Female</option>
                     <option value="Male">Male</option>
@@ -172,8 +174,8 @@ function FormComponent({ className, getAllMember }) {
                   Your Email <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <input type="email" id="email" name="email" className={`${ errors.email? "border-red-700 focus:border-red-600": "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                    placeholder="Enter your email" value={email} disabled={isLock} onChange={(e)=> setEmail(e.target.value)} readOnly
+                  <input type="email" id="email" name="email" className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                    placeholder="Enter your email" value={email} disabled={isLock} onChange={(e) => setEmail(e.target.value)} readOnly
                     // value={getAllMember.email}
                     {...register("email", {
                       required: "Email is required",
@@ -196,9 +198,9 @@ function FormComponent({ className, getAllMember }) {
                 <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Date <span className="text-red-500">*</span>
                 </label>
-                <input type="date" id="date" name="date" className={`${ errors.date? "border-red-700 focus:border-red-600": "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                    disabled={isLock} onChange={(e)=>setDate(e.target.value)}
-                    {...register("date", { required: "Date is required" })}
+                <input type="date" id="date" name="date" className={`${errors.date ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                  disabled={isLock} onChange={(e) => setDate(e.target.value)}
+                  {...register("date", { required: "Date is required" })}
                 />
                 {errors.date && (
                   <span className="text-red-500 text-sm">
@@ -211,15 +213,15 @@ function FormComponent({ className, getAllMember }) {
                 <label htmlFor="phone" className="mb-1 text-sm font-medium">
                   Phone Number <span className="text-red-500">*</span>
                 </label>
-                <input type="text" placeholder="Phone number" name="phoneNumber" className={`${ errors.phoneNumber? "border-red-700 focus:border-red-600": "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id="phone"
-                    disabled={isLock} onChange={(e)=>setPhoneNumber(e.target.value)}
-                    {...register("phoneNumber", {
-                        required: "Phone number is required",
-                        minLength: {
-                            value: 9,
-                            message: "Phone Number requires at least 8 characters",
-                        },
-                    })}
+                <input type="text" placeholder="Phone number" name="phoneNumber" className={`${errors.phoneNumber ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id="phone"
+                  disabled={isLock} onChange={(e) => setPhoneNumber(e.target.value)}
+                  {...register("phoneNumber", {
+                    required: "Phone number is required",
+                    minLength: {
+                      value: 9,
+                      message: "Phone Number requires at least 8 characters",
+                    },
+                  })}
                 />
                 {errors.phoneNumber && (
                   <span className="text-red-500 text-sm">
@@ -232,9 +234,9 @@ function FormComponent({ className, getAllMember }) {
                 <label htmlFor="address" className="mb-1 text-sm font-medium">
                   Address <span className="text-red-500">*</span>
                 </label>
-                <input type="text" placeholder="" name="address" className={`${errors.address? "border-red-700 focus:border-red-600": "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                    id="address" disabled={isLock} onChange={(e)=>setAddress(e.target.value)}
-                    {...register("address", { required: "Address is required" })}
+                <input type="text" placeholder="" name="address" className={`${errors.address ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                  id="address" disabled={isLock} onChange={(e) => setAddress(e.target.value)}
+                  {...register("address", { required: "Address is required" })}
                 />
                 {errors.address && (
                   <span className="text-red-500 text-sm">
@@ -258,8 +260,8 @@ function FormComponent({ className, getAllMember }) {
                     Cancel
                   </button>
                   <button className="btn btn-primary text-white w-40 text-lg lg:w-32 lg:text-base ml-5 rounded-2xl" type="submit">
-                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none"xmlns="http://www.w3.org/2000/svg">
-                      <path d="M16.69 2H8.31C4.67 2 2.5 4.17 2.5 7.81V16.18C2.5 19.83 4.67 22 8.31 22H16.68C20.32 22 22.49 19.83 22.49 16.19V7.81C22.5 4.17 20.33 2 16.69 2ZM16.5 12.75H13.25V16C13.25 16.41 12.91 16.75 12.5 16.75C12.09 16.75 11.75 16.41 11.75 16V12.75H8.5C8.09 12.75 7.75 12.41 7.75 12C7.75 11.59 8.09 11.25 8.5 11.25H11.75V8C11.75 7.59 12.09 7.25 12.5 7.25C12.91 7.25 13.25 7.59 13.25 8V11.25H16.5C16.91 11.25 17.25 11.59 17.25 12C17.25 12.41 16.91 12.75 16.5 12.75Z" fill="white"/>
+                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16.69 2H8.31C4.67 2 2.5 4.17 2.5 7.81V16.18C2.5 19.83 4.67 22 8.31 22H16.68C20.32 22 22.49 19.83 22.49 16.19V7.81C22.5 4.17 20.33 2 16.69 2ZM16.5 12.75H13.25V16C13.25 16.41 12.91 16.75 12.5 16.75C12.09 16.75 11.75 16.41 11.75 16V12.75H8.5C8.09 12.75 7.75 12.41 7.75 12C7.75 11.59 8.09 11.25 8.5 11.25H11.75V8C11.75 7.59 12.09 7.25 12.5 7.25C12.91 7.25 13.25 7.59 13.25 8V11.25H16.5C16.91 11.25 17.25 11.59 17.25 12C17.25 12.41 16.91 12.75 16.5 12.75Z" fill="white" />
                     </svg>
                     Save
                   </button>

@@ -113,12 +113,11 @@ const NewFormComponent = ({ searchParams }) => {
         <div className=" bg-purple-text h-[20%] rounded-t-2xl flex items-center justify-center"></div>
         <div className=" w-full h-0 flex justify-center z-30 mt-12 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 2xl:mt-0">
           <Image
-            // src={
-            //   imageSrc && /^(http|https):\/\//.test(imageSrc)
-            //     ? imageSrc
-            //     : defaultProfile
-            // }
-            src={userInfo?.organization?.logo}
+            src={
+              imageSrc && /^(http|https):\/\//.test(imageSrc)
+                ? imageSrc
+                : defaultProfile
+            }
             alt="logo"
             id="logo"
             name="logo"
@@ -241,11 +240,10 @@ const NewFormComponent = ({ searchParams }) => {
                 </button>
                 <button
                   className={`flex justify-center align-middle items-center rounded-lg bg-purple-text text-white text-lg ml-5 w-28 sm:w-32 md:w-32 lg:w-32 xl:w-32 2xl:w-32 
-                  ${
-                    !organizationName || !address
+                  ${!organizationName || !address
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:bg-violet-500"
-                  }`}
+                    }`}
                   onClick={handleSaveChanges}
                   type="button"
                   disabled={!organizationName.trim() || !address.trim()}
