@@ -80,10 +80,13 @@ export const addNewEventAction = async (data) => {
 
     const res = await createEventService(data);
     revalidateTag('overview_event');
+    //get all member to trigger noti to them
     const allMember = await getAllMember();
     await knockClient.notify('new-workout', {
         actor: userInfo?.sub,
+        //write logic to send noti to all member except me
         recipients: allMember.payload.filter(x => x.email !== userInfo?.sub).map(x => x.email),
+        //message base on ur own, change in value key
         data: {
             workoutText: {
                 value: "just created a new event."

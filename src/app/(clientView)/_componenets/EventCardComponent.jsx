@@ -1,12 +1,15 @@
 import Image from "next/image"
 import Link from "next/link"
 import image from "../../../../public/images/event-master-logo.png"
+import { getFormAction } from "@/actions/landingAction";
 
-export const EventCardComponent = ({ img, title, location, description, company, date, id, status }) => {
+export const EventCardComponent = async ({ img, title, location, description, company, date, id, status }) => {
     const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
     const inputDate = date;
     const formattedDate = formatDate(inputDate);
     const formated = formattedDate;
+    const form = await getFormAction(id);
+
     return (
         <div className="shadow-md rounded-3xl">
             <div className="relative">
@@ -45,9 +48,15 @@ export const EventCardComponent = ({ img, title, location, description, company,
                         </p>
                     </div>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                     <Link href={`/detail/${id}`} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
-                    <Link href={`/register/${id}`} className={`${!status && 'hidden'} text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text`}>Join Event</Link>
+                    <div>
+                        {form.status == 400 ?
+                            <p className={`text-red-600 text-sm ${!status && '!hidden'}`}>Attendee full</p>
+                            :
+                            <Link href={`/register/${id}`} className={`${!status && 'hidden'} text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text`}>Join Event</Link>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

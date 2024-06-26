@@ -8,7 +8,7 @@ import { EmailField } from "./Fields/EmailField";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { DateField } from "./Fields/DateField";
-import { getEventFormAction, updateEventFormAction } from "@/actions/eventAction";
+import { getEventByIdAction, getEventFormAction, updateEventFormAction } from "@/actions/eventAction";
 import { InputCreate } from "./FieldsType/InputCreate";
 import { toast } from "react-toastify";
 import { BooleanCreate } from "./FieldsType/BooleanCreate";
@@ -92,8 +92,8 @@ export const CreateDynamicForm = ({ id }) => {
   };
 
   const getFormData = async (id) => {
-    const res = await getEventFormAction(id);
-    setConfirmField(res?.payload?.data?.form || []);
+    const res = await getEventByIdAction(id);
+    setConfirmField(res?.payload?.form?.form || []);
   };
 
   const handleRemove = (index) => {
