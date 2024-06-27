@@ -4,7 +4,7 @@ import { useState } from "react"
 import MaterialComponent from "../MaterialComponent";
 import AgendaComponent from "../AgendaComponet";
 
-export const EventToggle = ({ id }) => {
+export const EventToggle = ({ id,userRole }) => {
     const [tab, setTab] = useState('a');
     return (
         <div>
@@ -13,9 +13,9 @@ export const EventToggle = ({ id }) => {
                 <p className={`${tab == 'b' && 'bg-white'} cursor-pointer w-32 text-center py-2 rounded-xl`} onClick={() => setTab('b')}>Agenda</p>
             </div>
             {tab === "a" ?
-                <MaterialComponent id={id} />
+                <MaterialComponent id={id} userRole={userRole}/>
                 :
-                <AgendaComponent id={id} />
+                <AgendaComponent id={id} userRole={userRole}/>
             }
         </div>
     )

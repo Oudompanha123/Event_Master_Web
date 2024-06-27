@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import Image from "next/image";
@@ -36,7 +36,7 @@ const getStatusColor = (status) => {
   }
 };
 
-export default function MaterialComponent({ id, searchParams }) {
+export default function MaterialComponent({ id, searchParams, userRole }) {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [data, setData] = useState(null);
@@ -53,9 +53,10 @@ export default function MaterialComponent({ id, searchParams }) {
   const [searchMaterial, setSearchMaterial] = useState([]);
   const [searchQuery, setSearchQuery] = useState(searchParams?.query || "");
   const [isLoading, setIsLoading] = useState(false);
+  const [searchInput, setSearchInput] = useState(""); // Define searchInput state
 
-  const query = searchQuery;
-  const nullsearch = searchMaterial.length;
+  let query = searchQuery;
+  const nullsearch = searchMaterial?.length;
   const dataOfMaterial = query === "" || query == null ? data : searchMaterial;
 
   const searchNameMaterial = async () => {
@@ -220,9 +221,7 @@ export default function MaterialComponent({ id, searchParams }) {
 
     try {
       if (idsToDelete.length > 0) {
-        setIsLoading(true);
         await deleteMaterialMultiple(idsToDelete);
-        setIsLoading(false);
       }
       // Filter out deleted IDs from data, if data exists
       if (data) {
@@ -231,6 +230,7 @@ export default function MaterialComponent({ id, searchParams }) {
       // Filter out new rows with 'new_' prefix from rows
       setRows(rows.filter((row) => !newIds.includes(row.id)));
       setCheckedRows([]);
+      handleClearSearch();
       // alert("Selected materials deleted successfully!");
     } catch (error) {
       console.error("Error deleting materials:", error);
@@ -319,6 +319,12 @@ export default function MaterialComponent({ id, searchParams }) {
     );
   };
 
+  const handleClearSearch = () => {
+    setSearchQuery("");
+    setSearchInput(""); // Clear search input state
+    setSearchMaterial([]);
+  };
+
   //find the length of material data to create the no index of new material
   const dataLength = data ? data.length : 0;
 
@@ -331,8 +337,13 @@ export default function MaterialComponent({ id, searchParams }) {
       {/* Render show Count material card component */}
       <CountMaterialComponent data={dataCount} />
       <div className="flex justify-between mt-5 h-14 w-full gap-1">
+        {/* <SearchMaterialComponent
+          handleSearch={handleSearch}
+          initialQuery={searchQuery}
+        /> */}
         <SearchMaterialComponent
           handleSearch={handleSearch}
+          handleClearSearch={handleClearSearch}
           initialQuery={searchQuery}
         />
         {/* Delete both material in Database and new row for create new material */}
@@ -382,7 +393,7 @@ export default function MaterialComponent({ id, searchParams }) {
           <button
             // type="submit"
             onClick={addNewRow}
-            className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text h-11 w-12 justify-center text-purple-text rounded-3xl md:px-4 md:py-2.5 flex items-center space-x-3 md:w-40"
+            className={`${userRole == "ROLE_USER" && "hidden"} button_new hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text h-11 w-12 justify-center text-purple-text rounded-3xl md:px-4 md:py-2.5 flex items-center space-x-3 md:w-40`}
           >
             <AddSquare size="24" variant="Bold" className="" />
             <p className="text-xs lg:text-base hidden md:block  lg:w-[140px]">
@@ -399,8 +410,9 @@ export default function MaterialComponent({ id, searchParams }) {
               <TableHeadMaterial
                 selectAllChecked={selectAllChecked}
                 handleSelectAllChange={handleSelectAllChange}
+                userRole={userRole}
               />
-              <EmptyMaterialRow />
+              <EmptyMaterialRow userRole={userRole}/>
             </table>
             <div className="justify-center w-full content-center space-y-6 pb-10">
               <div className="justify-center flex items-center">
@@ -427,6 +439,7 @@ export default function MaterialComponent({ id, searchParams }) {
             <TableHeadMaterial
               selectAllChecked={selectAllChecked}
               handleSelectAllChange={handleSelectAllChange}
+              userRole={userRole}
             />
 
             <tbody className="drop-shadow rounded-radiusUi text-sm font-normal text-primary-text bg-[#ffffff]">
@@ -442,6 +455,7 @@ export default function MaterialComponent({ id, searchParams }) {
                   query={query}
                   nullsearch={nullsearch}
                   id={id}
+                  userRole={userRole}
                 />
               ))}
 

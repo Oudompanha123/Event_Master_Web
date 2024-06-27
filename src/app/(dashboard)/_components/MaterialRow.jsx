@@ -29,8 +29,9 @@ const MaterialRow = ({
   handleCheckboxChange,
   memberData,
   id,
+  userRole
 }) => {
-  console.log("the data of material is ",data)
+  // console.log("the data fetch is ",data)
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({
     ...data,
@@ -42,6 +43,7 @@ const MaterialRow = ({
   const handleEdit = () => {
     setIsEditing(true);
   };
+  // console.log("edit data is ", editedData)
 
   const handleUpdate = async () => {
     if (validateForm()) {
@@ -103,6 +105,13 @@ const MaterialRow = ({
     setActiveDropdown(null);
   };
 
+  // const handleSupporterChange = (selectedSupporters) => {
+  //   setEditedData({
+  //     ...editedData,
+  //     supporters: selectedSupporters,
+  //   });
+  // };
+
   const toggleDropdown = (id) => {
     setActiveDropdown((prevState) => (prevState === id ? null : id));
   };
@@ -118,10 +127,11 @@ const MaterialRow = ({
       position: "top-center",
     });
   }
+  console.log("the data do update is ",editedData)
 
   return (
-    <tr className="bg-white border-b hover:bg-gray-50 border border-black w-full">
-      <td className="w-4 p-4 rounded-l-2xl">
+    <tr className="bg-white border-b hover:bg-gray-50 border border-black w-full rounded-l-2xl">
+      <td className={`${userRole == "ROLE_USER" && "hidden" } button_new w-4 p-4 rounded-l-2xl`}>
         <div className="flex items-center">
           <input
             type="checkbox"
@@ -135,7 +145,7 @@ const MaterialRow = ({
           </label>
         </div>
       </td>
-      <td className="text-base text-primary-text pl-1">{index + 1}</td>
+      <td className={`${userRole == "ROLE_USER" && "rounded-l-2xl pl-4" } text-base text-primary-text pl-1 `}>{index + 1}</td>
       <td className="text-sm font-normal text-primary-text px-2">
         <input
           type="text"
@@ -201,6 +211,7 @@ const MaterialRow = ({
       </td>
       <td className="px-2">
         <Dropdown
+        //  onSupporterChange={handleSupporterChange}
           selectedSupporters={editedData.supporters}
           readOnly={!isEditing}
         />
@@ -257,7 +268,7 @@ const MaterialRow = ({
             />
           </div>
         ) : (
-          <MaterialActionButton data={data} onEdit={handleEdit} />
+          <MaterialActionButton data={data} onEdit={handleEdit} userRole={userRole} />
         )}
       </td>
     </tr>

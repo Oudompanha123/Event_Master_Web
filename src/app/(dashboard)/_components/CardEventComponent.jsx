@@ -11,8 +11,7 @@ const formatDate = (dateString) => {
   return { day, month };
 };
 
-export default function CardEventComponent({ eventData }) {
-  console.log("event ",eventData);
+export default function CardEventComponent({ eventData,userRole }) {
   return (
     <div className="gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:gap-6 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2 2xl:grid-cols-4">
       {eventData.map((data, index) => {
@@ -39,8 +38,9 @@ export default function CardEventComponent({ eventData }) {
                       {month}
                     </small>
                   </div>
+                  <span className={`${userRole == "ROLE_USER" && "hidden"}`}>
                   <EventActionButton poster={data.poster} eventName={data.eventName} category={data.category} startDate={data.startDate} endDate={data.endDate}
-                   duration={data.duration} maxAttendee={data.maxAttendee} address={data.address} description={data.description} isPost={data.isPost} eventId={data.eventId} />
+                   duration={data.duration} maxAttendee={data.maxAttendee} address={data.address} description={data.description} isPost={data.isPost} eventId={data.eventId} /></span>
                 </div>
               </div>
 

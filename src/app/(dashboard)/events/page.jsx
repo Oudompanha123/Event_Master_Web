@@ -3,9 +3,16 @@ import { SelectDropdown } from "../_components/SelectDropdownComponent";
 import { SelectStatus } from "../_components/SelectStatusComponent";
 import { getAllEventsService } from "@/services/dashboard/eventService";
 import SearchComponent from "../_components/SearchComponent";
+import { getServerSession } from "next-auth";
+import { jwtDecode } from "jwt-decode";
+import { authOption } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function Page() {
   const eventData = await getAllEventsService();
+
+  const session = await getServerSession(authOption);
+  let userInfo = jwtDecode(session?.user?.token);
+  const userRole = userInfo.role;
 
   return (
     <main>
@@ -47,7 +54,7 @@ export default async function Page() {
           </div>
         </form>
       </div>
-      <SearchComponent eventData={eventData.payload} />
+      <SearchComponent eventData={eventData.payload} userRole={userRole} />
     </main>
   );
 }
