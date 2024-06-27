@@ -118,3 +118,25 @@ export const addAttendeeToEvent = async (data) => {
     const val = await res.json();
     return val;
 }
+
+export const addAgendaToClone = async (data, id) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}agendas/${id}`, {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify(data),
+    });
+    const val = await res.json();
+    return val;
+}
+
+export const addMaterialToClone = async (data) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}materials/multipleCreate`, {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify(data),
+    });
+    const val = await res.json();
+    return val;
+} 

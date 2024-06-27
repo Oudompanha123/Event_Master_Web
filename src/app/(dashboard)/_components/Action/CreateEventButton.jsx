@@ -149,7 +149,6 @@ export const CreateEventButton = () => {
         setIsSend(true);
         let cateId;
         //if category id = 88888 create new category base on categoryName
-        console.log(eventCategory, 'checking event from select')
         if (eventCategory.categoryId == 88888) {
             const res = await addNewCategoryAction(eventCategory.categoryName)
             cateId = res.payload.categoryId;
