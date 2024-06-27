@@ -1,26 +1,20 @@
 "use client";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { useForm } from "react-hook-form";
-import { CiLock } from "react-icons/ci";
-import { CiUnlock } from "react-icons/ci";
 import styles from "./MyComponent.module.css";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { useSession } from "next-auth/react";
 import Image from 'next/image';
 import { jwtDecode } from "jwt-decode";
-import { usePathname } from "next/navigation";
 import {
-  updateMemberData,
   updateMemberDataAction,
 } from "@/actions/profile/memberProfileAction";
 import defaultProfile from "../../../../../public/images/default-profile.jpg";
-import { getAllMemberProfile } from "@/services/profile/profile.service";
-import ProfileComponent from "./ProfileComponent";
+import { storeImageAction } from "@/actions/categoryAction";
+import { toast } from "react-toastify";
 
-// import { CiLock } from "react-icons/ci";
 function FormComponent({ className, getAllMember }) {
-  // console.log("Get all member in prop", getAllMember.picture);
 
   const ref = useRef();
   const [isLock, setLocked] = useState(true);
@@ -34,10 +28,8 @@ function FormComponent({ className, getAllMember }) {
   const [date, setDate] = useState(getAllMember.dateOfBirth);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null)
-
-
-  // let myArr = [userName, gender, email, address, email, phone, date]
-  //   console.log('My Array:', myArr)  
+  const [imageGG, setImageGG] = useState();
+  const [changeImage, setChangeImage] = useState(false);
 
   const { data: session, status } = useSession();
   let userInfo;
@@ -46,7 +38,6 @@ function FormComponent({ className, getAllMember }) {
     userInfo = jwtDecode(session.user.token);
   }
   const userRole = userInfo?.role;
-  //   console.log("User role: ", userRole);
 
   const displayRole = (userRole) => {
     if (userRole == "ROLE_ADMIN") {
@@ -78,16 +69,62 @@ function FormComponent({ className, getAllMember }) {
     defaultValues: initialData,
   });
 
+  const notify = (status, message) => {
+    if (status == "OK") {
+      toast.success("Sucessfully updated information.", {
+        position: "top-center"
+      });
+    }
+    if (status == 400) {
+      toast.error(`Can't update information, please check again ${message != undefined ? message : ''}`, {
+        position: "top-center"
+      });
+    }
+    if (status == 404) {
+      toast.error(`Please select category again ${message != undefined ? message : ''}`, {
+        position: "top-center"
+      });
+    }
+  }
+
   const onSubmit = async (data) => {
     console.log("Form data: ", data.picture)
+    console.log("checking data", data)
+    let formData = new FormData();
+    formData.append("file", imageGG);
+    const uploadImage = await storeImageAction(formData);
+    console.log(uploadImage, 'damn')
+
     setIsLoading(true);
-    await updateMemberDataAction(getAllMember.memberId, data)
+    const updateData = {
+      memberName: data?.name,
+      gender: data?.gender,
+      address: data?.address,
+      picture: uploadImage?.payload?.fileUrl || profileImage,
+      phone: data?.phoneNumber,
+      dateOfBirth: `${data?.date}T16:01:48.342095789`,
+    }
+    const res = await updateMemberDataAction(getAllMember.memberId, updateData)
     setIsLoading(false);
+    notify(res.status)
     reset();
+  };
+
+  const displayPreview = (file) => {
+    const reader = new FileReader();
+    reader?.readAsDataURL(file);
+    reader.onload = () => {
+      const preview = document.getElementById("damn");
+      preview.src = reader.result;
+      preview.classList.remove("hidden");
+    };
   };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
+    setImageGG(e.target.files[0])
+    displayPreview(file);
+    setChangeImage(true);
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setProfileImage(imageUrl);
@@ -106,14 +143,14 @@ function FormComponent({ className, getAllMember }) {
         <div className={`flex justify-between ${styles.container}`}>
           {/* Profile  */}
           <div className={`profile rounded-full  w-[20%] ${styles.profile}`}>
-            <div className={`rounded-full sm:mt-10  mx-auto min-w-[80px] max-w-[150px] relative`}>
-              <Image
-                src={profileImage && /^(http|https):\/\//.test(profileImage) ? profileImage : defaultProfile} alt="logo" className="rounded-full overflow-hidden" id="picture" width={200} height={200} />
+            <div className={`rounded-full sm:mt-10  mx-auto min-w-[80px] max-w-[200px] relative`}>
+              <Image src={profileImage && /^(http|https):\/\//.test(profileImage) ? profileImage : defaultProfile} alt="logo" className={`${changeImage && 'hidden'} h-[200px] w-[200px] object-cover rounded-full overflow-hidden`} id="picture" width={200} height={200} />
+              <img src="" className="mx-auto !h-[200px] !w-[200px] hidden rounded-full object-cover" id="damn" alt="Damn" />
               {!isLock && (
                 <>
-                  <label htmlFor="image-upload" className={`${styles.icon} absolute top-28 right-3 w-8 h-8 bg-slate-100  rounded-full flex justify-center items-center p-1 duration-300 hover:bg-slate-200 cursor-pointer`}>
+                  <label htmlFor="image-upload" className={`${styles.icon} absolute top-28 right-0 w-8 h-8 bg-slate-100  rounded-full flex justify-center items-center p-1 duration-300 hover:bg-slate-200 cursor-pointer`}>
                     <LiaUserEditSolid className="w-7 h-7 text-gray-700" />
-                    <input type="file" id="image-upload" name="picture" className="hidden" onChange={handleImageUpload} disabled={isLock} />
+                    <input accept="image/png,image/jpeg" type="file" id="image-upload" name="picture" className="hidden" onChange={handleImageUpload} disabled={isLock} />
                   </label>
                 </>
               )}
@@ -136,7 +173,8 @@ function FormComponent({ className, getAllMember }) {
                   Name <span className="text-red-500">*</span>
                 </label>
                 <input type="text" id="name" name="name" className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                  placeholder="Enter your name" onChange={(e) => setUserName(e.target.value)}
+                  placeholder="Enter your name"
+                  onChange={(e) => setUserName(e.target.value)}
                   disabled={isLock}
                   {...register("name", { required: "Name is required" })}
                 />
