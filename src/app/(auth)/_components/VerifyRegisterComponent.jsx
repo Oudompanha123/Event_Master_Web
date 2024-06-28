@@ -1,109 +1,3 @@
-// 'use client'
-//
-// import Link from "next/link";
-// import styles from "@/app/(reset-password)/style.module.css";
-// import OtpInput from "react18-input-otp";
-// import {useState} from "react";
-// import {useRouter} from "next/navigation";
-//
-// const VerifyRegisterComponent = () => {
-//
-//     const [rgotp, setRgotp] = useState('');
-//     const [errorMessage, setErrorMessage] = useState(null);
-//
-//     const handleChange = (enteredOtp) => {
-//         setRgotp('');
-//         if (!/^\d+$/.test(enteredOtp)) {
-//             setErrorMessage("Please enter only numbers.");
-//             return;
-//         }
-//         setRgotp(enteredOtp);
-//         setErrorMessage('');
-//     };
-//
-//     const router = useRouter();
-//
-//     return (
-//         <div className="absolute mx-[29%] mt-[14%] left-[9.5%]">
-//             <form>
-//                 <div className="mt-5 mb-12">
-//                     <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
-//                         Enter 4 Digits Code
-//                     </h2>
-//                     <p className="flex justify-center greyUi mt-6">Enter the 4 digits code that received your email.</p>
-//                 </div>
-//
-//                 <OtpInput inputStyle={styles.inputStyle}
-//                           value={rgotp}
-//                           onChange={handleChange}
-//                           numInputs={4}
-//                 />
-//
-//                 {errorMessage && <p className="text-red-600 mt-3 ml-4">{errorMessage}</p>}
-//
-//                 <button
-//                     onClick={() => router.push('/login')}
-//                     type="button"
-//                     id="continue"
-//                     className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 mt-12 shadow-md shadow-violet-400 ${rgotp.length !== 4 ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}
-//                     disabled={rgotp.length !== 4}
-//                 >
-//                     Continue
-//                 </button>
-//
-//
-//                 <Link href={`/verify-register`}>
-//                     <p className="flex justify-end text-blueUi mt-5"><u>Resend Code</u>
-//                     </p>
-//                 </Link>
-//             </form>
-//
-//
-//         </div>
-//     )
-// }
-// export default VerifyRegisterComponent
-//
-
-// async function handleSubmit(){
-//     setIsLoading(true);
-//     const response = await registerVerifyAction(email, otp);
-//     setIsLoading(false);
-//     if(response.status === 'OK'){
-//         router.push(`/login`)
-//     }
-//     else{
-//         error(response.detail);
-//     }
-// }
-//
-// function error(message){
-//     toast.error(message, {
-//         position: "top-center"
-//     });
-// };
-//
-// function successSendingOTP(message){
-//     toast.success(message, {
-//         position: "top-center"
-//     });
-// }
-//
-// async function handleResendOtp(){
-//     setIsLoadingResendOTP(true);
-//     const response = await resendRegisterAction(email);
-//     setIsLoadingResendOTP(false);
-//     if(response.status === 'CREATED'){
-//         successSendingOTP(response.message);
-//     }
-//     else{
-//         error(response.detail);
-//     }
-// }
-
-
-
-
 'use client'
 
 import Link from "next/link";
@@ -117,7 +11,6 @@ import {resendRegisterAction, registerVerifyAction} from "@/actions/auth/registe
 
 
 const VerifyRegisterComponent = ({email}) => {
-    console.log("final email : ", email)
     const [otp, setOtp] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -164,8 +57,8 @@ const VerifyRegisterComponent = ({email}) => {
         setIsLoadingResendOTP(true);
         const response = await resendRegisterAction(email);
         setIsLoadingResendOTP(false);
-        if (response.status === "OK") {
-            toast.success(response.detail, {
+        if (response.status === "CREATED") {
+            toast.success(response.message, {
                 position: "top-center"
             });
         } else {

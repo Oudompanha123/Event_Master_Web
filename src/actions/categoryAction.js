@@ -16,7 +16,8 @@ export const deleteCategoryAction = async (id) => {
     const session = await getServerSession(authOption);
     let userInfo = jwtDecode(session?.user?.token);
 
-    await deleteCategory(id);
+    const res = await deleteCategory(id);
+    revalidateTag('overview')
     const allMember = await getAllMember();
     if (allMember.totalRecord != 1) {
         await knockClient.notify('new-workout', {
@@ -29,7 +30,7 @@ export const deleteCategoryAction = async (id) => {
             }
         })
     }
-    revalidateTag('overview')
+    return res
 }
 
 export const addNewCategoryAction = async (name) => {

@@ -1,8 +1,11 @@
+
 import Image from "next/image";
 import LoginComponent from "@/app/(auth)/_components/LoginComponent";
 import Link from "next/link";
 import {signIn} from "next-auth/react";
 import {MdKeyboardArrowLeft} from "react-icons/md";
+import {redirect} from "next/navigation";
+
 
 const LoginPage = () => {
 
@@ -20,9 +23,7 @@ const LoginPage = () => {
             redirect: false,
             ...newUser,
         });
-        if (res.ok) {
-            router.push("/login");
-        }
+
     }
 
     return (
@@ -38,7 +39,7 @@ const LoginPage = () => {
 
             <Link
                 href={`/`}
-                className="absolute top-5 left-8 flex text-xl gap-1 text-white"
+                className="absolute top-5 left-8 flex text-xl gap-1 text-white z-10"
             >
                 <MdKeyboardArrowLeft size={30} className="bg-red-40 flex font-bold"/>
                 Back

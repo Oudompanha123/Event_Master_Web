@@ -10,15 +10,10 @@ import { FaRegCopy } from "react-icons/fa6";
 import { CgAddR } from "react-icons/cg";
 import { TbEdit } from "react-icons/tb";
 import { updateOrganization } from "@/services/profile/org";
-import useSWR from "swr";
+import { storeImageAction } from "@/actions/categoryAction";
+import { getOrganizationService } from "@/services/profile/org";
 
-const NewFormComponent = () => {
-  const notify = () => {
-    toast.success("Updated organization Successful", {
-      position: "top-center",
-    });
-  };
-
+const FormOrg = () => {
   // fetch data
   const { data: session, status } = useSession();
   const [userInfo, setUserInfo] = useState(null);
@@ -26,67 +21,88 @@ const NewFormComponent = () => {
   const [organizationName, setOrganizationName] = useState("");
   const [address, setAddress] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [imageSrc, setImageSrc] = useState(null);
+  const [imageSrc, setImageSrc] = useState("");
   const [copied, setCopied] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
-  const [uploadedImage, setUploadedImage] = useState(null);
+  const [imageLink, setImageLink] = useState(null); 
+  // const [displayedOrganizationName, setDisplayedOrganizationName] = useState("");
 
-  // console.log("Set image : ",setImageSrc)
   useEffect(() => {
     const fetchData = async () => {
       if (status === "authenticated" && session?.user?.token) {
-        const decodedToken = jwtDecode(session.user.token);
-        // console.log("data token : ",decodedToken)
-        setUserInfo(decodedToken);
-        const orgData = decodedToken.organization || {};
-        setOrganizationCode(orgData.code);
-        setOrganizationName(orgData.orgName || "");
-        setAddress(orgData.address || "");
-        setImageSrc(orgData.logo || null);
+        const organizationData = await getOrganizationService();
+          setOrganizationCode(organizationData.code || "");
+          setOrganizationName(organizationData.orgName || "");
+          setAddress(organizationData.address || "");
       }
     };
     fetchData();
   }, [status, session]);
 
+  const [hide, setHide] = useState(false);
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    setImageLink(file); // Store the selected file in state
+    displayLogo(file);
+  };
+
+  const displayLogo = (file) => {
     const reader = new FileReader();
-    
-    reader.onloadend = () => {
-      setUploadedImage(reader.result);
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setImageSrc(reader.result); // Set image preview URL
     };
-  
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };  
+  };
+
+  const onUpdate = async (imageLink) => {
+    // upload new image
+    onUpload(imageLink);
+    // delete old image with url
+    const desertRef = ref(storage, imageUrl);
+    await deleteObject(desertRef);
+  };
 
   const handleCancelChanges = () => {
     setOrganizationName(userInfo?.organization?.orgName || "");
     setAddress(userInfo?.organization?.address || "");
-    setImageSrc(userInfo?.organization?.logo || null);
     setIsEditing(false);
   };
 
   const handleSaveChanges = async () => {
-    const organizationData = {
-      orgId: userInfo.organization.orgId,
-      orgName: organizationName,
-      address: address,
-      logo: uploadedImage || imageSrc,
-    };
-
     try {
-      console.log("Saving changes...", organizationData);
+      // If there's a new image selected, upload it first
+      let uploadImage = null;
+      if (imageLink) {
+        const formData = new FormData();
+        formData.append("file", imageLink);
+        const response = await storeImageAction(formData);
+        uploadImage = response?.payload?.fileUrl;
+      }
+
+      const organizationData = {
+        orgId: userInfo.organization.orgId,
+        orgName: organizationName,
+        address: address,
+        logo: uploadImage || userInfo.organization.logo, // Use uploaded image or keep existing one
+      };
+
       const updatedOrganization = await updateOrganization(
         organizationData.orgId,
         organizationData
       );
-      console.log("Changes saved successfully: ", updatedOrganization);
+
       setIsEditing(false);
+      notify();
     } catch (error) {
-      console.error("Error updating organization: ", error);
+      console.error("Error updating organization:", error);
+      // Handle error state or show error message to the user
     }
+  };
+
+  const notify = () => {
+    toast.success("Updated organization Successful", {
+      position: "top-center",
+    });
   };
 
   const handleOrganizationNameChange = (e) => {
@@ -109,25 +125,28 @@ const NewFormComponent = () => {
     }, 2000);
   };
   return (
-    <form action="">
+    <form encType="multipart/form-data">
       <div className="rounded-2xl w-full h-[750px] sm:h-[800px] md:h-[800px] lg:h-[800px] xl:h-[800px] 2xl:h-[800px] flex flex-col shadow-md relative">
         <div className=" bg-purple-text h-[20%] rounded-t-2xl flex items-center justify-center"></div>
         <div className=" w-full h-0 flex justify-center z-30 mt-12 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 2xl:mt-0">
-          <Image
-            src={
-              uploadedImage ||
-              (userInfo?.organization?.logo &&
-              /^(http|https):\/\//.test(userInfo.organization.logo)
-                ? userInfo.organization.logo
-                : defaultProfile)
-            }
-            alt="logo"
-            id="logo"
-            name="logo"
-            width={112}
-            height={140}
-            className="rounded-full -mt-28 sm:-mt-16 md:-mt-20 lg:-mt-28 xl:-mt-28 2xl:-mt-28  sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-52 lg:h-52 xl:w-60 xl:h-60 2xl:w-64 2xl:h-64"
-          />
+          <div className="bg-slate-100 -mt-28 sm:-mt-16 md:-mt-20 lg:-mt-28 xl:-mt-28 2xl:-mt-28 rounded-full sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-52 lg:h-52 xl:w-60 xl:h-60 2xl:w-64 2xl:h-64">
+            <Image
+              src={
+                imageSrc ||
+                (userInfo?.organization?.logo &&
+                /^(http|https):\/\//.test(userInfo.organization.logo)
+                  ? userInfo.organization.logo
+                  : "/images/default-profile.jpg")
+              } 
+              alt="logo"
+              id="logo"
+              name="logo"
+              width={112}
+              height={140}
+              className="rounded-full w-full h-full"
+            />
+          </div>
+
           {isEditing && (
             <label
               htmlFor="upload-proflie-org"
@@ -147,7 +166,7 @@ const NewFormComponent = () => {
 
         <div className="absolute text-center w-full top-56 sm:top-64 md:top-64 lg:top-72 xl:top-80 2xl:top-[330px]">
           <p className="text-primary-text font-bold text-xl sm:text-xl md:text-xl lg:text-2xl xl:text-3xl 2xl:text-3xl">
-            {userInfo?.organization?.orgName}
+          {organizationName}
           </p>
         </div>
 
@@ -166,7 +185,7 @@ const NewFormComponent = () => {
                   type="number"
                   id="text"
                   className={`shadow-sm cursor-default bg-gray-100 border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                  placeholder={userInfo?.organization?.code}
+                  value={organizationCode}
                   readOnly
                 />
                 <FaRegCopy
@@ -276,7 +295,7 @@ const NewFormComponent = () => {
             alt="background"
             width={150}
             height={150}
-            className="sm:h-72 md:h-80 lg:h-96 xl:h-96 2xl:h-96"
+            className="rounded-b-xl sm:h-72 md:h-80 lg:h-96 xl:h-96 2xl:h-96"
           />
         </div>
       </div>
@@ -284,4 +303,4 @@ const NewFormComponent = () => {
   );
 };
 
-export default NewFormComponent;
+export default FormOrg;

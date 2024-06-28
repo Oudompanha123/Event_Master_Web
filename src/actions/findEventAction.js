@@ -11,7 +11,6 @@ export const handleSearch = async (input) => {
 
     try {
         const findData = await findEvent(searchData);
-        console.log(findData)
         return findData;
     } catch (error) {
         console.error('Error fetching data:', error);

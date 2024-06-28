@@ -23,7 +23,6 @@ export const getMaterialById = async (id) => {
 };
 
 export const getMaterialByEventId = async (id) => {
-  // console.log("t")
   try {
     const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}materials/getAll/${id}`, {
@@ -96,7 +95,6 @@ export const DeleteMaterialService = async (listId) => {
       body: JSON.stringify({ 'materialIds': listId }),
     });
     const data = await res.json();
-    console.log("Data response material service ", data);
     return data;
   } catch (err) {
     console.log("error material service", err);
@@ -128,8 +126,6 @@ export const UpdateMaterialService = async (data, id) => {
 
 export const UpdateMaterialStatusService = async (status, MaterialId) => {
   try {
-    console.log("the status in service",status);
-    console.log("the materail id in service",MaterialId)
     const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}materials/status/${MaterialId}?status=${status}`, {
       method: "PUT",

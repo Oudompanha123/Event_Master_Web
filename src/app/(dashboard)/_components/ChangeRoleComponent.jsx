@@ -20,9 +20,13 @@ export function ChangeRoleComponent({ role, onConfirm, onClose }) {
             height={0}
           />
         </div>
-        <p className="justify-center w-full flex text-primary-text font-bold text-lg text-center mt-5">
-          Do you want to change your role to {role.toLowerCase()}?
-        </p>
+        <div>
+          <span className="w-full  text-primary-text font-bold text-lg text-center mt-5">
+            Do you want to change this role to {role.toLowerCase()}?
+            {role === "Admin" && <span className="inline ml-2 text-red-500">Then you will become a sub_admin</span>}
+          </span>
+        </div>
+        
         <div className="modal-action">
           <form
             method="dialog"

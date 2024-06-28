@@ -15,7 +15,6 @@ const VerifyOTPComponent = ({email}) => {
     const [isLoadingResendOTP, setIsloadingResendOTP] = useState(false);
 
     const handleChange = (enteredOtp) => {
-        console.log("enteredOtp", enteredOtp)
         if (!/^\d+$/.test(enteredOtp)) {
             setOtp('');
             setErrorMessage("Please enter only numbers.");

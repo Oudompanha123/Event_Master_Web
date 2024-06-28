@@ -62,11 +62,7 @@ const MaterialRow = ({
   const handleUpdate = async () => {
     if (validateForm()) {
       if (userRole === "ROLE_USER" && editedData.handlerId === userId) {
-        console.log("if handler");
         try {
-          console.log("the status is", editedData.status);
-          console.log("the materail id is", editedData.materialId);
-
           const updatedMaterialStatus = await UpdateMaterialStatusService(
             editedData.status,
             editedData.materialId
@@ -78,7 +74,6 @@ const MaterialRow = ({
           showError("Error updating material!");
         }
       } else {
-        console.log("if admin");
         try {
           const updatedMaterial = await UpdateMaterialService(
             editedData,
@@ -142,7 +137,6 @@ const MaterialRow = ({
       [key]: value,
     });
   };
-  // console.log('the data ot edit is ',editedData)
   const handleStatusChange = (id, statusOption) => {
     setEditedData((prevState) => ({
       ...prevState,

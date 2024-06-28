@@ -53,7 +53,6 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
     setEventCategory(selectedCategory);
   };
   const handleEventType = (status) => {
-    console.log("Post : ", status);
     setPost(status);
   }
 
@@ -172,7 +171,6 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
     let endDateFormat = twoDayAhead.toISOString();
 
     const eventByName = await getEventByNameOrgAction(eventData?.eventName.replace(/\(\d+\)$/, '').trim())
-    console.log(eventByName, 'up here')
     let eventByNameLength = eventByName?.payload?.length;
 
     //clone event
@@ -286,8 +284,6 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
     setImageLink(e.target.files[0]);
     displayPreview(file);
     setHide(true);
-    console.log('check here ', e.target.files[0])
-    console.log("change", imageLink)
   };
 
   const displayPreview = (file) => {
@@ -390,23 +386,28 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                     </li>
                   </>
                 )}
-                <hr />
-                <li>
-                  <a
-                    className="gap-5 flex px-5 py-3 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-xl "
-                    role="menuitem"
-                    tabIndex="-1"
-                    onClick={() =>
-                      document.getElementById(`event_action_copy_${eventId}`).showModal()
-                    }
-                  >
-                    <Additem size="24" color="#2962FF" />
-                    {" "}
-                    <p className="text-primary-text text-base font-semibold ">
-                      Duplicate
-                    </p>
-                  </a>
-                </li>
+                {(userRole === "ROLE_ADMIN") && (
+                  <>
+                    <hr />
+                    <li>
+                      <a
+                        className="gap-5 flex px-5 py-3 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-xl "
+                        role="menuitem"
+                        tabIndex="-1"
+                        onClick={() =>
+                          document.getElementById(`event_action_copy_${eventId}`).showModal()
+                        }
+                      >
+                        <Additem size="24" color="#2962FF" />
+                        {" "}
+                        <p className="text-primary-text text-base font-semibold ">
+                          Duplicate
+                        </p>
+                      </a>
+                    </li>
+                  </>
+                )}
+
               </ul>
             </div>
           )}

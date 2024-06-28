@@ -2,7 +2,7 @@ import Image from "next/image";
 import VerifyRegisterComponent from "@/app/(auth)/_components/VerifyRegisterComponent";
 
 const VerifyRegisterPage = ({searchParams}) => {
-    const email = searchParams.get('email')
+    const email = searchParams.email
     return (
         <div className="bg-primary-purple w-[100%] h-screen relative">
             <div className="absolute w-[49%] h-[83%] mt-20 left-[25%]">
@@ -10,7 +10,6 @@ const VerifyRegisterPage = ({searchParams}) => {
                        src="images/verify-otp-rg.svg" alt="image" width={934} height={746} property=""
                 />
             </div>
-            {/*forgot password component*/}
             <VerifyRegisterComponent email = {email}/>
         </div>
 
