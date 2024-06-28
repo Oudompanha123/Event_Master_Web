@@ -1,4 +1,3 @@
-
 "use server";
 
 import {registerService} from "@/services/login-signup/auth.service";
@@ -14,3 +13,4 @@ export default async function signupAction(formRegister) {
     await registerService(newUser);
     return newUser;
 }
+

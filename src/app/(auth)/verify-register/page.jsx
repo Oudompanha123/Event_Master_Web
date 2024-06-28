@@ -2,7 +2,8 @@ import Image from "next/image";
 import VerifyRegisterComponent from "@/app/(auth)/_components/VerifyRegisterComponent";
 
 const VerifyRegisterPage = ({searchParams}) => {
-    const email = searchParams.get('email')
+    const email = searchParams.email
+    console.log("email: ", email)
     return (
         <div className="bg-primary-purple w-[100%] h-screen relative">
             <div className="absolute w-[49%] h-[83%] mt-20 left-[25%]">
