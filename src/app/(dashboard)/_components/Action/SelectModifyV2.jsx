@@ -7,8 +7,6 @@ import Image from "next/image";
 import { Add, AddSquare } from "iconsax-react";
 import { getAllCategoryEventAction } from "@/app/actions/eventAction";
 import { addNewCategoryAction } from "@/actions/categoryAction";
-import { toast } from "react-toastify";
-import "../../../../app/globals.css"
 
 export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => {
     const [selected, setSelected] = useState(null);
@@ -30,19 +28,6 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
         }
     };
 
-    const notifySuccess = (message) => {
-        toast.success(message, {
-          position: 'top-right',
-          
-        });
-      };
-      const notifyError = (message) => {
-        toast.error(message, {
-          position: 'top-right',
-          className: "custom-toast"
-        });
-      };
-
     const callApi = async () => {
         const res = await getAllCategoryEventAction();
         setOptionData(res.payload)
@@ -63,7 +48,6 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
         { categoryId: 88888, categoryName: `${newCategory}` },
         { categoryId: 999, categoryName: "Create Category" }
         ]);
-   
     }
 
     const handleTrigger = () => {
@@ -77,11 +61,10 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
             removeCategory()
             document.getElementById('my_modal_create_new_categoryV2').close()
             document.getElementById(`my_modal_updateEvent${eventId}`)
-            notifySuccess("Event Category is created successfully.")
+            setNewCategory("")
         } else {
-            notifyError(res?.detail)
+            setError(res?.detail)
         }
-        
     }
 
     const handlePassToParent = (v) => {
@@ -179,22 +162,24 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
                         <h2 className="text-lg lg:text-xl font-semibold">Create Category</h2>
                         <button onClick={() => {
                             document.getElementById("my_modal_create_new_categoryV2").close();
-                            // document.getElementById(`my_modal_updateEvent${eventId}`).showModal();
                         }} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </div>
-                    <input
+                    <div>
+                       <input
                         type="text"
                         name="category"
                         id="category"
-                        className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
+                        className={`${error ? "border-red-600" : "greyUi"} shadow-sm bg-white border primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                         placeholder="Category" required=""
                         value={newCategory}
                         onChange={(e) => setNewCategory(e.target.value)}
-                    />
+                    />  
+                    {error && <p className="text-red-600 mt-2">* {error}</p>}
+                    </div>
+                   
                     <div className="flex justify-end space-x-3">
                         <div onClick={() => {
                             document.getElementById("my_modal_create_new_categoryV2").close();
-                            document.getElementById(`my_modal_updateEvent${eventId}`).showModal();
                         }} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
                         <div onClick={() => handleCategorySave()} className="cursor-pointer save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
                             <AddSquare size="20" color="#FFFFFF" variant="Bold" />
@@ -204,7 +189,7 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
                 </div>
             </dialog>
 
-        
+            
         </div>
     );
 };

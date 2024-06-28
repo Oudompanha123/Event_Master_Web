@@ -26,6 +26,9 @@ export const SelectModify = ({ height, label, func, more }) => {
             setSelected(null);
         } else {
             setSelected(option);
+            // setSelected({ categoryId: 288, categoryName: 'GG', createAt: '2024-06-23T15:26:53.335+07:00', createBy: 'Davin Morn' });
+            // console.log(option, 'check')
+            // setSelected({ id: 77, name: "bank" })
         }
     };
 

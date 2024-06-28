@@ -10,7 +10,8 @@ const VerifyRegisterPage = ({searchParams}) => {
                        src="images/verify-otp-rg.svg" alt="image" width={934} height={746} property=""
                 />
             </div>
-            <VerifyRegisterComponent email = {email}/>
+            {/*forgot password component*/}
+            <VerifyRegisterComponent/>
         </div>
 
     )
