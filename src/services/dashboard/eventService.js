@@ -39,7 +39,7 @@ export const getAllCategoryService = async () => {
     const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}categories?offset=1&limit=100`,
         {
-            next: {tags: ['events']},
+            next: { tags: ['events'] },
             method: "GET",
             cache: "no-store",
             headers: header
@@ -86,39 +86,39 @@ export const findEvent = async (searchData) => {
 
 export const deleteEventById = async (eventId) => {
     const header = await headerToken();
-      const res = await fetch(`${process.env.API_URL}events/${eventId}`, {
+    const res = await fetch(`${process.env.API_URL}events/${eventId}`, {
         next: { tags: ["events"] },
         method: "DELETE",
         headers: header,
-      });
-      const data = await res.json();
+    });
+    const data = await res.json();
     return data;
 }
 
 export const updateEventService = async (eventId, data) => {
     const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}events/${eventId}`, {
-      next: { tags: ["events"] },
-      method: "PUT",
-      headers: header,
-      body: JSON.stringify(data),
+        next: { tags: ["events"] },
+        method: "PUT",
+        headers: header,
+        body: JSON.stringify(data),
     });
     const dataEvent = await res.json();
     return dataEvent;
-    
-  };
+
+};
 
 export const changeStatus = async (eventId) => {
-    console.log("status:",eventId);
+    console.log("status:", eventId);
     const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}events/active/${eventId}`, {
         next: { tags: ["events"] },
         method: "PUT",
         headers: header,
         body: JSON.stringify(data),
-      });
-      const dataEvent = await res.json();
-      return dataEvent;
+    });
+    const dataEvent = await res.json();
+    return dataEvent;
 };
 
 
@@ -126,6 +126,17 @@ export const getEventForm = async (id) => {
     const res = await fetch(`${process.env.API_URL}landing-page/form/${id}`);
     const data = await res.json();
     return data;
+}
+
+export const updateEventForm = async (data, id) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}events/registration-form/${id}`, {
+        method: "PUT",
+        headers: header,
+        body: JSON.stringify(data),
+    });
+    const dataEvent = await res.json();
+    return dataEvent;
 }
 
 export const getEventById = async (id) => {

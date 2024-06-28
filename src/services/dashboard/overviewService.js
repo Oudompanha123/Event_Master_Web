@@ -109,3 +109,17 @@ export const getEventByName = async (name) => {
         console.log(`service error : ${err}`)
     }
 }
+
+
+export const getEventByNameOrg = async (name) => {
+    const header = await headerToken()
+    try {
+        const res = await fetch(`${process.env.API_URL}events/search?offset=1&limit=200&eventName=${name}`, {
+            headers: header
+        })
+        const data = await res.json();
+        return data
+    } catch (err) {
+        console.log(`service error : ${err}`)
+    }
+}

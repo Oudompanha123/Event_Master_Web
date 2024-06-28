@@ -8,7 +8,7 @@ import { SelectModifyV2 } from "./Action/SelectModifyV2";
 import deleteEvent from "@/app/actions/deleteEventAction";
 import { Additem } from "iconsax-react";
 import { addAgendaToCloneAction, addMaterialToCloneAction, getAgendaByIdAction, getEventByIdAction, updateEventFormAction } from "@/actions/eventAction";
-import { addNewEventAction, getEventByNameAction, storeImageAction } from "@/actions/categoryAction";
+import { addNewEventAction, getEventByNameAction, getEventByNameOrgAction, storeImageAction } from "@/actions/categoryAction";
 import { toast } from "react-toastify";
 import { getAgendaByEventId } from "@/services/dashboard/agenda.service";
 import { getMaterialByEventId } from "@/services/dashboard/materialService";
@@ -171,18 +171,20 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
     let twoDayAhead = new Date(currentDate.getTime() + 48 * 60 * 60 * 1000);
     let endDateFormat = twoDayAhead.toISOString();
 
-    const eventByName = await getEventByNameAction(eventData?.eventName.replace(/\(\d+\)$/, '').trim())
-    let eventByNameLength = eventByName?.payload[0]?.events?.length;
+    const eventByName = await getEventByNameOrgAction(eventData?.eventName.replace(/\(\d+\)$/, '').trim())
+    console.log(eventByName, 'up here')
+    let eventByNameLength = eventByName?.payload?.length;
 
     //clone event
     let eName;
-    const baseEventNameWithoutNumber = eventData?.eventName.replace(/\(\d+\)$/, '').trim();
+    let baseEventNameWithoutNumber = eventData?.eventName.replace(/\(\d+\)$/, '').trim();
 
-    if (eventByNameLength === 0) {
+    if (eventByNameLength === 0 || eventByNameLength == undefined) {
       eName = baseEventNameWithoutNumber;
     } else if (eventByNameLength > 0) {
       eName = `${baseEventNameWithoutNumber} (${eventByNameLength})`;
     }
+
     const cloneData = {
       eventName: `${eName}`,
       description: eventData?.description,
@@ -196,16 +198,12 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
       categoryId: eventData?.category?.categoryId,
     }
 
-    alert('i got trigger')
-
     const resInsert = await addNewEventAction(cloneData);
-
-    console.log('check err', resInsert)
 
     //clone form
     const pushData = {
       data: {
-        form: res?.payload?.form?.form//confirmField is array
+        form: res?.payload?.form?.form //confirmField is array
       }
     };
 
@@ -234,13 +232,10 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
 
       await addMaterialToCloneAction(pushMaterial);
     }
-    alert('i got trigger')
 
     setTimeout(() => {
       setLoading(false)
     }, 1500)
-
-    alert('i got trigger down here')
 
     handleCloseClone();
 
