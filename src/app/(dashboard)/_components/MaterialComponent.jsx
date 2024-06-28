@@ -17,8 +17,8 @@ import DeleteDialog from "./DeleteDialog";
 import EmptyMaterialRow from "./EmptyMaterialRow";
 import MaterialRow from "./MaterialRow";
 import TableHeadMaterial from "./TableHeadOfMaterial";
-import { SearchMaterialComponent } from "../_components/SearchMaterialComponent";
 import { searchMaterialByName } from "@/services/dashboard/materialService";
+import { SearchMaterialComponent } from "./searchMaterialComponent";
 
 const getStatusColor = (status) => {
   switch (status) {
