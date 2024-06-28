@@ -1,36 +1,62 @@
-"use client";
+"use client"
 
 import { Fragment, useState, useEffect } from "react";
 import { Label, Listbox, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
-import { handleCategoryName } from "@/app/actions/findEventAction";
+import { getAllCategoryEventAction, getCategoryNameAction } from "@/app/actions/eventAction";
 
 export const SelectDropdown = ({ height, label, func }) => {
   const [selected, setSelected] = useState(null);
-  const [options, setOptions] = useState([]);
+  const [value, setValue] = useState();
+  const [clickCount, setClickCount] = useState(0);
   const placeholder = "Choose category";
+  const [options, setOptions] = useState([]);
 
-  const callApi = async ({}) => {
-    const res = await handleCategoryName(cateName);
-    setOptions(res.payload)
-    console.log("res: ",res);
+  const getAllCategory = async () => {
+    try {
+      const res = await getAllCategoryEventAction();
+      setOptions(res.payload);
+      setOptions(res.payload.map(item => ({ id: item.categoryId, name: item.categoryName })));
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      setOptions([]); 
+    }
   };
-
+  
   useEffect(() => {
-    callApi();
+    getAllCategory();
   }, []);
 
-  const handleSelect = (option) => {
-    const categoryName = option.categoryName;
-    setSelected(categoryName);
-    func(categoryName);
-    console.log(categoryName); // Log the selected category name to console
+  const handleChange = (option) => {
+    if (selected?.id === option.id) {
+      setSelected(null);
+    } else {
+        setSelected(option);
+    }
+    handleSelect(option.id);
   };
+
+  const handleSelect = (v) => {
+    setValue(v)
+    setClickCount(clickCount + 1);
+    if (clickCount <= 3) {
+        if (v === value) {
+            func('')
+            setValue('')
+        } else {
+            func(v)
+        }
+    } else {
+        func(v)
+        setClickCount(0)
+    }
+    // { v === value ? func('') : func(v) }
+  }
 
   return (
     <div className="w-auto">
-      <Listbox value={selected} onChange={handleSelect}>
+      <Listbox value={selected} onChange={handleChange}>
         {({ open }) => (
           <>
             <Label
@@ -44,7 +70,7 @@ export const SelectDropdown = ({ height, label, func }) => {
                 }`}
             >
               <span className="block truncate">
-                {selected ? selected : placeholder}
+                {selected ? selected.name : placeholder}
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-3">
                 <Image
@@ -64,10 +90,10 @@ export const SelectDropdown = ({ height, label, func }) => {
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 overflow-auto rounded-2xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {options.map((option) => (
+                {options?.map((option) => (
                   <Listbox.Option
                     onClick={() => handleSelect(option)}
-                    key={option.categoryId}
+                    key={option.id}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 hover:bg-blue-200 pl-8 p-[174px] ${active ? "text-black" : "text-gray-900"}`
                     }
@@ -75,9 +101,13 @@ export const SelectDropdown = ({ height, label, func }) => {
                   >
                     {({ selected }) => (
                       <>
-                        <span className={`${selected ? "font-medium" : "font-normal"}`}>
-                          {option.categoryName}
+                        <span
+                          className={` ${selected ? "font-medium" : "font-normal"
+                            }`}
+                        >
+                          {option.name}
                         </span>
+                        {/* <hr></hr> */}
                         {selected ? (
                           <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-black">
                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
@@ -85,6 +115,7 @@ export const SelectDropdown = ({ height, label, func }) => {
                         ) : null}
                       </>
                     )}
+                    
                   </Listbox.Option>
                 ))}
               </Listbox.Options>

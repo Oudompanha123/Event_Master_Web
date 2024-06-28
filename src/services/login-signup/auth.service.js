@@ -1,7 +1,7 @@
 "use server";
 
 export const loginService = async (userInfo) => {
-    const res = await fetch('http://34.124.203.109:8081/api/auth/login', {
+    const res = await fetch(`${process.env.API_URL}auth/login`, {
         method: 'POST',
         headers: {
             'accept': ' */*',
