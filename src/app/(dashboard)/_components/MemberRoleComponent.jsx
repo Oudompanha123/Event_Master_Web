@@ -41,12 +41,12 @@ export const MemberRoleComponent = ({
 }) => {
   const [userInfo, setUserInfo] = useState();
   const [currentRole, setCurrentRole] = useState(memberRoles);
-  // const [currentAdmin, setCurrentAdmin] = useState(userRole);
+  const [currentAdmin, setCurrentAdmin] = useState(userRole);
   const [activeDropdown, setActiveDropdown] = useState(false);
   const [confirmingRoleChange, setConfirmingRoleChange] = useState(null);
   const dropdownRefs = useRef([]);
 
-  const handleRoleChange = async (newRole, userRole) => {
+  const handleRoleChange = async (newRole, currentAdmin) => {
     try {
       // if (newRole == "ROLE_ADMIN" || userRole == "ROLE_ADMIN") {
       //   const response = await updateMemberAction(memberId, newRole);
@@ -55,14 +55,34 @@ export const MemberRoleComponent = ({
       // } else {
       //   const response = await updateMemberAction(memberId, newRole);
       // }
-
-      const response = await updateMemberAction(memberId, newRole);
-      if (response.status === "OK") {
-        setCurrentRole(newRole);
-        setCurrentAdmin("ROLE_SUB_ADMIN");
-      } else {
-        console.error("Failed to update role:", response.message);
+      if (newRole !== "ROLE_ADMIN") {
+        console.log("newRolw::", newRole);
+        const response = await updateMemberAction(memberId, newRole);
+        console.log("new role:", response);
+        if (response.status === "OK") {
+          setCurrentRole(newRole);
+        } else {
+          console.error("Failed to update role:", response.message);
+        }
       }
+      if (newRole === "ROLE_ADMIN" && currentAdmin === "ROLE_ADMIN") {
+        const responsea = await updateMemberAction(memberId, newRole);
+        const adminupdate = await updateMemberAction(userId, "ROLE_SUB_ADMIN");
+        console.log("respone:", responsea);
+        console.log("adminupdate:", adminupdate);
+        if (responsea.status === "OK" && adminupdate.status === "OK") {
+          setCurrentRole(newRole);
+          setCurrentAdmin("ROLE_SUB_ADMIN");
+        } else {
+          console.error("Failed to update role:", responsea.message);
+        }
+      }
+      // if (response.status === "OK") {
+      //   setCurrentRole(newRole);
+      //   setCurrentAdmin("ROLE_SUB_ADMIN");
+      // } else {
+      //   console.error("Failed to update role:", response.message);
+      // }
     } catch (error) {
       console.error("Error updating role:", error);
     }
@@ -104,16 +124,12 @@ export const MemberRoleComponent = ({
     handleRoleChange(confirmingRoleChange?.role);
   };
 
-  useEffect(
-    () => {
-      handleConfirmRoleChange();
-    },
-    [currentRole]
-    //  [currentAdmin]
-  );
-  // useEffect(() => {
-  //   handleConfirmRoleChange();
-  // }, [currentAdmin]);
+  useEffect(() => {
+    handleConfirmRoleChange();
+  }, [currentRole]);
+  useEffect(() => {
+    handleConfirmRoleChange();
+  }, [currentAdmin]);
 
   return (
     <div>

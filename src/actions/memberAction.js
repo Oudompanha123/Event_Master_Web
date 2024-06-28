@@ -25,18 +25,19 @@ export async function deleteMemberAction(memberId) {
   const data = await deleteMemberByIdService(memberId);
   revalidateTag("member");
   const allMember = await getAllMember();
-  if(allMember!=1){
-  await knockClient.notify("new-workout", {
-    actor: userInfo?.sub,
-    recipients: allMember.payload
-      .filter((x) => x.email !== userInfo?.sub)
-      .map((x) => x.email),
-    data: {
-      workoutText: {
-        value: `has been deleted member.`,
+  if (allMember.totalRecord != 1) {
+    await knockClient.notify("new-workout", {
+      actor: userInfo?.sub,
+      recipients: allMember.payload
+        .filter((x) => x.email !== userInfo?.sub)
+        .map((x) => x.email),
+      data: {
+        workoutText: {
+          value: `has been deleted member.`,
+        },
       },
-    },
-  });}
+    });
+  }
   return data;
 }
 
@@ -46,17 +47,19 @@ export async function updateMemberAction(memberId, role) {
   const data = await updateMemberService(memberId, role);
 
   const allMember = await getAllMember();
-  await knockClient.notify("new-workout", {
-    actor: userInfo?.sub,
-    recipients: allMember.payload
-      .filter((x) => x.email !== userInfo?.sub)
-      .map((x) => x.email),
-    data: {
-      workoutText: {
-        value: "has been updated member role.",
+  if (allMember.totalRecord != 1) {
+    await knockClient.notify("new-workout", {
+      actor: userInfo?.sub,
+      recipients: allMember.payload
+        .filter((x) => x.email !== userInfo?.sub)
+        .map((x) => x.email),
+      data: {
+        workoutText: {
+          value: "has been updated member role.",
+        },
       },
-    },
-  });
+    });
+  }
   revalidateTag("member");
   return data;
 }
