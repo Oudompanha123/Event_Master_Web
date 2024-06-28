@@ -44,7 +44,7 @@ export async function deleteMemberByIdService(memberId) {
 }
 
 export async function updateMemberService(memberId, role) {
-  console.log("mem",memberId, role);
+
   const header = await headerToken();
   const res = await fetch(
     `${process.env.API_URL}members/${memberId}?role=${role}`,
@@ -56,12 +56,10 @@ export async function updateMemberService(memberId, role) {
     }
   );
   const data = await res.json();
-  console.log("dataupdate:", data);
   return data;
 }
 
 export async function searchMemberService(name, page) {
-  console.log("member search");
   const header = await headerToken();
   const res = await fetch(
     `${process.env.API_URL}members/search?memberName=${name}&offset=${

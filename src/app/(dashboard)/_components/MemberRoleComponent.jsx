@@ -39,8 +39,6 @@ export const MemberRoleComponent = ({
   member,
   userId,
 }) => {
-  console.log("userId:  ", userId);
-  console.log("user role:", userRole);
   const [userInfo, setUserInfo] = useState();
   const [currentRole, setCurrentRole] = useState(memberRoles);
   const [activeDropdown, setActiveDropdown] = useState(false);
@@ -51,7 +49,7 @@ export const MemberRoleComponent = ({
     if (newRole == "ROLE_ADMIN") {
       const response = await updateMemberAction(memberId, newRole);
       const adminupdate = await updateMemberAction(userId, "ROLE_SUB_ADMIN");
-      console.log("user:,admin", response, adminupdate);
+      // console.log("user:,admin", response, adminupdate);
     }
     try {
       if (response.status === "OK") {

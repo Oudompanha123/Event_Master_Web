@@ -21,15 +21,16 @@ const MemberPage = async ({ searchParams }) => {
   // console.log("userId ,role", userId, userRole);
   const memberData = await getAllMembersAction(page);
   // console.log("member:", memberData);
-  const search = await searchMemberAction(query, page);
+  const search = await searchMemberAction(query);
   const data = query == "" || query == null ? memberData : search;
+  console.log("data::::", data);
   const nullsearch = data.totalRecord;
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
         <div className="lg:w-[650px] md:w-full w-full">
           <a className="md:text-lg xl:text-xl font-semibold text-primary-text">
-            Show All Members {userRole}
+            Show All Members
           </a>
         </div>
         <div className="w-full flex justify-end lg:mt-0 mt-3">
