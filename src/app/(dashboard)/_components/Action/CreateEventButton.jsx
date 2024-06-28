@@ -153,7 +153,6 @@ export const CreateEventButton = () => {
         setDiffChange(result);
     };
 
-
     const handleCategorySelect = (v) => setEventCategory(v)
 
     const handleEventType = (type) => setIsPublic(!type)
