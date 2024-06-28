@@ -1,10 +1,11 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
-import { Location } from "iconsax-react";
+import { Global, Location, Lock1 } from "iconsax-react";
 import { EventActionButton } from "./EventActionButton";
 // import { ChangeStatusComponent } from "./ChangeStatusComponent";
 import { RxCross2 } from "react-icons/rx";
+import { handleChangeStatusAction } from "@/app/actions/eventAction";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -14,8 +15,12 @@ const formatDate = (dateString) => {
 };
 
 export default function CardEventComponent({eventId, eventData ,userRole}) {
-  const handleChangeStatus = async () => {
-    await changeStatus (eventId);
+  const handleChangeEventStatus = async (id, status) => {
+    console.log("ID : ", id);
+    console.log("Status : ", status);
+    const tempStatus = status ? "close" : "open"
+    const response = await handleChangeStatusAction(id, tempStatus)
+    console.log("Response : ", response);
   };
   return (
     <div>
@@ -59,12 +64,12 @@ export default function CardEventComponent({eventId, eventData ,userRole}) {
                         className="rounded-2xl"
                         value="status"
                         onClick={() => {
-                          document.getElementById(`status_action_${eventId}`).showModal();
+                          document.getElementById(`status_action_${data?.eventId}`).showModal();
                         }}
                       >
                       {data.isOpen ? "Open" : "Closed"}
                       </button>
-                      <dialog id={`status_action_${eventId}`} className="modal">
+                      <dialog id={`status_action_${data?.eventId}`} className="modal">
                         <div className="modal-box w-[310px] justify-center">
                           <form method="dialog" className="justify-end flex">
                             <button type="submit">
@@ -85,7 +90,7 @@ export default function CardEventComponent({eventId, eventData ,userRole}) {
                           </p>
                           <div className="modal-action">
                             <form method="dialog" className="flex justify-around w-full mb-4 mt-3 px-3">
-                              <button onClick={handleChangeStatus} className="h-9 rounded-3xl bg-[#038446] w-[100px] hover:bg-green-700" value="yes">
+                              <button onClick={()=>handleChangeEventStatus(data?.eventId, data?.isOpen)} className="h-9 rounded-3xl bg-[#038446] w-[100px] hover:bg-green-700" value="yes">
                                 <p className="text-white font-semibold">Yes</p>
                               </button>
                               <button className="h-9 rounded-3xl bg-redUi w-[100px] hover:bg-red-700" value="cancel">
@@ -98,10 +103,33 @@ export default function CardEventComponent({eventId, eventData ,userRole}) {
                       
                     </span>
                   </div>
-                  <p className="text-gray-700 text-sm px-1 mt-3 flex items-center gap-2">
-                    <Location size="20" color="#7A44FF" variant="Bold" />
-                    <span className="mt-2 line-clamp-1">{data.address}</span>
-                  </p>
+                  <div className="flex justify-between text-sm items-center mt-3">
+                    <p className="text-gray-700  flex items-center gap-2">
+                      <Location size="20" color="#7A44FF" variant="Bold" />
+                      <span className="mt-2 line-clamp-1">{data.address}</span>
+                    </p>
+                    <div>
+                      {data.isPost ? (
+                        <div className="flex gap-2">
+                          <Global
+                          size="20"
+                          color="#344054"
+                          />
+                          <p>Public</p>
+                        </div>
+                      ):(
+                        <div className="flex gap-2">
+                          <Lock1
+                            size="20"
+                            color="#344054"
+                            />  
+                          <p>Private</p>
+                        </div>
+                        
+                      )}
+                    </div>
+                  </div>
+                 
                 </div>
                 <div className="flex lg:gap-4 md:gap-2 px-4 pt-4 pb-7 mt-6 sm:gap-2">
                   <Link

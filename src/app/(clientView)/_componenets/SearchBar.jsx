@@ -114,7 +114,7 @@ export const SearchBar = () => {
                         <input
                             onChange={(e) => setSearch(e.target.value)}
                             htmlFor="search"
-                            className=" input input-bordered border-[1px] pl-10 text-primary-text hover:border-gray-400  rounded-full w-full h-11 "
+                            className="border border-gray-200 input pl-10 focus:outline-none text-primary-text  rounded-full w-full h-11 "
                             id="search"
                             name="search"
                             type="text"
@@ -165,7 +165,7 @@ export const SearchBar = () => {
                                                 <div key={index} className="shadow-md rounded-3xl">
                                                     <div className="relative">
                                                         <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
-                                                            <img src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`} alt="event-image" className="rounded-t-3xl h-full object-cover" />
+                                                            <img src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`} alt="event-image" className="rounded-t-3xl h-full object-cover !w-full" />
                                                         </div>
                                                         <div className="absolute top-0 right-0 p-6 ">
                                                             <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${x.isOpen ? 'text-blueUi' : 'text-redUi'}`}>
@@ -180,11 +180,11 @@ export const SearchBar = () => {
                                                                 <p className="text-sm font-medium">{x?.orgName}</p>
                                                             </div>
                                                             <div className="flex text-sm justify-between font-medium">
-                                                                <p>{x?.address}</p>
+                                                                <p className="max-w-64 line-clamp-1">{x?.address}</p>
                                                                 <p>{formated}</p>
                                                             </div>
                                                             <div className="flex flex-col gap-3">
-                                                                <h2 className="text-lg lg:text-xl font-bold">{x?.eventName}</h2>
+                                                                <h2 className="text-lg lg:text-xl font-bold max-w-64 line-clamp-1">{x?.eventName}</h2>
                                                                 <p className="text-sm lg:text-base line-clamp-2 font-medium">
                                                                     {x?.description}
                                                                 </p>
@@ -192,7 +192,7 @@ export const SearchBar = () => {
                                                         </div>
                                                         <div className="flex justify-between">
                                                             <Link href={`/detail/${x.eventId}`} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
-                                                            <Link href={'/register'} className="text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text">Join Event</Link>
+                                                            <Link href={`/register/${x.eventId}`} className={`${!x.isOpen && 'hidden'} text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text`}>Join Event</Link>
                                                         </div>
                                                     </div>
                                                 </div>

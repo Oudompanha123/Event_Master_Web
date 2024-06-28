@@ -2,14 +2,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
-export function MaterialActionButton({ data }) {
+export function MaterialActionButton({ data , onEdit, userRole, handler,userId  }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [materialData, setMaterialData] = useState(data);
   const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    setMaterialData(data);
-  }, [data]);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -39,10 +34,11 @@ export function MaterialActionButton({ data }) {
 
   return (
     <div>
-      <div className="inline-block " ref={dropdownRef}>
+      <div className="inline-block pl-5" ref={dropdownRef}>
         <button
           type="button"
-          className="right-5 w-8 h-8 items-center flex flex-row justify-center z-0"
+          // className="right-5 w-8 h-8 items-center flex flex-row justify-right z-0 "
+          className=" right-0 w-8 h-8 flex items-center justify-right z-0 "
           onClick={toggleDropdown}
         >
           <svg
@@ -85,7 +81,9 @@ export function MaterialActionButton({ data }) {
                   className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg"
                   role="menuitem"
                   tabIndex="-1"
-                  onClick={() => document.getElementById(materialData.materialId).showModal()}
+                  onClick={() =>
+                    document.getElementById(data.materialId).showModal()
+                  }
                 >
                   <Image
                     src="/icons/detail.svg"
@@ -100,7 +98,13 @@ export function MaterialActionButton({ data }) {
               </li>
               <hr />
               <li>
-                <a className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg">
+              <span className={`${userRole === "ROLE_USER" && handler !== userId ? "hidden" : ""}`}>
+                <a
+                  className='user_role gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg'
+                  role="menuitem"
+                  tabIndex="-1"
+                  onClick={onEdit}
+                >
                   <Image
                     src="/icons/edit-blue.svg"
                     alt="edit"
@@ -111,14 +115,15 @@ export function MaterialActionButton({ data }) {
                     Edit
                   </p>
                 </a>
+                </span>
               </li>
             </ul>
           </div>
         )}
       </div>
 
-      {materialData && (
-        <dialog id={materialData.materialId} className="modal">
+      {data && (
+        <dialog id={data.materialId} className="modal">
           <div className="modal-box w-11/12 max-w-xl">
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 mt-2 mr-2">
@@ -150,7 +155,7 @@ export function MaterialActionButton({ data }) {
                     Material Name
                   </div>
                   <div className="text-large font-bold text-primary-text">
-                    {materialData?.materialName}
+                    {data?.materialName}
                   </div>
                 </div>
                 <div className="flex mb-3 gap-8">
@@ -165,7 +170,7 @@ export function MaterialActionButton({ data }) {
                     Quantity
                   </div>
                   <div className="text-large font-bold text-primary-text">
-                    {materialData?.qty} {materialData?.unit}
+                    {data?.qty} {data?.unit}
                   </div>
                 </div>
                 <div className="flex mb-3 gap-8">
@@ -180,7 +185,7 @@ export function MaterialActionButton({ data }) {
                     Assign Date
                   </div>
                   <div className="text-large font-bold text-primary-text">
-                    {materialData?.assignDate}
+                    {data?.assignDate}
                   </div>
                 </div>
                 <div className="flex mb-3 gap-8">
@@ -195,7 +200,7 @@ export function MaterialActionButton({ data }) {
                     Due Date
                   </div>
                   <div className="text-large font-bold text-primary-text">
-                    {materialData?.dueDate}
+                    {data?.dueDate}
                   </div>
                 </div>
                 <div className="flex mb-3 gap-8">
@@ -219,36 +224,41 @@ export function MaterialActionButton({ data }) {
                     />
                     <div className="ms-1">
                       <p className="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36">
-                        {materialData?.handlerName}
+                        {data?.handlerName}
                       </p>
                     </div>
                   </div>
                 </div>
                 <div className="flex mb-5 gap-8">
                   <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%] items-end">
-                    <img src="/icons/supporter.svg" alt="" className="w-5 h-5" />
+                    <img
+                      src="/icons/supporter.svg"
+                      alt=""
+                      className="w-5 h-5"
+                    />
                     Supporter
                   </div>
                   <div className="gap-2 flex">
-                    {Array.isArray(materialData?.supporters) && materialData?.supporters.map((supporter, index) => (
-                      <div
-                        key={index}
-                        className="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]"
-                      >
-                        <Image
-                          src="/images/sok.png"
-                          alt="Supporter image"
-                          className="w-8 h-8 rounded-full"
-                          width={50}
-                          height={50}
-                        />
-                        <div className="ms-1">
-                          <p className="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36">
-                            {supporter?.name}
-                          </p>
+                    {Array.isArray(data?.supporters) &&
+                      data?.supporters.map((supporter, index) => (
+                        <div
+                          key={index}
+                          className="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]"
+                        >
+                          <Image
+                            src="/images/sok.png"
+                            alt="Supporter image"
+                            className="w-8 h-8 rounded-full"
+                            width={50}
+                            height={50}
+                          />
+                          <div className="ms-1">
+                            <p className="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36">
+                              {supporter?.name}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </div>
               </div>

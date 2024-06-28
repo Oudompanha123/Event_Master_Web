@@ -14,10 +14,22 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export const CreateEventButton = () => {
-    const notify = () => {
-        toast.success("Sucessfully created event", {
-            position: "top-center"
-        });
+    const notify = (status, message) => {
+        if (status == "CREATED") {
+            toast.success("Sucessfully created event", {
+                position: "top-center"
+            });
+        }
+        if (status == 400) {
+            toast.error(`Can't create event, please check each field carefully ${message != undefined ? message : ''}`, {
+                position: "top-center"
+            });
+        }
+        if (status == 404) {
+            toast.error(`Please select category again ${message != undefined ? message : ''}`, {
+                position: "top-center"
+            });
+        }
     }
 
     const [events, setEvent] = useState({
@@ -103,6 +115,7 @@ export const CreateEventButton = () => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const [diffChange, setDiffChange] = useState();
+    const [random, setRandom] = useState(false);
 
     const triggerHourChange = () => {
         const sDate = new Date(`${startDate}`);
@@ -110,7 +123,22 @@ export const CreateEventButton = () => {
         const timeDiff = eDate - sDate;
         const hoursDiff = timeDiff / (1000 * 60 * 60);
         const roundedDiff = Math.round(hoursDiff * 100) / 100;
-        setDiffChange(Number(roundedDiff));
+
+        const days = Math.floor(roundedDiff / 24);  // Calculate the number of days
+        const remainingHours = roundedDiff % 24;    // Calculate the remaining hours
+
+        let result = '';
+        if (days > 0) {
+            result += `${days} day${days > 1 ? 's' : ''}`;  // Handle pluralization for days
+        }
+        if (remainingHours > 0) {
+            if (days > 0) {
+                result += ', ';
+            }
+            result += `${remainingHours} hour${remainingHours > 1 ? 's' : ''}`;  // Handle pluralization for hours
+        }
+
+        setDiffChange(result);
     };
 
     const handleCategorySelect = (v) => setEventCategory(v)
@@ -149,16 +177,6 @@ export const CreateEventButton = () => {
         formData.append("file", imageLink)
         const uploadImage = await storeImageAction(formData)
 
-        //firebase
-        // setUploading(false)
-        // if (imageLink == null) return;
-        // const imageRef = ref(storage, `${imageLink.name + v4()}`);
-        // await uploadBytes(imageRef, imageLink)
-        // setUploading(true)
-        // const url = await getDownloadURL(imageRef);
-        // setUploadedImage(url);
-        //firebase
-
         const submitData = {
             eventName: data.name,
             description: data.description,
@@ -171,14 +189,19 @@ export const CreateEventButton = () => {
             maxAttendee: data.maxAttendee,
             categoryId: cateId
         }
-        console.log('cheeck body', submitData)
         const okay = await addNewEventAction(submitData);
-        console.log('create event', okay)
-        reset();
+        console.log('checking submit', okay)
         await new Promise(resolve => setTimeout(resolve, 1000));
         setIsSend(false);
-        notify();
+        notify(okay?.status, okay?.Errors?.description || okay?.Errors?.poster);
         document.getElementById("my_modal_event_create").close()
+        setStartDate('')
+        setEndDate('')
+        setHide(false)
+        preview.src = ""
+        preview.classList.add("hidden")
+        reset();
+        setRandom(!random);
     };
 
     const handleCloseForm = () => {
@@ -196,7 +219,7 @@ export const CreateEventButton = () => {
 
     useEffect(() => {
         triggerHourChange();
-    }, [startDate, endDate]);
+    }, [startDate, endDate, random]);
 
 
     return (
@@ -219,7 +242,7 @@ export const CreateEventButton = () => {
                                 onDragOver={handleDragOver}
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDrop}>
-                                <input {...register("image")} type="file" className="absolute inset-0 w-full h-full opacity-0 z-50" id="file-upload" onChange={(e) => handleFileChange(e)} />
+                                <input {...register("image")} accept="image/png,image/jpeg" type="file" className="absolute inset-0 w-full h-full opacity-0 z-50" id="file-upload" onChange={(e) => handleFileChange(e)} />
                                 <div className={`text-center ${hide && 'hidden'}`}>
                                     <Image src={'/icons/upload-icon.svg'} className="mx-auto h-16 w-16" height={48} width={48} />
                                     <h3 className="mt-2 text-lg font-medium">
@@ -254,6 +277,7 @@ export const CreateEventButton = () => {
                                 <div className="w-full">
                                     <SelectModify
                                         func={handleCategorySelect}
+                                        more={random}
                                         {...register("category")}
                                         label={`!font-medium`}
                                         height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
@@ -319,14 +343,11 @@ export const CreateEventButton = () => {
                                     <input
                                         value={diffChange}
                                         disabled
-                                        // {...register("duration", {
-                                        //     required: "duration is required",
-                                        // })}
-                                        type="number"
+                                        type="text"
                                         name="duration"
                                         id="duration"
                                         className={`${errors.duration ? "border-red-700 focus:border-red-600" : "border-gray-300"} cursor-not-allowed shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
-                                        placeholder="Enter duration"
+                                        placeholder="Duration in hours"
                                         required=""
                                     />
                                     {errors.duration && <div className="text-red-600 text-sm mt-2">{errors.duration.message}</div>}

@@ -7,10 +7,11 @@ import Image from "next/image";
 import { Add, AddSquare } from "iconsax-react";
 import { allCategoryAction } from "@/actions/categoryAction";
 
-export const SelectModify = ({ height, label, func }) => {
+export const SelectModify = ({ height, label, func, more }) => {
 
     const [selected, setSelected] = useState(null);
     const [newCategory, setNewCategory] = useState();
+    const [trigger, setTrigger] = useState(false);
     const [options, setOptionData] = useState([
         { id: 1, name: "Social Event" },
         { id: 2, name: "Conferece" },
@@ -18,13 +19,16 @@ export const SelectModify = ({ height, label, func }) => {
         { id: 999, name: "Create Category" }
     ])
     const placeholder = "Choose category";
-    const lastArray = options[options.length - 2];
+     const lastArray = options[options.length - 2];
 
     const handleChange = (option) => {
         if (selected?.categoryId === option.categoryId) {
             setSelected(null);
         } else {
             setSelected(option);
+            // setSelected({ categoryId: 288, categoryName: 'GG', createAt: '2024-06-23T15:26:53.335+07:00', createBy: 'Davin Morn' });
+            // console.log(option, 'check')
+            // setSelected({ id: 77, name: "bank" })
         }
     };
 
@@ -33,12 +37,6 @@ export const SelectModify = ({ height, label, func }) => {
         setOptionData(res.payload)
         setOptionData([...res.payload, { categoryId: 999, categoryName: "Create Category" }])
     }
-
-    //call get all cagetory from api
-    useEffect(() => {
-        callApi();
-        removeCategory();
-    }, [])
 
     //remove create catgory and add back, just to make it behind all category.
     const removeCategory = () => {
@@ -59,12 +57,19 @@ export const SelectModify = ({ height, label, func }) => {
         removeCategory()
         document.getElementById('my_modal_create_new_category').close()
         document.getElementById('my_modal_event_create').showModal();
+        setTrigger(!trigger)
+        handlePassToParent({ categoryId: 88888, categoryName: newCategory })
+        setSelected({ categoryId: 88888, categoryName: newCategory });
     }
 
-    const handlePassToParent = (v) => {
-        func(v)
-        console.log('gg', v)
-    }
+    const handlePassToParent = (v) => func(v)
+    
+    //call get all cagetory from api
+    useEffect(() => {
+        callApi();
+        removeCategory();
+        setSelected(null)
+    }, [more])
 
     return (
         <div className="w-auto">

@@ -6,27 +6,45 @@ import { UpdateAgendaButton } from "./UpdateAgendaButton";
 import { useEffect, useState } from "react";
 import fetchAgenda from "@/app/actions/fetchAgendaAction";
 
-
 const convertTo12HourFormat = (time) => {
+  if (!time) return "";
   let [hours, minutes] = time.split(":");
+  if (minutes === undefined) return "";
   hours = parseInt(hours, 10);
   const period = hours >= 12 ? "PM" : "AM";
   hours = hours % 12 || 12; // Convert hour '0' to '12'
   return `${hours}:${minutes.padStart(2, "0")} ${period}`;
 };
 
-export default function AgendaComponent({id}) {
-  console.log('the id of event is ',id)
-
+export default function AgendaComponent({id,userRole}) {
+  // console.log('the id of event is ',id)
   const [data, setData] = useState(null);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
 
   const fetchData = async () => {
     const res = await fetchAgenda(id);
-    setData(res?.payload?.data?.agenda );
+    setData(res?.payload?.data?.agenda);
   };
+
+
   useEffect(() => {
     fetchData();
-  }, [id]);
+  }, [saveSuccess, updateSuccess, deleteSuccess]);
+
+  const handleSaveSuccess = (success) => {
+    setSaveSuccess(success);
+  };
+
+  const handleUpdateSuccess = (success) => {
+    setUpdateSuccess(success);
+  };
+
+  const handleDeleteSuccess = (success) => {
+    setDeleteSuccess(success);
+  };
+
   
 
   if (data == null) {
@@ -38,7 +56,7 @@ export default function AgendaComponent({id}) {
               Agenda Management
             </p>
           </div>
-          <CreateAgendaButton id={id} />
+          <span className={`${userRole == "ROLE_USER" && "hidden"}`}><CreateAgendaButton id={id} onSaveSuccess={handleSaveSuccess} /></span>
         </div>
 
         <div className=" justify-center w-full content-center space-y-6 py-24">
@@ -77,9 +95,9 @@ export default function AgendaComponent({id}) {
             Agenda Management
           </p>
         </div>
-        <div className="lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex">
-          <DeleteButton id={id} />
-          <UpdateAgendaButton id={id} />
+        <div className={`${userRole == "ROLE_USER" && "hidden"} lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex`}>
+        <DeleteButton id={id} onDeleteSuccess={handleDeleteSuccess} />
+        <UpdateAgendaButton id={id} onUpdateSuccess={handleUpdateSuccess} />
         </div>
       </div>
       {data?.map((data, index) => (

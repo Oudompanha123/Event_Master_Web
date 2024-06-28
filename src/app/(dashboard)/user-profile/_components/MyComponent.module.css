@@ -38,6 +38,7 @@
     }
     .profile {
         margin-bottom: 25px;
+        border-radius: 50%;
     }
 }
 
@@ -56,6 +57,8 @@
     }
     .profile {
         margin-bottom: 25px;
+        border-radius: 50%;
+        overflow: hidden;
     }
     
 }

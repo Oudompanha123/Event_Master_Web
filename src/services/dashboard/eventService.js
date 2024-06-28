@@ -1,9 +1,8 @@
 import { headerToken } from "@/app/api/auth/headerToken";
-import daisyui from "daisyui";
 
 export const getAllEventsService = async () => {
     const header = await headerToken()
-    const res = await fetch(`${process.env.API_URL}events`,
+    const res = await fetch(`${process.env.API_URL}events?offset=1&limit=1000`,
         {
             cache: "no-store",
             headers: header
@@ -24,12 +23,23 @@ export const getEventByIdService = async (id) => {
     const data = await res.json();
     return data
 }
+// export const getCategoryName = async (cateName) => {
+//     const header = await headerToken();
+//     const res = await fetch(`${process.env.API_URL}categories/${cateName}`, {
+//         next: { tags: ["category"] },
+//         method: 'GET',
+//         cache: "no-store",
+//         headers: header
+
+//     }
+//     );
+// }
 
 export const getAllCategoryService = async () => {
     const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}categories?offset=1&limit=100`,
         {
-            next: {tags: ['events']},
+            next: { tags: ['events'] },
             method: "GET",
             cache: "no-store",
             headers: header
@@ -76,39 +86,99 @@ export const findEvent = async (searchData) => {
 
 export const deleteEventById = async (eventId) => {
     const header = await headerToken();
-      const res = await fetch(`${process.env.API_URL}events/${eventId}`, {
+    const res = await fetch(`${process.env.API_URL}events/${eventId}`, {
         next: { tags: ["events"] },
         method: "DELETE",
         headers: header,
-      });
-      const data = await res.json();
+    });
+    const data = await res.json();
     return data;
 }
 
 export const updateEventService = async (eventId, data) => {
     const header = await headerToken();
     const res = await fetch(`${process.env.API_URL}events/${eventId}`, {
-      next: { tags: ["events"] },
-      method: "PUT",
-      headers: header,
-      body: JSON.stringify(data),
-    });
-    const dataEvent = await res.json();
-    return dataEvent;
-    
-  };
-
-export const changeStatus = async (eventId) => {
-    console.log("status:",eventId);
-    const header = await headerToken();
-    const res = await fetch(`${process.env.API_URL}events/active/${eventId}`, {
         next: { tags: ["events"] },
         method: "PUT",
         headers: header,
         body: JSON.stringify(data),
-      });
-      const dataEvent = await res.json();
-      return dataEvent;
+    });
+    const dataEvent = await res.json();
+    return dataEvent;
+
+};
+
+export const changeStatus = async (eventId, active) => {
+    console.log("status:", eventId);
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}events/active/${eventId}?active=${active}`, {
+        next: { tags: ["events"] },
+        method: "PUT",
+        headers: header,
+        body: JSON.stringify({
+            eventId, active
+        }),
+    });
+    const dataEvent = await res.json();
+    return dataEvent;
 };
 
 
+export const getEventForm = async (id) => {
+    const res = await fetch(`${process.env.API_URL}landing-page/form/${id}`);
+    const data = await res.json();
+    return data;
+}
+
+export const updateEventForm = async (data, id) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}events/registration-form/${id}`, {
+        method: "PUT",
+        headers: header,
+        body: JSON.stringify(data),
+    });
+    const dataEvent = await res.json();
+    return dataEvent;
+}
+
+export const getEventById = async (id) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}events/${id}`, {
+        headers: header,
+    });
+    const data = await res.json();
+    return data;
+}
+
+export const addAttendeeToEvent = async (data) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}attendees/create`, {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify(data),
+    });
+    const val = await res.json();
+    return val;
+}
+
+export const addAgendaToClone = async (data, id) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}agendas/${id}`, {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify(data),
+    });
+    const val = await res.json();
+    return val;
+}
+
+export const addMaterialToClone = async (data) => {
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}materials/multipleCreate`, {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify(data),
+    });
+    const val = await res.json();
+    return val;
+} 

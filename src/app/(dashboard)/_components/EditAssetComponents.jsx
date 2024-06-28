@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import { AddSquare, Edit } from "iconsax-react";
-import { handleUpdateAsset } from "@/app/actions/assetAction/handleAssetInput";
+import { handleUpdateAsset } from "@/actions/assetAction/handleAssetInput";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -13,15 +13,17 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
       position: "top-center",
     });
   };
-  // console.log("edit Id:", assetEdit);
-  // const trigger = async (id) => {
-  //  // handleUpdateAsset(id, e)
-  // };
 
   const [handleName, setHandleName] = useState(name);
   const [handleQty, setHandleQty] = useState(qty);
   const [handleUnit, setHandleUnit] = useState(unit);
   const [isLoading, setIsLoading] = useState(false);
+
+  const cancle = () => {
+    setHandleName(name);
+    setHandleQty(qty);
+    setHandleUnit(unit);
+  };
   const {
     register,
     handleSubmit,
@@ -60,7 +62,12 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
           <div className="flex flex-row items-center text-primary-text">
             <h2 className="text-lg lg:text-xl font-semibold">Edit Asset</h2>
             <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              <button
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                onClick={() => {
+                  cancle();
+                }}
+              >
                 ✕
               </button>
             </form>
@@ -134,12 +141,12 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                     placeholder="Enter unit"
                     {...register("unit", {
                       required: "unit is required",
-                       maxLength: {
-                      value: 40,
-                      message: "name cannot more than 40 characters",
-                    },
+                      maxLength: {
+                        value: 40,
+                        message: "name cannot more than 40 characters",
+                      },
                     })}
-                    // onChange={() => setHandleUnit(e.target.value)}
+                    onChange={(e) => setHandleUnit(e.target.value)}
                   />
                   {errors.unit && (
                     <div className="text-red-600 text-sm">
@@ -152,6 +159,8 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                 <div
                   onClick={() => {
                     reset();
+                    cancle();
+                    // checkchange;
                     document
                       .getElementById(`my_modal_updateasset${assetEdit}`)
                       .close();

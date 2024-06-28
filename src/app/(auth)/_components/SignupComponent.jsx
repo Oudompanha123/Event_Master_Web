@@ -1,13 +1,15 @@
 'use client';
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import {useState} from 'react';
+import {useForm} from 'react-hook-form';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import {useRouter} from 'next/navigation';
 import Link from 'next/link';
-import { getOrganizationDetails } from "@/services/login-signup/org.service";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {getOrganizationDetails} from "@/services/login-signup/org.service";
 import signupAction from "@/actions/auth/signupAction";
-import { registerUserAction } from "@/actions/auth/registerUserAction";
+import {registerUserAction} from "@/actions/auth/registerUserAction";
 
 const SignupComponent = () => {
     const initialData = {
@@ -23,11 +25,12 @@ const SignupComponent = () => {
     const [isLocked, setIsLocked] = useState(true);
     const [isKeyLocked, setIsKeyLocked] = useState(true);
     const [orgDetails, setOrgDetails] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const {
         register,
         handleSubmit,
-        formState: { errors, isValid },
+        formState: {errors, isValid},
         watch,
         reset,
     } = useForm({
@@ -51,11 +54,22 @@ const SignupComponent = () => {
     const router = useRouter();
 
     const onSubmit = async (data) => {
-        console.log("Data: ", data);
-        if (data?.organizationCode) {
-            await registerUserAction(data);
-        } else {
-            await signupAction(data);
+        setLoading(true);
+
+        if (data.password !== data.confirmPassword) {
+            toast.error("Passwords do not match. Please try again.");
+            setLoading(false);
+            return;
+        }
+
+        const register = data?.organizationCode ? registerUserAction : signupAction;
+
+        const response = await register(data);
+
+        if (response.error) {
+            toast.error(response.error.message);
+            setLoading(false);
+            return;
         }
 
         if (!isAdminSelected) {
@@ -69,18 +83,20 @@ const SignupComponent = () => {
                 console.error('Modal element not found');
             }
         } else {
-            router.push('/verify-register');
+            router.push(`/verify-register?email=${data.email}`);
         }
+
+        setLoading(false);
     };
 
     return (
-        <div
-            className="w-[75%] h-auto p-8 mt-20 md:w-[55%] xl:left-6 xl:mt-32 xl:mx-[42%] 2xl:mt-[10%]  2xl:left-5 xl:w-[45%] bg-white rounded-[40px] shadow-md absolute ">
-            <div className="flex justify-start p-6 pt-12 mx-8 focus:outline-none">
+        <div className="w-[75%] h-auto p-8 mt-20 md:w-[55%] xl:left-6 xl:mt-32 xl:mx-[42%] 2xl:mt-[10%] 2xl:left-5 xl:w-[45%] bg-white rounded-[40px] shadow-md absolute">
+            <ToastContainer autoClose={2000}/>
+            <div className="flex justify-center lg:justify-start p-6 pt-12 mx-8 focus:outline-none">
                 <button
                     type="button"
                     id="admin-button"
-                    className={`font-medium text-sm rounded-[100px] px-12 py-3.5 -mr-10  ${isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-sm bg-white border border-gray-300 primary-text z-10'}`}
+                    className={`font-medium text-sm rounded-[100px] px-12 py-3.5 -mr-10 ${isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-sm bg-white border border-gray-300 primary-text z-10'}`}
                     onClick={handleAdminClick}
                 >
                     ADMIN
@@ -88,16 +104,17 @@ const SignupComponent = () => {
                 <button
                     type="button"
                     id="user-button"
-                    className={`font-medium text-sm rounded-[100px] px-12 py-3.5  ${!isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-sm bg-white border border-gray-300 primary-text z-10'}`}
+                    className={`font-medium text-sm rounded-[100px] px-12 py-3.5 ${!isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-sm bg-white border border-gray-300 primary-text z-10'}`}
                     onClick={handleUserClick}
                 >
                     USER
                 </button>
             </div>
-            <div className=" w-full h-full">
+
+            <div className="w-full h-full">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-6 gap-6 px-3">
-                        <div className="col-span-6 md:col-span-3 ">
+                        <div className="col-span-6 md:col-span-3">
                             <label htmlFor="name" className="text-sm font-medium primary-text block mb-2">
                                 Full Name <span className="text-red-600 text-sm">*</span>
                             </label>
@@ -221,7 +238,7 @@ const SignupComponent = () => {
                                 className="w-full col-span-6 flex flex-col h-full gap-6 md:flex-row md:flex-1 xl:justify-between">
                                 <div className="grid grid-rows-1 w-full">
                                     <label htmlFor="phone-number"
-                                        className="text-sm font-medium primary-text block mb-2">
+                                           className="text-sm font-medium primary-text block mb-2">
                                         Phone Number <span className="text-red-600 text-sm">*</span>
                                     </label>
                                     <input
@@ -239,11 +256,11 @@ const SignupComponent = () => {
                                 </div>
                                 <div className="w-full">
                                     <label htmlFor="organization-code"
-                                        className="text-sm font-medium primary-text block mb-2 xl:col-span-3">
+                                           className="text-sm font-medium primary-text block mb-2 xl:col-span-3">
                                         Organization Code <span className="text-red-600 text-sm">*</span>
                                     </label>
                                     <input
-                                        type="password"
+                                        type="text"
                                         id="organization-code"
                                         className={`${errors.organizationCode ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                         placeholder="Enter your organization code"
@@ -264,9 +281,10 @@ const SignupComponent = () => {
                             <button
                                 type="submit"
                                 id="sign-up"
-                                className="bg-purple-text text-white font-medium text-sm rounded-3xl px-32 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400"
+                                className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-32 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                disabled={loading}
                             >
-                                Sign Up
+                                {loading ? <div className='loader'></div> : "Sign Up"}
                             </button>
                             <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
                                 <div className="modal-box w-[360px] h-[400px]">
@@ -286,27 +304,29 @@ const SignupComponent = () => {
                                                     <p className="font-medium text-base w-1/2">Organization Code</p>
                                                     <p className="font-medium text-base w-1/2 pl-10">{orgDetails.code}</p>
                                                 </div>
+
                                                 <div className="flex justify-between mt-2">
                                                     <p className="font-medium text-base w-1/2">Organization Name</p>
                                                     <p className="font-medium text-base w-1/2 pl-10">{orgDetails.orgName}</p>
                                                 </div>
+
                                                 <div className="flex justify-between mt-2">
                                                     <p className="font-medium text-base w-1/2">Address</p>
                                                     <p className="font-medium text-base w-1/2 break-words pl-10">{orgDetails.address}</p>
                                                 </div>
-                                                <div className="flex justify-between w-[300px] m-auto mb-4 mt-4 ">
+
+                                                <div className="flex justify-between w-[300px] m-auto mb-4 mt-4">
                                                     <button
                                                         className="border w-[110px] border-[#344054] h-10 rounded-3xl"
                                                         onClick={() => document.getElementById('my_modal_5').close()}
                                                     >
                                                         <p className="font-semibold">Cancel</p>
                                                     </button>
+
                                                     <button className="border w-[110px] bg-[#8C59FE] h-10 rounded-3xl"
-                                                        value="confirm">
-                                                        <Link href={`/verify-register`}
-                                                            className="text-white font-semibold ">
-                                                            Confirm
-                                                        </Link>
+                                                            value="confirm">
+                                                        <Link href={`/verify-register?email=${watch('email')}`}
+                                                              className="text-white font-semibold">Confirm</Link>
                                                     </button>
                                                 </div>
                                             </div>

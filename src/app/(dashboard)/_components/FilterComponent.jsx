@@ -1,7 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { callingEventServiceAction } from '@/app/actions/findEventAction';
 import { SelectDropdown } from './SelectDropdownComponent';
 import { SelectStatus } from './SelectStatusComponent';

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import CardEventComponent from "./CardEventComponent";
 
-export default function SearchComponent({ eventData }) {
+export default function SearchComponent({ eventData,userRole }) {
   const [text, setText] = useState('');
   const [query] = useDebounce(text, 750);
   const [filteredEvents, setFilteredEvents] = useState(eventData);
@@ -34,7 +34,7 @@ export default function SearchComponent({ eventData }) {
         </div>
       </div>
 
-      <CardEventComponent eventData={filteredEvents} />
+      <CardEventComponent eventData={filteredEvents} userRole={userRole}/>
     </>
   );
 }

@@ -4,7 +4,8 @@ import { getServerSession } from "next-auth";
 import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { jwtDecode } from "jwt-decode";
 import { RPaginate } from "./paginate/RPaginate";
-export const AssetTableComponent = async ({ data }) => {
+import Image from "next/image";
+export const AssetTableComponent = async ({ data, nullsearch, page }) => {
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
@@ -20,14 +21,14 @@ export const AssetTableComponent = async ({ data }) => {
             <th className="font-medium">CREATED AT</th>
             <th
               className={`${
-                userRole == "ROLE_USER" && "px-3 rounded-r-radiusUi"
+                userRole === "ROLE_USER" && "px-3 rounded-r-radiusUi"
               } font-medium `}
             >
               STATUS
             </th>
             <th
               className={`${
-                userRole == "ROLE_USER" && "hidden"
+                userRole === "ROLE_USER" && "hidden"
               } font-medium rounded-r-radiusUi px-3 `}
             >
               ACTION
@@ -35,89 +36,98 @@ export const AssetTableComponent = async ({ data }) => {
           </tr>
         </thead>
         <tbody className="border rounded-radiusUi w-full bg-white ">
-          {data?.payload?.map((asset, index) => (
-            <tr
-              key={asset.assetId}
-              className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border"
-            >
-              <td className="py-3 rounded-l-radiusUi items-center ml-1   text-xs xl:text-base w-20">
-                {index + 1}
-              </td>
-              <td className="w-28">
-                <div className="text-xs xl:text-base border rounded-radiusUi mx-3.5 py-1 w-auto">
-                  {asset.assetName}
-                </div>
-              </td>
-              <td className="w-16">
-                <div
-                  className={`text-xs xl:text-base border rounded-radiusUi mx-3 py-1 
+          {nullsearch > 0 &&
+            data?.payload?.map((asset, index) => (
+              <tr
+                key={asset.assetId}
+                className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border"
+              >
+                <td className="py-3 rounded-l-radiusUi items-center ml-1   text-xs xl:text-base w-20">
+                  {page > 1 ? index + 1 + 8 * (page - 1) : index + 1}
+                </td>
+                <td className="w-28">
+                  <div className="text-xs xl:text-base border rounded-radiusUi mx-3.5 py-1 w-auto">
+                    {asset.assetName}
+                  </div>
+                </td>
+                <td className="w-16">
+                  <div
+                    className={`text-xs xl:text-base border rounded-radiusUi mx-3 py-1 
               ${asset.qty <= 0 && "text-redUi"}
               `}
-                >
-                  {asset.qty}
-                </div>
-              </td>
-              <td className="w-16">
-                <div className="text-xs xl:text-base border rounded-radiusUi mx-3 py-1">
-                  {asset.unit}
-                </div>
-              </td>
-              <td className="w-28">
-                <div className="text-xs xl:text-base border rounded-radiusUi mx-3 py-1">
-                  {asset.createdAt}
-                </div>
-              </td>
-              <td className={`${userRole == "ROLE_USER" && "px-3"} w-14`}>
-                <div
-                  className={`text-xs xl:text-base border rounded-radiusUi py-1
+                  >
+                    {asset.qty}
+                  </div>
+                </td>
+                <td className="w-16">
+                  <div className="text-xs xl:text-base border rounded-radiusUi mx-3 py-1">
+                    {asset.unit}
+                  </div>
+                </td>
+                <td className="w-28">
+                  <div className="text-xs xl:text-base border rounded-radiusUi mx-3 py-1">
+                    {asset.createdAt}
+                  </div>
+                </td>
+                <td className={`${userRole == "ROLE_USER" && "px-3"} w-14`}>
+                  <div
+                    className={`text-xs xl:text-base border rounded-radiusUi py-1
                   ${asset.qty <= 0 ? "bg-softRedUi" : "bg-softGreenUi"} `}
+                  >
+                    {/* out of stock, qty color red */}
+                    {asset.qty <= 0 ? "Out of stock" : "In stock"}
+                  </div>
+                </td>
+                <td
+                  className={`${
+                    userRole === "ROLE_USER" && "hidden"
+                  } rounded-r-radiusUi w-20`}
                 >
-                  {/* out of stock, qty color red */}
-                  {asset.qty <= 0 ? "Out of stock" : "In stock"}
-                </div>
-              </td>
-              <td
-                className={`${
-                  userRole == "ROLE_USER" && "hidden"
-                } rounded-r-radiusUi w-20`}
-              >
-                <div className="flex justify-center items-center gap-3 mx-3">
-                  <div className="cursor-pointer">
-                    <DeleteAssetComponent assetIdprop={asset.assetId} />
+                  <div className="flex justify-center items-center gap-3 mx-3">
+                    <div className="cursor-pointer">
+                      <DeleteAssetComponent assetIdprop={asset.assetId} />
+                    </div>
+                    <div className="cursor-pointer">
+                      <EditAssetComponents
+                        assetEdit={asset.assetId}
+                        name={asset.assetName}
+                        qty={asset.qty}
+                        unit={asset.unit}
+                      />
+                    </div>
                   </div>
-                  <div className="cursor-pointer">
-                    <EditAssetComponents
-                      assetEdit={asset.assetId}
-                      name={asset.assetName}
-                      qty={asset.qty}
-                      unit={asset.unit}
-                    />
-                  </div>
-                </div>
-              </td>
-            </tr>
-          ))}
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
-      <div className="w-full h-full flex justify-end mt-8 mb-8">
-        <RPaginate totalData={data?.totalRecord} />
-      </div>
-      {/* {data.length === 0 } 
-        <div className="justify-center w-full content-center space-y-2 pb-10 flex flex-col items-center bg-red-500">
+      {nullsearch === 0 && (
+        <div className="justify-center h-[60vh] w-full content-center space-y-2 pb-10 flex flex-col items-center">
           <Image
-            src="/images/Search.gif"
+            className=""
+            src="/images/empty-amico.png"
             alt="empty image"
-            width={400}
-            height={400}
+            width={180}
+            height={180}
             priority
           />
-          <p className="text-center text-4xl font-semibold text-primary-text">
+          <p className="text-center text-2xl font-semibold text-primary-text">
             No results found
           </p>
           <p className="text-center text-xl text-gray-500">
             Please try another search!
           </p>
-        </div> */}
+        </div>
+      )}
+      {nullsearch > 0 && (
+        <div
+          className={`w-full  ${
+            nullsearch > 0 ? "flex" : "hidden"
+          } h-full  justify-end mt-8 mb-8`}
+        >
+          <RPaginate totalData={data?.totalRecord} />
+        </div>
+      )}
     </div>
   );
 };

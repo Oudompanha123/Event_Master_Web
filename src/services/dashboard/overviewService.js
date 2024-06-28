@@ -57,10 +57,11 @@ export const updateCategory = async (id, categoryName) => {
             headers: header
         }
     )
+    const data = res.json();
+    return data
 }
 
 export const createEventService = async (data) => {
-    console.log("triggered?")
     const header = await headerToken()
     const res = await fetch(`${process.env.API_URL}events`,
         {
@@ -91,6 +92,30 @@ export const storeImageService = async (image) => {
         const res = await fetch(`${process.env.API_URL}file`, {
             method: 'POST',
             body: image,
+        })
+        const data = await res.json();
+        return data
+    } catch (err) {
+        console.log(`service error : ${err}`)
+    }
+}
+
+export const getEventByName = async (name) => {
+    try {
+        const res = await fetch(`${process.env.API_URL}landing-page/search?eventName=${name}`)
+        const data = await res.json();
+        return data
+    } catch (err) {
+        console.log(`service error : ${err}`)
+    }
+}
+
+
+export const getEventByNameOrg = async (name) => {
+    const header = await headerToken()
+    try {
+        const res = await fetch(`${process.env.API_URL}events/search?offset=1&limit=200&eventName=${name}`, {
+            headers: header
         })
         const data = await res.json();
         return data

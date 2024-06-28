@@ -1,7 +1,8 @@
 'use server';
 
 export const verifyOTP = async (otp, email) => {
-    const res = await fetch(`http://34.124.203.109:8081/api/auth/verify?otp=${otp}&email=${encodeURIComponent(email)}`, {
+    const res = await fetch(`${process.env.API_URL}auth/verify?otp=${otp}&email=${encodeURIComponent(email)}`,{
+    // const res = await fetch(`${process.env.API_URL}auth/verify?otp=${otp}&email=${email}`,{
         method: 'PUT',
         headers: {
             'accept': '*/*'

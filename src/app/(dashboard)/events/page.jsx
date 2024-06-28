@@ -5,7 +5,6 @@ import {
 import { getServerSession } from "next-auth";
 import { jwtDecode } from "jwt-decode";
 import { authOption } from "@/app/api/auth/[...nextauth]/route";
-import { ToastContainer } from "react-toastify";
 
 export default async function Page({ searchParams }) {
   const eventData = await getAllEventsService();
@@ -15,7 +14,6 @@ export default async function Page({ searchParams }) {
   return (
     <main>
       <FilterComponent userRole={userRole} initialData={eventData?.payload}/>
-      <ToastContainer autoClose="1000"/>
     </main>
   );
 }

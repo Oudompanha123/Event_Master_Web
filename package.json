@@ -14,6 +14,7 @@
     "@knocklabs/node": "^0.6.11",
     "@knocklabs/react": "^0.2.22",
     "@plaiceholder/next": "^3.0.0",
+    "axios": "^1.7.2",
     "chart.js": "^4.4.3",
     "firebase": "^10.12.2",
     "iconsax-react": "^0.0.8",
@@ -28,6 +29,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.51.5",
+    "react-horizontal-scrolling-menu": "^7.1.1",
     "react-icons": "^5.2.1",
     "react-intersection-observer": "^9.10.3",
     "react-multi-select-component": "^4.3.4",
@@ -44,12 +46,12 @@
     "yarn": "^1.22.22"
   },
   "devDependencies": {
-    "next": "14.2.3",
-    "react": "^18.3.1",
-    "next-auth": "^4.24.7",
     "autoprefixer": "^10.4.19",
-    "daisyui": "^4.12.2",
+    "daisyui": "^4.12.8",
+    "next": "^14.2.3",
+    "next-auth": "^4.24.7",
     "postcss": "^8.4.38",
+    "react": "^18.3.1",
     "tailwindcss": "^3.4.4"
   },
   "description": "<p align=\"center\"><a href=\"#\" target=\"_blank\"><img src=\"https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/image_237-removebg%204.png?alt=media&token=a6cbd8a5-a874-49b9-8659-36579def7a84\" width=\"400\" alt=\"Laravel Logo\"></a></p>",

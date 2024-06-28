@@ -6,10 +6,13 @@ import { ToogleBtn } from "../_components/Action/ToogleBtn";
 import { RxCross2 } from "react-icons/rx";
 import { SelectModifyV2 } from "./Action/SelectModifyV2";
 import deleteEvent from "@/app/actions/deleteEventAction";
-import { storeImageAction } from "@/actions/categoryAction";
-import { handleUpdateEvent } from "@/app/actions/updateEventAction";
+import { Additem } from "iconsax-react";
+import { addAgendaToCloneAction, addMaterialToCloneAction, getAgendaByIdAction, getEventByIdAction, updateEventFormAction } from "@/actions/eventAction";
+import { addNewEventAction, getEventByNameAction, getEventByNameOrgAction, storeImageAction } from "@/actions/categoryAction";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { getAgendaByEventId } from "@/services/dashboard/agenda.service";
+import { getMaterialByEventId } from "@/services/dashboard/materialService";
+import { handleUpdateEvent } from "@/app/actions/updateEventAction";
 
 export const EventActionButton = ({ eventName, startDate, endDate, duration, address, description, poster, isPost, maxAttendee, category, eventId, userRole }) => {
 
@@ -49,7 +52,6 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
   const handleCategorySelect = (selectedCategory) => {
     setEventCategory(selectedCategory);
   };
-  
   const handleEventType = (status) => {
     console.log("Post : ", status);
     setPost(status);
@@ -64,7 +66,6 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
     const desertRef = ref(storage, imageUrl);
     await deleteObject(desertRef);
   };
-  
   const onSubmit = async () => {
     let uploadImage = imageLink;
     if (imageLink instanceof File) {
@@ -92,12 +93,12 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
       setLoading(true);
       const response = await handleUpdateEvent(eventId, submitData);
       setLoading(false);
-      if(response?.status === "OK") {
+      if (response?.status === "OK") {
         document.getElementById(`my_modal_updateEvent${eventId}`).close();
-          notifySuccess('Event updated successfully');
+        notifySuccess('Event updated successfully');
       }
       reset();
-     
+
     } catch (error) {
       setLoading(false);
       console.error('Failed to update event:', error);
@@ -118,19 +119,19 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
 
   const handleCloseForm = () => {
     setEvent({
-        eventName: '',
-        startDate: '',
-        endDate: '',
-        duration: '',
-        maxAttendee: '',
-        address: '',
-        description: '',
+      eventName: '',
+      startDate: '',
+      endDate: '',
+      duration: '',
+      maxAttendee: '',
+      address: '',
+      description: '',
     });
     document.getElementById(`my_modal_updateEvent${eventId}`).close();
-}
+  }
 
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null); 
+  const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -139,6 +140,107 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
   const closeDropdown = () => {
     setIsOpen(false);
   };
+
+  const notify = (status, message) => {
+    if (status == "CREATED") {
+      toast.success("Sucessfully duplicated a event", {
+        position: "top-center"
+      });
+    }
+    if (status == 400) {
+      toast.error(`Can't duplicate this event, please check ${message != undefined ? message : ''}`, {
+        position: "top-center"
+      });
+    }
+    if (status == 404) {
+      toast.error(`Please select category again ${message != undefined ? message : ''}`, {
+        position: "top-center"
+      });
+    }
+  }
+
+  const handleCloseClone = () => document.getElementById(`event_action_copy_${eventId}`)?.close()
+
+  const handleClone = async (id) => {
+    setLoading(true);
+    const res = await getEventByIdAction(id);
+    const eventData = res?.payload;
+    let currentDate = new Date();
+    let oneDayAhead = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+    let startDateFormat = oneDayAhead.toISOString();
+    let twoDayAhead = new Date(currentDate.getTime() + 48 * 60 * 60 * 1000);
+    let endDateFormat = twoDayAhead.toISOString();
+
+    const eventByName = await getEventByNameOrgAction(eventData?.eventName.replace(/\(\d+\)$/, '').trim())
+    console.log(eventByName, 'up here')
+    let eventByNameLength = eventByName?.payload?.length;
+
+    //clone event
+    let eName;
+    let baseEventNameWithoutNumber = eventData?.eventName.replace(/\(\d+\)$/, '').trim();
+
+    if (eventByNameLength === 0 || eventByNameLength == undefined) {
+      eName = baseEventNameWithoutNumber;
+    } else if (eventByNameLength > 0) {
+      eName = `${baseEventNameWithoutNumber} (${eventByNameLength})`;
+    }
+
+    const cloneData = {
+      eventName: `${eName}`,
+      description: eventData?.description,
+      startDate: startDateFormat,
+      endDate: endDateFormat,
+      duration: eventData?.duration,
+      address: eventData?.address,
+      poster: eventData?.poster,
+      isPost: eventData?.isPost,
+      maxAttendee: eventData?.maxAttendee,
+      categoryId: eventData?.category?.categoryId,
+    }
+
+    const resInsert = await addNewEventAction(cloneData);
+
+    //clone form
+    const pushData = {
+      data: {
+        form: res?.payload?.form?.form //confirmField is array
+      }
+    };
+
+    await updateEventFormAction(pushData, resInsert?.payload?.eventId)
+
+    //clone agenda
+    const agendaApi = await getAgendaByIdAction(id);
+    if (agendaApi != undefined) {
+      const pushAgenda = {
+        data: {
+          agenda: agendaApi?.payload?.data?.agenda
+        }
+      }
+
+      await addAgendaToCloneAction(pushAgenda, resInsert?.payload?.eventId)
+    }
+
+    //clone material
+    const materialApi = await getMaterialByEventId(id);
+    const cookingMaterial = materialApi?.payload;
+    if (materialApi != undefined) {
+      const appendEventId = (arr, eventId) => {
+        return arr?.map(item => ({ ...item, eventId }));
+      }
+      const pushMaterial = appendEventId(cookingMaterial, resInsert?.payload?.eventId);
+
+      await addMaterialToCloneAction(pushMaterial);
+    }
+
+    setTimeout(() => {
+      setLoading(false)
+    }, 1500)
+
+    handleCloseClone();
+
+    notify(resInsert?.status)
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -158,7 +260,8 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
     };
   }, [isOpen]);
 
-  const [hide, setHide] = useState(false);  
+  const [hide, setHide] = useState(false);
+  const [previewSrc, setPreviewSrc] = useState("");
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -178,23 +281,23 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
     setHide(true);
   };
 
-    const handleFileChange = (e) => {
-      const file = e.target.files[0];
-      setImageLink(e.target.files[0]);
-      displayPreview(file);
-      setHide(true);
-      console.log('check here ', e.target.files[0])
-      console.log("change", imageLink)
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setImageLink(e.target.files[0]);
+    displayPreview(file);
+    setHide(true);
+    console.log('check here ', e.target.files[0])
+    console.log("change", imageLink)
   };
 
   const displayPreview = (file) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-          const previewImage = document.getElementById(`previewImage${eventId}`);
-          previewImage.src = reader.result;
-          previewImage.classList.remove("hidden");
-      };
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const previewImage = document.getElementById(`previewImage${eventId}`);
+      previewImage.src = reader.result;
+      previewImage.classList.remove("hidden");
+    };
   };
 
   const {
@@ -287,12 +390,28 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                     </li>
                   </>
                 )}
+                <hr />
+                <li>
+                  <a
+                    className="gap-5 flex px-5 py-3 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-xl "
+                    role="menuitem"
+                    tabIndex="-1"
+                    onClick={() =>
+                      document.getElementById(`event_action_copy_${eventId}`).showModal()
+                    }
+                  >
+                    <Additem size="24" color="#2962FF" />
+                    {" "}
+                    <p className="text-primary-text text-base font-semibold ">
+                      Duplicate
+                    </p>
+                  </a>
+                </li>
               </ul>
             </div>
           )}
         </div>
       )}
-
       <dialog id={`my_modal_updateEvent${eventId}`} className="modal !m-0">
         <div className="modal-box w-11/12 lg:w-1/2 lg:max-w-5xl p-8">
           <div className="flex justify-between">
@@ -308,25 +427,27 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
               action=""
               className="w-full space-y-6"
               onSubmit={handleSubmit(onSubmit)}
-              >
-              <div className="w-full relative border-2 border-gray-300 border-dashed rounded-lg p-8" id="dropzone"
+            >
+              <div
+                className="w-full relative border-2 border-gray-300 border-dashed rounded-lg p-8"
+                id="dropzone"
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}>
                 <input {...register("udpate-image")} type="file" className="absolute inset-0 w-full h-full opacity-0 z-50" id="file-upload-update" onChange={(e) => handleFileChange(e)} />
-                <img src="{'/icons/upload-icon.svg'}" className="mx-auto h-80 w-full hidden object-cover" id={`previewImage${eventId}`} alt="file-upload-update" /> 
+                <img src="{'/icons/upload-icon.svg'}" className="mx-auto h-80 w-full hidden object-cover" id={`previewImage${eventId}`} alt="file-upload-update" />
                 <div className={`${hide && 'hidden'}`}>
-                  {imageLink && ( 
-                  <Image
-                    src={imageLink}
-                    className="mt-4 mx-auto h-80 w-full object-cover"
-                    previewImage
-                    alt="file-upload-update"
-                    width={1000}
-                    height={1000}
-                  />
-                )}
-              </div>  
+                  {imageLink && (
+                    <Image
+                      src={imageLink}
+                      className="mt-4 mx-auto h-80 w-full object-cover"
+                      previewImage
+                      alt="file-upload-update"
+                      width={1000}
+                      height={1000}
+                    />
+                  )}
+                </div>
               </div>
               {/* input field  */}
               <div className="flex flex-col md:flex-row gap-8">
@@ -360,13 +481,13 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                 </div>
                 <div className="w-full">
                   <SelectModifyV2
-                      eventId={eventId.categoryName}
-                      categoryName={eventCategory?.categoryName}
-                      setEventCategory={eventCategory}
-                      func={handleCategorySelect}
-                      {...register("category")}
-                      label={`!font-medium`}
-                      height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                    eventId={eventId.categoryName}
+                    categoryName={eventCategory?.categoryName}
+                    setEventCategory={eventCategory}
+                    func={handleCategorySelect}
+                    {...register("category")}
+                    label={`!font-medium`}
+                    height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
                   />
                   {errors.category && <span className="text-red-600 text-sm">{errors.category.message}</span>}
                 </div>
@@ -562,12 +683,12 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
               <div className="flex items-center gap-5">
                 <p>Create this event as :</p>
                 <div>
-                  <ToogleBtn func={handleEventType} isPost={post} setPost={post}/>
+                  <ToogleBtn func={handleEventType} isPost={post} setPost={post} />
                 </div>
               </div>
 
-              <div  className="flex justify-end space-x-3 w-full mb-4 gap-2">
-                <div onClick={() => { document.getElementById(`my_modal_updateEvent${eventId}`).close();}} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
+              <div className="flex justify-end space-x-3 w-full mb-4 gap-2">
+                <div onClick={() => { document.getElementById(`my_modal_updateEvent${eventId}`).close(); }} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
                 <button
                   type="submit"
                   className="save border rounded-2xl min-w-32 bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
@@ -588,52 +709,99 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
           </div>
         </div>
       </dialog>
-          <dialog id={`event_action_${eventId}`} className="modal">
-          <div className="modal-box w-[310px] justity-center  ">
-            <form method="dialog" className="justify-end flex">
-              <button type="submit">
-                <RxCross2 className="absolute right-[20px] top-[20px] w-6 h-6 " />
+
+
+      <dialog id={`event_action_${eventId}`} className="modal">
+        <div className="modal-box w-[310px] justity-center  ">
+          <form method="dialog" className="justify-end flex">
+            <button type="submit">
+              <RxCross2 className="absolute right-[20px] top-[20px] w-6 h-6 " />
+            </button>
+          </form>
+          <div className="justify-center flex">
+            <img
+              src="images/delete.svg"
+              alt="delete"
+              className="w-[58%] mb-3"
+            />
+          </div>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            Are you sure,you want to
+          </p>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            remove this event?
+          </p>
+          <div className="modal-action ">
+            <form
+              method="dialog"
+              className=" flex justify-around w-full mb-4 mt-3 px-3"
+            >
+              <button onClick={handleDelete}
+                className="h-9 rounded-3xl bg-red-600 w-[100px] hover:bg-red-700 flex items-center justify-center"
+                value="yes"
+              >
+                <p className="text-white font-semibold">Yes</p>
+              </button>
+
+              <button
+                className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500 flex items-center justify-center"
+                value="cancel"
+                onClick={() => {
+                  document.getElementById(`event_action_${eventId}`).close();
+                }}
+              >
+                <p className="text-white font-semibold al">No</p>
               </button>
             </form>
-            <div className="justify-center flex">
-              <img
-                src="images/delete.svg"
-                alt="delete"
-                className="w-[58%] mb-3"
-              />
-            </div>
-            <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
-              Are you sure,you want to
-            </p>
-            <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
-              remove this event?
-            </p>
-            <div className="modal-action ">
-              <form
-                method="dialog"
-                className=" flex justify-around w-full mb-4 mt-3 px-3"
+          </div>
+        </div>
+      </dialog>
+      <dialog id={`event_action_copy_${eventId}`} className="modal">
+        <div className="modal-box w-[310px] justity-center  ">
+          <form method="dialog" className="justify-end flex">
+            <button type="submit">
+              <RxCross2 className="absolute right-[20px] top-[20px] w-6 h-6 " />
+            </button>
+          </form>
+          <div className="justify-center flex">
+            <img
+              src="images/clone-illu.svg"
+              alt="delete"
+              className="w-[58%] mb-3"
+            />
+          </div>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            Are you sure,you want to
+          </p>
+          <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
+            clone this event?
+          </p>
+          <div className="modal-action ">
+            <div
+              className=" flex justify-around w-full mb-4 mt-3 px-3"
+            >
+              <button onClick={() => handleClone(eventId)}
+                className="h-9 rounded-3xl bg-blue-600 w-[100px] hover:bg-blue-700 flex items-center justify-center"
+                value="yes"
               >
-                <button onClick={handleDelete}
-                  className="h-9 rounded-3xl bg-red-600 w-[100px] hover:bg-red-700 flex items-center justify-center"
-                  value="yes"
-                >
-                      <p className="text-white font-semibold">Yes</p> 
-                </button>
-  
-                <button
-                  className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500 flex items-center justify-center"
-                  value="cancel"
-                  onClick={()=>{
-                    document.getElementById(`event_action_${eventId}`).close();
-                  }}
-                >
-                  <p className="text-white font-semibold al">No</p>
-                </button>
-              </form>
+                <p className={`text-white font-semibold al ${loading && 'hidden'}`}>Yes</p>
+                <div className={`loader ${!loading && '!hidden'}`}></div>
+              </button>
+
+              <button
+                onClick={() => handleCloseClone()}
+                className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500 flex items-center justify-center"
+                value="cancel"
+              >
+                <p className="text-white font-semibold al">No</p>
+              </button>
             </div>
           </div>
-        </dialog>
-        
+        </div>
+      </dialog>
+
     </div>
+
+
   );
 }

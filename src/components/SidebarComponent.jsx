@@ -6,25 +6,25 @@ import logo from "../../public/images/event-master.png"
 import { ArrowDown2, Buildings2, Calendar1, I3Dcube, Layer, LogoutCurve, Notification, People, Personalcard, Setting2 } from "iconsax-react"
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import sideBarData from "../data/sidebar.json"
 import { useEffect, useState } from "react";
 import { LogoutAction } from "@/app/(dashboard)/_components/Action/LogoutAction";
 import { useSession } from "next-auth/react";
 import { jwtDecode } from "jwt-decode";
 
 export const SidebarComponent = ({ className }) => {
-    const [loadData, setLoadData] = useState(sideBarData);
     const [data, setData] = useState();
     const { data: session, status } = useSession();
     const pathname = usePathname();
     const [click, setClick] = useState(false);
     const [userInfo, setUserInfo] = useState();
-
     useEffect(() => {
+        let test;
         if (status === 'authenticated' && session?.user?.token) {
             setUserInfo(jwtDecode(session.user.token));
+            test = jwtDecode(session.user.token)
         }
-        const userRole = userInfo?.role;
+        const userRole = test?.role;
+        // const userRole = userInfo?.role;
         if (userRole === "ROLE_USER") {
             setData({
                 "data": [
@@ -51,7 +51,35 @@ export const SidebarComponent = ({ className }) => {
                 ]
             });
         } else if (userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN") {
-            setData(loadData)
+            setData({
+                "data": [
+                    {
+                        "link": "/overview",
+                        "name": "Overview",
+                        "icon": "overview"
+                    },
+                    {
+                        "link": "/members",
+                        "name": "Members",
+                        "icon": "members"
+                    },
+                    {
+                        "link": "/assets",
+                        "name": "Assets",
+                        "icon": "assets"
+                    },
+                    {
+                        "link": "/events",
+                        "name": "Events",
+                        "icon": "events"
+                    },
+                    {
+                        "link": "/user-request",
+                        "name": "User Request",
+                        "icon": "request"
+                    }
+                ]
+            })
         }
     }, [session, status]);
 
