@@ -17,12 +17,6 @@ export function DeleteAttendeeComponent({ attendeeId, userRole }) {
     });
   };
 
-  const notifyUserCannotDelete = () => {
-    toast.error("You can not delete this attendee", {
-      position: "top-center",
-    });
-  };
-
   const handleDelete = async () => {
     if (isDeletable) {
       setIsLoading(true);
@@ -31,15 +25,12 @@ export function DeleteAttendeeComponent({ attendeeId, userRole }) {
         notifySuccess();
         document.getElementById(`attendee_action_${attendeeId}`).close();
       } catch (error) {
-        console.error(`Failed to delete attendee with ID: ${attendeeId}`, error);
         toast.error("Failed to delete attendee. Please try again.", {
           position: "top-center",
         });
       } finally {
         setIsLoading(false);
       }
-    } else {
-      notifyUserCannotDelete();
     }
   };
 
@@ -51,8 +42,6 @@ export function DeleteAttendeeComponent({ attendeeId, userRole }) {
         onClick={() => {
           if (isDeletable) {
             document.getElementById(`attendee_action_${attendeeId}`).showModal();
-          } else {
-            notifyUserCannotDelete();
           }
         }}
       >

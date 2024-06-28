@@ -11,7 +11,6 @@ export const getAttendeeByEventIdService = async (eventId, page) => {
     }
   );
   const data = await res.json();
-  // console.log("data:", data);
   return data;
 };
 export const DeleteAttendeeService = async (attendeeId) => {
@@ -39,7 +38,6 @@ export const searchAttendeeByNameOrPhoneService = async (
     }
   );
   const data = await res.json();
-  console.log("Dataaaaa:",data)
   return data;
 };
 
