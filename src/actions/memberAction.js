@@ -25,6 +25,7 @@ export async function deleteMemberAction(memberId) {
   const data = await deleteMemberByIdService(memberId);
   revalidateTag("member");
   const allMember = await getAllMember();
+  if(allMember!=1){
   await knockClient.notify("new-workout", {
     actor: userInfo?.sub,
     recipients: allMember.payload
@@ -35,7 +36,7 @@ export async function deleteMemberAction(memberId) {
         value: `has been deleted member.`,
       },
     },
-  });
+  });}
   return data;
 }
 

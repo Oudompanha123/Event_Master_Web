@@ -6,13 +6,14 @@ export async function getAllMemberService(page) {
   const res = await fetch(
     `${process.env.API_URL}members?offset=${page ? page : 1}&limit=8`,
     {
-      next: { tags: ["get_member"] },
+      next: { tags: ["member"] },
       method: "GET",
       cache: "no-store",
       headers: header,
     }
   );
   const data = await res.json();
+  console.log("data from api:", data);
   return data;
 }
 
@@ -44,7 +45,6 @@ export async function deleteMemberByIdService(memberId) {
 }
 
 export async function updateMemberService(memberId, role) {
-
   const header = await headerToken();
   const res = await fetch(
     `${process.env.API_URL}members/${memberId}?role=${role}`,

@@ -6,7 +6,6 @@ export const MemberComponent = ({ memberInfo }) => {
   return (
     <div className="flex items-center text-xs xl:text-base w-48">
       <Image
-        // src={`${image}`}
         src={`${
           memberInfo.picture
             ? memberInfo?.picture
