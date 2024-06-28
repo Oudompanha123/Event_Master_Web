@@ -11,14 +11,17 @@ import { CgAddR } from "react-icons/cg";
 import { TbEdit } from "react-icons/tb";
 import { updateOrganization } from "@/services/profile/org";
 import useSWR from "swr";
+import { storeImageAction } from "@/actions/categoryAction";
+
+// const fetcher = (url, token) =>
+//   fetch(url, {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   }).then((res) => res.json());
+
 
 const NewFormComponent = () => {
-  const notify = () => {
-    toast.success("Updated organization Successful", {
-      position: "top-center",
-    });
-  };
-
   // fetch data
   const { data: session, status } = useSession();
   const [userInfo, setUserInfo] = useState(null);
@@ -30,63 +33,92 @@ const NewFormComponent = () => {
   const [copied, setCopied] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [selectedFileName, setSelectedFileName] = useState("");
+  const [imageLink, setImageLink] = useState();
 
-  // console.log("Set image : ",setImageSrc)
+  // const { data: userInfo, mutate } = useSWR(
+  //   () => (status === "authenticated" ? ["/api/user", session.user.token] : null),
+  //   fetcher
+  // );
+
   useEffect(() => {
     const fetchData = async () => {
       if (status === "authenticated" && session?.user?.token) {
         const decodedToken = jwtDecode(session.user.token);
-        // console.log("data token : ",decodedToken)
         setUserInfo(decodedToken);
         const orgData = decodedToken.organization || {};
         setOrganizationCode(orgData.code);
         setOrganizationName(orgData.orgName || "");
         setAddress(orgData.address || "");
-        setImageSrc(orgData.logo || null);
+        setUploadedImage(orgData.logo || "");
       }
     };
     fetchData();
   }, [status, session]);
 
+  const [hide, setHide] = useState(false);
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    setImageLink(e.target.files[0]);
+    console.log("file name: ", file);
+    displayLogo(file);
+    setHide(true);
+  };
+
+  const displayLogo = (file) => {
     const reader = new FileReader();
-    
-    reader.onloadend = () => {
-      setUploadedImage(reader.result);
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setImageSrc(reader.result);
     };
-  
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };  
+  };
+
+  const onUpdate = async (imageLink) => {
+    // upload new image
+    onUpload(imageLink);
+    // delete old image with url
+    const desertRef = ref(storage, imageUrl);
+    await deleteObject(desertRef);
+  };
 
   const handleCancelChanges = () => {
     setOrganizationName(userInfo?.organization?.orgName || "");
     setAddress(userInfo?.organization?.address || "");
-    setImageSrc(userInfo?.organization?.logo || null);
+    setUploadedImage(userInfo?.organization?.logo || null);
     setIsEditing(false);
   };
 
   const handleSaveChanges = async () => {
+    let formData = new FormData();
+    formData.append("file", imageLink);
+    const uploadImage = await storeImageAction(formData);
+
     const organizationData = {
       orgId: userInfo.organization.orgId,
       orgName: organizationName,
       address: address,
-      logo: uploadedImage || imageSrc,
+      logo: uploadImage?.payload?.fileUrl,
     };
 
     try {
-      console.log("Saving changes...", organizationData);
       const updatedOrganization = await updateOrganization(
         organizationData.orgId,
         organizationData
       );
-      console.log("Changes saved successfully: ", updatedOrganization);
       setIsEditing(false);
+      setUploadedImage(uploadImage?.payload?.fileUrl);
+      notify();
+      // mutate();
     } catch (error) {
-      console.error("Error updating organization: ", error);
+      // console.error("Error updating organization: ", error);
     }
+  };
+
+  const notify = () => {
+    toast.success("Updated organization Successful", {
+      position: "top-center",
+    });
   };
 
   const handleOrganizationNameChange = (e) => {
@@ -109,7 +141,7 @@ const NewFormComponent = () => {
     }, 2000);
   };
   return (
-    <form action="">
+    <form encType="multipart/form-data">
       <div className="rounded-2xl w-full h-[750px] sm:h-[800px] md:h-[800px] lg:h-[800px] xl:h-[800px] 2xl:h-[800px] flex flex-col shadow-md relative">
         <div className=" bg-purple-text h-[20%] rounded-t-2xl flex items-center justify-center"></div>
         <div className=" w-full h-0 flex justify-center z-30 mt-12 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 2xl:mt-0">
@@ -276,7 +308,7 @@ const NewFormComponent = () => {
             alt="background"
             width={150}
             height={150}
-            className="sm:h-72 md:h-80 lg:h-96 xl:h-96 2xl:h-96"
+            className="rounded-b-xl sm:h-72 md:h-80 lg:h-96 xl:h-96 2xl:h-96"
           />
         </div>
       </div>
