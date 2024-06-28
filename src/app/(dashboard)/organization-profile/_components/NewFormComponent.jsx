@@ -14,12 +14,6 @@ import useSWR from "swr";
 import { storeImageAction } from "@/actions/categoryAction";
 
 const NewFormComponent = () => {
-  const notify = () => {
-    toast.success("Updated organization Successful", {
-      position: "top-center",
-    });
-  };
-
   // fetch data
   const { data: session, status } = useSession();
   const [userInfo, setUserInfo] = useState(null);
@@ -27,12 +21,13 @@ const NewFormComponent = () => {
   const [organizationName, setOrganizationName] = useState("");
   const [address, setAddress] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [imageSrc, setImageSrc] = useState(null);
+  const [imageSrc, setImageSrc] = useState("");
   const [copied, setCopied] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [uploadedImage, setUploadedImage] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
   const [imageLink, setImageLink] = useState();
+  // const [displayedOrganizationName, setDisplayedOrganizationName] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +39,7 @@ const NewFormComponent = () => {
         setOrganizationName(orgData.orgName || "");
         setAddress(orgData.address || "");
         setUploadedImage(orgData.logo || "");
+        // setDisplayedOrganizationName(orgData.orgName || "");
       }
     };
     fetchData();
@@ -51,30 +47,31 @@ const NewFormComponent = () => {
 
   const [hide, setHide] = useState(false);
 
-  
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   console.log("file name: ", file)
+  //   setImageLink(e.target.files[0]);
+  //   displayLogo(file);
+  // };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setImageLink(e.target.files[0]);
-    console.log("file name: ", file);
-    displaylogo(file);
-    // setHide(true);
+    setImageLink(e.target.files[0]); // Assuming setImageLink is defined elsewhere
+    displayLogo(file);
   };
 
-const displaylogo = (file) => {
+  const displayLogo = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      const preview = document.getElementById("logo");
-      preview.src = reader.result;
-      preview.classList.remove("hidden");
+      setImageSrc(reader.result); // Set image preview URL
     };
   };
 
   const onUpdate = async (imageLink) => {
-    //upload new image
+    // upload new image
     onUpload(imageLink);
-    //delete old image with url
+    // delete old image with url
     const desertRef = ref(storage, imageUrl);
     await deleteObject(desertRef);
   };
@@ -90,6 +87,7 @@ const displaylogo = (file) => {
     let formData = new FormData();
     formData.append("file", imageLink);
     const uploadImage = await storeImageAction(formData);
+
     const organizationData = {
       orgId: userInfo.organization.orgId,
       orgName: organizationName,
@@ -98,14 +96,25 @@ const displaylogo = (file) => {
     };
 
     try {
+      console.log("Sending organization data: ", organizationData);
       const updatedOrganization = await updateOrganization(
         organizationData.orgId,
         organizationData
       );
+      console.log("data: ", updateOrganization);
       setIsEditing(false);
+      setUploadedImage(uploadImage?.payload?.fileUrl);
+      notify();
+      // mutate();
     } catch (error) {
       // console.error("Error updating organization: ", error);
     }
+  };
+
+  const notify = () => {
+    toast.success("Updated organization Successful", {
+      position: "top-center",
+    });
   };
 
   const handleOrganizationNameChange = (e) => {
@@ -132,21 +141,24 @@ const displaylogo = (file) => {
       <div className="rounded-2xl w-full h-[750px] sm:h-[800px] md:h-[800px] lg:h-[800px] xl:h-[800px] 2xl:h-[800px] flex flex-col shadow-md relative">
         <div className=" bg-purple-text h-[20%] rounded-t-2xl flex items-center justify-center"></div>
         <div className=" w-full h-0 flex justify-center z-30 mt-12 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 2xl:mt-0">
-          <Image
-            src={
-              uploadedImage ||
-              (userInfo?.organization?.logo &&
-              /^(http|https):\/\//.test(userInfo.organization.logo)
-                ? userInfo.organization.logo
-                : defaultProfile)
-            }
-            alt="logo"
-            id="logo"
-            name="logo"
-            width={112}
-            height={140}
-            className="rounded-full -mt-28 sm:-mt-16 md:-mt-20 lg:-mt-28 xl:-mt-28 2xl:-mt-28  sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-52 lg:h-52 xl:w-60 xl:h-60 2xl:w-64 2xl:h-64"
-          />
+          <div className="bg-slate-100 -mt-28 sm:-mt-16 md:-mt-20 lg:-mt-28 xl:-mt-28 2xl:-mt-28 rounded-full sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-52 lg:h-52 xl:w-60 xl:h-60 2xl:w-64 2xl:h-64">
+            <Image
+              src={
+                imageSrc ||
+                (userInfo?.organization?.logo &&
+                /^(http|https):\/\//.test(userInfo.organization.logo)
+                  ? userInfo.organization.logo
+                  : defaultProfile)
+              } 
+              alt="logo"
+              id="logo"
+              name="logo"
+              width={112}
+              height={140}
+              className="rounded-full w-full h-full"
+            />
+          </div>
+
           {isEditing && (
             <label
               htmlFor="upload-proflie-org"
@@ -295,7 +307,7 @@ const displaylogo = (file) => {
             alt="background"
             width={150}
             height={150}
-            className="sm:h-72 md:h-80 lg:h-96 xl:h-96 2xl:h-96"
+            className="rounded-b-xl sm:h-72 md:h-80 lg:h-96 xl:h-96 2xl:h-96"
           />
         </div>
       </div>
