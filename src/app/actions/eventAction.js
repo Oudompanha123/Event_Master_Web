@@ -1,19 +1,25 @@
 'use server'
 
-import {getAllEventCategory, getEventByCateNameLoading } from "@/services/dashboard/eventService";
+import {changeStatus, getAllCategoryService, getCategoryName, getEventByIdService} from "@/services/dashboard/eventService";
+import { revalidateTag } from "next/cache";
 
 export const getAllCategoryEventAction = async () => {
-    const res = await getAllEventCategory();
+    const res = await getAllCategoryService();
+    revalidateTag('events')
     return res
 }
 
-export const getEventByCategoryNameAction = async ({name, page}) => {
-    const res = await getEventByCateNameLoading({ name, page });
-    const data = res.payload
-    return data
+export const getCategoryNameAction = async (cateName) => {
+    const res = await getCategoryName(cateName);
+    return res;
 }
 
 export const callingServiceAction = async (searchData) => {
     const data = await findEvent(searchData);
+    return data
+}
+
+export const handleChangeStatus = async (eventData) => {
+    const data = await changeStatus(eventData)
     return data
 }

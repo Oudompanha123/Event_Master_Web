@@ -6,16 +6,17 @@ import { UpdateAgendaButton } from "./UpdateAgendaButton";
 import { useEffect, useState } from "react";
 import fetchAgenda from "@/app/actions/fetchAgendaAction";
 
-
 const convertTo12HourFormat = (time) => {
+  if (!time) return "";
   let [hours, minutes] = time.split(":");
+  if (minutes === undefined) return "";
   hours = parseInt(hours, 10);
   const period = hours >= 12 ? "PM" : "AM";
   hours = hours % 12 || 12; // Convert hour '0' to '12'
   return `${hours}:${minutes.padStart(2, "0")} ${period}`;
 };
 
-export default function AgendaComponent({id}) {
+export default function AgendaComponent({id,userRole}) {
   // console.log('the id of event is ',id)
   const [data, setData] = useState(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -55,7 +56,7 @@ export default function AgendaComponent({id}) {
               Agenda Management
             </p>
           </div>
-          <CreateAgendaButton id={id} onSaveSuccess={handleSaveSuccess} />
+          <span className={`${userRole == "ROLE_USER" && "hidden"}`}><CreateAgendaButton id={id} onSaveSuccess={handleSaveSuccess} /></span>
         </div>
 
         <div className=" justify-center w-full content-center space-y-6 py-24">
@@ -94,10 +95,9 @@ export default function AgendaComponent({id}) {
             Agenda Management
           </p>
         </div>
-        <div className="lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex">
+        <div className={`${userRole == "ROLE_USER" && "hidden"} lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex`}>
         <DeleteButton id={id} onDeleteSuccess={handleDeleteSuccess} />
-            <UpdateAgendaButton id={id} onUpdateSuccess={handleUpdateSuccess} />
-        
+        <UpdateAgendaButton id={id} onUpdateSuccess={handleUpdateSuccess} />
         </div>
       </div>
       {data?.map((data, index) => (

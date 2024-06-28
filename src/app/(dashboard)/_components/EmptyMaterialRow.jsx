@@ -3,11 +3,11 @@
 import React from "react";
 import DropdownSupporter from "./DropdownSupporterComponent"; // Ensure to import any necessary components
 
-const EmptyMaterialRow = () => {
+const EmptyMaterialRow = ({userRole}) => {
   return (
     <tbody className="drop-shadow rounded-radiusUi text-sm font-normal text-primary-text bg-[#ffffff] invisible">
       <tr className="bg-white border-b font-medium text-base hover:bg-gray-50 h-8 border border-black">
-        <td className="w-4 p-4 rounded-l-2xl">
+        <td className={`${userRole == "ROLE_USER" && "hidden"} w-4 p-4 rounded-l-2xl`}>
           <div className="flex items-center">
             <input
               type="checkbox"
@@ -16,7 +16,7 @@ const EmptyMaterialRow = () => {
             <label className="sr-only">checkbox</label>
           </div>
         </td>
-        <td className="text-base text-primary-text pl-1">1</td>
+        <td className={`${userRole == "ROLE_USER" && "pl-4 rounded-l-2xl"}text-base text-primary-text pl-1`}>1</td>
         <td className="text-sm font-normal text-primary-text px-2">
           <input
             type="text"

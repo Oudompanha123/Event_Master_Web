@@ -56,7 +56,7 @@ export const DeleteAgendaService = async (id) => {
       headers: header,
     });
     const data = await res.json();
-    console.log("Data reponse agenda service ", data);
+    console.log("Delete agenda success!")
     return data;
   } catch (err) {
     console.log("error agenda service", err);
