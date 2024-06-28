@@ -1,8 +1,11 @@
+
 import Image from "next/image";
 import LoginComponent from "@/app/(auth)/_components/LoginComponent";
 import Link from "next/link";
 import {signIn} from "next-auth/react";
 import {MdKeyboardArrowLeft} from "react-icons/md";
+import {redirect} from "next/navigation";
+
 
 const LoginPage = () => {
 
@@ -20,9 +23,7 @@ const LoginPage = () => {
             redirect: false,
             ...newUser,
         });
-        if (res.ok) {
-            router.push("/login");
-        }
+
     }
 
     return (

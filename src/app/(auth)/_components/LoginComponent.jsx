@@ -5,9 +5,11 @@ import {useState} from "react";
 import {useForm} from "react-hook-form";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
-import {signIn} from "next-auth/react";
-import {ToastContainer, toast} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {loginAction} from "@/actions/auth/authAction";
+import {signIn} from "next-auth/react";
+import {loginService} from "@/services/login-signup/auth.service";
 
 const LoginComponent = () => {
     const initialData = {
@@ -31,26 +33,34 @@ const LoginComponent = () => {
     const router = useRouter();
 
     const onSubmit = async (data) => {
+
         setLoading(true);
         const res = await signIn("credentials", {
             redirect: false,
             ...data,
         });
+        console.log("res is  : ", res)
         if (res.ok) {
+            toast.success('Login successfully', {
+                position: "top-center"
+            });
             router.push("/overview");
+
         } else {
             setLoading(false);
-            toast.error("Incorrect password. Please try again.", {
+            toast.error("Incorrect ! please try again", {
                 position: "top-center"
-                });
+            });
         }
     }
+
 
     return (
         <div
             className="absolute flex mt-11 flex-col h-screen justify-center lg:px-8 w-full p-8 xl:mx-[42%] xl:mt-2 xl:w-[45%] xl:right-[10%]">
             <div className="mt-8 sm:mx-auto w-full sm:w-full sm:max-w-md flex justify-center ">
                 <div className="bg-white py-6 md:py-8 w-[110%] shadow rounded-[40px] px-3 md:px-12">
+                    <ToastContainer autoClose={2000}/>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="mb-12 -mt-3 rounded-radiusUi">
                             <h2 className="mt-6 px-2 text-center text-3xl md:text-4xl font-bold flex justify-center">
@@ -168,7 +178,7 @@ const LoginComponent = () => {
                                 disabled={!isValid}
                             >
                                 {/*loading*/}
-                                {loading ? <div className='loader'></div> : "Login" }
+                                {loading ? <div className='loader'></div> : "Login"}
                             </button>
                         </div>
 
