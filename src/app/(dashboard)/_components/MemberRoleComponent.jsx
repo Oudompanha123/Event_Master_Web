@@ -37,8 +37,10 @@ export const MemberRoleComponent = ({
   memberRoles,
   userRole,
   member,
+  userId,
 }) => {
-  console.log("Member  ", member);
+  console.log("userId:  ", userId);
+  console.log("user role:", userRole);
   const [userInfo, setUserInfo] = useState();
   const [currentRole, setCurrentRole] = useState(memberRoles);
   const [activeDropdown, setActiveDropdown] = useState(false);
@@ -46,14 +48,15 @@ export const MemberRoleComponent = ({
   const dropdownRefs = useRef([]);
 
   const handleRoleChange = async (newRole) => {
-    const response = await updateMemberAction(memberId, newRole);
-    console.log("Role : ", response);
+    if (newRole == "ROLE_ADMIN") {
+      const response = await updateMemberAction(memberId, newRole);
+      const adminupdate = await updateMemberAction(userId, "ROLE_SUB_ADMIN");
+      console.log("user:,admin", response, adminupdate);
+    }
     try {
       if (response.status === "OK") {
         setCurrentRole(newRole);
-        // userRole = "ROLE_USER";
-        // console.log("newrole:", newRole);
-        // console.log("Admin:", userRole);
+        // setCurrentRole("ROLE_SUB_ADMIN")
       } else {
         console.error("Failed to update role:", response.message);
       }
@@ -101,7 +104,7 @@ export const MemberRoleComponent = ({
   useEffect(() => {
     handleConfirmRoleChange();
   }, [currentRole]);
-  
+
   return (
     <div>
       <div

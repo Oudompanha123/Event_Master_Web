@@ -111,7 +111,7 @@ export const AssetTableComponent = async ({ data, nullsearch, page }) => {
             height={180}
             priority
           />
-          <p className="text-center text-4xl font-semibold text-primary-text">
+          <p className="text-center text-2xl font-semibold text-primary-text">
             No results found
           </p>
           <p className="text-center text-xl text-gray-500">

@@ -1,32 +1,34 @@
 "use server";
 import { headerToken } from "@/app/api/auth/headerToken";
 
-export async function getAllMemberService(){
-    const header = await headerToken();
-    const res = await fetch(`${process.env.API_URL}members?offset=1&limit=8`,
-        {
-            next: { tags: ["get_member"] },
-            method: "GET",
-            cache: "no-store",
-            headers: header
-        }
-    );
-    const data = await res.json();
-    return data;
+export async function getAllMemberService(page) {
+  const header = await headerToken();
+  const res = await fetch(
+    `${process.env.API_URL}members?offset=${page ? page : 1}&limit=8`,
+    {
+      next: { tags: ["get_member"] },
+      method: "GET",
+      cache: "no-store",
+      headers: header,
+    }
+  );
+  const data = await res.json();
+  return data;
 }
 
-export async function getAllMemberForMaterialCreateService(){
-    const header = await headerToken();
-    const res = await fetch(`${process.env.API_URL}members?offset=1&limit=1000`,
-        {
-            next: { tags: ["get_member"] },
-            method: "GET",
-            cache: "no-store",
-            headers: header
-        }
-    );
-    const data = await res.json();
-    return data;
+export async function getAllMemberForMaterialCreateService(page) {
+  const header = await headerToken();
+  const res = await fetch(
+    `${process.env.API_URL}members?offset=${page ? page : 1}&limit=1000`,
+    {
+      next: { tags: ["get_member"] },
+      method: "GET",
+      cache: "no-store",
+      headers: header,
+    }
+  );
+  const data = await res.json();
+  return data;
 }
 
 export async function deleteMemberByIdService(memberId) {
@@ -42,7 +44,7 @@ export async function deleteMemberByIdService(memberId) {
 }
 
 export async function updateMemberService(memberId, role) {
-  console.log(memberId, role);
+  console.log("mem",memberId, role);
   const header = await headerToken();
   const res = await fetch(
     `${process.env.API_URL}members/${memberId}?role=${role}`,

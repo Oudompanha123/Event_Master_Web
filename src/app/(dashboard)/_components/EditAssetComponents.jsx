@@ -62,7 +62,12 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
           <div className="flex flex-row items-center text-primary-text">
             <h2 className="text-lg lg:text-xl font-semibold">Edit Asset</h2>
             <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              <button
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                onClick={() => {
+                  cancle();
+                }}
+              >
                 ✕
               </button>
             </form>
