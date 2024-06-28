@@ -48,7 +48,6 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
         { categoryId: 88888, categoryName: `${newCategory}` },
         { categoryId: 999, categoryName: "Create Category" }
         ]);
-   
     }
 
     const handleTrigger = () => {
@@ -62,10 +61,10 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
             removeCategory()
             document.getElementById('my_modal_create_new_categoryV2').close()
             document.getElementById(`my_modal_updateEvent${eventId}`)
+            setNewCategory("")
         } else {
             setError(res?.detail)
         }
-        
     }
 
     const handlePassToParent = (v) => {

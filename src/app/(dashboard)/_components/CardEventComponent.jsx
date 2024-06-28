@@ -22,6 +22,7 @@ export default function CardEventComponent({eventId, eventData ,userRole}) {
     const response = await handleChangeStatusAction(id, tempStatus)
     console.log("Response : ", response);
   };
+  console.log(eventData);
   return (
     <div>
       <div className="gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:gap-6 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2 2xl:grid-cols-4">

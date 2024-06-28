@@ -88,6 +88,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
       categoryId: eventCategory.categoryId,
     };
 
+    console.log("Submit data : ", submitData);
     try {
       setLoading(true);
       const response = await handleUpdateEvent(eventId, submitData);
