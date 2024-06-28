@@ -2,7 +2,6 @@ import React from "react";
 import { DeleteAttendeeComponent } from "./Action/DeleteAttendeeComponent";
 import Image from "next/image";
 
-// name or fullname first
 const reorderFields = (fields) => {
   const priorityFields = ["name", "fullname"];
   const priorityField = priorityFields.find((field) => fields.includes(field));
@@ -21,6 +20,7 @@ const AttendeeTableComponent = ({
   attendeeInEvent,
   isSearch,
   header,
+  page,
 }) => {
   let attendees = parentData?.payload || [];
   let temp = header;
@@ -30,7 +30,6 @@ const AttendeeTableComponent = ({
   }
 
   let tableHeaders = ["NO", ...temp];
-  console.log("th:", tableHeaders);
   if (userRole !== "ROLE_USER") {
     tableHeaders.push("ACTION");
   }
@@ -42,8 +41,14 @@ const AttendeeTableComponent = ({
   }
 
   const hasManyColumns = tableHeaders.length > 6;
+  const isNoData =
+    (isSearch && attendees.length === 0) ||
+    (!isSearch && attendeeInEvent === 0);
+
   return (
-    <div className="overflow-y-auto h-[600px]">
+    <div
+      className={`overflow-y-auto ${isNoData ? "fixed-width" : "h-[600px]"}`}
+    >
       <table
         className={`table min-w-full border-separate border-spacing-y-3 mt-5 p-1 ${
           hasManyColumns ? "w-screen table-auto" : "w-auto table-fixed"
@@ -94,7 +99,7 @@ const AttendeeTableComponent = ({
           {!isSearch && attendeeInEvent === 0 && (
             <tr>
               <td colSpan={tableHeaders.length}>
-                <div className="justify-center w-full h-[595px] content-center space-y-2 pb-10 flex flex-col items-center">
+                <div className="justify-center h-[595px] content-center space-y-2 pb-10 flex flex-col items-center">
                   <Image
                     src="/images/Search.gif"
                     alt="empty image"
@@ -125,18 +130,19 @@ const AttendeeTableComponent = ({
                   className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
                 >
                   <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">
-                    {index + 1}
+                    {page > 1 ? index + 1 + 8 * (page - 1) : index + 1}
                   </td>
+
                   {header.map((field, fieldIndex) => (
                     <td
                       key={fieldIndex}
-                      className="px-5 py-2 text-xs lg:text-base  "
+                      className="px-5 py-2 text-xs lg:text-base"
                     >
                       {reorderedAttendee[field]}
                     </td>
                   ))}
                   {userRole !== "ROLE_USER" && (
-                    <td className="px-5 py-2 text-xs lg:text-base rounded-r-radiusUi ">
+                    <td className="px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">
                       <DeleteAttendeeComponent
                         attendeeId={attendeeWrapper.attendeeId}
                         userRole={userRole}
@@ -151,4 +157,5 @@ const AttendeeTableComponent = ({
     </div>
   );
 };
+
 export default AttendeeTableComponent;
