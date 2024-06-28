@@ -47,10 +47,10 @@ const AttendeeTableComponent = ({
 
   return (
     <div
-      className={`overflow-y-auto ${isNoData ? "fixed-width" : "h-[600px]"}`}
+      className={`overflow-y-auto ${isNoData ? "fixed-width" : "h-auto"}`}
     >
       <table
-        className={`table min-w-full border-separate border-spacing-y-3 mt-5 p-1 ${
+        className={`table min-w-full border-separate border-spacing-y-3 px-1 mt-5  ${
           hasManyColumns ? "w-screen table-auto" : "w-auto table-fixed"
         }`}
       >
@@ -78,7 +78,7 @@ const AttendeeTableComponent = ({
           {isSearch && attendees.length === 0 && (
             <tr>
               <td colSpan={tableHeaders.length}>
-                <div className="justify-center w-full h-[595px] content-center space-y-2 pb-10 flex flex-col items-center">
+                <div className="justify-center w-full h-[600px] content-center space-y-2 pb-10 flex flex-col items-center">
                   <Image
                     src="/images/Search.gif"
                     alt="empty image"
@@ -99,7 +99,7 @@ const AttendeeTableComponent = ({
           {!isSearch && attendeeInEvent === 0 && (
             <tr>
               <td colSpan={tableHeaders.length}>
-                <div className="justify-center h-[595px] content-center space-y-2 pb-10 flex flex-col items-center">
+                <div className="justify-center h-[665px] content-center space-y-2 pb-10 flex flex-col items-center">
                   <Image
                     src="/images/Search.gif"
                     alt="empty image"
@@ -127,7 +127,7 @@ const AttendeeTableComponent = ({
               return (
                 <tr
                   key={attendeeWrapper.attendeeId}
-                  className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
+                  className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi bg-red-700 even:bg-white text-primary-text`}
                 >
                   <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">
                     {page > 1 ? index + 1 + 8 * (page - 1) : index + 1}
@@ -139,7 +139,7 @@ const AttendeeTableComponent = ({
                       className="px-5 py-2 text-xs lg:text-base"
                     >
                       {reorderedAttendee[field]}
-                    </td>
+                    </td> 
                   ))}
                   {userRole !== "ROLE_USER" && (
                     <td className="px-5 py-2 text-xs lg:text-base rounded-r-radiusUi">

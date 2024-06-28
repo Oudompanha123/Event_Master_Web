@@ -11,20 +11,21 @@ import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { SearchMemberComponent } from "../_components/SearchMemberComponent";
 import { RPaginate } from "../_components/paginate/RPaginate";
 import Image from "next/image";
+
 const MemberPage = async ({ searchParams }) => {
   const query = searchParams?.query || "";
   const page = searchParams?.page;
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
-  const userRole = userInfo.role;
   const userId = userInfo.memberId;
-  // console.log("userId ,role", userId, userRole);
+  const userRole = userInfo.role;
   const memberData = await getAllMembersAction(page);
-  // console.log("member:", memberData);
   const search = await searchMemberAction(query);
   const data = query == "" || query == null ? memberData : search;
-  console.log("data::::", data);
   const nullsearch = data.totalRecord;
+
+  
+
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
@@ -72,7 +73,7 @@ const MemberPage = async ({ searchParams }) => {
           <tbody>
             {data?.payload?.map((member, index) => (
               <tr
-                key={member.id}
+                key={index}
                 className={`h-14 shadow-sm rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
               >
                 <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi border border-r-0 border-member-border sm:text-sm">
@@ -97,11 +98,10 @@ const MemberPage = async ({ searchParams }) => {
                   } px-5 py-2 text-xs xl:text-base border border-x-0 border-member-border sm:text-sm `}
                 >
                   <MemberRoleComponent
-                    member={member}
                     memberId={member.memberId}
                     memberRoles={member.role} //role in table
                     userRole={userRole} //role admin
-                    userId={userId}
+                    userId = {userId}
                   />
                 </td>
                 <td

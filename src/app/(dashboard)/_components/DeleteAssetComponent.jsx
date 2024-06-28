@@ -14,7 +14,6 @@ export const DeleteAssetComponent = ({ assetIdprop }) => {
       position: "top-center",
     });
   };
-  //console.log("asset:", assetIdprop);
   const trigger = async (x) => {
     await handleDeleteAsset(x);
   };

@@ -29,7 +29,6 @@ export const rejectUserRequestByIdService = async (memberId) => {
   );
 
   const data = await res.json();
-  console.log("Data:", data);
   return data;
 };
 

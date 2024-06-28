@@ -54,7 +54,6 @@ export const UpdateEventButton = () => {
   const start = watch("startDate");
 
   const onSubmit = (data) => {
-    console.log(data);
   };
 
   return (

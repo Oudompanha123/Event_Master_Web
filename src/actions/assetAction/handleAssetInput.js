@@ -29,17 +29,19 @@ export async function handleAsset(assetInput) {
   const data = await insertAssetService(newAsset);
   revalidateTag("asset");
   const allMember = await getAllMember();
-  await knockClient.notify("new-workout", {
-    actor: userInfo?.sub,
-    recipients: allMember.payload
-      .filter((x) => x.email !== userInfo?.sub)
-      .map((x) => x.email),
-    data: {
-      workoutText: {
-        value: "has been created a new asset.",
+  if (allMember.totalRecord != 1) {
+    await knockClient.notify("new-workout", {
+      actor: userInfo?.sub,
+      recipients: allMember.payload
+        .filter((x) => x.email !== userInfo?.sub)
+        .map((x) => x.email),
+      data: {
+        workoutText: {
+          value: "has been created a new asset.",
+        },
       },
-    },
-  });
+    });
+  }
   return data;
 }
 export const getAllAssetAction = async (page) => {
@@ -60,17 +62,19 @@ export async function handleUpdateAsset(id, newAsset) {
   await updateAssetService(id, editAsset);
   revalidateTag("asset");
   const allMember = await getAllMember();
-  await knockClient.notify("new-workout", {
-    actor: userInfo?.sub,
-    recipients: allMember.payload
-      .filter((x) => x.email !== userInfo?.sub)
-      .map((x) => x.email),
-    data: {
-      workoutText: {
-        value: "has been updated asset.",
+  if (allMember.totalRecord != 1) {
+    await knockClient.notify("new-workout", {
+      actor: userInfo?.sub,
+      recipients: allMember.payload
+        .filter((x) => x.email !== userInfo?.sub)
+        .map((x) => x.email),
+      data: {
+        workoutText: {
+          value: "has been updated asset.",
+        },
       },
-    },
-  });
+    });
+  }
 }
 
 //handle delete asset
@@ -80,17 +84,19 @@ export async function handleDeleteAsset(id) {
   await deleteAssetService(id);
   revalidateTag("asset");
   const allMember = await getAllMember();
-  await knockClient.notify("new-workout", {
-    actor: userInfo?.sub,
-    recipients: allMember.payload
-      .filter((x) => x.email !== userInfo?.sub)
-      .map((x) => x.email),
-    data: {
-      workoutText: {
-        value: "has been deleted asset.",
+  if (allMember.totalRecord != 1) {
+    await knockClient.notify("new-workout", {
+      actor: userInfo?.sub,
+      recipients: allMember.payload
+        .filter((x) => x.email !== userInfo?.sub)
+        .map((x) => x.email),
+      data: {
+        workoutText: {
+          value: "has been deleted asset.",
+        },
       },
-    },
-  });
+    });
+  }
 }
 
 export const getAllAssetNoPageAction = async () => {

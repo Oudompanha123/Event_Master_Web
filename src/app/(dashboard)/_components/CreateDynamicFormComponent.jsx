@@ -97,21 +97,16 @@ export const CreateDynamicForm = ({ id ,userRole }) => {
   };
 
   const handleRemove = (index) => {
-    console.log('checking after remove', confirmField)
-    console.log('checking index', index)
     setConfirmField((prev) => prev.filter((x, i) => i !== index));
     setChoosedField(confirmField)
     toast.info(`Removed item ${index + 1}`, {
       position: "top-center"
     });
-    console.log('checking after remove', confirmField)
   };
 
   useEffect(() => {
     getFormData(id);
   }, []);
-
-  console.log('checking outsite', confirmField)
 
   return (
     <>

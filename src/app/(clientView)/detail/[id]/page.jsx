@@ -14,9 +14,6 @@ const Page = async ({ params: { id } }) => {
     const imageUrl = data?.payload?.poster;
     const isValidUrl = imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://');
     const form = await getFormAction(id);
-    console.log('form res', form)
-
-    console.log(data, 'detail data landing')
 
     return (
         <div className="container">

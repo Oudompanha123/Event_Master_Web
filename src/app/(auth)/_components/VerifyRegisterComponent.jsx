@@ -11,7 +11,6 @@ import {resendRegisterAction, registerVerifyAction} from "@/actions/auth/registe
 
 
 const VerifyRegisterComponent = ({email}) => {
-    console.log("final email : ", email)
     const [otp, setOtp] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);

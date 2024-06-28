@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import {useState} from "react";
-import {useForm} from "react-hook-form";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import Image from "next/image";
-import {useRouter} from "next/navigation";
-import {toast, ToastContainer} from "react-toastify";
+import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {loginAction} from "@/actions/auth/authAction";
-import {signIn} from "next-auth/react";
-import {loginService} from "@/services/login-signup/auth.service";
+import { loginAction } from "@/actions/auth/authAction";
+import { signIn } from "next-auth/react";
+import { loginService } from "@/services/login-signup/auth.service";
 
 const LoginComponent = () => {
     const initialData = {
@@ -20,7 +20,7 @@ const LoginComponent = () => {
     const {
         register,
         handleSubmit,
-        formState: {errors, isValid},
+        formState: { errors, isValid },
     } = useForm({
         defaultValues: initialData,
         mode: "onChange",
@@ -39,7 +39,6 @@ const LoginComponent = () => {
             redirect: false,
             ...data,
         });
-        console.log("res is  : ", res)
         if (res.ok) {
             toast.success('Login successfully', {
                 position: "top-center"
@@ -60,7 +59,7 @@ const LoginComponent = () => {
             className="absolute flex mt-11 flex-col h-screen justify-center lg:px-8 w-full p-8 xl:mx-[42%] xl:mt-2 xl:w-[45%] xl:right-[10%]">
             <div className="mt-8 sm:mx-auto w-full sm:w-full sm:max-w-md flex justify-center ">
                 <div className="bg-white py-6 md:py-8 w-[110%] shadow rounded-[40px] px-3 md:px-12">
-                    <ToastContainer autoClose={2000}/>
+                    <ToastContainer autoClose={2000} />
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="mb-12 -mt-3 rounded-radiusUi">
                             <h2 className="mt-6 px-2 text-center text-3xl md:text-4xl font-bold flex justify-center">
@@ -82,11 +81,10 @@ const LoginComponent = () => {
                                 <input
                                     type="text"
                                     id="email"
-                                    className={`${
-                                        errors.email
+                                    className={`${errors.email
                                             ? "border-red-700 focus:border-red-600"
                                             : "border-gray-300"
-                                    } shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                        } shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                     placeholder="Enter your email"
                                     {...register("email", {
                                         required: "Email is required",
@@ -115,11 +113,10 @@ const LoginComponent = () => {
                                 <input
                                     type={isLocked ? "Password" : "text"}
                                     id="password"
-                                    className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 ${
-                                        errors.userPassword
+                                    className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 ${errors.userPassword
                                             ? "border-red-700 focus:border-red-600"
                                             : "border-gray-300"
-                                    }`}
+                                        }`}
                                     placeholder="Enter your password"
                                     {...register("password", {
                                         required: "Password is required",
@@ -170,11 +167,10 @@ const LoginComponent = () => {
                             <button
                                 type="submit"
                                 id="login"
-                                className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-32 py-3.5  shadow-md shadow-violet-400  ${
-                                    !isValid
+                                className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-32 py-3.5  shadow-md shadow-violet-400  ${!isValid
                                         ? "opacity-50 cursor-not-allowed"
                                         : "hover:bg-violet-500"
-                                }`}
+                                    }`}
                                 disabled={!isValid}
                             >
                                 {/*loading*/}
@@ -194,7 +190,6 @@ const LoginComponent = () => {
                     </form>
                 </div>
             </div>
-            <ToastContainer/>
         </div>
     );
 };
