@@ -11,6 +11,8 @@ import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { SearchMemberComponent } from "../_components/SearchMemberComponent";
 import { RPaginate } from "../_components/paginate/RPaginate";
 import Image from "next/image";
+import { getAllMemberService } from "@/services/dashboard/memberService";
+import { Location } from "iconsax-react";
 const MemberPage = async ({ searchParams }) => {
   const query = searchParams?.query || "";
   const page = searchParams?.page;
@@ -20,17 +22,17 @@ const MemberPage = async ({ searchParams }) => {
   const userId = userInfo.memberId;
   // console.log("userId ,role", userId, userRole);
   const memberData = await getAllMembersAction(page);
-  // console.log("member:", memberData);
+  console.log("member:", memberData);
   const search = await searchMemberAction(query);
   const data = query == "" || query == null ? memberData : search;
-  console.log("data::::", data);
+  // console.log("data::::", data);
   const nullsearch = data.totalRecord;
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
         <div className="lg:w-[650px] md:w-full w-full">
           <a className="md:text-lg xl:text-xl font-semibold text-primary-text">
-            Show All Members
+            Show All Members {userRole}
           </a>
         </div>
         <div className="w-full flex justify-end lg:mt-0 mt-3">
@@ -72,7 +74,7 @@ const MemberPage = async ({ searchParams }) => {
           <tbody>
             {data?.payload?.map((member, index) => (
               <tr
-                key={member.id}
+                key={index}
                 className={`h-14 shadow-sm rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
               >
                 <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi border border-r-0 border-member-border sm:text-sm">
