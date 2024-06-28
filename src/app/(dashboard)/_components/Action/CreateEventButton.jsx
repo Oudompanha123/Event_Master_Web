@@ -122,24 +122,37 @@ export const CreateEventButton = () => {
         const eDate = new Date(`${endDate}`);
         const timeDiff = eDate - sDate;
         const hoursDiff = timeDiff / (1000 * 60 * 60);
-        const roundedDiff = Math.round(hoursDiff * 100) / 100;
+        const roundedDiff = Math.round(hoursDiff * 100) / 100; // Round the hours difference to two decimal places
 
         const days = Math.floor(roundedDiff / 24);  // Calculate the number of days
         const remainingHours = roundedDiff % 24;    // Calculate the remaining hours
+        const remainingMinutes = (remainingHours * 60) % 60;  // Calculate the remaining minutes
+
+        const roundedDays = Math.floor(days); // Round days to remove decimal values
+        const roundedRemainingHours = Math.floor(remainingHours); // Round remaining hours to remove decimal values
+        const roundedRemainingMinutes = Math.round(remainingMinutes); // Round remaining minutes to remove decimal values
 
         let result = '';
-        if (days > 0) {
-            result += `${days} day${days > 1 ? 's' : ''}`;  // Handle pluralization for days
+
+        if (roundedDays > 0) {
+            result += `${roundedDays} day${roundedDays > 1 ? 's' : ''}`;  // Handle pluralization for days
         }
-        if (remainingHours > 0) {
-            if (days > 0) {
+        if (roundedRemainingHours > 0) {
+            if (roundedDays > 0) {
                 result += ', ';
             }
-            result += `${remainingHours} hour${remainingHours > 1 ? 's' : ''}`;  // Handle pluralization for hours
+            result += `${roundedRemainingHours} hour${roundedRemainingHours > 1 ? 's' : ''}`;  // Handle pluralization for hours
+        }
+        if (roundedRemainingMinutes > 0) {
+            if (roundedDays > 0 || (roundedRemainingHours > 0)) {
+                result += ', ';
+            }
+            result += `${roundedRemainingMinutes} minute${roundedRemainingMinutes > 1 ? 's' : ''}`;  // Handle pluralization for minutes
         }
 
         setDiffChange(result);
     };
+
 
     const handleCategorySelect = (v) => setEventCategory(v)
 
@@ -190,7 +203,6 @@ export const CreateEventButton = () => {
             categoryId: cateId
         }
         const okay = await addNewEventAction(submitData);
-        console.log('checking submit', okay)
         await new Promise(resolve => setTimeout(resolve, 1000));
         setIsSend(false);
         notify(okay?.status, okay?.Errors?.description || okay?.Errors?.poster);
@@ -205,15 +217,13 @@ export const CreateEventButton = () => {
     };
 
     const handleCloseForm = () => {
-        setEvent({
-            eventName: '',
-            startDate: '',
-            endDate: '',
-            duration: '',
-            maxAttendee: '',
-            address: '',
-            description: '',
-        });
+        setRandom(!random)
+        setStartDate('')
+        setEndDate('')
+        setHide(false)
+        preview.src = ""
+        preview.classList.add("hidden")
+        reset();
         document.getElementById("my_modal_event_create").close();
     }
 
@@ -232,9 +242,7 @@ export const CreateEventButton = () => {
                 <div className="modal-box w-11/12 lg:w-1/2 lg:max-w-5xl p-8">
                     <div className="flex justify-between">
                         <h3 className="font-bold text-xl">Create Event</h3>
-                        <form method="dialog">
-                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                        </form>
+                        <button onClick={() => handleCloseForm()} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </div>
                     <div className="modal-action">
                         <form action="" className="w-full space-y-6" onSubmit={handleSubmit(onSubmit)}>
