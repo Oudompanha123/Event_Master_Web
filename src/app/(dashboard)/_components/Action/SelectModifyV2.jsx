@@ -58,7 +58,6 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
 
     const handleCategorySave = async () => {
         const res = await addNewCategoryAction(newCategory)
-        console.log("Response : ", res);
         if(res?.status === "CREATED") {
             removeCategory()
             document.getElementById('my_modal_create_new_categoryV2').close()
@@ -71,7 +70,6 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
 
     const handlePassToParent = (v) => {
         func(v)
-        console.log('event', v)
     }
 
 

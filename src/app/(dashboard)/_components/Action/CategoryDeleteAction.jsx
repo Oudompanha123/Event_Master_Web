@@ -6,11 +6,22 @@ import { RxCross2 } from "react-icons/rx"
 import { toast } from "react-toastify"
 
 export const CategoryDeleteAction = ({ cateId }) => {
+    const notify = (status) => {
+        if (status == 400) {
+            toast.warning(`Can't delete category because category is use by event`, {
+                position: "top-center"
+            });
+        }
+        if (status == "OK") {
+            toast.success("Successfully deleted category", {
+                position: "top-center"
+            });
+        }
+    }
+
     const handleDelete = async () => {
-        await deleteCategoryAction(cateId)
-        toast.success("Category has been deleted successfully", {
-            position: "top-center"
-        });
+        const res = await deleteCategoryAction(cateId)
+        notify(res.status)
     }
 
     return (

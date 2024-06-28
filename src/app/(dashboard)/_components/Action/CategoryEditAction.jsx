@@ -24,7 +24,6 @@ export const CategoryEditAction = ({ cateId, name }) => {
     const handleUpdate = async () => {
         setIsSend(true)
         const res = await updateCategoryAction(cateId, categoryName);
-        console.log('checking res', res)
         await new Promise(resolve => setTimeout(resolve, 1000));
         setCategoryName('');
         setIsSend(false)

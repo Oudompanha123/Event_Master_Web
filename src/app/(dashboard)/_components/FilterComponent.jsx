@@ -7,7 +7,6 @@ import { SelectStatus } from './SelectStatusComponent';
 import CardEventComponent from './CardEventComponent';
 
 const FilterComponent = ({ initialData ,userRole }) => {
-  console.log("Initial data : ", initialData);
   const [findData, setFindData] = useState(initialData);
   const [search, setSearch] = useState('');
   const [startTime, setStartTime] = useState('');

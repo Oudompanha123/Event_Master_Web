@@ -11,7 +11,6 @@ export const handleSearch = async (input) => {
 
     try {
         const findData = await findEvent(searchData);
-        console.log(findData)
         return findData;
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -19,7 +18,6 @@ export const handleSearch = async (input) => {
 }
 
 export const callingEventServiceAction = async (searchData) => {
-    console.log("searching: " , searchData)
     const data = await findEvent(searchData);
     return data
 }

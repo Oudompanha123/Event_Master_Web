@@ -115,9 +115,7 @@ export const changeStatus = async (eventId, active) => {
         next: { tags: ["events"] },
         method: "PUT",
         headers: header,
-        body: JSON.stringify({
-            eventId, active
-        }),
+        body: JSON.stringify(data),
     });
     const dataEvent = await res.json();
     return dataEvent;

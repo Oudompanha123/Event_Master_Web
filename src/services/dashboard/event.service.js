@@ -38,7 +38,6 @@ export const findEvent = async (searchData) => {
 }
 
 export const createEventService = async (newEvent) => {
-    console.log("new event", newEvent)
     const res = await fetch(`${process.env.API_URL}events`,
         {
             next: { tags: 'events' },
@@ -83,7 +82,6 @@ export const deleteEventById = async (id) => {
         headers: header,
       });
       const data = await res.json();
-      console.log("Data response event service ", data);
       return data;
     } catch (err) {
       console.log("error event service", err);

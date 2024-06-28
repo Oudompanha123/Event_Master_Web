@@ -1,10 +1,14 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, {useRef, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { ChangeRoleComponent } from "./ChangeRoleComponent";
-import { updateMemberService } from "@/services/dashboard/memberService";
 import { updateMemberAction } from "@/actions/memberAction";
+import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
+import { ToastContainer, toast } from "react-toastify";
+
+
 
 const getRoleColor = (role) => {
   switch (role) {
@@ -36,25 +40,52 @@ export const MemberRoleComponent = ({
   memberId,
   memberRoles,
   userRole,
-  member,
-  userId,
+  userId
 }) => {
-  const [userInfo, setUserInfo] = useState();
-  const [currentRole, setCurrentRole] = useState(memberRoles);
+
+  
+
   const [activeDropdown, setActiveDropdown] = useState(false);
   const [confirmingRoleChange, setConfirmingRoleChange] = useState(null);
   const dropdownRefs = useRef([]);
 
-  const handleRoleChange = async (newRole) => {
-    if (newRole == "ROLE_ADMIN") {
-      const response = await updateMemberAction(memberId, newRole);
-      const adminupdate = await updateMemberAction(userId, "ROLE_SUB_ADMIN");
-      // console.log("user:,admin", response, adminupdate);
+  const router = useRouter()
+
+  const handleClickOutside = (event) => {
+    if (
+      activeDropdown &&
+      dropdownRefs.current[0] &&
+      !dropdownRefs.current[0].contains(event.target)
+    ) {
+      closeDropdown();
     }
+  };
+  
+  if (activeDropdown) {
+    document.addEventListener("mousedown", handleClickOutside);
+  } else {
+    document.removeEventListener("mousedown", handleClickOutside);
+  }
+
+
+  const handleRoleChange = async (newRole, userRole) => {
     try {
-      if (response.status === "OK") {
-        setCurrentRole(newRole);
-        // setCurrentRole("ROLE_SUB_ADMIN")
+      const response = await updateMemberAction(memberId, newRole);
+
+      if(newRole === "ROLE_ADMIN") {
+        try{
+          const res = await updateMemberAction(userId, "ROLE_SUB_ADMIN");
+          
+          signOut()
+          router.push("/login")
+          
+        }
+        catch (error) {
+          console.error("Error updating role:", error);
+        }
+      }
+
+      if (response.status === "OK") { 
       } else {
         console.error("Failed to update role:", response.message);
       }
@@ -73,38 +104,15 @@ export const MemberRoleComponent = ({
     setActiveDropdown(false);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        activeDropdown &&
-        dropdownRefs.current[0] &&
-        !dropdownRefs.current[0].contains(event.target)
-      ) {
-        closeDropdown();
-      }
-    };
-
-    if (activeDropdown) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [activeDropdown]);
-
   const handleConfirmRoleChange = () => {
     handleRoleChange(confirmingRoleChange?.role);
   };
 
-  useEffect(() => {
-    handleConfirmRoleChange();
-  }, [currentRole]);
+  
 
   return (
     <div>
+      <ToastContainer autoClose = {2000}/>
       <div
         className="inline-block"
         ref={(el) => (dropdownRefs.current[0] = el)}
@@ -115,17 +123,17 @@ export const MemberRoleComponent = ({
           onClick={toggleDropdown}
           className="btn btn-sm border rounded-radiusUi w-[122px] h-8"
           style={{
-            color: getRoleColor(currentRole),
-            borderColor: getRoleColor(currentRole),
+            color: getRoleColor(memberRoles),
+            borderColor: getRoleColor(memberRoles),
           }}
         >
-          {getRoleDisplayName(currentRole)}
-          {currentRole !== "ROLE_ADMIN" && userRole == "ROLE_ADMIN" && (
+          {getRoleDisplayName(memberRoles)}
+          {memberRoles != "ROLE_ADMIN" && userRole == "ROLE_ADMIN" && (
             <FaAngleDown className=" right-0" />
           )}
         </div>
         {activeDropdown &&
-          currentRole !== "ROLE_ADMIN" &&
+          memberRoles !== "ROLE_ADMIN" &&
           userRole == "ROLE_ADMIN" && (
             <div
               className={`

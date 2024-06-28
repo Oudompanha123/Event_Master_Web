@@ -46,6 +46,8 @@ export const deleteCategory = async (id) => {
             headers: header
         }
     )
+    const data = await res.json()
+    return data
 }
 
 export const updateCategory = async (id, categoryName) => {

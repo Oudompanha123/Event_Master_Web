@@ -37,8 +37,6 @@ export async function updateProfileMemberById(memberId, updateMemberData){
 }
 
 export async function changePassword(updatePassword){
-    console.log("Update data service : ", updatePassword)
-    // const session = await getServerSession(authOption());
     const header = await headerToken();
     try{
         const res = await fetch(`${process.env.API_URL}profiles/change-password`, {
@@ -48,7 +46,6 @@ export async function changePassword(updatePassword){
             
     });
         const data = await res.json();
-        console.log("data: ", data);
         return data;
     }catch (error){
         console.error("Error: ", error);

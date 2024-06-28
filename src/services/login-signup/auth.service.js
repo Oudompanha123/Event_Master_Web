@@ -32,7 +32,6 @@ export const registerService = async (userInfo) => {
 
 
 export const registerUserService = async (userInfo) => {
-    console.log("User : ", userInfo)
     const res2 = await fetch(`${process.env.API_URL}auth/user-register`, {
         method: 'POST',
         headers:  {

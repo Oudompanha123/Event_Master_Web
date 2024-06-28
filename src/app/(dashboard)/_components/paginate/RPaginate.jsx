@@ -11,7 +11,6 @@ export const RPaginate = ({ totalData }) => {
   const router = useRouter();
 
   const passToParent = (event) => {
-    console.log(event);
     setPage(event.selected);
     router.push(`?page=${event.selected + 1}`, { scroll: false });
   };

@@ -17,8 +17,8 @@ import DeleteDialog from "./DeleteDialog";
 import EmptyMaterialRow from "./EmptyMaterialRow";
 import MaterialRow from "./MaterialRow";
 import TableHeadMaterial from "./TableHeadOfMaterial";
-import { SearchMaterialComponent } from "../_components/SearchMaterialComponent";
 import { searchMaterialByName } from "@/services/dashboard/materialService";
+import { SearchMaterialComponent } from "./searchMaterialComponent";
 
 const getStatusColor = (status) => {
   switch (status) {
@@ -228,6 +228,7 @@ export default function MaterialComponent({
       (id) => !id.toString().startsWith("new_")
     );
     const newIds = checkedRows.filter((id) => id.toString().startsWith("new_"));
+
     try {
       if (idsToDelete.length > 0) {
         await deleteMaterialMultiple(idsToDelete);
@@ -316,7 +317,6 @@ export default function MaterialComponent({
     } catch (error) {
       setIsLoading(false);
       error("Unsuccussfully! input data is invalid!");
-      console.log(error);
     }
   };
 

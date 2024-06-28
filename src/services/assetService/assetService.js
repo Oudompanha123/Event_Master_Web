@@ -10,6 +10,7 @@ export const getAllAssetService = async (page) => {
     }
   );
   const assetData = await res.json();
+
   return assetData;
 };
 
