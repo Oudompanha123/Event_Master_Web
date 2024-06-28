@@ -317,7 +317,6 @@ export default function MaterialComponent({
     } catch (error) {
       setIsLoading(false);
       error("Unsuccussfully! input data is invalid!");
-      console.log(error);
     }
   };
 

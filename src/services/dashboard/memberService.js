@@ -12,7 +12,6 @@ export async function getAllMemberService(page) {
     }
   );
   const data = await res.json();
-  console.log("data from api:", data);
   return data;
 }
 

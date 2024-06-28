@@ -3,7 +3,6 @@ import VerifyRegisterComponent from "@/app/(auth)/_components/VerifyRegisterComp
 
 const VerifyRegisterPage = ({searchParams}) => {
     const email = searchParams.email
-    console.log("email: ", email)
     return (
         <div className="bg-primary-purple w-[100%] h-screen relative">
             <div className="absolute w-[49%] h-[83%] mt-20 left-[25%]">

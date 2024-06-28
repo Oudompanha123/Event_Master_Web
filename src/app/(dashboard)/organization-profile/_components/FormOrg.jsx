@@ -40,13 +40,6 @@ const FormOrg = () => {
 
   const [hide, setHide] = useState(false);
 
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   console.log("file name: ", file)
-  //   setImageLink(e.target.files[0]);
-  //   displayLogo(file);
-  // };
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setImageLink(file); // Store the selected file in state

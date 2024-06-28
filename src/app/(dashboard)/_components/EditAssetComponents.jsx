@@ -34,7 +34,6 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
   const delay = (x) => new Promise((resolve) => setTimeout(resolve, x));
 
   const onSubmit = async (e) => {
-    // console.log("data", e);
     setIsLoading(true);
     await handleUpdateAsset(assetEdit, e);
     await delay(1000);

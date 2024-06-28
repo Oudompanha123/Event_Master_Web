@@ -16,7 +16,6 @@ export const NavbarComponent = ({ className }) => {
     const pathname = usePathname();
     let url = pathname;
     let eId = url.split('/').pop()
-    console.log(eId, 'check path')
 
     const param = useSearchParams()
     const eName = param.get('name')

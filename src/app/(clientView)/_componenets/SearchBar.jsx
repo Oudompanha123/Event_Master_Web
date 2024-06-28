@@ -38,11 +38,8 @@ export const SearchBar = () => {
             status: statusValue,
             categoryName: dropDownValue
         };
-        console.log('check search data', searchData)
         const data = await callingServiceAction(searchData); //move to action for cors
-        console.log(data.payload, 'check data in search')
         router.replace('/?search=true', { scroll: false });
-        console.log('router pushed')
         setFindData(data);
         setIsLoading(false)
     };

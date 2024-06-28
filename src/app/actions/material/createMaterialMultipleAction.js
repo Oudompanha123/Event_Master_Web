@@ -3,8 +3,6 @@ import { CreateMultipleMaterialService } from "@/services/dashboard/materialServ
 import { revalidateTag } from "next/cache";
 
 async function CreateMultipleMaterial(materialData) {
-  // console.log("data in action is",materialData)
-
   const data = await CreateMultipleMaterialService(materialData);
   revalidateTag("materials");
   return data;

@@ -47,13 +47,6 @@ const NewFormComponent = () => {
 
   const [hide, setHide] = useState(false);
 
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   console.log("file name: ", file)
-  //   setImageLink(e.target.files[0]);
-  //   displayLogo(file);
-  // };
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setImageLink(e.target.files[0]); // Assuming setImageLink is defined elsewhere
@@ -96,12 +89,10 @@ const NewFormComponent = () => {
     };
 
     try {
-      console.log("Sending organization data: ", organizationData);
       const updatedOrganization = await updateOrganization(
         organizationData.orgId,
         organizationData
       );
-      console.log("data: ", updateOrganization);
       setIsEditing(false);
       setUploadedImage(uploadImage?.payload?.fileUrl);
       notify();

@@ -7,7 +7,6 @@ export const resendOtp = async (email) => {
         }
     )
     const data = await res.json();
-    console.log(data)
     return data;
 }
 
@@ -32,7 +31,5 @@ export const changePassword = async (email, otp, newPassword) => {
         }
     )
     const data = await res.json();
-    console.log(email, otp)
-    console.log(JSON.stringify(newPassword))
     return data;
 }

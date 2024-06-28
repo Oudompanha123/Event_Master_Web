@@ -10,7 +10,6 @@ export const loginService = async (userInfo) => {
         body: JSON.stringify(userInfo)
     });
     const data = await res.json();
-    console.log("login: ", data);
     return data;
 }
 
@@ -25,14 +24,12 @@ export const registerService = async (userInfo) => {
         body: JSON.stringify(userInfo)
     });
     const data = await res1.json();
-    console.log("admin register: ", data);
     return data;
 
 }
 
 
 export const registerUserService = async (userInfo) => {
-    console.log("User : ", userInfo)
     const res2 = await fetch(`${process.env.API_URL}auth/user-register`, {
         method: 'POST',
         headers:  {

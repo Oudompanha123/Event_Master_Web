@@ -7,7 +7,6 @@ export const resendRegisterOtp = async (email) => {
         }
     )
     const data = await res.json();
-    console.log("data:", data)
     return data;
 }
 
@@ -18,6 +17,5 @@ export const registerVerify = async (email, otp) => {
         }
     )
     const data = await res.json();
-    console.log("verify otp: ", data);
     return data;
 }

@@ -39,7 +39,6 @@ const LoginComponent = () => {
             redirect: false,
             ...data,
         });
-        console.log("res is  : ", res)
         if (res.ok) {
             toast.success('Login successfully', {
                 position: "top-center"

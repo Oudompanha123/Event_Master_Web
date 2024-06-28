@@ -15,7 +15,6 @@ import { ListOfSkeleton } from "./_componenets/ListOfSkeleton";
 export default async function Home({ searchParams }) {
   const popularData = await getPopularEvent();
   const allCategory = await getAllCategory();
-  console.log(searchParams.search, 'check param')
 
   return (
     <div className="container">

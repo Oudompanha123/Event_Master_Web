@@ -19,7 +19,6 @@ export const SelectDropdownLanding = ({ height, label, func }) => {
     const callApi = async () => {
         const res = await getAllCategoryLandingAction();
         setOptions(res.payload)
-        console.log(res)
         // setOptionData([...res.payload, { categoryId: 999, categoryName: "Create Category" }])
     }
 
@@ -29,7 +28,6 @@ export const SelectDropdownLanding = ({ height, label, func }) => {
     }, [])
 
     const handleChange = (option) => {
-        console.log(option)
         if (selected === option) {
             setSelected(null);
         } else {

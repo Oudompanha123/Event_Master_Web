@@ -8,7 +8,6 @@ export function DeleteButton({ id, onDeleteSuccess }) {
   const handleDelete = async () => {
     try {
       const res = await deleteAgenda(id);
-      console.log("Delete response:", res);
       onDeleteSuccess(true); // Notify parent of the delete success
       document.getElementById("delete").close(); // Close the modal
     } catch (error) {

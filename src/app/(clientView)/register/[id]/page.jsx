@@ -39,12 +39,10 @@ const Page = ({ params: { id } }) => {
     const gen = watch("gender");
 
     const onSubmit = (data) => {
-        console.log(data);
     };
 
     const getData = async (id) => {
         const res = await getFormAction(id);
-        console.log(res, 'checking form')
         setRegisterForm(res?.payload?.data?.form)
     }
 
@@ -65,12 +63,8 @@ const Page = ({ params: { id } }) => {
             }
         });
 
-        console.log(data, 'checking from form');
-        console.log(formData);
-
         // If any field is empty, do not proceed with the API call
         if (!allFieldsFilled) {
-            console.log('All fields must be filled');
             setLoading(false)
             notify(400, "make sure you have fill each information.");
             return;
@@ -82,8 +76,6 @@ const Page = ({ params: { id } }) => {
             eventId: id
         };
         const res = await addAttendeeToEventAction(sendData);
-        console.log(sendData, 'checking send data');
-        console.log(res, 'checking res after send api');
 
         setLoading(false)
         setTimeout(() => {
@@ -95,7 +87,6 @@ const Page = ({ params: { id } }) => {
         getData(id)
     }, [])
 
-    console.log('checking form data', registerForm)
     return (
         <div className="container">
             <RedirectBackComponent link={'/'} />

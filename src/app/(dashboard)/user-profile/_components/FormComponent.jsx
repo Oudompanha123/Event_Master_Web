@@ -88,12 +88,9 @@ function FormComponent({ className, getAllMember }) {
   }
 
   const onSubmit = async (data) => {
-    console.log("Form data: ", data.picture)
-    console.log("checking data", data)
     let formData = new FormData();
     formData.append("file", imageGG);
     const uploadImage = await storeImageAction(formData);
-    console.log(uploadImage, 'damn')
 
     setIsLoading(true);
     const updateData = {
@@ -129,11 +126,6 @@ function FormComponent({ className, getAllMember }) {
       const imageUrl = URL.createObjectURL(file);
       setProfileImage(imageUrl);
       setSelectedFile(file);
-      console.log("File details:", {
-        name: file.name,
-        size: file.size,
-        type: file.type,
-      });
     }
   };
 

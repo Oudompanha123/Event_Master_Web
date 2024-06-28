@@ -38,7 +38,6 @@ export const getPopularEvent = async () => {
 }
 
 export const findEvent = async (searchData) => {
-    searchData.categoryName ? console.log('have data') : console.log('no data')
     let res;
     if (searchData.categoryName) {
         res = await fetch(`${process.env.API_URL}landing-page/search?eventName=${searchData.eventName}&categoryName=${searchData.categoryName}&status=${searchData.status}&startDateTime=${searchData.startDateTime !== 'T12:00:00' ? searchData.startDateTime : ''}&endDateTime=${searchData.endDateTime !== 'T12:00:00' ? searchData.endDateTime : ''}`)
