@@ -1,22 +1,29 @@
 "use client";
 import React, { useState } from "react";
-import { MdAddBox } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { AddSquare } from "iconsax-react";
+import createAgenda from "@/app/actions/createAgendaAction";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function AddmoreInput({ inputList, setInputList }) {
+function AddmoreInput({ inputList, setInputList, errors, setErrors }) {
   const handleAddClick = () => {
     setInputList([
       ...inputList,
       { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
+   
     ]);
+    setErrors([...errors, {}]);
   };
 
   const handleRemove = (index) => {
     const list = [...inputList];
+    const errs = [...errors];
     list.splice(index, 1);
+    errs.splice(index, 1);
     setInputList(list);
+    setErrors(errs);
   };
 
   const handleInputChange = (e, index) => {
@@ -24,6 +31,22 @@ function AddmoreInput({ inputList, setInputList }) {
     const list = [...inputList];
     list[index][name] = value;
     setInputList(list);
+    validateInputs(list);
+  };
+
+  const validateInputs = (list) => {
+    const newErrors = list.map((item) => {
+      const error = { topic: "", startTime: "", endTime: "" };
+      if (!item.topic) {
+        error.topic = "Topic is required.";
+      }
+      // && item.endTime && item.startTime
+      if (item.startTime  >= item.endTime) {
+        error.startTime = "Start time must be before end time.";
+      }
+      return error;
+    });
+    setErrors(newErrors);
   };
 
   return (
@@ -32,7 +55,7 @@ function AddmoreInput({ inputList, setInputList }) {
         <div className="col-sm-12 ">
           {inputList.map((x, i) => (
             <div key={i} className="row ">
-              <div className="mb-5 mt-4 px-4 pt-4 pb-3  bottom-1 bg-white rounded-3xl border-1px  ">
+              <div className="mb-5 mt-4 px-4 pt-4 pb-3 bottom-1 bg-white rounded-3xl border-1px">
                 <div className="form-group justify-end flex h-5">
                   {inputList.length !== 1 && (
                     <button
@@ -44,7 +67,7 @@ function AddmoreInput({ inputList, setInputList }) {
                     </button>
                   )}
                 </div>
-                <div className="w-full form-group col-md-4 text-sm font-semibold text-primary-text block mb-4">
+                <div className="w-full form-group col-md-4 block mb-4">
                   <label
                     htmlFor="topic"
                     className="text-sm font-semibold text-primary-text block mb-2"
@@ -54,12 +77,15 @@ function AddmoreInput({ inputList, setInputList }) {
                   <input
                     type="text"
                     name="topic"
-                    className="appearance-none input input-bordered font-medium text-sm w-full rounded-xl  focus:outline-none focus:border-purple-text"
+                    className="appearance-none input input-bordered font-medium text-sm w-full rounded-xl focus:outline-none focus:border-purple-text"
                     placeholder="Enter the Topic"
                     value={x.topic}
                     onChange={(e) => handleInputChange(e, i)}
                     required
                   />
+                  {errors[i]?.topic && (
+                    <p className="text-red-600 text-xs mt-1">{errors[i].topic}</p>
+                  )}
                 </div>
                 <div className="flex gap-4 mb-1 sm:grid-cols-2">
                   <div className="w-full mx-auto form-group">
@@ -78,7 +104,7 @@ function AddmoreInput({ inputList, setInputList }) {
                         type="time"
                         id="start-time"
                         name="startTime"
-                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none "
+                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
                         min="09:00"
                         max="18:00"
                         value={x.startTime}
@@ -86,6 +112,9 @@ function AddmoreInput({ inputList, setInputList }) {
                         onChange={(e) => handleInputChange(e, i)}
                       />
                     </div>
+                    {errors[i]?.startTime && (
+                      <p className="text-red-600 text-xs mt-1">{errors[i].startTime}</p>
+                    )}
                   </div>
                   <div className="w-full mx-auto form-group">
                     <label
@@ -102,7 +131,7 @@ function AddmoreInput({ inputList, setInputList }) {
                         type="time"
                         id="end-time"
                         name="endTime"
-                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none "
+                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
                         min="09:00"
                         max="18:00"
                         value={x.endTime}
@@ -110,6 +139,9 @@ function AddmoreInput({ inputList, setInputList }) {
                         onChange={(e) => handleInputChange(e, i)}
                       />
                     </div>
+                    {errors[i]?.endTime && (
+                      <p className="text-red-600 text-xs mt-1">{errors[i].endTime}</p>
+                    )}
                   </div>
                   <div className="form-group w-full col-md-4 text-sm font-semibold text-primary-text block mb-2">
                     <label
@@ -165,45 +197,110 @@ function AddmoreInput({ inputList, setInputList }) {
   );
 }
 
-export function CreateAgendaButton() {
+
+export function CreateAgendaButton({ id, onSaveSuccess }) {
   const [inputList, setInputList] = useState([
     { topic: "", startTime: "", endTime: "", speaker: "", description: "" },
   ]);
+  const [errors, setErrors] = useState([{ topic: "", startTime: "", endTime: "" }]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    console.log("Form Submitted", inputList);
-    // Close the modal after submission
+  const resetInputs = () => {
+    setInputList([{ topic: "", startTime: "", endTime: "", speaker: "", description: "" }]);
+    setErrors([{ topic: "", startTime: "", endTime: "" }]);
+  };
+
+  const validateInputs = (list) => {
+    const newErrors = list.map((item) => {
+      const error = { topic: "", startTime: "", endTime: "" };
+      if (!item.topic) {
+        error.topic = "Topic is required.";
+      }
+      // && item.endTime && item.startTime
+      if (item.startTime >= item.endTime) {
+        error.startTime = "Start time must be before end time.";
+      }
+      return error;
+    });
+
+    setErrors(newErrors);
+  };
+
+  const handleCreate = async () => {
+    validateInputs(inputList); // Validate before submission
+
+    // Check if there are any errors
+    const hasErrors = errors.some((error) => error.topic || error.startTime || error.endTime);
+    if (hasErrors) {
+      return;
+    }
+
+    const agenda = inputList.map((item) => ({
+      startTime: item.startTime,
+      endTime: item.endTime,
+      topic: item.topic,
+      description: item.description || "",
+      speaker: item.speaker,
+    }));
+
+    const requestBody = { agenda };
     document.getElementById("my_modal_4").close();
+
+    try {
+      setIsLoading(true);
+      const data = await createAgenda(requestBody, id);
+      toast.success("Create Material successfully!", {
+        position: "top-center",
+      });
+      setIsLoading(false);
+      resetInputs();
+      onSaveSuccess(true); // Notify parent of the save success
+    } catch (error) {
+      console.error("Error creating agenda:", error);
+      setIsLoading(false);
+      onSaveSuccess(false); // Notify parent of the failure
+    }
   };
 
   return (
     <>
       <button
-        className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-11 justify-center text-purple-text rounded-3xl  md:py-2.5 flex items-center gap-1"
+        className="hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text w-[165px] h-11 justify-center text-purple-text rounded-3xl md:py-2.5 flex items-center gap-1"
         onClick={() => document.getElementById("my_modal_4").showModal()}
       >
-          <AddSquare size="24" variant="Bold" className="" />
+        <AddSquare size="24" variant="Bold" className="" />
         <p className="text-base">Create Agenda</p>
       </button>
-      <dialog id="my_modal_4" className="modal ">
-        <div className="modal-box w-11/12 max-w-5xl  bg-[#F7F9FB]">
-          <AddmoreInput inputList={inputList} setInputList={setInputList} />
+      <dialog id="my_modal_4" className="modal">
+        <div className="modal-box w-11/12 max-w-5xl bg-[#F7F9FB]">
+          <AddmoreInput
+            inputList={inputList}
+            setInputList={setInputList}
+            errors={errors}
+            setErrors={setErrors}
+          />
           <div className="modal-action gap-2 mb-4">
-          <button
-              className="px-6 py-3 rounded-2xl border-1px border-borderUi bg-white  hover:border-gray-500 hover:bg-white"
-              onClick={() => document.getElementById("my_modal_4").close()}
+            <button
+              className="px-6 py-3 rounded-2xl border-1px border-borderUi bg-white hover:border-gray-500 hover:bg-white"
+              onClick={() => {
+                document.getElementById("my_modal_4").close();
+                resetInputs();
+              }}
             >
               Cancel
             </button>
             <button
-              className="px-6 py-3 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-3  bg-blue-700  w-32 hover:border-blueUi hover:bg-blue-800"
-              onClick={handleSubmit}
+              type="submit"
+              className="px-6 py-3 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-3 bg-blue-700 w-32 hover:border-blueUi hover:bg-blue-800"
+              onClick={handleCreate}
             >
-              <MdAddBox size={24} color="white" />
-              <p className="text-white">Save</p>
+              <AddSquare size="24" variant="Bold" className="text-white" />
+              {!isLoading ? (
+                <p className="text-white">Save</p>
+              ) : (
+                <div className="loader"></div>
+              )}
             </button>
-            
           </div>
         </div>
       </dialog>

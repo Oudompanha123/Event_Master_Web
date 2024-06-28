@@ -1,12 +1,10 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { useForm } from "react-hook-form";
-import { ToogleBtn } from "../_components/Action/ToogleBtn";
 
-export function MaterialActionButton() {
+export function MaterialActionButton({ data , onEdit, userRole, handler,userId  }) {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null); // Reference for dropdown
+  const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -33,12 +31,14 @@ export function MaterialActionButton() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
+
   return (
     <div>
-      <div className=" inline-block" ref={dropdownRef}>
+      <div className="inline-block pl-5" ref={dropdownRef}>
         <button
           type="button"
-          className="right-5 w-8 h-8 items-center flex flex-row justify-center z-0"
+          // className="right-5 w-8 h-8 items-center flex flex-row justify-right z-0 "
+          className=" right-0 w-8 h-8 flex items-center justify-right z-0 "
           onClick={toggleDropdown}
         >
           <svg
@@ -81,11 +81,13 @@ export function MaterialActionButton() {
                   className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg"
                   role="menuitem"
                   tabIndex="-1"
-                  onClick={() => document.getElementById("detail").showModal()}
+                  onClick={() =>
+                    document.getElementById(data.materialId).showModal()
+                  }
                 >
                   <Image
                     src="/icons/detail.svg"
-                    alt=""
+                    alt="detail"
                     height={22}
                     width={22}
                   />
@@ -96,186 +98,174 @@ export function MaterialActionButton() {
               </li>
               <hr />
               <li>
-                <a className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg">
+              <span className={`${userRole === "ROLE_USER" && handler !== userId ? "hidden" : ""}`}>
+                <a
+                  className='user_role gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg'
+                  role="menuitem"
+                  tabIndex="-1"
+                  onClick={onEdit}
+                >
                   <Image
-                    src="/icons/delete-red.svg"
-                    alt=""
+                    src="/icons/edit-blue.svg"
+                    alt="edit"
                     height={24}
                     width={24}
                   />
                   <p className="text-primary-text text-base font-semibold">
-                    Delete
+                    Edit
                   </p>
                 </a>
+                </span>
               </li>
             </ul>
           </div>
         )}
       </div>
 
-      <dialog id="detail" className="modal">
-        <div className="modal-box w-11/12 max-w-xl  ">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 mt-2 mr-2">
-              <Image
-                src="/icons/cancel.svg"
-                alt=""
-                className="w-7 h-7"
-                width={7}
-                height={7}
-              />
-            </button>
-          </form>
-          <div>
-            <h3 className=" text-xl font-semibold text-primary-text mb-8">
-              Material Detail
-            </h3>
+      {data && (
+        <dialog id={data.materialId} className="modal">
+          <div className="modal-box w-11/12 max-w-xl">
+            <form method="dialog">
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 mt-2 mr-2">
+                <Image
+                  src="/icons/cancel.svg"
+                  alt="cancel"
+                  className="w-7 h-7"
+                  width={7}
+                  height={7}
+                />
+              </button>
+            </form>
 
-            <div className="">
-              <div className="flex mb-3 gap-8">
-                <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
-                  <Image
-                    src="/icons/material.svg"
-                    alt=""
-                    className="h-5 w-5"
-                    width={5}
-                    height={5}
-                  />
-                  Material Name
-                </div>
-                <div className="text-larg font-bold text-primary-text">
-                  Mail tea
-                </div>
-              </div>
-              <div className="flex mb-3  gap-8">
-                <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
-                  <Image
-                    src="/icons/quantity.svg"
-                    alt=""
-                    className="h-5 w-5"
-                    width={5}
-                    height={5}
-                  />
-                  Quantity
-                </div>
-                <div className="text-larg font-bold text-primary-text">
-                  8 Bottle
-                </div>
-              </div>
-              <div className="flex mb-3  gap-8">
-                <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
-                  <Image
-                    src="/icons/assign-date.svg"
-                    alt=""
-                    className="h-5 w-5"
-                    width={5}
-                    height={5}
-                  />
-                  Assign Date
-                </div>
-                <div className="text-larg font-bold text-primary-text">
-                  May,19,2024
-                </div>
-              </div>
-              <div className="flex mb-[2px]  gap-8">
-                <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
-                  <Image
-                    src="/icons/due-date.svg"
-                    alt=""
-                    className="h-5 w-5"
-                    width={5}
-                    height={5}
-                  />
-                  Due Date
-                </div>
-                <div className="text-larg font-bold text-primary-text">
-                  May,20,2024
-                </div>
-              </div>
-              <div className="flex mb-1   gap-8">
-                <div className="flex gap-4 text-sm font-semibold text-primary-text  items-end w-[30%]">
-                  <Image
-                    src="/icons/handler.svg"
-                    alt=""
-                    className="h-5 w-5"
-                    width={5}
-                    height={5}
-                  />
-                  Handler
-                </div>
-                <div class="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
-                  <Image
-                    src="/images/sok.png"
-                    alt="Neil image"
-                    className="w-8 h-8 rounded-full"
-                    width={50}
-                    height={50}
-                  />
-                  <div class="ms-1">
-                    <p class="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36	">
-                      Ronado
-                    </p>
+            <div>
+              <h3 className="text-xl font-semibold text-primary-text mb-8">
+                Material Detail
+              </h3>
+
+              <div className="">
+                <div className="flex mb-3 gap-8">
+                  <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
+                    <Image
+                      src="/icons/material.svg"
+                      alt="headler"
+                      className="h-5 w-5"
+                      width={5}
+                      height={5}
+                    />
+                    Material Name
+                  </div>
+                  <div className="text-large font-bold text-primary-text">
+                    {data?.materialName}
                   </div>
                 </div>
-              </div>
-              <div className="flex mb-5 gap-8">
-                <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%] items-end">
-                  <img src="/icons/supporter.svg" alt="" className="w-5 h-5" />
-                  Supporter
+                <div className="flex mb-3 gap-8">
+                  <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
+                    <Image
+                      src="/icons/quantity.svg"
+                      alt="qty"
+                      className="h-5 w-5"
+                      width={5}
+                      height={5}
+                    />
+                    Quantity
+                  </div>
+                  <div className="text-large font-bold text-primary-text">
+                    {data?.qty} {data?.unit}
+                  </div>
                 </div>
-
-                <div className="gap-2 flex">
-                  <div class="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
+                <div className="flex mb-3 gap-8">
+                  <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
+                    <Image
+                      src="/icons/assign-date.svg"
+                      alt="assignDate"
+                      className="h-5 w-5"
+                      width={5}
+                      height={5}
+                    />
+                    Assign Date
+                  </div>
+                  <div className="text-large font-bold text-primary-text">
+                    {data?.assignDate}
+                  </div>
+                </div>
+                <div className="flex mb-3 gap-8">
+                  <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
+                    <Image
+                      src="/icons/due-date.svg"
+                      alt="DueDate"
+                      className="h-5 w-5"
+                      width={5}
+                      height={5}
+                    />
+                    Due Date
+                  </div>
+                  <div className="text-large font-bold text-primary-text">
+                    {data?.dueDate}
+                  </div>
+                </div>
+                <div className="flex mb-3 gap-8">
+                  <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
+                    <Image
+                      src="/icons/handler.svg"
+                      alt="headler"
+                      className="h-5 w-5"
+                      width={5}
+                      height={5}
+                    />
+                    Handler
+                  </div>
+                  <div className="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
                     <Image
                       src="/images/sok.png"
-                      alt="Neil image"
+                      alt="Handler image"
                       className="w-8 h-8 rounded-full"
                       width={50}
                       height={50}
                     />
-                    <div class="ms-1">
-                      <p class="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36	">
-                        Ly Nyta
+                    <div className="ms-1">
+                      <p className="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36">
+                        {data?.handlerName}
                       </p>
                     </div>
                   </div>
-
-                  <div class="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
-                    <Image
-                      src="/images/sok.png"
-                      alt="Neil image"
-                      className="w-8 h-8 rounded-full"
-                      width={50}
-                      height={50}
+                </div>
+                <div className="flex mb-5 gap-8">
+                  <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%] items-end">
+                    <img
+                      src="/icons/supporter.svg"
+                      alt=""
+                      className="w-5 h-5"
                     />
-                    <div class="ms-1">
-                      <p class="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36	">
-                        Davin
-                      </p>
-                    </div>
+                    Supporter
                   </div>
-                </div>
-              </div>
-
-              <div className="flex  gap-8">
-                <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
-                  <Image
-                    src="/icons/note.svg"
-                    alt=""
-                    className="h-5 w-5"
-                    width={5}
-                    height={5}
-                  />
-                  Noted
-                </div>
-                <div className="text-larg font-bold text-primary-text">
-                  if Mail tea is empty .pls buy it quickly
+                  <div className="gap-2 flex">
+                    {Array.isArray(data?.supporters) &&
+                      data?.supporters.map((supporter, index) => (
+                        <div
+                          key={index}
+                          className="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]"
+                        >
+                          <Image
+                            src="/images/sok.png"
+                            alt="Supporter image"
+                            className="w-8 h-8 rounded-full"
+                            width={50}
+                            height={50}
+                          />
+                          <div className="ms-1">
+                            <p className="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36">
+                              {supporter?.name}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </dialog>
+        </dialog>
+      )}
     </div>
   );
 }

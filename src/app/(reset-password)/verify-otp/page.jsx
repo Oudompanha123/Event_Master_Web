@@ -1,10 +1,12 @@
 import VerifyOTPComponent from "@/app/(reset-password)/_components/VerifyOTPComponent";
 
-const VerifyOTPPage = () => {
+const VerifyOTPPage = ({ searchParams }) => {
+    const email = searchParams.get('email')
+
     return (
 
         <div>
-            <VerifyOTPComponent/>
+            <VerifyOTPComponent email={email} />
         </div>
 
     )

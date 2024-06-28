@@ -1,14 +1,19 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment,useEffect, useState } from "react";
 import { Label, Listbox, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import { Add, AddSquare } from "iconsax-react";
+import { getAllCategoryEventAction } from "@/app/actions/eventAction";
+import { addNewCategoryAction } from "@/actions/categoryAction";
+import { toast } from "react-toastify";
+import "../../../../app/globals.css"
 
-export const SelectModifyV2 = ({ height, label }) => {
+export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => {
     const [selected, setSelected] = useState(null);
     const [newCategory, setNewCategory] = useState();
+    const [error, setError] = useState("")
     const [options, setOptionData] = useState([
         { id: 1, name: "Social Event" },
         { id: 2, name: "Conferece" },
@@ -16,36 +21,75 @@ export const SelectModifyV2 = ({ height, label }) => {
         { id: 999, name: "Create Category" }
     ])
     const placeholder = "Choose category";
-    const lastArray = options[options.length - 2];
 
     const handleChange = (option) => {
-        if (selected?.id === option.id) {
+        if (selected?.categoryId === option.categoryId) {
             setSelected(null);
         } else {
             setSelected(option);
         }
     };
 
-    const handleTrigger = () => {
-        document.getElementById('updateEventCard').close()
-        document.getElementById('my_modal_create_new_categoryV2').showModal()
+    const notifySuccess = (message) => {
+        toast.success(message, {
+          position: 'top-right',
+          
+        });
+      };
+      const notifyError = (message) => {
+        toast.error(message, {
+          position: 'top-right',
+          className: "custom-toast"
+        });
+      };
+
+    const callApi = async () => {
+        const res = await getAllCategoryEventAction();
+        setOptionData(res.payload)
+        setOptionData([...res.payload, { categoryId: 999, categoryName: "Create Category" }])
     }
+
+    //call get all cagetory from api
+    useEffect(() => {
+        callApi();
+        removeCategory();
+    }, [newCategory])
 
     //remove create catgory and add back, just to make it behind all category.
     const removeCategory = () => {
-        const updatedOptions = options.filter(option => option.id !== 999);
+        const updatedOptions = options.filter(option => option.categoryId !== 999);
         setOptionData(updatedOptions);
         setOptionData([...updatedOptions,
-        { id: lastArray.id + 1, name: `${newCategory}` },
-        { id: 999, name: "Create Category" }
+        { categoryId: 88888, categoryName: `${newCategory}` },
+        { categoryId: 999, categoryName: "Create Category" }
         ]);
+   
     }
 
-    const handleCategorySave = () => {
-        removeCategory()
-        document.getElementById('my_modal_create_new_categoryV2').close()
-        document.getElementById('updateEventCard').showModal();
+    const handleTrigger = () => {
+        document.getElementById(`my_modal_updateEvent${eventId}`)
+        document.getElementById('my_modal_create_new_categoryV2').showModal()
     }
+
+    const handleCategorySave = async () => {
+        const res = await addNewCategoryAction(newCategory)
+        console.log("Response : ", res);
+        if(res?.status === "CREATED") {
+            removeCategory()
+            document.getElementById('my_modal_create_new_categoryV2').close()
+            document.getElementById(`my_modal_updateEvent${eventId}`)
+            notifySuccess("Event Category is created successfully.")
+        } else {
+            notifyError(res?.detail)
+        }
+        
+    }
+
+    const handlePassToParent = (v) => {
+        func(v)
+        console.log('event', v)
+    }
+
 
 
     return (
@@ -54,22 +98,23 @@ export const SelectModifyV2 = ({ height, label }) => {
                 {({ open }) => (
                     <>
                         <Label
-                            for="category"
+                            htmlFor="category"
                             className={`text-sm ${label} font-semibold text-primary-text block mb-2`}
                         >
                             Event Category
                         </Label>
                         <Listbox.Button
-                            className={`relative ${height} h-[42px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${!selected ? " text-gray-400" : "bg-white text-black"
-                                }`}
+                            className={`relative ${height} h-[42px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${
+                                !selected ? "text-gray-400" : "bg-white text-gray-400"
+                            }`}
                         >
-                            <span className="block truncate ">
-                                {selected ? selected.name : placeholder}
+                            <span className="block truncate sm:text-sm text-primary-text">
+                                {selected ? selected.categoryName : categoryName || placeholder}
                             </span>
                             <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-3">
                                 <Image
                                     src="/icons/dropdown.svg"
-                                    alt="Location"
+                                    alt="Dropdown"
                                     width={15}
                                     height={25}
                                     priority
@@ -83,35 +128,43 @@ export const SelectModifyV2 = ({ height, label }) => {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >
-                            <Listbox.Options className="absolute z-10 mt-1  overflow-auto rounded-2xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                {options.map((option) => (
+                            <Listbox.Options className="absolute z-10 mt-1 overflow-auto rounded-2xl bg-white h-72 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                {options?.map((option) => (
                                     <Listbox.Option
-                                        key={option.id}
-                                        onClick={() => { option.id == 999 && handleTrigger() }}
+                                        key={option.categoryId}
+                                        onClick={() => { handlePassToParent(option); option.categoryId == 999 && handleTrigger() }}
                                         className={({ active }) =>
-                                            `relative cursor-default select-none py-2 hover:bg-blue-200 pl-8 p-[174px] ${active ? " text-black" : "text-gray-900"
+                                            `relative cursor-default select-none py-2 hover:bg-blue-200 pl-8 p-[174px] ${
+                                                active ? "text-black" : "text-gray-900"
                                             }`
                                         }
+                                
                                         value={option}
                                     >
                                         {({ selected }) => (
                                             <>
                                                 <span
-                                                    className={`${selected ? "font-medium" : "font-normal"} ${option.id == 999 && 'text-greenUi'} h-full w-full`}
+                                                    className={`${
+                                                        selected ? "font-medium" : "font-normal"
+                                                    } ${option.categoryId === 999 ? "text-greenUi" : ""} h-full w-full`}
                                                 >
-                                                    {option.name}
+                                                    {option.categoryName}
                                                 </span>
-                                                {/* <hr></hr> */}
                                                 {selected && (
-                                                    <span className={`${option.id == 999 && 'hidden'} absolute inset-y-0 left-0 flex items-center pl-2 text-black`}>
+                                                    <span className={`${option.categoryId === 999 ? "hidden" : ""} absolute inset-y-0 left-0 flex items-center pl-2 text-black`}>
                                                         <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                                     </span>
                                                 )}
-                                                {option.id == 999 &&
+                                                {categoryName === option?.categoryName && (
+                                                    <span className={`${option.categoryId === 999 ? "hidden" : ""} absolute inset-y-0 left-0 flex items-center pl-2 text-black`}>
+                                                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                    </span>
+                                                )}
+                                                {option.categoryId === 999 && (
                                                     <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-greenUi">
                                                         <Add size="20" />
                                                     </span>
-                                                }
+                                                )}
                                             </>
                                         )}
                                     </Listbox.Option>
@@ -121,13 +174,14 @@ export const SelectModifyV2 = ({ height, label }) => {
                     </>
                 )}
             </Listbox>
+
             <dialog id="my_modal_create_new_categoryV2" className="modal">
                 <div className="modal-box w-11/12 md:w-1/3 max-w-5xl space-y-8">
                     <div className="flex flex-row items-center text-primary-text">
                         <h2 className="text-lg lg:text-xl font-semibold">Create Category</h2>
                         <button onClick={() => {
                             document.getElementById("my_modal_create_new_categoryV2").close();
-                            document.getElementById('updateEventCard').showModal();
+                            // document.getElementById(`my_modal_updateEvent${eventId}`).showModal();
                         }} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </div>
                     <input
@@ -136,12 +190,13 @@ export const SelectModifyV2 = ({ height, label }) => {
                         id="category"
                         className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
                         placeholder="Category" required=""
+                        value={newCategory}
                         onChange={(e) => setNewCategory(e.target.value)}
                     />
                     <div className="flex justify-end space-x-3">
                         <div onClick={() => {
                             document.getElementById("my_modal_create_new_categoryV2").close();
-                            document.getElementById('updateEventCard').showModal();
+                            document.getElementById(`my_modal_updateEvent${eventId}`).showModal();
                         }} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
                         <div onClick={() => handleCategorySave()} className="cursor-pointer save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
                             <AddSquare size="20" color="#FFFFFF" variant="Bold" />
@@ -150,6 +205,8 @@ export const SelectModifyV2 = ({ height, label }) => {
                     </div>
                 </div>
             </dialog>
+
+            
         </div>
     );
 };

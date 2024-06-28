@@ -1,44 +1,62 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import mockAgendaService from "../mockAgendaService";
-import { DeleteButton} from "./Action/DeleteButton";
+'use client'
+
+import { DeleteButton } from "./Action/DeleteButton";
 import CreateAgendaButton from "./Action/CreateAgendaButton";
 import { UpdateAgendaButton } from "./UpdateAgendaButton";
-
+import { useEffect, useState } from "react";
+import fetchAgenda from "@/app/actions/fetchAgendaAction";
 
 const convertTo12HourFormat = (time) => {
+  if (!time) return "";
   let [hours, minutes] = time.split(":");
+  if (minutes === undefined) return "";
   hours = parseInt(hours, 10);
   const period = hours >= 12 ? "PM" : "AM";
   hours = hours % 12 || 12; // Convert hour '0' to '12'
   return `${hours}:${minutes.padStart(2, "0")} ${period}`;
 };
 
-export default function AgendaComponent() {
-  const [agenda, setAgenda] = useState([]);
+export default function AgendaComponent({id,userRole}) {
+  // console.log('the id of event is ',id)
+  const [data, setData] = useState(null);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+
+  const fetchData = async () => {
+    const res = await fetchAgenda(id);
+    setData(res?.payload?.data?.agenda);
+  };
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await mockAgendaService();
-        setAgenda(response.payload);
-      } catch (error) {
-        console.error("Error fetching agenda:", error);
-      }
-    };
     fetchData();
-  }, []);
+  }, [saveSuccess, updateSuccess, deleteSuccess]);
 
-  if (agenda.length === 0) {
+  const handleSaveSuccess = (success) => {
+    setSaveSuccess(success);
+  };
+
+  const handleUpdateSuccess = (success) => {
+    setUpdateSuccess(success);
+  };
+
+  const handleDeleteSuccess = (success) => {
+    setDeleteSuccess(success);
+  };
+
+  
+
+  if (data == null) {
     return (
-      <div className="mb-5 mt-14 pl-1">
+      <div className="mb-5 mt-10">
         <div className="flex justify-between align-middle content-center mb-4 ">
           <div className="flex items-center justify-center">
             <p className="text-primary-text font-semibold text-2xl">
               Agenda Management
             </p>
           </div>
-          <CreateAgendaButton/>
+          <span className={`${userRole == "ROLE_USER" && "hidden"}`}><CreateAgendaButton id={id} onSaveSuccess={handleSaveSuccess} /></span>
         </div>
 
         <div className=" justify-center w-full content-center space-y-6 py-24">
@@ -62,7 +80,7 @@ export default function AgendaComponent() {
             You don’t have an agenda form!
           </p>
           <p className=" text-center text-xl font-medium  text-gray-500">
-            Please create agenda form for attendees to join event!
+            Please create agenda form For attendees to join event!
           </p>
         </div>
       </div>
@@ -70,51 +88,47 @@ export default function AgendaComponent() {
   }
 
   return (
-    <div className="space-y-4 mb-5 mt-14">
-      <div className="flex justify-between align-middle content-center mb-4">
+    <div className="space-y-4 mb-5 mt-10">
+      <div className="flex justify-between align-middle content-center mb-5">
         <div className="flex items-center justify-center">
           <p className="text-primary-text font-semibold text-2xl">
             Agenda Management
           </p>
         </div>
-        <div className="lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex">
-          <DeleteButton/>
-          <UpdateAgendaButton/>
-      
-         
+        <div className={`${userRole == "ROLE_USER" && "hidden"} lg:space-x-4 sm:grid-cols-1 sm:space-x-0 md:grid-cols-2 lg:grid-cols-2 flex`}>
+        <DeleteButton id={id} onDeleteSuccess={handleDeleteSuccess} />
+        <UpdateAgendaButton id={id} onUpdateSuccess={handleUpdateSuccess} />
         </div>
       </div>
-      {agenda.map((data, index) => (
+      {data?.map((data, index) => (
         <div key={index} className="space-y-4 ">
           <div
-            className={`border h-auto py-4 px-4 rounded-3xl flex gap-5 ${
-              index % 2 === 1 ? "bg-blue-0" : "bg-gray-100"
-            }`}
+            className={`border h-auto py-4 px-4 rounded-3xl flex gap-5 ${index % 2 === 1 ? "bg-blue-0" : "bg-gray-100"
+              }`}
           >
             <div
-              className={`bg-red-100 h-auto border-l-[2.6px] ${
-                index % 2 === 1 ? "border-blue-600" : "border-green-600"
-              }`}
+              className={`bg-red-100 h-auto border-l-[2.6px] ${index % 2 === 1 ? "border-blue-600" : "border-green-600"
+                }`}
             ></div>
             <div className="h-auto w-full space-y-2 ">
               <p className="text-base font-regular text-primary-text">{`${convertTo12HourFormat(
-                data.startTime
+                data?.startTime
               )} - ${convertTo12HourFormat(data.endTime)}`}</p>
               <p className="text-xl font-semibold text-primary-text">
-                {data.topic}
+                {data?.topic}
               </p>
 
-              {(data.description || data.speaker) && (
+              {(data?.description || data?.speaker) && (
                 <hr className="h-[1px] w-full bg-gray-300" />
               )}
               {data.description && (
                 <p className="text-base font-regular text-primary-text">
-                  {data.description}
+                  {data?.description}
                 </p>
               )}
-              {data.speaker && (
+              {data?.speaker && (
                 <p className="text-base font-medium text-primary-text">
-                  <span className="font-semibold">Speaker:</span> {data.speaker}
+                  <span className="font-semibold">Speaker:</span> {data?.speaker}
                 </p>
               )}
             </div>

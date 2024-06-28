@@ -3,6 +3,7 @@
 
 import { Line } from "react-chartjs-2"
 import { Chart as ChartJS, LinearScale, CategoryScale, LineElement, PointElement, Legend, Title, plugins, Tooltip } from 'chart.js'
+import { useEffect, useState } from "react"
 
 ChartJS.register(
     LinearScale,
@@ -14,13 +15,26 @@ ChartJS.register(
     Tooltip
 )
 
-export const BarChartComponent = () => {
+export const BarChartComponent = ({ data }) => {
+    const [labelsName, setLabelsName] = useState([]);
+    const [chartNumber, setChartNumber] = useState();
+
+    useEffect(() => {
+        const labels = data.map(x => x.cateName);
+        setLabelsName(labels);
+    }, [data]);
+
+    useEffect(() => {
+        const numberChart = data.map(x => Math.floor(x.count));
+        setChartNumber(numberChart);
+    }, [data]);
+
     const chartData = {
-        labels: ['Social', 'Sports', 'Technology'],
+        labels: labelsName,
         datasets: [
             {
                 label: 'Event',
-                data: [5, 3, 9],
+                data: chartNumber,
                 borderColor: '#7939EF',
                 backgroundColor: '#7939EF',
                 tension: 0.3
@@ -38,6 +52,10 @@ export const BarChartComponent = () => {
             y: {
                 grid: {
                     display: false
+                },
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
                 }
             },
         },
@@ -46,7 +64,6 @@ export const BarChartComponent = () => {
                 display: false,
             },
         },
-
     }
 
     return (

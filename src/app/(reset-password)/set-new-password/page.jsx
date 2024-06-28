@@ -1,10 +1,12 @@
 import SetNewPasswordComponent from "@/app/(reset-password)/_components/SetNewPasswordComponent";
 
-const SetNewPasswordPage = () => {
+const SetNewPasswordPage = ({ searchParams }) => {
+    const email = searchParams.get('email')
+    const otp = searchParams.get('otp')
     return (
 
         <div>
-            <SetNewPasswordComponent/>
+            <SetNewPasswordComponent email={email} otp={otp} />
         </div>
 
     )

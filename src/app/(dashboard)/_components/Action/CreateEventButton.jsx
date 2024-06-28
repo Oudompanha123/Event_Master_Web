@@ -4,13 +4,65 @@ import { AddSquare } from "iconsax-react"
 import Image from "next/image";
 import { ToogleBtn } from "./ToogleBtn";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { SelectModify } from "./SelectModify";
+import { addNewCategoryAction, addNewEventAction, storeImageAction } from "@/actions/categoryAction";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "@/lib/firebase";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export const CreateEventButton = () => {
+    const notify = (status, message) => {
+        if (status == "CREATED") {
+            toast.success("Sucessfully created event", {
+                position: "top-center"
+            });
+        }
+        if (status == 400) {
+            toast.error(`Can't create event, please check each field carefully ${message != undefined ? message : ''}`, {
+                position: "top-center"
+            });
+        }
+        if (status == 404) {
+            toast.error(`Please select category again ${message != undefined ? message : ''}`, {
+                position: "top-center"
+            });
+        }
+    }
+
+    const [events, setEvent] = useState({
+        eventName: '',
+        startDate: '',
+        endDate: '',
+        duration: '',
+        maxAttendee: '',
+        address: '',
+        description: '',
+    })
+
+
+    const handleInput = (e) => {
+        e.persist();
+        setEvent({ ...events, [e.target.name]: e.target.value });
+    }
+
+    const saveEvents = (e) => {
+        e.preventDefault();
+        const data = {
+            eventName: events.eventName,
+            startDate: events.startDate,
+            endDate: events.endDate,
+            duration: events.duration,
+            maxAttendee: events.maxAttendee,
+            address: events.address,
+            description: events.description,
+        }
+    }
+
     const [hide, setHide] = useState(false);
+    const [isSend, setIsSend] = useState(false);
 
     const handleDragOver = (e) => {
         e.preventDefault();
@@ -32,6 +84,7 @@ export const CreateEventButton = () => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
+        setImageLink(e.target.files[0]);
         displayPreview(file);
         setHide(true);
     };
@@ -46,30 +99,136 @@ export const CreateEventButton = () => {
         };
     };
 
-    const router = useRouter();
-
     const {
         watch,
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm();
 
     const start = watch("startDate");
 
-    const onSubmit = (data) => {
-        console.log(data);
-        router.push('/event-detail/1')
-        document.getElementById('my_modal_event').close()
+    const [eventCategory, setEventCategory] = useState();
+    const [isPublic, setIsPublic] = useState(false);
+    const [imageLink, setImageLink] = useState();
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
+    const [diffChange, setDiffChange] = useState();
+    const [random, setRandom] = useState(false);
+
+    const triggerHourChange = () => {
+        const sDate = new Date(`${startDate}`);
+        const eDate = new Date(`${endDate}`);
+        const timeDiff = eDate - sDate;
+        const hoursDiff = timeDiff / (1000 * 60 * 60);
+        const roundedDiff = Math.round(hoursDiff * 100) / 100;
+
+        const days = Math.floor(roundedDiff / 24);  // Calculate the number of days
+        const remainingHours = roundedDiff % 24;    // Calculate the remaining hours
+
+        let result = '';
+        if (days > 0) {
+            result += `${days} day${days > 1 ? 's' : ''}`;  // Handle pluralization for days
+        }
+        if (remainingHours > 0) {
+            if (days > 0) {
+                result += ', ';
+            }
+            result += `${remainingHours} hour${remainingHours > 1 ? 's' : ''}`;  // Handle pluralization for hours
+        }
+
+        setDiffChange(result);
     };
+
+    const handleCategorySelect = (v) => setEventCategory(v)
+
+    const handleEventType = (type) => setIsPublic(!type)
+
+    const currentTime = new Date();
+
+    //firebase research code
+    const [uploading, setUploading] = useState(true);
+    const [imageUrl, setImageUrl] = useState(null);
+    const [uploadedImage, setUploadedImage] = useState();
+
+    const onUpdate = async (imageLink) => {
+        //upload new image
+        onUpload(imageLink)
+        //delete old image with url
+        const desertRef = ref(storage, imageUrl);
+        await deleteObject(desertRef);
+    }
+
+    const onSubmit = async (data) => {
+        setIsSend(true);
+        let cateId;
+        //if category id = 88888 create new category base on categoryName
+        if (eventCategory.categoryId == 88888) {
+            const res = await addNewCategoryAction(eventCategory.categoryName)
+            cateId = res.payload.categoryId;
+        }
+        //if category id isn't = 88888 calling api 
+        if (eventCategory.categoryId != 88888) {
+            cateId = eventCategory.categoryId;
+        }
+
+        let formData = new FormData()
+        formData.append("file", imageLink)
+        const uploadImage = await storeImageAction(formData)
+
+        const submitData = {
+            eventName: data.name,
+            description: data.description,
+            startDate: data.startDate,
+            endDate: data.endDate,
+            duration: diffChange,
+            address: data.address,
+            poster: uploadImage?.payload?.fileUrl,
+            isPost: isPublic,
+            maxAttendee: data.maxAttendee,
+            categoryId: cateId
+        }
+        const okay = await addNewEventAction(submitData);
+        console.log('checking submit', okay)
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setIsSend(false);
+        notify(okay?.status, okay?.Errors?.description || okay?.Errors?.poster);
+        document.getElementById("my_modal_event_create").close()
+        setStartDate('')
+        setEndDate('')
+        setHide(false)
+        preview.src = ""
+        preview.classList.add("hidden")
+        reset();
+        setRandom(!random);
+    };
+
+    const handleCloseForm = () => {
+        setEvent({
+            eventName: '',
+            startDate: '',
+            endDate: '',
+            duration: '',
+            maxAttendee: '',
+            address: '',
+            description: '',
+        });
+        document.getElementById("my_modal_event_create").close();
+    }
+
+    useEffect(() => {
+        triggerHourChange();
+    }, [startDate, endDate, random]);
+
 
     return (
         <>
-            <div onClick={() => document.getElementById('my_modal_event').showModal()} className="cursor-pointer lg:flex items-center bg-[#F7F9FB] gap-2 py-3 px-3 lg:px-6 rounded-full">
+            <div onClick={() => document.getElementById('my_modal_event_create').showModal()} className="cursor-pointer lg:flex items-center bg-[#F7F9FB] gap-2 py-3 px-3 lg:px-6 rounded-full">
                 <AddSquare size="24" color="#344054" variant="Bold" />
                 <p className="text-sm hidden lg:block">New Event</p>
             </div>
-            <dialog id="my_modal_event" className="modal !m-0">
+            <dialog id="my_modal_event_create" className="modal !m-0">
                 <div className="modal-box w-11/12 lg:w-1/2 lg:max-w-5xl p-8">
                     <div className="flex justify-between">
                         <h3 className="font-bold text-xl">Create Event</h3>
@@ -83,7 +242,7 @@ export const CreateEventButton = () => {
                                 onDragOver={handleDragOver}
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDrop}>
-                                <input {...register("image")} type="file" className="absolute inset-0 w-full h-full opacity-0 z-50" id="file-upload" onChange={handleFileChange} />
+                                <input {...register("image")} accept="image/png,image/jpeg" type="file" className="absolute inset-0 w-full h-full opacity-0 z-50" id="file-upload" onChange={(e) => handleFileChange(e)} />
                                 <div className={`text-center ${hide && 'hidden'}`}>
                                     <Image src={'/icons/upload-icon.svg'} className="mx-auto h-16 w-16" height={48} width={48} />
                                     <h3 className="mt-2 text-lg font-medium">
@@ -94,7 +253,7 @@ export const CreateEventButton = () => {
                                         </label>
                                     </h3>
                                 </div>
-                                <img src="" className="mt-4 mx-auto h-80 w-full hidden object-cover" id="preview" alt="Preview" />
+                                <img src="" className="mx-auto h-80 w-full hidden object-cover" id="preview" alt="Preview" />
                             </div>
 
                             {/* input field  */}
@@ -116,26 +275,9 @@ export const CreateEventButton = () => {
                                     {errors.name && <div className="text-red-600 text-sm mt-2">{errors.name.message}</div>}
                                 </div>
                                 <div className="w-full">
-                                    {/* <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
-                                        Event Category <span className="text-red-600">*</span>
-                                    </label>
-                                    <select
-                                        name="category" id="category"
-                                        className={`${errors.category && "border-red-700 focus:border-red-600"} mb-2 classic shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
-                                        {...register("category", {
-                                            required: "category is required", validate: (v) => {
-                                                if (v === "0") {
-                                                    return "please select category";
-                                                }
-                                            }
-                                        })}
-                                    >
-                                        <option value="0">Choose event category</option>
-                                        <option value="1">Conference</option>
-                                        <option value="2">Social Event</option>
-                                        <option value="3">Sport</option>
-                                    </select> */}
                                     <SelectModify
+                                        func={handleCategorySelect}
+                                        more={random}
                                         {...register("category")}
                                         label={`!font-medium`}
                                         height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
@@ -151,13 +293,19 @@ export const CreateEventButton = () => {
                                     <input
                                         {...register("startDate", {
                                             required: "start date is required",
+                                            validate: {
+                                                isNotPastDate: value => new Date(value) >= currentTime || "Start date cannot be in the past"
+                                            }
                                         })}
+                                        value={startDate}
+                                        // onChange={handleInput}
                                         type="datetime-local"
                                         name="startDate"
                                         id="startdate"
                                         className={`${errors.startDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         required=""
+                                        onChange={(e) => { setStartDate(e.target.value); triggerHourChange() }}
                                     />
                                     {errors.startDate && <div className="text-red-600 text-sm mt-2">{errors.startDate.message}</div>}
                                 </div>
@@ -174,12 +322,15 @@ export const CreateEventButton = () => {
                                                 }
                                             }
                                         })}
+                                        value={endDate}
+                                        // onChange={handleInput}
                                         type="datetime-local"
                                         name="endDate"
                                         id="enddate"
                                         className={`${errors.endDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         required=""
+                                        onChange={(e) => { setEndDate(e.target.value); triggerHourChange() }}
                                     />
                                     {errors.endDate && <div className="text-red-600 text-sm mt-2">{errors.endDate.message}</div>}
                                 </div>
@@ -190,14 +341,13 @@ export const CreateEventButton = () => {
                                         Duration <span className="text-red-600">*</span>
                                     </label>
                                     <input
-                                        {...register("duration", {
-                                            required: "duration is required",
-                                        })}
-                                        type="number"
+                                        value={diffChange}
+                                        disabled
+                                        type="text"
                                         name="duration"
                                         id="duration"
-                                        className={`${errors.duration ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
-                                        placeholder="Enter duration"
+                                        className={`${errors.duration ? "border-red-700 focus:border-red-600" : "border-gray-300"} cursor-not-allowed shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        placeholder="Duration in hours"
                                         required=""
                                     />
                                     {errors.duration && <div className="text-red-600 text-sm mt-2">{errors.duration.message}</div>}
@@ -262,14 +412,20 @@ export const CreateEventButton = () => {
                             <div className="flex items-center gap-5">
                                 <p>Create this event as :</p>
                                 <div>
-                                    <ToogleBtn />
+                                    <ToogleBtn func={handleEventType} />
                                 </div>
                             </div>
                             <div className="flex justify-end space-x-3">
-                                <div onClick={() => document.getElementById("my_modal_event").close()} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
-                                <button type="submit" className="save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
-                                    <AddSquare size="20" color="#FFFFFF" variant="Bold" />
-                                    <span className="h-12 text-white flex justify-center items-center">Create</span>
+                                <div onClick={() => handleCloseForm()} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
+                                <button type="submit" className="min-w-32 save border rounded-2xl bg-purple-text text-white flex justify-center text-center items-center px-4 gap-3 ">
+                                    {!isSend ?
+                                        <div className="flex justify-center items-center gap-3">
+                                            <AddSquare size="20" color="#FFFFFF" variant="Bold" />
+                                            <span className="h-12 text-white flex justify-center items-center">Create</span>
+                                        </div>
+                                        :
+                                        <div className="loader"></div>
+                                    }
                                 </button>
                             </div>
                         </form>

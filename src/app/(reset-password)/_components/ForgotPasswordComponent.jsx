@@ -1,8 +1,15 @@
 'use client'
+
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import {useForm} from "react-hook-form";
 import {useRouter} from "next/navigation";
+import { forgetPasswordAction } from "@/actions/auth/forgetPasswordAction";
+import { useState } from 'react';
 
 const ForgotPasswordComponent = () => {
+
+    const [isLoading, setIsloading] = useState(false);
 
     const initialData = {
         email: "",
@@ -19,27 +26,44 @@ const ForgotPasswordComponent = () => {
 
     const router = useRouter();
 
-    const onSubmit = data => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        setIsloading(true);
+        const response = await forgetPasswordAction(data.email);
+        setIsloading(false);
+        if(response.status === 'CREATED'){
+            router.push(`/verify-otp?email=${data.email}`)   
+        }
+        else{
+            error(response.detail);
+        }
+        
+    };
+
+    function error(message){
+        toast.error(message, {
+            position: "top-center"
+          });
     };
 
     return (
-        <div className="absolute mx-[29%] mt-[18%] left-[9.5%] ">
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="absolute flex justify-center sm:pt-[200px] sm:pl-0 md:pl-[30%] lg:pl-[50%] lg:pt-[350px] w-full md:w-[70%] lg:w-[39%]">
+            <ToastContainer autoClose={2000}/>
+            <form className='mt-[238px] lg:mt-[20px] 2xl:mt-[50px] ' onSubmit={handleSubmit(onSubmit)}>
                 <div className="mt-5">
-                    <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
+                
+                    <h2 className="text-[20px] flex justify-center lg:mt-[-100px] mt-[10px] md:mt-6  text-center md:text-3xl leading-9 font-extrabold text-purple-text-head">
                         Forgot Password?
                     </h2>
-                    <p className="flex justify-center greyUi mt-6">Please enter your email to reset password</p>
+                    <p className="flex justify-center greyUi mt-2 md:mt-6">Please enter your email to reset password</p>
                 </div>
 
-                <div className="mt-12">
+                <div className="lg:mt-[-1px] mt-6 sm:mt-16 2xl:mt-[40px]">
                     <label htmlFor="email" className="text-sm font-medium primary-text block mb-2">Email</label>
                     <div>
                         <input
                             type="text"
                             id="email"
-                            className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                            className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} w-full sm:w-[500px] shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block  p-3`}
                             placeholder="Enter your email"
                             {...register("email", {
                                 required: "Email is required",
@@ -55,13 +79,11 @@ const ForgotPasswordComponent = () => {
 
                 <div className="flex justify-center mt-10">
                     <button
-                        onClick={() => router.push('/verify-otp')}
-                        type="button"
                         id="continue"
-                        className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-44 py-3.5 shadow-md shadow-violet-400 ${!isValid ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}
+                        className={`flex justify-center w-full bg-purple-text text-white font-medium text-sm rounded-3xl  py-3.5 shadow-md shadow-violet-400 ${!isValid ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}
                         disabled={!isValid}
                     >
-                        Continue
+                        {isLoading ? <div className='loader'></div> : <p>Continue</p> } 
                     </button>
                 </div>
             </form>

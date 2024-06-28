@@ -1,8 +1,24 @@
 import { AssetPopupComponent } from "../_components/CreateNewAssetComponent";
-import { IoSearchOutline } from "react-icons/io5";
 import { AssetTableComponent } from "../_components/assetTableComponent";
-import { Pagination } from "../_components/Pagination";
-export default function assetPage() {
+import { SearchAssetComponent } from "../_components/SearchAssetComponent";
+import {
+  getAllAssetService,
+  searchAssetByName,
+} from "@/services/assetService/assetService";
+import { getServerSession } from "next-auth";
+import { jwtDecode } from "jwt-decode";
+import { authOption } from "@/app/api/auth/[...nextauth]/route";
+export default async function assetPage({ searchParams }) {
+  const query = searchParams?.query || "";
+  const page = searchParams?.page;
+  const dataasset = await getAllAssetService(page);
+  const searchasset = await searchAssetByName(query);
+  const nullsearch = searchasset.totalRecord;
+  const data = query == "" || query == null ? dataasset : searchasset;
+  const session = await getServerSession(authOption);
+  let userInfo = jwtDecode(session?.user?.token);
+  const userRole = userInfo.role;
+
   return (
     <>
       <div className="contain bg-white w-full lg:w-full rounded-3xl box-border">
@@ -11,25 +27,20 @@ export default function assetPage() {
             Asset Management
           </div>
           <div className="search_bar flex gap-7 lg:w-3/4 justify-between ">
-            <div className=" w-4/5 lg:w-[730px]">
-              <input
-                type="text"
-                placeholder="Angkor"
-                className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
-              />
-              <IoSearchOutline className="w-[24px] h-[24px] -mt-8 ml-3" />
-            </div>
-            <div className="button_new">
+            <SearchAssetComponent />
+            <div className={`${userRole === "ROLE_USER" && "hidden"}`}>
               <AssetPopupComponent />
             </div>
           </div>
         </div>
         <div className="px-6">
           <div className="box-border mt-0 overflow-scroll">
-            <AssetTableComponent />
-            <div className="pagination flex justify-end px-8 pb-8 mt-8">
-              <Pagination />
-            </div>
+            <AssetTableComponent
+              data={data}
+              query={query}
+              nullsearch={nullsearch}
+              page={page}
+            />
           </div>
         </div>
       </div>
