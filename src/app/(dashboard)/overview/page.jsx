@@ -112,7 +112,7 @@ const Page = async ({ searchParams }) => {
                                             const formated = formattedDate;
                                             return (
                                                 <tr key={x.categoryId} className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}>
-                                                    <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{index + 1}</td>
+                                                    <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{searchParams.page > 1 ? index + 1 + 8 * (searchParams.page - 1) : index + 1}</td>
                                                     <td className="px-5 py-2 text-xs xl:text-base">{x?.categoryName}</td>
                                                     <td className="px-5 py-2 text-xs xl:text-base">{formated}</td>
                                                     <td className="px-5 py-2 text-xs xl:text-base">{x?.createBy}</td>

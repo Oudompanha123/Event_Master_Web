@@ -7,9 +7,11 @@ import { RxCross2 } from "react-icons/rx";
 import { SelectModifyV2 } from "./Action/SelectModifyV2";
 import deleteEvent from "@/app/actions/deleteEventAction";
 import { Additem } from "iconsax-react";
-import { getEventByIdAction, updateEventFormAction } from "@/actions/eventAction";
-import { addNewEventAction } from "@/actions/categoryAction";
+import { addAgendaToCloneAction, addMaterialToCloneAction, getAgendaByIdAction, getEventByIdAction, updateEventFormAction } from "@/actions/eventAction";
+import { addNewEventAction, getEventByNameAction } from "@/actions/categoryAction";
 import { toast } from "react-toastify";
+import { getAgendaByEventId } from "@/services/dashboard/agenda.service";
+import { getMaterialByEventId } from "@/services/dashboard/materialService";
 
 export const EventActionButton = ({ eventName, startDate, endDate, duration, address, description, poster, isPost, maxAttendee, category, eventId }) => {
 
@@ -97,12 +99,12 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
 
   const notify = (status, message) => {
     if (status == "CREATED") {
-      toast.success("Sucessfully clone a event", {
+      toast.success("Sucessfully duplicated a event", {
         position: "top-center"
       });
     }
     if (status == 400) {
-      toast.error(`Can't clone a event, please check ${message != undefined ? message : ''}`, {
+      toast.error(`Can't duplicate this event, please check ${message != undefined ? message : ''}`, {
         position: "top-center"
       });
     }
@@ -113,23 +115,35 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
     }
   }
 
-  const handleCloseClone = () => document.getElementById(`event_action_copy_${eventId}`).close()
+  const handleCloseClone = () => document.getElementById(`event_action_copy_${eventId}`)?.close()
 
   const handleClone = async (id) => {
     setLoading(true);
     const res = await getEventByIdAction(id);
     const eventData = res?.payload;
-    let start = new Date();
-    start.setMinutes(start.getMinutes() + 2);
-    let end = new Date();
-    end.setMinutes(end.getMinutes() + 5);
+    let currentDate = new Date();
+    let oneDayAhead = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+    let startDateFormat = oneDayAhead.toISOString();
+    let twoDayAhead = new Date(currentDate.getTime() + 48 * 60 * 60 * 1000);
+    let endDateFormat = twoDayAhead.toISOString();
+
+    const eventByName = await getEventByNameAction(eventData?.eventName.replace(/\(\d+\)$/, '').trim())
+    let eventByNameLength = eventByName?.payload[0]?.events?.length;
 
     //clone event
+    let eName;
+    const baseEventNameWithoutNumber = eventData?.eventName.replace(/\(\d+\)$/, '').trim();
+
+    if (eventByNameLength === 0) {
+      eName = baseEventNameWithoutNumber;
+    } else if (eventByNameLength > 0) {
+      eName = `${baseEventNameWithoutNumber} (${eventByNameLength})`;
+    }
     const cloneData = {
-      eventName: eventData?.eventName,
+      eventName: `${eName}`,
       description: eventData?.description,
-      startDate: start.toISOString(),
-      endDate: end.toISOString(),
+      startDate: startDateFormat,
+      endDate: endDateFormat,
       duration: eventData?.duration,
       address: eventData?.address,
       poster: eventData?.poster,
@@ -149,11 +163,36 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
 
     await updateEventFormAction(pushData, resInsert?.payload?.eventId)
 
+    //clone agenda
+    const agendaApi = await getAgendaByIdAction(id);
+    if (agendaApi != undefined) {
+      const pushAgenda = {
+        data: {
+          agenda: agendaApi?.payload?.data?.agenda
+        }
+      }
+
+      await addAgendaToCloneAction(pushAgenda, resInsert?.payload?.eventId)
+    }
+
+    //clone material
+    const materialApi = await getMaterialByEventId(id);
+    const cookingMaterial = materialApi?.payload;
+    if (materialApi != undefined) {
+      const appendEventId = (arr, eventId) => {
+        return arr?.map(item => ({ ...item, eventId }));
+      }
+      const pushMaterial = appendEventId(cookingMaterial, resInsert?.payload?.eventId);
+
+      await addMaterialToCloneAction(pushMaterial);
+    }
+
     setTimeout(() => {
       setLoading(false)
     }, 1500)
 
-    handleCloseClone()
+    handleCloseClone();
+
     notify(resInsert?.status)
   }
 
@@ -305,7 +344,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                   <Additem size="24" color="#2962FF" />
                   {" "}
                   <p className="text-primary-text text-base font-semibold ">
-                    Clone
+                    Duplicate
                   </p>
                 </a>
               </li>

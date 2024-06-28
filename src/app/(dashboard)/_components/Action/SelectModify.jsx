@@ -19,13 +19,16 @@ export const SelectModify = ({ height, label, func, more }) => {
         { id: 999, name: "Create Category" }
     ])
     const placeholder = "Choose category";
-    const lastArray = options[options.length - 2];
+     const lastArray = options[options.length - 2];
 
     const handleChange = (option) => {
         if (selected?.categoryId === option.categoryId) {
             setSelected(null);
         } else {
             setSelected(option);
+            // setSelected({ categoryId: 288, categoryName: 'GG', createAt: '2024-06-23T15:26:53.335+07:00', createBy: 'Davin Morn' });
+            // console.log(option, 'check')
+            // setSelected({ id: 77, name: "bank" })
         }
     };
 
@@ -55,12 +58,12 @@ export const SelectModify = ({ height, label, func, more }) => {
         document.getElementById('my_modal_create_new_category').close()
         document.getElementById('my_modal_event_create').showModal();
         setTrigger(!trigger)
+        handlePassToParent({ categoryId: 88888, categoryName: newCategory })
+        setSelected({ categoryId: 88888, categoryName: newCategory });
     }
 
-    const handlePassToParent = (v) => {
-        func(v)
-    }
-
+    const handlePassToParent = (v) => func(v)
+    
     //call get all cagetory from api
     useEffect(() => {
         callApi();

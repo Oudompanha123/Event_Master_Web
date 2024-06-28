@@ -99,3 +99,13 @@ export const storeImageService = async (image) => {
         console.log(`service error : ${err}`)
     }
 }
+
+export const getEventByName = async (name) => {
+    try {
+        const res = await fetch(`${process.env.API_URL}landing-page/search?eventName=${name}`)
+        const data = await res.json();
+        return data
+    } catch (err) {
+        console.log(`service error : ${err}`)
+    }
+}

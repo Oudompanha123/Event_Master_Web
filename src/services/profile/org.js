@@ -2,6 +2,7 @@
 
 import { headerToken } from "@/app/api/auth/headerToken";
 
+
 export const updateOrganization = async (id, organizationData) => {
   const header = await headerToken();
   const response = await fetch(
@@ -12,7 +13,8 @@ export const updateOrganization = async (id, organizationData) => {
       body: JSON.stringify(organizationData),
     }
   );
-  const test = await response.json()
-  console.log('checking', test)
+  const test = await response.json();
   return test;
 };
+
+
