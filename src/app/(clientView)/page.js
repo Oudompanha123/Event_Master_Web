@@ -20,7 +20,7 @@ export default async function Home({ searchParams }) {
   return (
     <div className="container">
       {/* hero section */}
-      <section className="bg-pattern bg-cover md:bg-contain relative lg:top-0">
+      <section className="bg-pattern bg-cover md:bg-contain relative lg:-top-16 2xl:top-0">
         <div className="text-center space-y-8 mt-16 lg:mt-0 lg:relative lg:top-24">
           <div className="space-y-8 mb-8">
             <h1 className="!leading-snug font-bold text-5xl md:text-6xl lg:text-[64px] w-full lg:w-3/4 2xl:w-1/2 mx-auto">Bringing everyone <br className="hidden lg:block"></br>all together</h1>

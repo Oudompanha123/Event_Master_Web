@@ -184,9 +184,7 @@ export const CreateEventButton = () => {
             maxAttendee: data.maxAttendee,
             categoryId: cateId
         }
-        console.log('cheeck body', submitData)
         const okay = await addNewEventAction(submitData);
-        console.log('create event', okay)
         await new Promise(resolve => setTimeout(resolve, 1000));
         setIsSend(false);
         notify(okay?.status, okay?.Errors?.description || okay?.Errors?.poster);
