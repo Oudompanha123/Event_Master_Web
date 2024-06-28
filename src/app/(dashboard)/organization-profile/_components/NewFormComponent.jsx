@@ -11,15 +11,14 @@ import { CgAddR } from "react-icons/cg";
 import { TbEdit } from "react-icons/tb";
 import { updateOrganization } from "@/services/profile/org";
 import useSWR from "swr";
+import { storeImageAction } from "@/actions/categoryAction";
 
-const NewFormComponent = ({ searchParams }) => {
+const NewFormComponent = () => {
   const notify = () => {
     toast.success("Updated organization Successful", {
       position: "top-center",
     });
   };
-
-
 
   // fetch data
   const { data: session, status } = useSession();
@@ -28,9 +27,12 @@ const NewFormComponent = ({ searchParams }) => {
   const [organizationName, setOrganizationName] = useState("");
   const [address, setAddress] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [imageSrc, setImageSrc] = useState(defaultProfile);
+  const [imageSrc, setImageSrc] = useState(null);
   const [copied, setCopied] = useState(false);
-  const [logoFile, setLogoFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [selectedFileName, setSelectedFileName] = useState("");
+  const [imageLink, setImageLink] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,53 +40,71 @@ const NewFormComponent = ({ searchParams }) => {
         const decodedToken = jwtDecode(session.user.token);
         setUserInfo(decodedToken);
         const orgData = decodedToken.organization || {};
-        setOrganizationCode(orgData.code || "");
+        setOrganizationCode(orgData.code);
         setOrganizationName(orgData.orgName || "");
         setAddress(orgData.address || "");
-        setImageSrc(orgData?.logo || defaultProfile);
+        setUploadedImage(orgData.logo || "");
       }
     };
     fetchData();
   }, [status, session]);
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      if (file.name === "default-profile.png") {
-        setImageSrc(defaultProfile);
-      } else {
-        setLogoFile(file); // Optionally store the file for submission
-        setImageSrc(URL.createObjectURL(file));
-      }
-    }
+  const [hide, setHide] = useState(false);
+
+  
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setImageLink(e.target.files[0]);
+    console.log("file name: ", file);
+    displaylogo(file);
+    // setHide(true);
   };
 
+const displaylogo = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const preview = document.getElementById("logo");
+      preview.src = reader.result;
+      preview.classList.remove("hidden");
+    };
+  };
+
+  const onUpdate = async (imageLink) => {
+    //upload new image
+    onUpload(imageLink);
+    //delete old image with url
+    const desertRef = ref(storage, imageUrl);
+    await deleteObject(desertRef);
+  };
 
   const handleCancelChanges = () => {
     setOrganizationName(userInfo?.organization?.orgName || "");
     setAddress(userInfo?.organization?.address || "");
+    setUploadedImage(userInfo?.organization?.logo || null);
     setIsEditing(false);
   };
 
   const handleSaveChanges = async () => {
+    let formData = new FormData();
+    formData.append("file", imageLink);
+    const uploadImage = await storeImageAction(formData);
     const organizationData = {
       orgId: userInfo.organization.orgId,
       orgName: organizationName,
       address: address,
-      logo: imageSrc,
+      logo: uploadImage?.payload?.fileUrl,
     };
 
     try {
-      console.log("Saving changes...", organizationData);
       const updatedOrganization = await updateOrganization(
         organizationData.orgId,
         organizationData
       );
-      console.log("Changes saved successfully: ", updatedOrganization);
-      notify();
       setIsEditing(false);
     } catch (error) {
-      console.error("Error updating organization: ", error);
+      // console.error("Error updating organization: ", error);
     }
   };
 
@@ -108,17 +128,18 @@ const NewFormComponent = ({ searchParams }) => {
     }, 2000);
   };
   return (
-    <form action="">
+    <form encType="multipart/form-data">
       <div className="rounded-2xl w-full h-[750px] sm:h-[800px] md:h-[800px] lg:h-[800px] xl:h-[800px] 2xl:h-[800px] flex flex-col shadow-md relative">
         <div className=" bg-purple-text h-[20%] rounded-t-2xl flex items-center justify-center"></div>
         <div className=" w-full h-0 flex justify-center z-30 mt-12 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 2xl:mt-0">
           <Image
-            // src={
-            //   imageSrc && /^(http|https):\/\//.test(imageSrc)
-            //     ? imageSrc
-            //     : defaultProfile
-            // }
-            src={userInfo?.organization?.logo}
+            src={
+              uploadedImage ||
+              (userInfo?.organization?.logo &&
+              /^(http|https):\/\//.test(userInfo.organization.logo)
+                ? userInfo.organization.logo
+                : defaultProfile)
+            }
             alt="logo"
             id="logo"
             name="logo"
@@ -128,16 +149,16 @@ const NewFormComponent = ({ searchParams }) => {
           />
           {isEditing && (
             <label
-              htmlFor="file-upload"
+              htmlFor="upload-proflie-org"
               className="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center bg-gray-100 duration-300 hover:bg-gray-200 cursor-pointer -mt-10 -ml-14 sm:-ml-12 md:-ml-14 lg:-ml-16 xl:-ml-16 2xl:-ml-16 sm:mt-10 md:mt-10 lg:mt-14 xl:mt-20 2xl:mt-24 "
             >
               <LiaUserEditSolid className="w-6 h-6 text-gray-800 relative" />
               <input
-                id="file-upload"
-                name="file-upload"
+                id="upload-proflie-org"
+                name="upload-proflie-org"
                 type="file"
                 className="sr-only w-14 h-14 cursor-pointer z-50"
-                onChange={handleImageChange}
+                onChange={handleFileChange}
               />
             </label>
           )}

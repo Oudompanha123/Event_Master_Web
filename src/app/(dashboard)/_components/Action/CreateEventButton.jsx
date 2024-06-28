@@ -163,16 +163,6 @@ export const CreateEventButton = () => {
         formData.append("file", imageLink)
         const uploadImage = await storeImageAction(formData)
 
-        //firebase
-        // setUploading(false)
-        // if (imageLink == null) return;
-        // const imageRef = ref(storage, `${imageLink.name + v4()}`);
-        // await uploadBytes(imageRef, imageLink)
-        // setUploading(true)
-        // const url = await getDownloadURL(imageRef);
-        // setUploadedImage(url);
-        //firebase
-
         const submitData = {
             eventName: data.name,
             description: data.description,
