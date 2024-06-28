@@ -303,4 +303,4 @@ const FormOrg = () => {
   );
 };
 
-export default FormOrg;
+export default NewFormComponent;

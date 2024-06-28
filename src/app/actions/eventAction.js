@@ -19,7 +19,8 @@ export const callingServiceAction = async (searchData) => {
     return data
 }
 
-export const handleChangeStatus = async (eventData) => {
-    const data = await changeStatus(eventData)
+export const handleChangeStatusAction = async (eventId, active) => {
+    const data = await changeStatus(eventId, active)
+    revalidateTag("events")
     return data
 }

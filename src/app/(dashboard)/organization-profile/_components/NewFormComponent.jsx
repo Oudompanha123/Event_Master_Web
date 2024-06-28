@@ -14,6 +14,12 @@ import useSWR from "swr";
 import { storeImageAction } from "@/actions/categoryAction";
 
 const NewFormComponent = () => {
+  const notify = () => {
+    toast.success("Updated organization Successful", {
+      position: "top-center",
+    });
+  };
+
   // fetch data
   const { data: session, status } = useSession();
   const [userInfo, setUserInfo] = useState(null);

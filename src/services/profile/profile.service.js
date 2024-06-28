@@ -13,10 +13,13 @@ export async function getAllMemberProfile(){
         next: { tags: ["customer"] }
     })
     const data = await res.json();
+    // console.log("get :",data);
     return data;
 }
 
 export async function updateProfileMemberById(memberId, updateMemberData){
+    console.log("Member ID: ", memberId);
+    console.log("Data of member: ", updateMemberData)
     const header = await headerToken();
     try {
         const res = await fetch(`${process.env.API_URL}profiles/update-member/${memberId}`, {
@@ -25,6 +28,7 @@ export async function updateProfileMemberById(memberId, updateMemberData){
             headers: header,
         });
         const data = await res.json();
+        console.log("data :",data);
         return data;
     } catch (error) {
         console.error("Error updating member:", error);
