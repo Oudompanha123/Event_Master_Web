@@ -1,12 +1,7 @@
-'use client'
-
 import Image from "next/image";
 import VerifyRegisterComponent from "@/app/(auth)/_components/VerifyRegisterComponent";
-import {useSearchParams} from "next/navigation";
 
-
-const VerifyRegisterPage = () => {
-    const searchParams = useSearchParams()
+const VerifyRegisterPage = ({searchParams}) => {
     const email = searchParams.get('email')
     console.log("email: ", email)
     return (

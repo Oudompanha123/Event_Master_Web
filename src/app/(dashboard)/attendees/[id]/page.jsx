@@ -22,12 +22,13 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
     ? await searchAttendeeByNameOrPhoneService(id, query)
     : attendeeData;
 
-    let headerResponse = await searchAttendeeByNameOrPhoneService(id, "");
-    let header = headerResponse?.payload?.[0]?.data
-      ? Object.keys(headerResponse.payload[0].data)
-      : [];
+  let headerResponse = await searchAttendeeByNameOrPhoneService(id, "");
+  let header = headerResponse?.payload?.[0]?.data
+    ? Object.keys(headerResponse.payload[0].data)
+    : [];
 
   const session = await getServerSession(authOption);
+
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
 
@@ -55,6 +56,7 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
           attendeeInEvent={attendeeInEvent}
           isSearch={isSearch}
           header={header}
+          page={page}
         />
         {!noAttendees && !noSearchResults && (
           <div className="w-full flex justify-end mt-8">

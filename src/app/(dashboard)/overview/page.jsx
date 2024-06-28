@@ -6,7 +6,7 @@ import { getAllCategory, getOverviewData } from "@/services/dashboard/overviewSe
 import { getServerSession } from "next-auth"
 import { authOption } from "@/app/api/auth/[...nextauth]/route"
 import { jwtDecode } from "jwt-decode"
-import { Suspense} from "react"
+import { Suspense } from "react"
 import 'react-toastify/dist/ReactToastify.css';
 import { RPaginate } from "../_components/paginate/RPaginate"
 import { CategoryDeleteAction } from "../_components/Action/CategoryDeleteAction"
@@ -77,8 +77,8 @@ const Page = async ({ searchParams }) => {
                         Impeccable Execution, and the Ability to Craft Timeless
                         Experiences That Will Resonate Long After the Occasion.
                     </p>
-                    <Getstart className={`absolute z-20 mt-6 ${userRole == 'ROLE_USER' && 'hidden'}`} />
-                    <Getstart className={`opacity-0 mt-6 ${userRole == 'ROLE_USER' && 'hidden'}`} />
+                    <Getstart className={`absolute z-20 mt-6 ${userRole == 'ROLE_USER' || userRole == 'ROLE_SUB_ADMIN' && 'hidden'}`} />
+                    <Getstart className={`opacity-0 mt-6 ${userRole == 'ROLE_USER' || userRole == 'ROLE_SUB_ADMIN' && 'hidden'}`} />
                     <div className="absolute -bottom-56 rotate-[13.5deg] right-0 h-80 w-80 bg-[#AD9CFF] rounded-radius64 z-0"></div>
                     <div className="absolute -bottom-72 rotate-[13.5deg] -right-12 h-80 w-80 bg-[#9782FF] rounded-radius64 z-0"></div>
                 </div>
@@ -112,7 +112,7 @@ const Page = async ({ searchParams }) => {
                                             const formated = formattedDate;
                                             return (
                                                 <tr key={x.categoryId} className={`h-14 shadow-soft rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}>
-                                                    <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{index + 1}</td>
+                                                    <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi">{searchParams.page > 1 ? index + 1 + 8 * (searchParams.page - 1) : index + 1}</td>
                                                     <td className="px-5 py-2 text-xs xl:text-base">{x?.categoryName}</td>
                                                     <td className="px-5 py-2 text-xs xl:text-base">{formated}</td>
                                                     <td className="px-5 py-2 text-xs xl:text-base">{x?.createBy}</td>

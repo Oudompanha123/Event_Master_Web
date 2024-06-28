@@ -5,7 +5,7 @@ import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { jwtDecode } from "jwt-decode";
 import { RPaginate } from "./paginate/RPaginate";
 import Image from "next/image";
-export const AssetTableComponent = async ({ data, nullsearch }) => {
+export const AssetTableComponent = async ({ data, nullsearch, page }) => {
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
@@ -21,14 +21,14 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
             <th className="font-medium">CREATED AT</th>
             <th
               className={`${
-                userRole == "ROLE_USER" && "px-3 rounded-r-radiusUi"
+                userRole === "ROLE_USER" && "px-3 rounded-r-radiusUi"
               } font-medium `}
             >
               STATUS
             </th>
             <th
               className={`${
-                userRole == "ROLE_USER" && "hidden"
+                userRole === "ROLE_USER" && "hidden"
               } font-medium rounded-r-radiusUi px-3 `}
             >
               ACTION
@@ -43,7 +43,7 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
                 className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border"
               >
                 <td className="py-3 rounded-l-radiusUi items-center ml-1   text-xs xl:text-base w-20">
-                  {index + 1}
+                  {page > 1 ? index + 1 + 8 * (page - 1) : index + 1}
                 </td>
                 <td className="w-28">
                   <div className="text-xs xl:text-base border rounded-radiusUi mx-3.5 py-1 w-auto">
@@ -80,7 +80,7 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
                 </td>
                 <td
                   className={`${
-                    userRole == "ROLE_USER" && "hidden"
+                    userRole === "ROLE_USER" && "hidden"
                   } rounded-r-radiusUi w-20`}
                 >
                   <div className="flex justify-center items-center gap-3 mx-3">
@@ -111,7 +111,7 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
             height={180}
             priority
           />
-          <p className="text-center text-4xl font-semibold text-primary-text">
+          <p className="text-center text-2xl font-semibold text-primary-text">
             No results found
           </p>
           <p className="text-center text-xl text-gray-500">

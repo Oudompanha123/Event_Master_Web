@@ -2,11 +2,11 @@
 
 import React from "react";
 
-const TableHeadMaterial = ({ selectAllChecked, handleSelectAllChange }) => {
+const TableHeadMaterial = ({ selectAllChecked, handleSelectAllChange,userRole }) => {
   return (
     <thead className="uppercase dark:text-gray-400 text-sm font-normal h-10 drop-shadow text-primary-text bg-[#F0F1F3]">
       <tr className="text-[14px] font-semibold rounded-2xl">
-        <th className="w-4 p-4 rounded-l-2xl">
+        <th className={`${userRole == "ROLE_USER" && "hidden" } w-4 p-4 rounded-l-2xl`}>
           <div className="flex items-center">
             <input
               type="checkbox"
@@ -20,7 +20,7 @@ const TableHeadMaterial = ({ selectAllChecked, handleSelectAllChange }) => {
             </label>
           </div>
         </th>
-        <th scope="col" className="py-5 text-primary-text px-0">
+        <th scope="col" className={`${userRole == "ROLE_USER" && "pl-4 rounded-l-2xl" } py-5 text-primary-text px-0 `}>
           NO
         </th>
         <th scope="col" className="py-3 text-primary-text px-6">

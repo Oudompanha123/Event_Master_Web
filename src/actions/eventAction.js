@@ -1,6 +1,8 @@
 'use server'
 
-import { addAttendeeToEvent, getEventById, getEventForm, updateEventForm } from "@/services/dashboard/eventService";
+import { getAgendaByEventId } from "@/services/dashboard/agenda.service";
+import { addAgendaToClone, addAttendeeToEvent, addMaterialToClone, getEventById, getEventForm, updateEventForm } from "@/services/dashboard/eventService";
+import { getMaterialByEventId } from "@/services/dashboard/materialService";
 
 
 export const updateEventFormAction = async (data, id) => {
@@ -20,5 +22,25 @@ export const getEventByIdAction = async (id) => {
 
 export const addAttendeeToEventAction = async (data) => {
     const res = await addAttendeeToEvent(data)
+    return res
+}
+
+export const addAgendaToCloneAction = async (data, id) => {
+    const res = await addAgendaToClone(data, id);
+    return res
+}
+
+export const addMaterialToCloneAction = async (data) => {
+    const res = await addMaterialToClone(data);
+    return res
+}
+
+export const getAgendaByIdAction = async (id) => {
+    const res = await getAgendaByEventId(id);
+    return res
+}
+
+export const getMaterialByIdAction = async (id) => {
+    const res = await getMaterialByEventId(id);
     return res
 }

@@ -1,4 +1,3 @@
-"use server";
 import { MemberComponent } from "../_components/MemberProfileComponent";
 import { DeleteMemberbutton } from "../_components/DeleteMemberbutton";
 import { MemberRoleComponent } from "../_components/MemberRoleComponent";
@@ -12,22 +11,20 @@ import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { SearchMemberComponent } from "../_components/SearchMemberComponent";
 import { RPaginate } from "../_components/paginate/RPaginate";
 import Image from "next/image";
-
-// console.log("ROLE::", userRole);
-
 const MemberPage = async ({ searchParams }) => {
-  console.log("param:", searchParams);
   const query = searchParams?.query || "";
   const page = searchParams?.page;
-  console.log("page:", page);
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
+  const userId = userInfo.memberId;
+  // console.log("userId ,role", userId, userRole);
   const memberData = await getAllMembersAction(page);
-  const search = await searchMemberAction(query, page);
+  // console.log("member:", memberData);
+  const search = await searchMemberAction(query);
   const data = query == "" || query == null ? memberData : search;
-     const nullsearch= data.totalRecord;
-  console.log("recive data:", data);
+  console.log("data::::", data);
+  const nullsearch = data.totalRecord;
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
@@ -79,7 +76,7 @@ const MemberPage = async ({ searchParams }) => {
                 className={`h-14 shadow-sm rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
               >
                 <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi border border-r-0 border-member-border sm:text-sm">
-                  {index + 1}
+                  {page > 1 ? index + 1 + 8 * (page - 1) : index + 1}
                 </td>
                 <td className="text-xs xl:text-base sm:text-sm ">
                   <MemberComponent memberInfo={member} />
@@ -100,8 +97,11 @@ const MemberPage = async ({ searchParams }) => {
                   } px-5 py-2 text-xs xl:text-base border border-x-0 border-member-border sm:text-sm `}
                 >
                   <MemberRoleComponent
+                    member={member}
                     memberId={member.memberId}
-                    memberRoles={member.role}
+                    memberRoles={member.role} //role in table
+                    userRole={userRole} //role admin
+                    userId={userId}
                   />
                 </td>
                 <td
@@ -126,7 +126,7 @@ const MemberPage = async ({ searchParams }) => {
               height={180}
               priority
             />
-            <p className="text-center text-4xl font-semibold text-primary-text">
+            <p className="text-center text-2xl font-semibold text-primary-text">
               No results found
             </p>
             <p className="text-center text-xl text-gray-500">
@@ -134,7 +134,11 @@ const MemberPage = async ({ searchParams }) => {
             </p>
           </div>
         )}
-        <div className="w-full flex justify-end mt-8">
+        <div
+          className={`${
+            nullsearch > 0 ? "flex" : "hidden"
+          } w-full flex justify-end mt-8`}
+        >
           <RPaginate totalData={data?.totalRecord} />
         </div>
       </div>

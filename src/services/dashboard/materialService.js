@@ -110,9 +110,7 @@ export const UpdateMaterialService = async (data, id) => {
       method: "PUT",
       next: { tags: ["materials"] },
       headers: header,
-      body: JSON.stringify({
-        data,
-      }),
+      body: JSON.stringify(data),
     });
 
     if (!res.ok) {
@@ -120,13 +118,48 @@ export const UpdateMaterialService = async (data, id) => {
       throw `Error: ${errorText}`;
     }
 
-    const dataAgenda = await res.json();
-    return dataAgenda;
+    const materialData = await res.json();
+    return materialData;
   } catch (error) {
     console.error("There was an error updating the materials:", error);
     throw error;
   }
 };
-// http://34.124.203.109:8081/api/materials/count-status/
 
+export const UpdateMaterialStatusService = async (status, MaterialId) => {
+  try {
+    console.log("the status in service",status);
+    console.log("the materail id in service",MaterialId)
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}materials/status/${MaterialId}?status=${status}`, {
+      method: "PUT",
+      next: { tags: ["materials"] },
+      headers: header,
+    });
 
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw `Error: ${errorText}`;
+    }
+
+    const materialData = await res.json();
+    return materialData;
+  } catch (error) {
+    console.error("There was an error updating the materials:", error);
+    throw error;
+  }
+};
+
+export const searchMaterialByName = async (name,id) => {
+  const header = await headerToken();
+  const res = await fetch(
+    `${process.env.API_URL}materials/search?materialName=${name}&eventId=${id}`,
+    //  `${process.env.API_URL}materials/search?materialName=sdf&eventId=$342`,
+    {
+      next: { tags: ["material"] },
+      headers: header,
+    }
+  );
+  const data = await res.json();
+  return data;
+};

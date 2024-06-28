@@ -1,17 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { UpdateEventButton } from "./UpdateEventButton";
 
-export const EventDetail = ({ eventData }) => {
+export const EventDetail = ({ eventData,userRole }) => {
   const event = eventData;
-
-  // if (!event) {
-  //   return (
-  //     <div class="flex justify-center items-center h-screen">
-  //       <div class="rounded-full h-20 w-20 bg-violet-800 animate-ping"></div>
-  //     </div>
-  //   );
-  // }
   
   const formatDate = (dateString) => {
     const options = { day: "2-digit", month: "long", year: "numeric" };
@@ -29,7 +21,9 @@ export const EventDetail = ({ eventData }) => {
         }}
         alt="Event Photo"
       >
+        <span className={`${userRole == "ROLE_USER" && "hidden"}`}>
         <UpdateEventButton />
+        </span>
       </div>
 
       <div className="flex justify-between px-5 mb-3">
