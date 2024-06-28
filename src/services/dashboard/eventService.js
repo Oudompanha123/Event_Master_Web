@@ -98,4 +98,17 @@ export const updateEventService = async (eventId, data) => {
     
   };
 
+export const changeStatus = async (eventId) => {
+    console.log("status:",eventId);
+    const header = await headerToken();
+    const res = await fetch(`${process.env.API_URL}events/active/${eventId}`, {
+        next: { tags: ["events"] },
+        method: "PUT",
+        headers: header,
+        body: JSON.stringify(data),
+      });
+      const dataEvent = await res.json();
+      return dataEvent;
+};
+
 

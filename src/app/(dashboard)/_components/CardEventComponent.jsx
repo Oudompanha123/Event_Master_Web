@@ -3,6 +3,8 @@ import React from "react";
 import Image from "next/image";
 import { Location } from "iconsax-react";
 import { EventActionButton } from "./EventActionButton";
+// import { ChangeStatusComponent } from "./ChangeStatusComponent";
+import { RxCross2 } from "react-icons/rx";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -11,8 +13,10 @@ const formatDate = (dateString) => {
   return { day, month };
 };
 
-export default function CardEventComponent({ eventData ,userRole}) {
-  
+export default function CardEventComponent({eventId, eventData ,userRole}) {
+  const handleChangeStatus = async () => {
+    await changeStatus (eventId);
+  };
   return (
     <div>
       <div className="gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:gap-6 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2 2xl:grid-cols-4">
@@ -41,7 +45,7 @@ export default function CardEventComponent({ eventData ,userRole}) {
                       duration={data.duration} maxAttendee={data.maxAttendee} address={data.address} description={data.description} isPost={data.isPost} eventId={data.eventId} />
                   </div>
                 </div>
-
+                {/* <ChangeStatusComponent /> */}
                 <div className="px-3 w-full">
                   <div className="flex gap-3 justify-between mt-5">
                     <div className="font-bold primary-text w-[70%] line-clamp-1">
@@ -51,7 +55,47 @@ export default function CardEventComponent({ eventData ,userRole}) {
                       className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${data.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
                         }`}
                     >
+                      <button
+                        className="rounded-2xl"
+                        value="status"
+                        onClick={() => {
+                          document.getElementById(`status_action_${eventId}`).showModal();
+                        }}
+                      >
                       {data.isOpen ? "Open" : "Closed"}
+                      </button>
+                      <dialog id={`status_action_${eventId}`} className="modal">
+                        <div className="modal-box w-[310px] justify-center">
+                          <form method="dialog" className="justify-end flex">
+                            <button type="submit">
+                              <RxCross2 className="absolute right-[20px] top-[20px] w-6 h-6" />
+                            </button>
+                          </form>
+                          <div className="justify-center flex">
+                            <Image
+                              src={`/images/question.svg`}
+                              alt={`question image`}
+                              className="w-[58%] mb-3"
+                              width={32}
+                              height={32}
+                            />
+                          </div>
+                          <p className="justify-center w-full flex text-primary-text font-bold text-lg text-center">
+                            Do you want to change Status?
+                          </p>
+                          <div className="modal-action">
+                            <form method="dialog" className="flex justify-around w-full mb-4 mt-3 px-3">
+                              <button onClick={handleChangeStatus} className="h-9 rounded-3xl bg-[#038446] w-[100px] hover:bg-green-700" value="yes">
+                                <p className="text-white font-semibold">Yes</p>
+                              </button>
+                              <button className="h-9 rounded-3xl bg-redUi w-[100px] hover:bg-red-700" value="cancel">
+                                <p className="text-white font-semibold">No</p>
+                              </button>
+                            </form>
+                          </div>
+                        </div>
+                      </dialog>
+                      
                     </span>
                   </div>
                   <p className="text-gray-700 text-sm px-1 mt-3 flex items-center gap-2">
