@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { ChangeRoleComponent } from "./ChangeRoleComponent";
+import { updateMemberService } from "@/services/dashboard/memberService";
 import { updateMemberAction } from "@/actions/memberAction";
 
 const getRoleColor = (role) => {
@@ -35,24 +36,20 @@ export const MemberRoleComponent = ({
   memberId,
   memberRoles,
   userRole,
+  member,
   userId,
 }) => {
-  console.log("userId:  ", userId);
-  console.log("user role:", userRole);
   const [userInfo, setUserInfo] = useState();
   const [currentRole, setCurrentRole] = useState(memberRoles);
   const [activeDropdown, setActiveDropdown] = useState(false);
   const [confirmingRoleChange, setConfirmingRoleChange] = useState(null);
   const dropdownRefs = useRef([]);
 
-  console.log('checking gg', confirmingRoleChange)
-
   const handleRoleChange = async (newRole) => {
-    console.log(newRole, 'checking new role')
     if (newRole == "ROLE_ADMIN") {
       const response = await updateMemberAction(memberId, newRole);
       const adminupdate = await updateMemberAction(userId, "ROLE_SUB_ADMIN");
-      console.log("user:,admin", response, adminupdate);
+      // console.log("user:,admin", response, adminupdate);
     }
     try {
       if (response.status === "OK") {
@@ -100,7 +97,6 @@ export const MemberRoleComponent = ({
 
   const handleConfirmRoleChange = () => {
     handleRoleChange(confirmingRoleChange?.role);
-    console.log(confirmingRoleChange?.role, "damn")
   };
 
   useEffect(() => {
@@ -119,17 +115,17 @@ export const MemberRoleComponent = ({
           onClick={toggleDropdown}
           className="btn btn-sm border rounded-radiusUi w-[122px] h-8"
           style={{
-            color: getRoleColor(memberRoles),
-            borderColor: getRoleColor(memberRoles),
+            color: getRoleColor(currentRole),
+            borderColor: getRoleColor(currentRole),
           }}
         >
-          {getRoleDisplayName(memberRoles)}
-          {memberRoles !== "ROLE_ADMIN" && userRole == "ROLE_ADMIN" && (
-            <FaAngleDown className="right-0" />
+          {getRoleDisplayName(currentRole)}
+          {currentRole !== "ROLE_ADMIN" && userRole == "ROLE_ADMIN" && (
+            <FaAngleDown className=" right-0" />
           )}
         </div>
         {activeDropdown &&
-          memberRoles !== "ROLE_ADMIN" &&
+          currentRole !== "ROLE_ADMIN" &&
           userRole == "ROLE_ADMIN" && (
             <div
               className={`
@@ -147,7 +143,7 @@ export const MemberRoleComponent = ({
                     tabIndex="-1"
                     onClick={() =>
                       setConfirmingRoleChange({
-                        id: 1,
+                        id: memberRoles,
                         role: "ROLE_ADMIN",
                       })
                     }
@@ -172,7 +168,7 @@ export const MemberRoleComponent = ({
                     tabIndex="-1"
                     onClick={() =>
                       setConfirmingRoleChange({
-                        id: 2,
+                        id: memberRoles,
                         role: "ROLE_USER",
                       })
                     }
@@ -197,7 +193,7 @@ export const MemberRoleComponent = ({
                     tabIndex="-1"
                     onClick={() =>
                       setConfirmingRoleChange({
-                        id: 3,
+                        id: memberRoles,
                         role: "ROLE_SUB_ADMIN",
                       })
                     }

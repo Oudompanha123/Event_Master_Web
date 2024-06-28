@@ -24,7 +24,6 @@ export async function deleteMemberAction(memberId) {
   let userInfo = jwtDecode(session?.user?.token);
   const data = await deleteMemberByIdService(memberId);
   revalidateTag("member");
-  console.log("delete:", data);
   const allMember = await getAllMember();
   await knockClient.notify("new-workout", {
     actor: userInfo?.sub,
@@ -61,8 +60,8 @@ export async function updateMemberAction(memberId, role) {
   return data;
 }
 
-export async function searchMemberAction(memberName, page) {
-  const data = await searchMemberService(memberName, page);
+export async function searchMemberAction(memberName) {
+  const data = await searchMemberService(memberName);
   revalidateTag("member");
   return data;
 }

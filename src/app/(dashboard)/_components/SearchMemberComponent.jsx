@@ -20,7 +20,7 @@ export const SearchMemberComponent = () => {
     }
     replace(`${pathname}?${params.toString()}`);
   };
- 
+
   return (
     <div className="relative w-full lg:w-[650px]">
       <form onSubmit={handleSubmit(onSubmit)}>
