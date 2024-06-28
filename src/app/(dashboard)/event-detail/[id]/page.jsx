@@ -13,7 +13,9 @@ const Page = async ({ params: { id } }) => {
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
+  const userId = userInfo.memberId;
   const eventData = await getEventByIdService(id)
+  const endDate = eventData?.payload.endDate;
   return (
     <main className="space-y-8">
       <div className=" rounded-3xl bg-white  z-0">
@@ -27,7 +29,7 @@ const Page = async ({ params: { id } }) => {
       </div>
       {/* <RegisterFormConferrence /> */}
       <div className="rounded-3xl bg-white  z-0 py-[2%] px-[2%]">
-        <EventToggle id={id} userRole={userRole} />
+        <EventToggle id={id} userRole={userRole} userId={userId} endDate={endDate} />
       </div>
     </main>
   );

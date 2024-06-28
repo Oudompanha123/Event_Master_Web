@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
-export function MaterialActionButton({ data , onEdit, userRole }) {
+export function MaterialActionButton({ data , onEdit, userRole, handler,userId  }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -97,9 +97,10 @@ export function MaterialActionButton({ data , onEdit, userRole }) {
                 </a>
               </li>
               <hr />
-              <li clasName={`${userRole == "ROLE_USER" && "hidden"} user_role `} >
+              <li>
+              <span className={`${userRole === "ROLE_USER" && handler !== userId ? "hidden" : ""}`}>
                 <a
-                  className={`${userRole == "ROLE_USER" && "hidden" }user_role gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg`} 
+                  className='user_role gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg'
                   role="menuitem"
                   tabIndex="-1"
                   onClick={onEdit}
@@ -114,6 +115,7 @@ export function MaterialActionButton({ data , onEdit, userRole }) {
                     Edit
                   </p>
                 </a>
+                </span>
               </li>
             </ul>
           </div>

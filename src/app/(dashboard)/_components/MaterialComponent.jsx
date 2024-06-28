@@ -1,9 +1,8 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import Image from "next/image";
 import { CiCircleRemove } from "react-icons/ci";
-import { IoSearchOutline } from "react-icons/io5";
 import { AddSquare } from "iconsax-react";
 import Dropdown from "./DropdownSupporterComponent";
 import fetchMaterialData from "@/app/actions/material/fetchMaterialAction";
@@ -36,7 +35,13 @@ const getStatusColor = (status) => {
   }
 };
 
-export default function MaterialComponent({ id, searchParams, userRole }) {
+export default function MaterialComponent({
+  id,
+  searchParams,
+  userRole,
+  userId,
+  endDate,
+}) {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [data, setData] = useState(null);
@@ -54,7 +59,8 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
   const [searchQuery, setSearchQuery] = useState(searchParams?.query || "");
   const [isLoading, setIsLoading] = useState(false);
   const [searchInput, setSearchInput] = useState(""); // Define searchInput state
-
+  const [cancelUpdate, setCancelUpdate] = useState(false);
+  // the end date in form 2024-11-27T01:33:23.572
   let query = searchQuery;
   const nullsearch = searchMaterial?.length;
   const dataOfMaterial = query === "" || query == null ? data : searchMaterial;
@@ -86,7 +92,7 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
 
   useEffect(() => {
     fetchMaterial(), fetchData(), fatchAsset(), fetchCountMaterial();
-  }, [saveSuccess, checkedRows, isDeleteDialogOpen]);
+  }, [saveSuccess, checkedRows, isDeleteDialogOpen, cancelUpdate]);
 
   useEffect(() => {
     searchNameMaterial();
@@ -213,6 +219,10 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
     );
   };
 
+  const handleCancelUpdate = () => {
+    setCancelUpdate(!cancelUpdate); // Toggle cancelUpdate state
+  };
+
   const deleteSelectedRows = async () => {
     const idsToDelete = checkedRows.filter(
       (id) => !id.toString().startsWith("new_")
@@ -230,6 +240,8 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
       // Filter out new rows with 'new_' prefix from rows
       setRows(rows.filter((row) => !newIds.includes(row.id)));
       setCheckedRows([]);
+      success("Delete materail selected successfully!");
+      setSelectAllChecked(false); // Uncheck the "Select All" checkbox
       handleClearSearch();
       // alert("Selected materials deleted successfully!");
     } catch (error) {
@@ -240,8 +252,11 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
   };
 
   const validateInputs = (list) => {
+    const today = new Date().toISOString().split("T")[0];
+
     const newErrors = list.map((item) => {
-      const error = { name: "", qty: "", unit: "" };
+      const error = { name: "", qty: "", unit: "", dueDate: "" };
+      const today = new Date().toISOString().split("T")[0];
       if (!item.materialName) {
         error.name = "Name is required.";
       }
@@ -250,12 +265,23 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
       }
       if (!item.unit) {
         error.unit = "Unit is required.";
+      } 
+      if (!item.dueDate) {
+        formIsValid = false;
+        error.dueDate = "Due date is required.";
+      } else if (item.dueDate > endDate) {
+        formIsValid = false;
+        error.dueDate = `Due date must be before ${endDate}.`;
+      } else if (item.dueDate < today) {
+        formIsValid = false;
+        error.dueDate = "Due date cannot be in the past.";
       }
       return error;
     });
 
     setErrors(newErrors);
   };
+
   //handler save create new material in multiple in save button
   const handleSave = async () => {
     const materials = rows.map((row) => ({
@@ -267,12 +293,7 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
       dueDate: row.dueDate,
       handlerId: row.handler,
       eventId: id,
-      supporters: {
-        data: row.supporterIds.map((supporter) => ({
-          name: supporter.name,
-          profile: supporter.avatar, // Assuming avatar URL is used as profile
-        })),
-      },
+      supporters: row.supporterIds,
     }));
 
     const invalidField = materials.find(
@@ -337,10 +358,6 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
       {/* Render show Count material card component */}
       <CountMaterialComponent data={dataCount} />
       <div className="flex justify-between mt-5 h-14 w-full gap-1">
-        {/* <SearchMaterialComponent
-          handleSearch={handleSearch}
-          initialQuery={searchQuery}
-        /> */}
         <SearchMaterialComponent
           handleSearch={handleSearch}
           handleClearSearch={handleClearSearch}
@@ -393,7 +410,9 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
           <button
             // type="submit"
             onClick={addNewRow}
-            className={`${userRole == "ROLE_USER" && "hidden"} button_new hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text h-11 w-12 justify-center text-purple-text rounded-3xl md:px-4 md:py-2.5 flex items-center space-x-3 md:w-40`}
+            className={`${
+              userRole == "ROLE_USER" && "hidden"
+            } button_new hover:bg-purple-text hover:duration-300 transition-all hover:text-white border-1px border-purple-text h-11 w-12 justify-center text-purple-text rounded-3xl md:px-4 md:py-2.5 flex items-center space-x-3 md:w-40`}
           >
             <AddSquare size="24" variant="Bold" className="" />
             <p className="text-xs lg:text-base hidden md:block  lg:w-[140px]">
@@ -412,7 +431,7 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
                 handleSelectAllChange={handleSelectAllChange}
                 userRole={userRole}
               />
-              <EmptyMaterialRow userRole={userRole}/>
+              <EmptyMaterialRow userRole={userRole} />
             </table>
             <div className="justify-center w-full content-center space-y-6 pb-10">
               <div className="justify-center flex items-center">
@@ -456,8 +475,37 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
                   nullsearch={nullsearch}
                   id={id}
                   userRole={userRole}
+                  cancelUpdate={cancelUpdate} // Pass cancelUpdate state to MaterialRow
+                  handleCancelUpdate={handleCancelUpdate} // Pass function to update cancelUpdate
+                  userId={userId}
+                  endDate={endDate}
                 />
               ))}
+
+              {(!dataOfMaterial || dataOfMaterial.length === 0) &&
+                rows.length === 0 && (
+                  <>
+                    <tr>
+                      <td colSpan="100%">
+                        <div className="justify-center w-full content-center space-y-2 pb-10 flex flex-col items-center">
+                          <Image
+                            src="/images/Search.gif"
+                            alt="empty image"
+                            width={280}
+                            height={280}
+                            priority
+                          />
+                          <p className="text-center text-4xl font-semibold text-primary-text">
+                            No results found
+                          </p>
+                          <p className="text-center text-xl text-gray-500">
+                            Please try another search!
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  </>
+                )}
 
               {/* Show the new row for create new material */}
               {rows.map((row, index) => (
@@ -562,7 +610,6 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
                       )}
                     </div>
                   </td>
-
                   <td className="text-sm font-normal text-primary-text px-2">
                     <input
                       type="text"
@@ -574,13 +621,32 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
                       }`}
                       placeholder=""
                       value={row.qty}
-                      onChange={(e) =>
-                        setRows((prevRows) =>
-                          prevRows.map((r) =>
-                            r.id === row.id ? { ...r, qty: e.target.value } : r
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        // Check if the entered value is numeric
+                        if (!isNaN(value)) {
+                          setRows((prevRows) =>
+                            prevRows.map((r) =>
+                              r.id === row.id ? { ...r, qty: value } : r
+                            )
+                          );
+                        }
+                      }}
+                      onKeyDown={(e) => {
+                        // Allow only numeric input
+                        if (
+                          !(
+                            (e.key >= "0" && e.key <= "9") ||
+                            e.key === "." ||
+                            e.key === "Backspace" ||
+                            e.key === "Delete" ||
+                            e.key === "ArrowLeft" ||
+                            e.key === "ArrowRight"
                           )
-                        )
-                      }
+                        ) {
+                          e.preventDefault();
+                        }
+                      }}
                       required
                       min="0.01"
                       step="0.01"
@@ -610,7 +676,11 @@ export default function MaterialComponent({ id, searchParams, userRole }) {
                     <input
                       type="date"
                       name="dueDate"
-                      className=" border text-gray-900 sm:text-sm rounded-xl block w-22 p-2 focus:outline-none placeholder:text-opacity-50 "
+                      className={` border text-gray-900 sm:text-sm rounded-xl block w-22 p-2 focus:outline-none placeholder:text-opacity-50 ${
+                        errors[index]?.dueDate
+                          ? "border-red-600 shake-animation"
+                          : ""
+                      }`}
                       placeholder="dd/mm/yyyy"
                       value={row.dueDate}
                       onChange={(e) =>
