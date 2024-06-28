@@ -141,7 +141,7 @@ const NewFormComponent = () => {
       <div className="rounded-2xl w-full h-[750px] sm:h-[800px] md:h-[800px] lg:h-[800px] xl:h-[800px] 2xl:h-[800px] flex flex-col shadow-md relative">
         <div className=" bg-purple-text h-[20%] rounded-t-2xl flex items-center justify-center"></div>
         <div className=" w-full h-0 flex justify-center z-30 mt-12 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 2xl:mt-0">
-          <div className="bg-slate-100 -mt-28 sm:-mt-16 md:-mt-20 lg:-mt-28 xl:-mt-28 2xl:-mt-28 rounded-full sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-52 lg:h-52 xl:w-60 xl:h-60 2xl:w-64 2xl:h-64">
+          <div className="border-1px bg-slate-100 -mt-28 sm:-mt-16 md:-mt-20 lg:-mt-28 xl:-mt-28 2xl:-mt-28 rounded-full sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-52 lg:h-52 xl:w-60 xl:h-60 2xl:w-64 2xl:h-64">
             <Image
               src={
                 imageSrc ||
@@ -178,7 +178,7 @@ const NewFormComponent = () => {
 
         <div className="absolute text-center w-full top-56 sm:top-64 md:top-64 lg:top-72 xl:top-80 2xl:top-[330px]">
           <p className="text-primary-text font-bold text-xl sm:text-xl md:text-xl lg:text-2xl xl:text-3xl 2xl:text-3xl">
-            {userInfo?.organization?.orgName}
+            {organizationName}
           </p>
         </div>
 
