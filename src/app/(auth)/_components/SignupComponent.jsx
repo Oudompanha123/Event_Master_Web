@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import {useState} from 'react';
+import {useForm} from 'react-hook-form';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import {useRouter} from 'next/navigation';
 import Link from 'next/link';
-import { getOrganizationDetails } from "@/services/login-signup/org.service";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {getOrganizationDetails} from "@/services/login-signup/org.service";
 import signupAction from "@/actions/auth/signupAction";
-import { registerUserAction } from "@/actions/auth/registerUserAction";
-import { resendRegisterAction, registerVerifyAction } from "@/actions/auth/registerOtpAction";
+import {registerUserAction} from "@/actions/auth/registerUserAction";
 
 const SignupComponent = () => {
     const initialData = {
@@ -29,7 +30,7 @@ const SignupComponent = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isValid },
+        formState: {errors, isValid},
         watch,
         reset,
     } = useForm({
@@ -53,23 +54,23 @@ const SignupComponent = () => {
     const router = useRouter();
 
     const onSubmit = async (data) => {
-
         setLoading(true);
 
         if (data.password !== data.confirmPassword) {
-            alert("Passwords do not match. Please try again.");
+            toast.error("Passwords do not match. Please try again.");
             setLoading(false);
             return;
         }
 
-        if (data?.organizationCode) {
-            await registerUserAction(data);
-        } else {
-            await signupAction(data);
-        }
+        const register = data?.organizationCode ? registerUserAction : signupAction;
 
-        // Send OTP code
-        await resendRegisterAction(data.email);
+        const response = await register(data);
+
+        if (response.error) {
+            toast.error(response.error.message);
+            setLoading(false);
+            return;
+        }
 
         if (!isAdminSelected) {
             const orgData = await getOrganizationDetails(data.organizationCode);
@@ -82,14 +83,16 @@ const SignupComponent = () => {
                 console.error('Modal element not found');
             }
         } else {
-            router.push(`/verify-register/?email=${data.email}`);
+            router.push(`/verify-register?email=${data.email}`);
         }
+
         setLoading(false);
     };
 
     return (
-        <div className="w-[75%] h-auto p-8 mt-20 md:w-[55%] xl:left-6 xl:mt-32 xl:mx-[42%] 2xl:mt-[10%]  2xl:left-5 xl:w-[45%] bg-white rounded-[40px] shadow-md absolute">
-            <div className="flex justify-start p-6 pt-12 mx-8 focus:outline-none">
+        <div className="w-[75%] h-auto p-8 mt-20 md:w-[55%] xl:left-6 xl:mt-32 xl:mx-[42%] 2xl:mt-[10%] 2xl:left-5 xl:w-[45%] bg-white rounded-[40px] shadow-md absolute">
+            <ToastContainer autoClose={2000}/>
+            <div className="flex justify-center lg:justify-start p-6 pt-12 mx-8 focus:outline-none">
                 <button
                     type="button"
                     id="admin-button"
@@ -107,6 +110,7 @@ const SignupComponent = () => {
                     USER
                 </button>
             </div>
+
             <div className="w-full h-full">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-6 gap-6 px-3">
@@ -230,7 +234,8 @@ const SignupComponent = () => {
                         )}
 
                         {!isAdminSelected && (
-                            <div className="w-full col-span-6 flex flex-col h-full gap-6 md:flex-row md:flex-1 xl:justify-between">
+                            <div
+                                className="w-full col-span-6 flex flex-col h-full gap-6 md:flex-row md:flex-1 xl:justify-between">
                                 <div className="grid grid-rows-1 w-full">
                                     <label htmlFor="phone-number"
                                            className="text-sm font-medium primary-text block mb-2">
@@ -250,11 +255,12 @@ const SignupComponent = () => {
                                     )}
                                 </div>
                                 <div className="w-full">
-                                    <label htmlFor="organization-code" className="text-sm font-medium primary-text block mb-2 xl:col-span-3">
+                                    <label htmlFor="organization-code"
+                                           className="text-sm font-medium primary-text block mb-2 xl:col-span-3">
                                         Organization Code <span className="text-red-600 text-sm">*</span>
                                     </label>
                                     <input
-                                        type="password"
+                                        type="text"
                                         id="organization-code"
                                         className={`${errors.organizationCode ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                         placeholder="Enter your organization code"
@@ -278,7 +284,7 @@ const SignupComponent = () => {
                                 className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-32 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 disabled={loading}
                             >
-                                {loading ? <div className='loader'></div> : "Sign Up" }
+                                {loading ? <div className='loader'></div> : "Sign Up"}
                             </button>
                             <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
                                 <div className="modal-box w-[360px] h-[400px]">
@@ -317,8 +323,10 @@ const SignupComponent = () => {
                                                         <p className="font-semibold">Cancel</p>
                                                     </button>
 
-                                                    <button className="border w-[110px] bg-[#8C59FE] h-10 rounded-3xl" value="confirm">
-                                                        <Link href={`/verify-register`} className="text-white font-semibold">Confirm</Link>
+                                                    <button className="border w-[110px] bg-[#8C59FE] h-10 rounded-3xl"
+                                                            value="confirm">
+                                                        <Link href={`/verify-register?email=${watch('email')}`}
+                                                              className="text-white font-semibold">Confirm</Link>
                                                     </button>
                                                 </div>
                                             </div>
@@ -335,7 +343,3 @@ const SignupComponent = () => {
 };
 
 export default SignupComponent;
-
-
-
-

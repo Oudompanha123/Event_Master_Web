@@ -8,6 +8,7 @@ import {useSearchParams} from "next/navigation";
 const VerifyRegisterPage = () => {
     const searchParams = useSearchParams()
     const email = searchParams.get('email')
+    console.log("email: ", email)
     return (
         <div className="bg-primary-purple w-[100%] h-screen relative">
             <div className="absolute w-[49%] h-[83%] mt-20 left-[25%]">
