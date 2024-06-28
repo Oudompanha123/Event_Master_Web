@@ -44,6 +44,7 @@ export async function updateMemberAction(memberId, role) {
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
   const data = await updateMemberService(memberId, role);
+  console.log(data)
 
   const allMember = await getAllMember();
   await knockClient.notify("new-workout", {
