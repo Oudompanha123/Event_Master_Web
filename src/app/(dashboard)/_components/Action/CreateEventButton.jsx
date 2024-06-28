@@ -123,7 +123,22 @@ export const CreateEventButton = () => {
         const timeDiff = eDate - sDate;
         const hoursDiff = timeDiff / (1000 * 60 * 60);
         const roundedDiff = Math.round(hoursDiff * 100) / 100;
-        setDiffChange(Number(roundedDiff));
+
+        const days = Math.floor(roundedDiff / 24);  // Calculate the number of days
+        const remainingHours = roundedDiff % 24;    // Calculate the remaining hours
+
+        let result = '';
+        if (days > 0) {
+            result += `${days} day${days > 1 ? 's' : ''}`;  // Handle pluralization for days
+        }
+        if (remainingHours > 0) {
+            if (days > 0) {
+                result += ', ';
+            }
+            result += `${remainingHours} hour${remainingHours > 1 ? 's' : ''}`;  // Handle pluralization for hours
+        }
+
+        setDiffChange(result);
     };
 
     const handleCategorySelect = (v) => setEventCategory(v)
@@ -185,6 +200,7 @@ export const CreateEventButton = () => {
             categoryId: cateId
         }
         const okay = await addNewEventAction(submitData);
+        console.log('checking submit', okay)
         await new Promise(resolve => setTimeout(resolve, 1000));
         setIsSend(false);
         notify(okay?.status, okay?.Errors?.description || okay?.Errors?.poster);
@@ -337,10 +353,7 @@ export const CreateEventButton = () => {
                                     <input
                                         value={diffChange}
                                         disabled
-                                        // {...register("duration", {
-                                        //     required: "duration is required",
-                                        // })}
-                                        type="number"
+                                        type="text"
                                         name="duration"
                                         id="duration"
                                         className={`${errors.duration ? "border-red-700 focus:border-red-600" : "border-gray-300"} cursor-not-allowed shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}

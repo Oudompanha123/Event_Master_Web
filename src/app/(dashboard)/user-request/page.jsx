@@ -1,9 +1,10 @@
 import { getAllUserRequestService } from "@/services/dashboard/userRequestService";
 import { RegisterActionComponent } from "../_components/RegisterActionComponent";
 import { RPaginate } from "../_components/paginate/RPaginate";
+import Image from "next/image";
 
 const Page = async ({ searchParams }) => {
-const page = searchParams?.page;
+  const page = searchParams?.page;
   const userRequests = await getAllUserRequestService(page);
   return (
     <>
@@ -32,7 +33,7 @@ const page = searchParams?.page;
                   className={`h-14 shadow-soft text-primary-text rounded-radiusUi odd:bg-softwhiteUi even:bg-white`}
                 >
                   <td className="px-5 py-2 text-xs lg:text-base rounded-l-radiusUi">
-                    {index + 1}
+                    {page > 1 ? index + 1 + 8 * (page - 1) : index + 1}
                   </td>
                   <td className="px-5 py-2 text-xs lg:text-base w-56">
                     {user.memberName}
@@ -53,8 +54,31 @@ const page = searchParams?.page;
               ))}
             </tbody>
           </table>
-          <div className={`${userRequests.totalRecord == 0 && "hidden"} w-full flex justify-end mt-8`}>
-            <RPaginate totalData={userRequests?.totalRecord}/>
+          {userRequests.totalRecord == 0 && (
+            <div className="justify-center h-[60vh] w-full content-center space-y-2 pb-10 flex flex-col items-center">
+              <Image
+                className=""
+                src="/images/empty-amico.png"
+                alt="empty image"
+                width={180}
+                height={180}
+                priority
+              />
+              <p className="text-center text-2xl font-semibold text-primary-text">
+                No results found
+              </p>
+              <p className="text-center text-xl text-gray-500">
+                Please try another search!
+              </p>
+            </div>
+          )}
+
+          <div
+            className={`${
+              userRequests.totalRecord == 0 && "hidden"
+            } w-full flex justify-end mt-8`}
+          >
+            <RPaginate totalData={userRequests?.totalRecord} />
           </div>
         </div>
       </div>

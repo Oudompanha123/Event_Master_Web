@@ -3,7 +3,6 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { ChangeRoleComponent } from "./ChangeRoleComponent";
-import { updateMemberService } from "@/services/dashboard/memberService";
 import { updateMemberAction } from "@/actions/memberAction";
 
 const getRoleColor = (role) => {
@@ -32,21 +31,33 @@ const getRoleDisplayName = (role) => {
   }
 };
 
-export const MemberRoleComponent = ({ memberId, memberRoles, userRole }) => {
+export const MemberRoleComponent = ({
+  memberId,
+  memberRoles,
+  userRole,
+  userId,
+}) => {
+  console.log("userId:  ", userId);
+  console.log("user role:", userRole);
   const [userInfo, setUserInfo] = useState();
   const [currentRole, setCurrentRole] = useState(memberRoles);
   const [activeDropdown, setActiveDropdown] = useState(false);
   const [confirmingRoleChange, setConfirmingRoleChange] = useState(null);
   const dropdownRefs = useRef([]);
 
+  console.log('checking gg', confirmingRoleChange)
+
   const handleRoleChange = async (newRole) => {
-    const response = await updateMemberAction(memberId, newRole);
+    console.log(newRole, 'checking new role')
+    if (newRole == "ROLE_ADMIN") {
+      const response = await updateMemberAction(memberId, newRole);
+      const adminupdate = await updateMemberAction(userId, "ROLE_SUB_ADMIN");
+      console.log("user:,admin", response, adminupdate);
+    }
     try {
-      if (response.success && newRole == "ROLE_ADMIN") {
+      if (response.status === "OK") {
         setCurrentRole(newRole);
-        // userRole = "ROLE_USER";
-        // console.log("newrole:", newRole);
-        // console.log("Admin:", userRole);
+        // setCurrentRole("ROLE_SUB_ADMIN")
       } else {
         console.error("Failed to update role:", response.message);
       }
@@ -88,8 +99,14 @@ export const MemberRoleComponent = ({ memberId, memberRoles, userRole }) => {
   }, [activeDropdown]);
 
   const handleConfirmRoleChange = () => {
-    handleRoleChange(confirmingRoleChange.role);
+    handleRoleChange(confirmingRoleChange?.role);
+    console.log(confirmingRoleChange?.role, "damn")
   };
+
+  useEffect(() => {
+    handleConfirmRoleChange();
+  }, [currentRole]);
+
   return (
     <div>
       <div
@@ -102,17 +119,17 @@ export const MemberRoleComponent = ({ memberId, memberRoles, userRole }) => {
           onClick={toggleDropdown}
           className="btn btn-sm border rounded-radiusUi w-[122px] h-8"
           style={{
-            color: getRoleColor(currentRole),
-            borderColor: getRoleColor(currentRole),
+            color: getRoleColor(memberRoles),
+            borderColor: getRoleColor(memberRoles),
           }}
         >
-          {getRoleDisplayName(currentRole)}
-          {currentRole !== "ROLE_ADMIN" && userRole == "ROLE_ADMIN" && (
-            <FaAngleDown className=" right-0" />
+          {getRoleDisplayName(memberRoles)}
+          {memberRoles !== "ROLE_ADMIN" && userRole == "ROLE_ADMIN" && (
+            <FaAngleDown className="right-0" />
           )}
         </div>
         {activeDropdown &&
-          currentRole !== "ROLE_ADMIN" &&
+          memberRoles !== "ROLE_ADMIN" &&
           userRole == "ROLE_ADMIN" && (
             <div
               className={`
@@ -130,7 +147,7 @@ export const MemberRoleComponent = ({ memberId, memberRoles, userRole }) => {
                     tabIndex="-1"
                     onClick={() =>
                       setConfirmingRoleChange({
-                        id: memberRoles,
+                        id: 1,
                         role: "ROLE_ADMIN",
                       })
                     }
@@ -155,7 +172,7 @@ export const MemberRoleComponent = ({ memberId, memberRoles, userRole }) => {
                     tabIndex="-1"
                     onClick={() =>
                       setConfirmingRoleChange({
-                        id: memberRoles,
+                        id: 2,
                         role: "ROLE_USER",
                       })
                     }
@@ -180,7 +197,7 @@ export const MemberRoleComponent = ({ memberId, memberRoles, userRole }) => {
                     tabIndex="-1"
                     onClick={() =>
                       setConfirmingRoleChange({
-                        id: memberRoles,
+                        id: 3,
                         role: "ROLE_SUB_ADMIN",
                       })
                     }

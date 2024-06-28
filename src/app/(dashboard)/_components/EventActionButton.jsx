@@ -8,7 +8,7 @@ import { SelectModifyV2 } from "./Action/SelectModifyV2";
 import deleteEvent from "@/app/actions/deleteEventAction";
 import { Additem } from "iconsax-react";
 import { addAgendaToCloneAction, addMaterialToCloneAction, getAgendaByIdAction, getEventByIdAction, updateEventFormAction } from "@/actions/eventAction";
-import { addNewEventAction } from "@/actions/categoryAction";
+import { addNewEventAction, getEventByNameAction } from "@/actions/categoryAction";
 import { toast } from "react-toastify";
 import { getAgendaByEventId } from "@/services/dashboard/agenda.service";
 import { getMaterialByEventId } from "@/services/dashboard/materialService";
@@ -115,7 +115,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
     }
   }
 
-  const handleCloseClone = () => document.getElementById(`event_action_copy_${eventId}`).close()
+  const handleCloseClone = () => document.getElementById(`event_action_copy_${eventId}`)?.close()
 
   const handleClone = async (id) => {
     setLoading(true);
@@ -127,9 +127,20 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
     let twoDayAhead = new Date(currentDate.getTime() + 48 * 60 * 60 * 1000);
     let endDateFormat = twoDayAhead.toISOString();
 
+    const eventByName = await getEventByNameAction(eventData?.eventName.replace(/\(\d+\)$/, '').trim())
+    let eventByNameLength = eventByName?.payload[0]?.events?.length;
+
     //clone event
+    let eName;
+    const baseEventNameWithoutNumber = eventData?.eventName.replace(/\(\d+\)$/, '').trim();
+
+    if (eventByNameLength === 0) {
+      eName = baseEventNameWithoutNumber;
+    } else if (eventByNameLength > 0) {
+      eName = `${baseEventNameWithoutNumber} (${eventByNameLength})`;
+    }
     const cloneData = {
-      eventName: eventData?.eventName,
+      eventName: `${eName}`,
       description: eventData?.description,
       startDate: startDateFormat,
       endDate: endDateFormat,
@@ -154,29 +165,34 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
 
     //clone agenda
     const agendaApi = await getAgendaByIdAction(id);
-    const pushAgenda = {
-      data: {
-        agenda: agendaApi?.payload?.data?.agenda
+    if (agendaApi != undefined) {
+      const pushAgenda = {
+        data: {
+          agenda: agendaApi?.payload?.data?.agenda
+        }
       }
-    }
 
-    await addAgendaToCloneAction(pushAgenda, resInsert?.payload?.eventId)
+      await addAgendaToCloneAction(pushAgenda, resInsert?.payload?.eventId)
+    }
 
     //clone material
     const materialApi = await getMaterialByEventId(id);
     const cookingMaterial = materialApi?.payload;
-    const appendEventId = (arr, eventId) => {
-      return arr.map(item => ({ ...item, eventId }));
+    if (materialApi != undefined) {
+      const appendEventId = (arr, eventId) => {
+        return arr?.map(item => ({ ...item, eventId }));
+      }
+      const pushMaterial = appendEventId(cookingMaterial, resInsert?.payload?.eventId);
+
+      await addMaterialToCloneAction(pushMaterial);
     }
-    const pushMaterial = appendEventId(cookingMaterial, resInsert?.payload?.eventId);
-    
-    await addMaterialToCloneAction(pushMaterial);
 
     setTimeout(() => {
       setLoading(false)
     }, 1500)
 
-    handleCloseClone()
+    handleCloseClone();
+
     notify(resInsert?.status)
   }
 

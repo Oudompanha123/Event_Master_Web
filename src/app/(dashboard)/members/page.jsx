@@ -1,4 +1,3 @@
-"use server";
 import { MemberComponent } from "../_components/MemberProfileComponent";
 import { DeleteMemberbutton } from "../_components/DeleteMemberbutton";
 import { MemberRoleComponent } from "../_components/MemberRoleComponent";
@@ -18,7 +17,10 @@ const MemberPage = async ({ searchParams }) => {
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
+  const userId = userInfo.memberId;
+  // console.log("userId ,role", userId, userRole);
   const memberData = await getAllMembersAction(page);
+  // console.log("member:", memberData);
   const search = await searchMemberAction(query, page);
   const data = query == "" || query == null ? memberData : search;
   const nullsearch = data.totalRecord;
@@ -27,7 +29,7 @@ const MemberPage = async ({ searchParams }) => {
       <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
         <div className="lg:w-[650px] md:w-full w-full">
           <a className="md:text-lg xl:text-xl font-semibold text-primary-text">
-            Show All Members
+            Show All Members {userRole}
           </a>
         </div>
         <div className="w-full flex justify-end lg:mt-0 mt-3">
@@ -57,10 +59,9 @@ const MemberPage = async ({ searchParams }) => {
                 ROLE
               </th>
               <th
-                className={`${
-                  (userRole == "ROLE_USER" || userRole == "ROLE_SUB_ADMIN") &&
+                className={`${(userRole == "ROLE_USER" || userRole == "ROLE_SUB_ADMIN") &&
                   "hidden"
-                } px-5 py-2 font-medium rounded-r-radiusUi border border-l-0 border-member-border sm:text-sm`}
+                  } px-5 py-2 font-medium rounded-r-radiusUi border border-l-0 border-member-border sm:text-sm`}
               >
                 ACTION
               </th>
@@ -73,7 +74,7 @@ const MemberPage = async ({ searchParams }) => {
                 className={`h-14 shadow-sm rounded-radiusUi odd:bg-softwhiteUi even:bg-white text-primary-text`}
               >
                 <td className="px-5 py-2 text-xs xl:text-base rounded-l-radiusUi border border-r-0 border-member-border sm:text-sm">
-                  {index + 1}
+                  {page > 1 ? index + 1 + 8 * (page - 1) : index + 1}
                 </td>
                 <td className="text-xs xl:text-base sm:text-sm ">
                   <MemberComponent memberInfo={member} />
@@ -88,22 +89,24 @@ const MemberPage = async ({ searchParams }) => {
                   {member.address}
                 </td>
                 <td
-                  className={`${
-                    (userRole == "ROLE_USER" || userRole == "ROLE_SUB_ADMIN") &&
+                  className={`${(userRole == "ROLE_USER" || userRole == "ROLE_SUB_ADMIN") &&
                     "rounded-r-radiusUi"
-                  } px-5 py-2 text-xs xl:text-base border border-x-0 border-member-border sm:text-sm `}
+                    } px-5 py-2 text-xs xl:text-base border border-x-0 border-member-border sm:text-sm `}
                 >
+                  <p>{member.role}</p>
                   <MemberRoleComponent
+                    key={index}
+                    member={member}
                     memberId={member.memberId}
-                    memberRoles={member.role}
-                    userRole ={userRole}
+                    memberRoles={member.role} //role in table
+                    userRole={userRole} //role admin
+                    userId={userId}
                   />
                 </td>
                 <td
-                  className={`${
-                    (userRole == "ROLE_USER" || userRole == "ROLE_SUB_ADMIN") &&
+                  className={`${(userRole == "ROLE_USER" || userRole == "ROLE_SUB_ADMIN") &&
                     "hidden"
-                  } px-5 py-2 xl:text-sm rounded-r-radiusUi border border-l-0 border-member-border`}
+                    } px-5 py-2 xl:text-sm rounded-r-radiusUi border border-l-0 border-member-border`}
                 >
                   <DeleteMemberbutton member={member} />
                 </td>
@@ -121,7 +124,7 @@ const MemberPage = async ({ searchParams }) => {
               height={180}
               priority
             />
-            <p className="text-center text-4xl font-semibold text-primary-text">
+            <p className="text-center text-2xl font-semibold text-primary-text">
               No results found
             </p>
             <p className="text-center text-xl text-gray-500">
@@ -130,9 +133,8 @@ const MemberPage = async ({ searchParams }) => {
           </div>
         )}
         <div
-          className={`${
-            nullsearch > 0 ? "flex" : "hidden"
-          } w-full flex justify-end mt-8`}
+          className={`${nullsearch > 0 ? "flex" : "hidden"
+            } w-full flex justify-end mt-8`}
         >
           <RPaginate totalData={data?.totalRecord} />
         </div>

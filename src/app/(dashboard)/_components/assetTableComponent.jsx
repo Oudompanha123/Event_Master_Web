@@ -5,11 +5,10 @@ import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { jwtDecode } from "jwt-decode";
 import { RPaginate } from "./paginate/RPaginate";
 import Image from "next/image";
-export const AssetTableComponent = async ({ data, nullsearch }) => {
+export const AssetTableComponent = async ({ data, nullsearch, page }) => {
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
   const userRole = userInfo.role;
-  
   return (
     <div className="flex flex-col w-full">
       <table className="w-full px-1 border-separate border-spacing-y-3 mt-0 ">
@@ -44,7 +43,7 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
                 className="text-center shadow-soft mx-5 h-14 rounded-radiusUi gap-20 box-border"
               >
                 <td className="py-3 rounded-l-radiusUi items-center ml-1   text-xs xl:text-base w-20">
-                  {index + 1}
+                  {page > 1 ? index + 1 + 8 * (page - 1) : index + 1}
                 </td>
                 <td className="w-28">
                   <div className="text-xs xl:text-base border rounded-radiusUi mx-3.5 py-1 w-auto">
@@ -112,7 +111,7 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
             height={180}
             priority
           />
-          <p className="text-center text-4xl font-semibold text-primary-text">
+          <p className="text-center text-2xl font-semibold text-primary-text">
             No results found
           </p>
           <p className="text-center text-xl text-gray-500">
@@ -130,5 +129,5 @@ export const AssetTableComponent = async ({ data, nullsearch }) => {
         </div>
       )}
     </div>
-  );  
+  );
 };
