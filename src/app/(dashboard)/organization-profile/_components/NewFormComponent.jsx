@@ -108,12 +108,6 @@ const NewFormComponent = () => {
     }
   };
 
-  const notify = () => {
-    toast.success("Updated organization Successful", {
-      position: "top-center",
-    });
-  };
-
   const handleOrganizationNameChange = (e) => {
     setOrganizationName(e.target.value);
   };
