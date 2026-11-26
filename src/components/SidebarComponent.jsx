@@ -15,7 +15,7 @@ export const SidebarComponent = ({ className }) => {
     const [data, setData] = useState();
     const { data: session, status } = useSession();
     const pathname = usePathname();
-    const [click, setClick] = useState(false);
+    const [click, setClick] = useState(pathname === "/organization-profile" || pathname === "/user-profile");
     const [userInfo, setUserInfo] = useState();
     useEffect(() => {
         let test;
@@ -84,18 +84,18 @@ export const SidebarComponent = ({ className }) => {
     }, [session, status]);
 
     return (
-        <div className={`${className} space-y-4 flex lg:block flex-col items-center lg:p-4 2xl:p-5 border-r-1px sticky top-0 h-screen`}>
+        <div className={`${className} space-y-4 p-4 2xl:p-5 border-r-1px bg-white`}>
             <Link prefetch={true} href={'/overview'}>
                 <div className="p-2 lg:p-2 flex items-center gap-4">
-                    <Image src={logo} height={192} width={192} />
+                    <Image src={logo} height={192} width={192} alt="EventMaster" className="w-full max-w-[192px] h-auto" />
                     {/* <h2 className="hidden xl:block text-xl font-semibold">EventMaster</h2> */}
                 </div>
             </Link>
             <hr />
-            <div className="w-full flex xl:block flex-col items-center xl:items-start justify-center">
+            <div className="w-full">
                 {data?.data?.map((x, index) => (
                     <Link prefetch={true} onClick={() => setClick(false)} href={x.link} key={index}>
-                        <div className={`space-x-3 px-3 lg:px-4 py-3 flex justify-center xl:justify-start rounded-radiusUi w-fit xl:!w-full items-center 
+                        <div className={`space-x-3 px-3 lg:px-4 py-3 flex justify-start rounded-radiusUi w-full items-center 
                             ${pathname === x.link && "text-white bg-purple-text"} 
                             ${x.name == "Events" && pathname === "/attendees" ? "text-white bg-purple-text" : ""}
                             ${x.name == "Events" && pathname.startsWith("/event-detail") ? "text-white bg-purple-text" : ""}
@@ -108,18 +108,18 @@ export const SidebarComponent = ({ className }) => {
                                             : x.icon == "request" ? <Notification size="20" color={`${pathname === "/user-request" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                                 : x.icon == "setting" ? <Setting2 size="20" color={`${pathname === "/account-setting" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
                                                     : x.icon == "logout" ? <LogoutCurve size="20" color="#344054" variant="Bulk" /> : <LogoutCurve size="24" color="#344054" variant="Bulk" />}
-                            <p className="hidden xl:block text-base">{x.name}</p>
+                            <p className="text-base">{x.name}</p>
                         </div>
                     </Link>
                 ))}
                 {/* dropdown sidebar  */}
-                <ul className={`w-full p-0 w-ful cursor-pointer rounded-radiusUi hidden xl:block`}>
+                <ul className={`w-full p-0 w-ful cursor-pointer rounded-radiusUi block`}>
                     {/* <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-center xl:justify-start items-center gap-3 rounded-radiusUi px-4 py-3 ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`}> */}
                     <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-between xl:justify-between items-center gap-3 rounded-radiusUi px-4 py-3`}>
                         <div className="flex items-center space-x-3">
                             <Setting2 size="20" color={`${pathname === "/organization-profile" || pathname === "/user-profile" ? '#344054' : '#344054'}`} variant="Bulk" />
                             <div className="flex items-center justify-between">
-                                <p className={`text-base hidden w-[124px] xl:block font-normal ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-primary-text" : 'text-primary-text'}`}>
+                                <p className={`text-base w-[124px] font-normal ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-primary-text" : 'text-primary-text'}`}>
                                     Account Setting
                                 </p>
                             </div>
@@ -141,19 +141,6 @@ export const SidebarComponent = ({ className }) => {
                         </li>
                     </ul>
                 </ul>
-                {/* dropdown sidebar on mobile */}
-                <div className="block xl:hidden">
-                    <Link prefetch={true} onClick={() => setClick(false)} href={'/organization-profile'}>
-                        <div className={`flex justify-center mx-auto items-center rounded-radiusUi px-3 w-fit py-3 ${pathname == "/organization-profile" && "text-white bg-purple-text"}`}>
-                            <Buildings2 size="20" color={`${pathname === "/organization-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
-                        </div>
-                    </Link>
-                    <Link prefetch={true} onClick={() => setClick(false)} href={'/user-profile'}>
-                        <div className={`flex justify-center mx-auto items-center rounded-radiusUi px-3 w-fit py-3 ${pathname == "/user-profile" && "text-white bg-purple-text"}`}>
-                            <Personalcard size="20" color={`${pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
-                        </div>
-                    </Link>
-                </div>
                 <LogoutAction />
             </div>
         </div>

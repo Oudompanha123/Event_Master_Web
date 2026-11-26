@@ -1,7 +1,7 @@
 'use server';
 
 export const resendRegisterOtp = async (email) => {
-    const res = await fetch(`${process.env.API_URL}auth/resend?email=${email}`,
+    const res = await fetch(`${process.env.API_URL}auth/resend?email=${encodeURIComponent(email)}`,
         {
             method: 'POST'
         }
@@ -11,7 +11,7 @@ export const resendRegisterOtp = async (email) => {
 }
 
 export const registerVerify = async (email, otp) => {
-    const res = await fetch(`${process.env.API_URL}auth/verify?otp=${otp}&email=${email}`,
+    const res = await fetch(`${process.env.API_URL}auth/verify?otp=${encodeURIComponent(otp)}&email=${encodeURIComponent(email)}`,
         {
             method: 'PUT'
         }

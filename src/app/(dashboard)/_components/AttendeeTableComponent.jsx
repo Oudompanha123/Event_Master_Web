@@ -49,8 +49,9 @@ const AttendeeTableComponent = ({
     <div
       className={`overflow-y-auto ${isNoData ? "fixed-width" : "h-auto"}`}
     >
+      <div className="w-full overflow-x-auto">
       <table
-        className={`table min-w-full border-separate border-spacing-y-3 px-1 mt-5  ${
+        className={`min-w-[640px] table min-w-full border-separate border-spacing-y-3 px-1 mt-5  ${
           hasManyColumns ? "w-screen table-auto" : "w-auto table-fixed"
         }`}
       >
@@ -154,6 +155,7 @@ const AttendeeTableComponent = ({
             })}
         </tbody>
       </table>
+      </div>
     </div>
   );
 };

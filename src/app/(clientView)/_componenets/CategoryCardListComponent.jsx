@@ -25,7 +25,7 @@ export const CategoryCardListComponent = ({ data }) => {
                     }
                 }}
             >
-                {data.payload.map((x, index) => {
+                {(data?.payload ?? []).map((x, index) => {
                     const imageUrl = x?.poster;
                     const isValidUrl = imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://');
                     return (

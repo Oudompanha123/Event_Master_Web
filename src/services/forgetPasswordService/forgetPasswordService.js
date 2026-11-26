@@ -1,7 +1,7 @@
 import { headerToken } from "@/app/api/auth/headerToken";
 
 export const resendOtp = async (email) => {
-    const res = await fetch(`${process.env.API_URL}auth/resend?email=${email}`,
+    const res = await fetch(`${process.env.API_URL}auth/resend?email=${encodeURIComponent(email)}`,
         {   
             method: 'POST'
         }
@@ -11,7 +11,7 @@ export const resendOtp = async (email) => {
 }
 
 export const verify = async (email, otp) => { 
-    const res = await fetch(`${process.env.API_URL}auth/verify?otp=${otp}&email=${email}`,
+    const res = await fetch(`${process.env.API_URL}auth/verify?otp=${encodeURIComponent(otp)}&email=${encodeURIComponent(email)}`,
         {   
             method: 'PUT'
         }
@@ -21,7 +21,7 @@ export const verify = async (email, otp) => {
 }
 
 export const changePassword = async (email, otp, newPassword) => { 
-    const res = await fetch(`${process.env.API_URL}auth/set-new-password?otp=${otp}&email=${email}`,
+    const res = await fetch(`${process.env.API_URL}auth/set-new-password?otp=${encodeURIComponent(otp)}&email=${encodeURIComponent(email)}`,
         {   
             method: 'PUT',
             body: JSON.stringify(newPassword),

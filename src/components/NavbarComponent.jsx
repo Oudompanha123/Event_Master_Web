@@ -9,9 +9,10 @@ import Link from "next/link"
 import { useSession } from "next-auth/react"
 import { jwtDecode } from "jwt-decode"
 import { getEventByIdAction } from "@/actions/eventAction"
+import { getOrganizationAction } from "@/actions/orgAction"
 import { useEffect, useState } from "react"
 
-export const NavbarComponent = ({ className }) => {
+export const NavbarComponent = ({ className, onMenuClick }) => {
     const [eventName, setEventName] = useState();
     const pathname = usePathname();
     let url = pathname;
@@ -41,10 +42,37 @@ export const NavbarComponent = ({ className }) => {
 
     const userRole = userInfo?.role;
 
+    // The token's organization is a snapshot from login time; load the live one,
+    // and pick up edits made on the organization profile page.
+    const [org, setOrg] = useState(null);
+    useEffect(() => {
+        if (status !== 'authenticated') return;
+        getOrganizationAction()
+            .then(res => res?.payload && setOrg(res.payload))
+            .catch(err => console.error("Error loading organization: ", err));
+        const onUpdated = (e) => e.detail && setOrg(e.detail);
+        window.addEventListener('organization-updated', onUpdated);
+        return () => window.removeEventListener('organization-updated', onUpdated);
+    }, [status]);
+    const orgName = org?.orgName ?? userInfo?.organization?.orgName;
+    const orgLogo = org?.logo ?? userInfo?.organization?.logo;
+    const logoSrc = orgLogo && /^(http|https):\/\//.test(orgLogo) ? orgLogo : defaultProfile;
+
     return (
-        <div className={`${className} justify-between sticky top-0 z-50 bg-white flex lg:justify-between items-center py-3 px-3 lg:px-14 border-b-[1px]`}>
+        <div className={`${className ?? ''} justify-between gap-3 sticky top-0 z-50 bg-white flex items-center py-3 px-4 sm:px-6 lg:px-10 xl:px-14 border-b-[1px]`}>
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            {onMenuClick && (
+                <button
+                    type="button"
+                    onClick={onMenuClick}
+                    aria-label="Open menu"
+                    className="lg:hidden -ml-1 p-2 rounded-lg hover:bg-gray-100 shrink-0"
+                >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#344054" strokeWidth="2" strokeLinecap="round"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+                </button>
+            )}
             {!pathname.startsWith('/event-detail') && !pathname.startsWith('/attendees') ?
-                <h2 className="text-lg lg:text-xl font-semibold block">
+                <h2 className="text-lg lg:text-xl font-semibold block truncate">
                     {pathname === '/overview' ?
                         'Overview' :
                         pathname === '/members' ?
@@ -94,10 +122,11 @@ export const NavbarComponent = ({ className }) => {
                     </div>
                 </div>
             }
-            <div className="space-x-10 flex items-center">
+            </div>
+            <div className="flex items-center gap-3 sm:gap-6 lg:gap-10 shrink-0">
                 <div className="bg-[#F7F9FB] p-2 rounded-full hidden cursor-pointer">
                     {/* <NotificationMenu /> */}
-                    <Image src={'/icons/icon.svg'} width={24} height={24} />
+                    <Image src={'/icons/icon.svg'} width={24} height={24} alt="" />
                 </div>
                 {/* <NotificationCard /> */}
                 <div tabIndex={0} role="button" className="bg-[#F7F9FB] p-1 rounded-full hidden cursor-pointer lg:block">
@@ -107,21 +136,23 @@ export const NavbarComponent = ({ className }) => {
                 <Link href={'/user-profile'}>
                     <div className="flex items-center gap-4">
                         <div className="hidden lg:block">
-                            <p className="font-semibold text-end text-sm">{userInfo?.organization?.orgName}</p>
+                            <p className="font-semibold text-end text-sm">{orgName}</p>
                             <p className="text-xs text-greyUi">{userInfo?.sub}</p>
                         </div>
-                        <div className="w-[48px] h-48px] hidden lg:block">
+                        <div className="w-[48px] h-[48px] hidden lg:block">
                             <Image
-                                className="rounded-full"
-                                src={userInfo?.organization?.logo && /^(http|https):\/\//.test(userInfo.organization.logo) ? userInfo.organization.logo : defaultProfile}
+                                className="rounded-full w-full h-full object-cover"
+                                src={logoSrc}
+                                alt="organization logo"
                                 height={48}
                                 width={48}
                             />
                         </div>
-                        <div className="w-[32px] h-[32px] block lg:hidden">
+                        <div className="w-[36px] h-[36px] block lg:hidden">
                             <Image
-                                className="rounded-full"
-                                src={userInfo?.organization?.logo && /^(http|https):\/\//.test(userInfo.organization.logo) ? userInfo.organization.logo : defaultProfile}
+                                className="rounded-full w-full h-full object-cover"
+                                src={logoSrc}
+                                alt="organization logo"
                                 height={48}
                                 width={48}
                             />

@@ -13,8 +13,12 @@ import { EventList } from "./_componenets/EventList";
 import { ListOfSkeleton } from "./_componenets/ListOfSkeleton";
 
 export default async function Home({ searchParams }) {
-  const popularData = await getPopularEvent();
-  const allCategory = await getAllCategory();
+  // Fetched together so their timeouts overlap rather than stack.
+  const [popularData, allCategory] = await Promise.all([
+    getPopularEvent(),
+    getAllCategory(),
+  ]);
+  const apiDown = popularData?.unreachable || allCategory?.unreachable;
 
   return (
     <div className="container">
@@ -55,9 +59,15 @@ export default async function Home({ searchParams }) {
           <h2 className="text-4xl lg:text-5xl font-semibold w-full sm:w-2/3 lg:w-1/2 mx-auto">Popular events you may like also.</h2>
           <p className="text-sm md:text-base font-medium">explore new thing by gathering with people.</p>
         </div>
-        <Suspense>
-          <CategoryCardListComponent data={popularData} />
-        </Suspense>
+        {apiDown ? (
+          <p className="text-center text-sm text-slate-500">
+            Events can&apos;t be loaded right now. Please try again shortly.
+          </p>
+        ) : (
+          <Suspense>
+            <CategoryCardListComponent data={popularData} />
+          </Suspense>
+        )}
       </section>
 
       <section className="mb-16">
@@ -67,7 +77,7 @@ export default async function Home({ searchParams }) {
       </section>
       {/* event section */}
       <section id="content" className={`space-y-16 ${searchParams.search ? 'hidden' : 'block'}`}>
-        {allCategory.payload.map(async (x, index) => (
+        {(allCategory?.payload ?? []).map(async (x, index) => (
           <Suspense fallback={<ListOfSkeleton />}>
             <EventList key={index} title={x} data={await getEventByCateName(x)} />
           </Suspense>

@@ -11,6 +11,8 @@ export const authOption = {
                     password: newUserInfo?.password,
                 }
                 const login = await loginService(userData);
+                // surface the API's reason ("Wrong Email", "Wrong Password", ...) to signIn()
+                if (!login?.payload) throw new Error(login?.detail || "Incorrect email or password");
                 return login.payload;
             },
         }),

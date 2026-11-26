@@ -131,23 +131,23 @@ function FormComponent({ className, getAllMember }) {
 
   return (
     <>
-      <form action="#" className="mx-auto mt-5 w-[92%] z-20" ref={ref} method="post" onSubmit={handleSubmit(onSubmit)}>
-        <div className={`flex justify-between ${styles.container}`}>
+      <form action="#" className="mx-auto mt-5 w-[92%] relative z-20" ref={ref} method="post" onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-6">
           {/* Profile  */}
-          <div className={`profile rounded-full  w-[20%] ${styles.profile}`}>
-            <div className={`rounded-full sm:mt-10  mx-auto min-w-[80px] max-w-[200px] relative`}>
-              <Image src={profileImage && /^(http|https):\/\//.test(profileImage) ? profileImage : defaultProfile} alt="logo" className={`${changeImage && 'hidden'} h-[200px] w-[200px] object-cover rounded-full overflow-hidden`} id="picture" width={200} height={200} />
-              <img src="" className="mx-auto !h-[200px] !w-[200px] hidden rounded-full object-cover" id="damn" alt="Damn" />
+          <div className="profile w-full lg:w-[22%] flex flex-col items-center">
+            <div className="rounded-full lg:mt-10 mx-auto w-fit relative">
+              <Image src={profileImage && /^(http|https):\/\//.test(profileImage) ? profileImage : defaultProfile} alt="logo" className={`${changeImage && 'hidden'} h-[140px] w-[140px] sm:h-[180px] sm:w-[180px] xl:h-[200px] xl:w-[200px] object-cover rounded-full overflow-hidden`} id="picture" width={200} height={200} />
+              <img src="" className="mx-auto !h-[140px] !w-[140px] sm:!h-[180px] sm:!w-[180px] xl:!h-[200px] xl:!w-[200px] hidden rounded-full object-cover" id="damn" alt="Damn" />
               {!isLock && (
                 <>
-                  <label htmlFor="image-upload" className={`${styles.icon} absolute top-28 right-0 w-8 h-8 bg-slate-100  rounded-full flex justify-center items-center p-1 duration-300 hover:bg-slate-200 cursor-pointer`}>
+                  <label htmlFor="image-upload" className={`absolute bottom-2 right-2 w-8 h-8 bg-slate-100  rounded-full flex justify-center items-center p-1 duration-300 hover:bg-slate-200 cursor-pointer`}>
                     <LiaUserEditSolid className="w-7 h-7 text-gray-700" />
                     <input accept="image/png,image/jpeg" type="file" id="image-upload" name="picture" className="hidden" onChange={handleImageUpload} disabled={isLock} />
                   </label>
                 </>
               )}
             </div>
-            <div className="mt-2 mx-auto mx-w-[100px] flex flex-col items-center">
+            <div className="mt-2 mx-auto flex flex-col items-center text-center">
               <h1 className="text-slate-400 font-semibold">
                 {getAllMember.memberName}
               </h1>
@@ -158,8 +158,8 @@ function FormComponent({ className, getAllMember }) {
 
           {/* Form */}
 
-          <div className="w-[75%]">
-            <div className="grid md:grid-cols-2 gap-2 gap-x-6 w-full sm:grid-cols-1">
+          <div className="w-full lg:w-[75%]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 gap-x-6 w-full">
               <div className="w-full mb-2 group flex flex-col">
                 <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Name <span className="text-red-500">*</span>

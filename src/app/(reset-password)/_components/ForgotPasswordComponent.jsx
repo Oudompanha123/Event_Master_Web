@@ -7,6 +7,12 @@ import {useRouter} from "next/navigation";
 import { forgetPasswordAction } from "@/actions/auth/forgetPasswordAction";
 import { useState } from 'react';
 
+// API errors come back as ProblemDetail: field errors in `Errors`, otherwise `detail`.
+function apiErrorMessage(res) {
+    if (res?.Errors && typeof res.Errors === "object") return Object.values(res.Errors).join(", ");
+    return res?.detail || res?.message || "Something went wrong. Please try again.";
+}
+
 const ForgotPasswordComponent = () => {
 
     const [isLoading, setIsloading] = useState(false);
@@ -31,10 +37,10 @@ const ForgotPasswordComponent = () => {
         const response = await forgetPasswordAction(data.email);
         setIsloading(false);
         if(response.status === 'CREATED'){
-            router.push(`/verify-otp?email=${data.email}`)   
+            router.push(`/verify-otp?email=${encodeURIComponent(data.email)}`)   
         }
         else{
-            error(response.detail);
+            error(apiErrorMessage(response));
         }
         
     };

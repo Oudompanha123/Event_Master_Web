@@ -8,6 +8,12 @@ import {useRouter} from "next/navigation";
 import { forgetPasswordAction, verifyOtpAction } from "@/actions/auth/forgetPasswordAction";
 import { ToastContainer, toast } from "react-toastify";
 
+// API errors come back as ProblemDetail: field errors in `Errors`, otherwise `detail`.
+function apiErrorMessage(res) {
+    if (res?.Errors && typeof res.Errors === "object") return Object.values(res.Errors).join(", ");
+    return res?.detail || res?.message || "Something went wrong. Please try again.";
+}
+
 const VerifyOTPComponent = ({email}) => {
     const [otp, setOtp] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
@@ -43,10 +49,10 @@ const VerifyOTPComponent = ({email}) => {
         const response = await verifyOtpAction(email, otp);
         setIsloading(false);
         if(response.status === 'OK'){
-            router.push(`/set-new-password?email=${email}&otp=${otp}`)
+            router.push(`/set-new-password?email=${encodeURIComponent(email)}&otp=${encodeURIComponent(otp)}`)
         }
         else{
-            error(response.detail);
+            error(apiErrorMessage(response));
         }
     }
 
@@ -70,7 +76,7 @@ const VerifyOTPComponent = ({email}) => {
             successSendingOTP(response.message);
         }
         else{
-            error(response.detail);
+            error(apiErrorMessage(response));
         }
     }
 
@@ -85,9 +91,10 @@ const VerifyOTPComponent = ({email}) => {
                     <p className="flex justify-center greyUi mt-4">Enter the 4 digits code that received your email.</p>
                 </div>
 
-                <div className="pr-[4px]">
+                <div className="pr-[4px] flex justify-center">
                     <OtpInput 
                         inputStyle={styles.inputStyle}
+                        containerStyle={{ justifyContent: "center" }}
                         value={otp}
                         onChange={handleChange}
                         onKeyDown={handleKeyDown}
@@ -101,7 +108,7 @@ const VerifyOTPComponent = ({email}) => {
                         onClick={handleSubmit}
                         type="button"
                         id="continue"
-                        className={`flex justify-center w-[320px] sm:w-full bg-purple-text text-white font-medium text-sm rounded-3xl px-[165px] py-3.5 mt-10 ml-2 shadow-md shadow-violet-400 ${otp.length !== 4 ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}
+                        className={`flex justify-center w-full max-w-[320px] sm:max-w-none bg-purple-text text-white font-medium text-sm rounded-3xl py-3.5 mt-10 ml-2 shadow-md shadow-violet-400 ${otp.length !== 4 ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}
                         disabled={otp.length !== 4}
                     >
                         {isLoading ? <div className='loader'></div> : <p>Continue</p> }  

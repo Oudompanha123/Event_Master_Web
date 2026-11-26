@@ -39,7 +39,8 @@ const MemberPage = async ({ searchParams }) => {
         </div>
       </div>
       <div className="w-full overflow-scroll">
-        <table className="table w-full px-1 border-separate border-spacing-y-3 mt-5">
+        <div className="w-full overflow-x-auto">
+        <table className="min-w-[640px] table w-full px-1 border-separate border-spacing-y-3 mt-5">
           <thead className="h-14 text-primary-text rounded-radiusUi bg-[#FFFFFF] uppercase">
             <tr className="w-full overflow-auto text-xs lg:text-base">
               <th className="px-5 py-2 font-medium rounded-l-radiusUi border border-r-0 border-member-border">
@@ -116,6 +117,7 @@ const MemberPage = async ({ searchParams }) => {
             ))}
           </tbody>
         </table>
+        </div>
         {nullsearch === 0 && (
           <div className="justify-center h-[60vh] w-full content-center space-y-2 pb-10 flex flex-col items-center">
             <Image

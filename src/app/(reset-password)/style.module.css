@@ -13,3 +13,14 @@
 .inputStyle:focus {
     outline: none;
 }
+
+/* phones: four boxes must fit in ~340px */
+@media (max-width: 480px) {
+    .inputStyle {
+        width: 3.25rem !important;
+        height: 3.25rem;
+        margin: 0 0.5rem;
+        font-size: 1.5rem;
+        border-radius: 14px;
+    }
+}

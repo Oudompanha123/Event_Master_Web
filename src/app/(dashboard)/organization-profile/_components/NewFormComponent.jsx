@@ -10,8 +10,9 @@ import { FaRegCopy } from "react-icons/fa6";
 import { CgAddR } from "react-icons/cg";
 import { TbEdit } from "react-icons/tb";
 import { updateOrganization } from "@/services/profile/org";
-import useSWR from "swr";
+import { getOrganizationAction } from "@/actions/orgAction";
 import { storeImageAction } from "@/actions/categoryAction";
+import { toast } from "react-toastify";
 
 const NewFormComponent = () => {
   const notify = () => {
@@ -35,21 +36,34 @@ const NewFormComponent = () => {
   const [imageLink, setImageLink] = useState();
   // const [displayedOrganizationName, setDisplayedOrganizationName] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (status === "authenticated" && session?.user?.token) {
-        const decodedToken = jwtDecode(session.user.token);
-        setUserInfo(decodedToken);
-        const orgData = decodedToken.organization || {};
-        setOrganizationCode(orgData.code);
-        setOrganizationName(orgData.orgName || "");
-        setAddress(orgData.address || "");
-        setUploadedImage(orgData.logo || "");
-        // setDisplayedOrganizationName(orgData.orgName || "");
+  // The login token holds a snapshot of the organization from sign-in time,
+  // so always load the current values from the API.
+  const applyOrg = (org) => {
+    setUserInfo({ organization: org });
+    setOrganizationCode(org.code || "");
+    setOrganizationName(org.orgName || "");
+    setAddress(org.address || "");
+    setUploadedImage(org.logo || "");
+  };
+
+  const loadOrganization = async () => {
+    try {
+      const res = await getOrganizationAction();
+      if (res?.payload) applyOrg(res.payload);
+    } catch (error) {
+      console.error("Error loading organization: ", error);
+      // fall back to the token snapshot so the page still renders
+      if (session?.user?.token) {
+        applyOrg(jwtDecode(session.user.token).organization || {});
       }
-    };
-    fetchData();
-  }, [status, session]);
+    }
+  };
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.token) {
+      loadOrganization();
+    }
+  }, [status]);
 
   const [hide, setHide] = useState(false);
 
@@ -79,32 +93,42 @@ const NewFormComponent = () => {
     setOrganizationName(userInfo?.organization?.orgName || "");
     setAddress(userInfo?.organization?.address || "");
     setUploadedImage(userInfo?.organization?.logo || null);
+    setImageLink(undefined);
+    setImageSrc("");
     setIsEditing(false);
   };
 
   const handleSaveChanges = async () => {
-    let formData = new FormData();
-    formData.append("file", imageLink);
-    const uploadImage = await storeImageAction(formData);
-
-    const organizationData = {
-      orgId: userInfo.organization.orgId,
-      orgName: organizationName,
-      address: address,
-      logo: uploadImage?.payload?.fileUrl,
-    };
-
     try {
-      const updatedOrganization = await updateOrganization(
-        organizationData.orgId,
-        organizationData
-      );
+      // only upload when a new logo was picked; otherwise the API keeps the current one
+      let logo = null;
+      if (imageLink) {
+        const formData = new FormData();
+        formData.append("file", imageLink);
+        const uploadImage = await storeImageAction(formData);
+        logo = uploadImage?.payload?.fileUrl;
+        if (!logo) throw new Error("Logo upload failed");
+      }
+
+      const res = await updateOrganization(userInfo.organization.orgId, {
+        orgName: organizationName.trim(),
+        address: address.trim(),
+        logo,
+      });
+      if (!res?.payload) {
+        const fieldErrors = res?.Errors && Object.values(res.Errors).join(", ");
+        throw new Error(fieldErrors || res?.detail || res?.message || "Update failed");
+      }
+
+      applyOrg(res.payload);
+      window.dispatchEvent(new CustomEvent("organization-updated", { detail: res.payload }));
+      setImageLink(undefined);
+      setImageSrc("");
       setIsEditing(false);
-      setUploadedImage(uploadImage?.payload?.fileUrl);
       notify();
-      // mutate();
     } catch (error) {
-      // console.error("Error updating organization: ", error);
+      console.error("Error updating organization: ", error);
+      toast.error(error.message || "Update failed", { position: "top-center" });
     }
   };
 
@@ -185,10 +209,10 @@ const NewFormComponent = () => {
               </label>
               <div className="flex align-middle">
                 <input
-                  type="number"
+                  type="text"
                   id="text"
                   className={`shadow-sm cursor-default bg-gray-100 border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                  placeholder={userInfo?.organization?.code}
+                  value={organizationCode}
                   readOnly
                 />
                 <FaRegCopy

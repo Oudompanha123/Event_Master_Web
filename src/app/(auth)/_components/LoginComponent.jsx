@@ -44,11 +44,13 @@ const LoginComponent = () => {
             toast.success('Login successfully', {
                 position: "top-center"
             });
-            router.push("/overview");
+            // /login and /overview live under different root layouts, so do a
+            // full page load instead of a client-side transition between them.
+            window.location.assign("/overview");
 
         } else {
             setLoading(false);
-            toast.error("Incorrect ! please try again", {
+            toast.error(res?.error && res.error !== "CredentialsSignin" ? res.error : "Incorrect ! please try again", {
                 position: "top-center"
             });
         }
@@ -114,18 +116,13 @@ const LoginComponent = () => {
                                 <input
                                     type={isLocked ? "Password" : "text"}
                                     id="password"
-                                    className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 ${errors.userPassword
+                                    className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 ${errors.password
                                             ? "border-red-700 focus:border-red-600"
                                             : "border-gray-300"
                                         }`}
                                     placeholder="Enter your password"
                                     {...register("password", {
                                         required: "Password is required",
-                                        pattern: {
-                                            value: /^[A-Za-z0-9]*$/,
-                                            message:
-                                                "Password must contain only numbers and characters",
-                                        },
                                         minLength: {
                                             value: 8,
                                             message: "Password requires at least 8 characters",
@@ -146,9 +143,9 @@ const LoginComponent = () => {
                                     />
                                 </div>
                             </div>
-                            {errors.userPassword && (
+                            {errors.password && (
                                 <span className="text-red-600 text-sm">
-                                    {errors.userPassword.message}
+                                    {errors.password.message}
                                 </span>
                             )}
                         </div>

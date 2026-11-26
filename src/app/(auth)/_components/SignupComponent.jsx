@@ -90,13 +90,13 @@ const SignupComponent = () => {
     };
 
     return (
-        <div className="w-[75%] h-auto p-8 mt-20 md:w-[55%] xl:left-6 xl:mt-32 xl:mx-[42%] 2xl:mt-[10%] 2xl:left-5 xl:w-[45%] bg-white rounded-[40px] shadow-md absolute">
+        <div className="w-[calc(100%-2rem)] max-w-xl h-auto p-5 sm:p-8 mt-16 sm:mt-20 md:w-[80%] lg:w-[65%] xl:max-w-none xl:left-6 xl:mt-32 xl:mx-[42%] 2xl:mt-[10%] 2xl:left-5 xl:w-[45%] bg-white rounded-[32px] sm:rounded-[40px] shadow-md absolute">
             <ToastContainer autoClose={2000}/>
-            <div className="flex justify-center lg:justify-start p-6 pt-12 mx-8 focus:outline-none">
+            <div className="flex justify-center xl:justify-start pt-4 sm:pt-8 pb-6 sm:px-6 focus:outline-none">
                 <button
                     type="button"
                     id="admin-button"
-                    className={`font-medium text-sm rounded-[100px] px-12 py-3.5 -mr-10 ${isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-sm bg-white border border-gray-300 primary-text z-10'}`}
+                    className={`font-medium text-sm rounded-[100px] pl-9 pr-14 sm:px-12 py-3.5 -mr-10 ${isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-sm bg-white border border-gray-300 primary-text z-10'}`}
                     onClick={handleAdminClick}
                 >
                     ADMIN
@@ -104,7 +104,7 @@ const SignupComponent = () => {
                 <button
                     type="button"
                     id="user-button"
-                    className={`font-medium text-sm rounded-[100px] px-12 py-3.5 ${!isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-sm bg-white border border-gray-300 primary-text z-10'}`}
+                    className={`font-medium text-sm rounded-[100px] px-9 sm:px-12 py-3.5 ${!isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-sm bg-white border border-gray-300 primary-text z-10'}`}
                     onClick={handleUserClick}
                 >
                     USER
@@ -113,7 +113,7 @@ const SignupComponent = () => {
 
             <div className="w-full h-full">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-6 gap-6 px-3">
+                    <div className="grid grid-cols-6 gap-5 sm:gap-6 sm:px-3">
                         <div className="col-span-6 md:col-span-3">
                             <label htmlFor="name" className="text-sm font-medium primary-text block mb-2">
                                 Full Name <span className="text-red-600 text-sm">*</span>
@@ -235,8 +235,8 @@ const SignupComponent = () => {
 
                         {!isAdminSelected && (
                             <div
-                                className="w-full col-span-6 flex flex-col h-full gap-6 md:flex-row md:flex-1 xl:justify-between">
-                                <div className="grid grid-rows-1 w-full">
+                                className="w-full col-span-6 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+                                <div className="w-full">
                                     <label htmlFor="phone-number"
                                            className="text-sm font-medium primary-text block mb-2">
                                         Phone Number <span className="text-red-600 text-sm">*</span>
@@ -244,7 +244,7 @@ const SignupComponent = () => {
                                     <input
                                         type="text"
                                         id="phone-number"
-                                        className={`${errors.phoneNumber ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block xl:w-full p-3.5`}
+                                        className={`${errors.phoneNumber ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
                                         placeholder="Enter your phone number"
                                         {...register('phoneNumber', {
                                             required: 'Phone Number is required',
@@ -256,7 +256,7 @@ const SignupComponent = () => {
                                 </div>
                                 <div className="w-full">
                                     <label htmlFor="organization-code"
-                                           className="text-sm font-medium primary-text block mb-2 xl:col-span-3">
+                                           className="text-sm font-medium primary-text block mb-2">
                                         Organization Code <span className="text-red-600 text-sm">*</span>
                                     </label>
                                     <input
@@ -276,18 +276,18 @@ const SignupComponent = () => {
                         )}
                     </div>
 
-                    <div className="flex justify-center p-6 pb-6 pt-12 mb-3">
-                        <div>
+                    <div className="flex justify-center pt-10 pb-4 sm:pb-6 mb-3">
+                        <div className="w-full max-w-xs">
                             <button
                                 type="submit"
                                 id="sign-up"
-                                className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-32 py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                className={`bg-purple-text text-white font-medium text-sm rounded-3xl w-full flex justify-center py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 disabled={loading}
                             >
                                 {loading ? <div className='loader'></div> : "Sign Up"}
                             </button>
                             <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                                <div className="modal-box w-[360px] h-[400px]">
+                                <div className="modal-box w-full sm:w-[360px] h-auto min-h-[400px]">
                                     <h3 className="font-bold text-lg text-center">Organization Profile</h3>
                                     <Image
                                         className="mx-auto max-w-2xl md:text-center mt-5"
@@ -299,7 +299,7 @@ const SignupComponent = () => {
                                     />
                                     {orgDetails && (
                                         <div className="modal-action">
-                                            <div method="dialog" className="w-[350px] m-auto">
+                                            <div method="dialog" className="w-full max-w-[350px] m-auto">
                                                 <div className="flex justify-between">
                                                     <p className="font-medium text-base w-1/2">Organization Code</p>
                                                     <p className="font-medium text-base w-1/2 pl-10">{orgDetails.code}</p>

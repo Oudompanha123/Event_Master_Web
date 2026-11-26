@@ -11,7 +11,7 @@ const VerifyRegisterPage = ({searchParams}) => {
                 />
             </div>
             {/*forgot password component*/}
-            <VerifyRegisterComponent/>
+            <VerifyRegisterComponent email={email}/>
         </div>
 
     )

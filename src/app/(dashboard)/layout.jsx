@@ -1,7 +1,6 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "../globals.css";
-import { SidebarComponent } from "@/components/SidebarComponent";
-import { NavbarComponent } from "@/components/NavbarComponent";
+import DashboardShell from "@/components/DashboardShell";
 import { getServerSession } from "next-auth";
 import SessionProvider from "../../components/SessionProvider";
 import { Knock } from "@knocklabs/node";
@@ -39,18 +38,7 @@ export default async function RootLayout({ children }) {
       <body className={jakarta.className}>
         <ToastContainer autoClose={2000} />
         <SessionProvider session={session}>
-          <div className="flex">
-            <SidebarComponent className={`w-[13%] xl:w-[19%] 2xl:w-[17%]`} />
-            <div className="w-[87%] xl:w-[81%] 2xl:w-[83%]">
-              <NavbarComponent />
-              <div
-                data-theme="light"
-                className="p-6 lg:px-14 bg-backgroundUi min-h-[92%] overflow-scroll"
-              >
-                {children}
-              </div>
-            </div>
-          </div>
+          <DashboardShell>{children}</DashboardShell>
         </SessionProvider>
       </body>
     </html>

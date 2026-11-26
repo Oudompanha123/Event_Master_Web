@@ -11,7 +11,8 @@ export const AssetTableComponent = async ({ data, nullsearch, page }) => {
   const userRole = userInfo.role;
   return (
     <div className="flex flex-col w-full">
-      <table className="w-full px-1 border-separate border-spacing-y-3 mt-0 ">
+      <div className="w-full overflow-x-auto">
+      <table className="min-w-[640px] w-full px-1 border-separate border-spacing-y-3 mt-0 ">
         <thead className="h-14 shadow-soft text-primary-text rounded-radiusUi bg-tableBg uppercase">
           <tr className="w-full overflow-auto text-xs lg:text-base px-4">
             <th className="py-3 font-medium px-2 rounded-l-radiusUi">NO</th>
@@ -101,6 +102,7 @@ export const AssetTableComponent = async ({ data, nullsearch, page }) => {
             ))}
         </tbody>
       </table>
+      </div>
       {nullsearch === 0 && (
         <div className="justify-center h-[60vh] w-full content-center space-y-2 pb-10 flex flex-col items-center">
           <Image
