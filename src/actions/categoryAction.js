@@ -3,7 +3,7 @@
 import { allCategory, createEventService, getAllCategory, getEventByName, getEventByNameOrg, insertCategory, storeImageService, updateCategory } from "@/services/dashboard/overviewService";
 import { deleteCategory } from "@/services/dashboard/overviewService";
 import { getAllMember } from "@/services/notification/notificationService";
-import { revalidateTag } from "next/cache";
+import { revalidateTag, revalidatePath } from "next/cache";
 import { Knock } from "@knocklabs/node";
 import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
@@ -87,6 +87,9 @@ export const addNewEventAction = async (data) => {
 
     const res = await createEventService(data);
     revalidateTag('overview_event');
+    // re-render the pages that list events so the new one shows up without a reload
+    revalidatePath('/events');
+    revalidatePath('/overview');
     //get all member to trigger noti to them
     const allMember = await getAllMember();
     if (allMember.totalRecord != 1) {

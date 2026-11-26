@@ -83,28 +83,38 @@ export default function Dropdown({
     <Listbox value={selected} onChange={() => {}} disabled={readOnly}>
       {({ open }) => (
         <div className="relative">
-            <ListboxButton className="relative h-[42px] cursor-default rounded-xl bg-white pl-2 w-[150px] pr-8 text-left text-black ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 z-20">
-            <span className="flex items-center gap-2">
+            <ListboxButton className="relative h-[42px] cursor-default rounded-xl bg-white pl-2 w-[190px] pr-8 text-left text-black ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 z-20">
+            <span
+              className="flex items-center gap-1 min-w-0"
+              title={Array.isArray(selected) ? selected.map((p) => p.name).join(", ") : ""}
+            >
+              {Array.isArray(selected) && selected.length === 0 && (
+                <span className="text-gray-400 truncate">Select</span>
+              )}
               {Array.isArray(selected) &&
                 selected.map((person) => (
                   <span
                     key={person.id}
-                    className="flex items-center gap-2 py-[1px] rounded-xl"
+                    className="flex items-center gap-1 py-[1px] rounded-xl min-w-0"
                   >
                     <img
                       src={person.avatar}
                       alt=""
-                      className="h-5 w-5 ml-1 rounded-full"
+                      className="h-5 w-5 ml-1 rounded-full shrink-0"
                     />
+                    <span className="truncate">
+                      {/* two supporters share the box, so show first names only */}
+                      {selected.length > 1 ? person.name?.split(" ")[0] : person.name}
+                    </span>
                     {!readOnly && (
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           removeSelection(person);
                         }}
-                        className="text-gray-500 hover:text-gray-700 mr-1"
+                        className="text-gray-500 hover:text-gray-700 mr-1 shrink-0"
                       >
-                        <XMarkIcon className="h-5 w-5" aria-hidden="true" />
+                        <XMarkIcon className="h-4 w-4" aria-hidden="true" />
                       </button>
                     )}
                   </span>
@@ -144,7 +154,7 @@ export default function Dropdown({
                   value={person}
                   onClick={() => handleSelectionChange(person)}
                 >
-                  {({ selected, active }) => (
+                  {({ active }) => (
                     <>
                       <div className="flex items-center gap-3">
                         <input
