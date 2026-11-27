@@ -25,18 +25,18 @@ export default function CardEventComponent({ eventId, eventData, userRole }) {
   console.log(eventData);
   return (
     <div>
-      <div className="gap-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:gap-6 lg:gap-5 md:gap-2 w-sm sm:gap-4 xs:gap-2 2xl:grid-cols-4">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,300px),1fr))] gap-4 lg:gap-5 2xl:gap-6">
         {eventData.map((data, index) => {
           const { day, month } = formatDate(data.startDate);
           return (
-            <div key={index}>
-              <div className="rounded-2xl overflow-hidden shadow-lg">
+            <div key={index} className="min-w-0">
+              <div className="h-full flex flex-col rounded-2xl overflow-hidden shadow-lg bg-white">
                 <div
-                  className="w-auto h-60 bg-cover bg-center sm:h-[200px] md:h-[220px] lg:h-[220px] xl:h-[230px] 2xl:[250px]"
+                  className="w-full h-48 sm:h-52 xl:h-56 2xl:h-[250px] bg-cover bg-center"
                   style={{
-                    backgroundImage:
-                      `url(${data.poster})` ??
-                      `url(https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg)`,
+                    backgroundImage: data.poster
+                      ? `url(${data.poster})`
+                      : `url(https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg)`,
                   }}
                   alt="Event Photo"
                 >
@@ -54,11 +54,11 @@ export default function CardEventComponent({ eventId, eventData, userRole }) {
                 {/* <ChangeStatusComponent /> */}
                 <div className="px-3 w-full">
                   <div className="flex gap-3 justify-between mt-5">
-                    <div className="font-bold primary-text w-[70%] line-clamp-1">
+                    <div className="font-bold primary-text flex-1 min-w-0 line-clamp-1">
                       {data.eventName}
                     </div>
                     <span
-                      className={`inline-block rounded-full w-16 text-center py-1 text-sm font-semibold ${data.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
+                      className={`inline-block shrink-0 rounded-full w-16 text-center py-1 text-sm font-semibold ${data.isOpen ? "bg-blue-100 text-blue-700" : "bg-red-100 text-red-700"
                         }`}
                     >
                       <button
@@ -104,12 +104,12 @@ export default function CardEventComponent({ eventId, eventData, userRole }) {
 
                     </span>
                   </div>
-                  <div className="flex justify-between text-sm items-center mt-3">
-                    <p className="text-gray-700  flex items-center gap-2">
-                      <Location size="20" color="#7A44FF" variant="Bold" />
-                      <span className="mt-2 line-clamp-1">{data.address}</span>
+                  <div className="flex justify-between gap-3 text-sm items-center mt-3">
+                    <p className="text-gray-700 flex items-center gap-2 min-w-0">
+                      <Location size="20" color="#7A44FF" variant="Bold" className="shrink-0" />
+                      <span className="line-clamp-1">{data.address}</span>
                     </p>
-                    <div>
+                    <div className="shrink-0">
                       {data.isPost ? (
                         <div className="flex gap-2">
                           <Global
@@ -132,7 +132,7 @@ export default function CardEventComponent({ eventId, eventData, userRole }) {
                   </div>
 
                 </div>
-                <div className="flex gap-3 px-4 pt-4 pb-6 mt-4">
+                <div className="flex flex-wrap gap-3 px-3 pt-4 pb-5 mt-auto">
                   <Link
                     href={`/attendees/${data.eventId}`}
                     className="flex-1 flex items-center justify-center rounded-full border border-purple-text text-purple-text antialiased h-10 px-3 text-sm font-medium whitespace-nowrap transition duration-300 ease-in-out hover:bg-purple-50 active:scale-[98%]"

@@ -387,7 +387,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                     </li>
                   </>
                 )}
-                {(userRole === "ROLE_ADMIN") && (
+                {(userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN") && (
                   <>
                     <hr />
                     <li>

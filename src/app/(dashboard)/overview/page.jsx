@@ -77,8 +77,8 @@ const Page = async ({ searchParams }) => {
                         Impeccable Execution, and the Ability to Craft Timeless
                         Experiences That Will Resonate Long After the Occasion.
                     </p>
-                    <Getstart className={`absolute z-20 mt-6 ${userRole == 'ROLE_USER' || userRole == 'ROLE_SUB_ADMIN' && 'hidden'}`} />
-                    <Getstart className={`opacity-0 mt-6 ${userRole == 'ROLE_USER' || userRole == 'ROLE_SUB_ADMIN' && 'hidden'}`} />
+                    <Getstart className={`absolute z-20 mt-6 ${userRole !== 'ROLE_ADMIN' && userRole !== 'ROLE_SUB_ADMIN' ? 'hidden' : ''}`} />
+                    <Getstart className={`opacity-0 mt-6 ${userRole !== 'ROLE_ADMIN' && userRole !== 'ROLE_SUB_ADMIN' ? 'hidden' : ''}`} />
                     <div className="absolute -bottom-56 rotate-[13.5deg] right-0 h-80 w-80 bg-[#AD9CFF] rounded-radius64 z-0"></div>
                     <div className="absolute -bottom-72 rotate-[13.5deg] -right-12 h-80 w-80 bg-[#9782FF] rounded-radius64 z-0"></div>
                 </div>
