@@ -2,7 +2,7 @@
 
 ## Introduction
 
-EventMaster, developed by the Korea Software HRD Center, is a web application designed to streamline the management of events and improve the experience htmlFor both the event organizers and the attendees. htmlFor event organizers, EventMaster offers them with many useful features, such as dynamic registration form creation, attendee management, agenda management, and material management. With these essential tools, event organizers can efficiently manage their events. On the other hand, the attendees will find it easier to browse htmlFor any kind of event that interests them and join by filling out the registration form attached to each event. In brief, EventMaster is the finest choice htmlFor fulfilling the event management system, with many wonderful features provided.
+EventMaster, developed by the Korea Software HRD Center, is a web application designed to streamline the management of events and improve the experience for both the event organizers and the attendees. For event organizers, EventMaster offers them with many useful features, such as dynamic registration form creation, attendee management, agenda management, and material management. With these essential tools, event organizers can efficiently manage their events. On the other hand, the attendees will find it easier to browse for any kind of event that interests them and join by filling out the registration form attached to each event. In brief, EventMaster is the finest choice for fulfilling the event management system, with many wonderful features provided.
 
 <img src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/landing.jpg?alt=media&token=16c12168-8f97-44cd-b3a1-2452b7e2caae" alt="landing_page">
 <img src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/material.jpg?alt=media&token=7c4140eb-1b70-477f-96fe-c1b12a9790ae" alt="material_page">
@@ -16,6 +16,60 @@ EventMaster, developed by the Korea Software HRD Center, is a web application de
 - Dynamic Form
 - Notification
 - Verify OTP
+
+## CI/CD
+
+The pipeline mirrors the API's (`Event_Master_API/Jenkinsfile`) and runs on the same Jenkins and
+SonarQube containers (`cicd` compose stack). A **multibranch pipeline** job pointed at this
+repository picks up the `Jenkinsfile`; Jenkins polls GitHub every ~5 minutes.
+
+| Stage                | What it does                                                          |
+|----------------------|-----------------------------------------------------------------------|
+| `Install`            | `npm ci` in a Node 20 container - fails if the lockfile is out of sync |
+| `SonarQube Analysis` | `sonar-scanner` using `sonar-project.properties` (project `event-master-web`) |
+| `Quality Gate`       | Polls SonarQube and fails the build unless the gate is `OK`           |
+| `Docker Build`       | Builds `event-master-web:<build number>` and `:latest`                |
+| `Deploy`             | `docker stack deploy` of `stack.yml` as the `event-master-web` stack  |
+| `Health Check`       | Waits for `1/1` replicas, then requires HTTP 2xx/3xx on port 3000     |
+
+| Branch       | Install | Analysis + Gate | Build + Deploy |
+|--------------|---------|-----------------|----------------|
+| `main`       | yes     | yes             | **yes**        |
+| `develop`    | yes     | yes             | no             |
+| other        | yes     | no              | no             |
+
+There are no automated frontend tests yet, so the quality gate is the main check before a deploy.
+
+### Jenkins setup (once)
+
+Add these under *Manage Jenkins > Credentials* (kind: *Secret text*):
+
+| Credential ID          | Value                                   |
+|------------------------|-----------------------------------------|
+| `nextauth-secret`      | `NEXTAUTH_SECRET` (`openssl rand -base64 32`) |
+| `knock-secret-api-key` | Knock server-side API key               |
+
+The SonarQube server entry named `SonarQube` is the one the API pipeline already uses.
+
+### Order matters
+
+`next build` prerenders pages that call the API, so **deploy the API stack first**. The web
+service reaches it through `API_URL` (default `http://host.docker.internal:8899/`, with the
+trailing slash). Next.js also downloads Google Fonts during the build, so the build needs
+internet access.
+
+### Manual deploy
+
+```bash
+docker build -t event-master-web:latest \
+  --build-arg API_URL=http://host.docker.internal:8899/ \
+  --build-arg NEXTAUTH_URL=http://localhost:3000 \
+  --build-arg NEXTAUTH_SECRET=... --build-arg KNOCK_SECRET_API_KEY=... .
+
+IMAGE_TAG=latest API_URL=http://host.docker.internal:8899/ NEXTAUTH_URL=http://localhost:3000 \
+NEXTAUTH_SECRET=... KNOCK_SECRET_API_KEY=... \
+  docker stack deploy -c stack.yml event-master-web
+```
 
 ## Routes
 
