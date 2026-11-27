@@ -1,4 +1,12 @@
-<p align="center"><a href="#" target="_blank"><img src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/image_237-removebg%204.png?alt=media&token=a6cbd8a5-a874-49b9-8659-36579def7a84" width="400" alt="Laravel Logo"></a></p>
+<p align="center">
+  <img src="./event-master.png" width="400" alt="EventMaster Logo">
+</p>
+
+<h1 align="center">EventMaster</h1>
+
+<p align="center">
+  Event Management System
+</p>
 
 ## Introduction
 
