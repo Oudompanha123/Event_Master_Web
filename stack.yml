@@ -1,0 +1,60 @@
+version: "3.8"
+
+# Docker Swarm stack for the Next.js frontend. Deployed by the Jenkins 'Deploy'
+# stage with
+#   docker stack deploy -c stack.yml event-master-web
+# which substitutes the ${...} values below from its own environment, so no
+# secret is ever written into this file.
+#
+# Manual deploy (values from your shell, not .env - stack deploy does not read it):
+#   IMAGE_TAG=latest API_URL=http://host.docker.internal:8899/ \
+#   NEXTAUTH_URL=http://localhost:3000 NEXTAUTH_SECRET=... KNOCK_SECRET_API_KEY=... \
+#     docker stack deploy -c stack.yml event-master-web
+#
+# The API is a separate stack (event-master, see Event_Master_API/stack.yml);
+# this one only needs to be able to reach it through API_URL.
+
+services:
+  web:
+    # The pipeline pins the exact build it produced; 'latest' is only a manual
+    # fallback. On a multi-node swarm this has to come from a registry that
+    # every node can pull - a locally built tag only exists on the node that
+    # built it.
+    image: event-master-web:${IMAGE_TAG:-latest}
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      # Trailing slash required: the code concatenates paths, e.g. ${API_URL}events/1
+      API_URL: ${API_URL:?API_URL is required}
+      NEXTAUTH_URL: ${NEXTAUTH_URL:?NEXTAUTH_URL is required}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:?NEXTAUTH_SECRET is required}
+      KNOCK_SECRET_API_KEY: ${KNOCK_SECRET_API_KEY:?KNOCK_SECRET_API_KEY is required}
+
+    # Only checks that the server accepts connections. It deliberately does not
+    # request a page: pages call the API, and a backend outage should not make
+    # Swarm roll the frontend back.
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('net').connect(3000,'127.0.0.1').on('connect',()=>process.exit(0)).on('error',()=>process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      update_config:
+        # Start the replacement task before stopping the old one, so a redeploy
+        # does not drop requests, and put the previous task back if the new
+        # image fails to come up at all.
+        order: start-first
+        failure_action: rollback
+      rollback_config:
+        order: start-first

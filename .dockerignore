@@ -10,3 +10,7 @@ yarn-error.log*
 Dockerfile
 .dockerignore
 README.md
+.scannerwork
+Jenkinsfile
+stack.yml
+sonar-project.properties
