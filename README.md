@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="./event-master.png" width="400" alt="EventMaster Logo">
+  <img
+    src="./public/images/event-master copy.png"
+    width="400"
+    alt="EventMaster Logo"
+  />
 </p>
 
 <h1 align="center">EventMaster</h1>
-
-<p align="center">
-  Event Management System
-</p>
 
 ## Introduction
 
