@@ -14,7 +14,7 @@ const formatDate = (dateString) => {
   return { day, month };
 };
 
-export default function CardEventComponent({eventId, eventData ,userRole}) {
+export default function CardEventComponent({ eventId, eventData, userRole }) {
   const handleChangeEventStatus = async (id, status) => {
     console.log("ID : ", id);
     console.log("Status : ", status);
@@ -68,7 +68,7 @@ export default function CardEventComponent({eventId, eventData ,userRole}) {
                           document.getElementById(`status_action_${data?.eventId}`).showModal();
                         }}
                       >
-                      {data.isOpen ? "Open" : "Closed"}
+                        {data.isOpen ? "Open" : "Closed"}
                       </button>
                       <dialog id={`status_action_${data?.eventId}`} className="modal">
                         <div className="modal-box w-[310px] justify-center">
@@ -91,7 +91,7 @@ export default function CardEventComponent({eventId, eventData ,userRole}) {
                           </p>
                           <div className="modal-action">
                             <form method="dialog" className="flex justify-around w-full mb-4 mt-3 px-3">
-                              <button onClick={()=>handleChangeEventStatus(data?.eventId, data?.isOpen)} className="h-9 rounded-3xl bg-[#038446] w-[100px] hover:bg-green-700" value="yes">
+                              <button onClick={() => handleChangeEventStatus(data?.eventId, data?.isOpen)} className="h-9 rounded-3xl bg-[#038446] w-[100px] hover:bg-green-700" value="yes">
                                 <p className="text-white font-semibold">Yes</p>
                               </button>
                               <button className="h-9 rounded-3xl bg-redUi w-[100px] hover:bg-red-700" value="cancel">
@@ -101,7 +101,7 @@ export default function CardEventComponent({eventId, eventData ,userRole}) {
                           </div>
                         </div>
                       </dialog>
-                      
+
                     </span>
                   </div>
                   <div className="flex justify-between text-sm items-center mt-3">
@@ -113,37 +113,37 @@ export default function CardEventComponent({eventId, eventData ,userRole}) {
                       {data.isPost ? (
                         <div className="flex gap-2">
                           <Global
-                          size="20"
-                          color="#344054"
+                            size="20"
+                            color="#344054"
                           />
                           <p>Public</p>
                         </div>
-                      ):(
+                      ) : (
                         <div className="flex gap-2">
                           <Lock1
                             size="20"
                             color="#344054"
-                            />  
+                          />
                           <p>Private</p>
                         </div>
-                        
+
                       )}
                     </div>
                   </div>
-                 
+
                 </div>
-                <div className="flex lg:gap-4 md:gap-2 px-4 pt-4 pb-7 mt-6 sm:gap-2">
+                <div className="flex gap-3 px-4 pt-4 pb-6 mt-4">
                   <Link
                     href={`/attendees/${data.eventId}`}
-                    className="flex-1 flex items-center justify-center rounded-full border-purple-text border-[1px] text-purple-text antialiased py-2 text-sm transition duration-300 ease-in-out hover:scale-[102%]"
+                    className="flex-1 flex items-center justify-center rounded-full border border-purple-text text-purple-text antialiased h-10 px-3 text-sm font-medium whitespace-nowrap transition duration-300 ease-in-out hover:bg-purple-50 active:scale-[98%]"
                   >
-                    <button className="mx-auto">View all attendees</button>
+                    View all attendees
                   </Link>
                   <Link
                     href={`/event-detail/${data.eventId}`}
-                    className="flex hover:bg-violet-700 active:bg-violet-800 focus:outline-none focus:ring focus:ring-violet-500 items-center justify-center flex-1 rounded-full bg-[#7939EF] text-white antialiased py-2 text-sm transition duration-300 ease-in-out hover:scale-[102%]"
+                    className="flex-1 flex items-center justify-center rounded-full bg-[#7939EF] text-white antialiased h-10 px-3 text-sm font-medium whitespace-nowrap transition duration-300 ease-in-out hover:bg-violet-700 active:bg-violet-800 focus:outline-none focus:ring focus:ring-violet-500 active:scale-[98%]"
                   >
-                    <button className="mx-auto">View event detail</button>
+                    View event detail
                   </Link>
                 </div>
               </div>

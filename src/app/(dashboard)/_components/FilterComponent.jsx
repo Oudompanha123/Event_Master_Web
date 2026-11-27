@@ -6,7 +6,7 @@ import { SelectDropdown } from './SelectDropdownComponent';
 import { SelectStatus } from './SelectStatusComponent';
 import CardEventComponent from './CardEventComponent';
 
-const FilterComponent = ({ initialData ,userRole }) => {
+const FilterComponent = ({ initialData, userRole }) => {
   const [findData, setFindData] = useState(initialData);
   const [search, setSearch] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -84,18 +84,10 @@ const FilterComponent = ({ initialData ,userRole }) => {
             />
           </div>
         </div>
-        <div className="relative z-3 lg:mb-5 flex justify-center w-full gap-5">
-          <div className="flex grid-cols-2 w-4/5">
-            <input
-              onChange={(e) => setSearch(e.target.value)}
-              htmlFor="search"
-              className="input input-bordered border-[1px] pl-10 text-primary-text hover:border-gray-400 rounded-full w-full h-11"
-              id="search"
-              name="search"
-              type="text"
-              placeholder="Search..."
-            />
-            <div className="absolute left-0 inset-y-0 flex items-center">
+        <div className="flex items-center justify-center w-full gap-3 sm:gap-5 mb-6">
+          {/* Search input */}
+          <div className="relative flex-1 sm:w-4/5 sm:flex-none">
+            <div className="absolute left-0 inset-y-0 flex items-center pointer-events-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 ml-3 text-gray-400"
@@ -111,8 +103,21 @@ const FilterComponent = ({ initialData ,userRole }) => {
                 />
               </svg>
             </div>
+            <input
+              onChange={(e) => setSearch(e.target.value)}
+              className="input input-bordered border-[1px] pl-11 text-primary-text hover:border-gray-400 focus:outline-none focus:border-purple-text rounded-full w-full h-11"
+              id="search"
+              name="search"
+              type="text"
+              placeholder="Search..."
+            />
           </div>
-          <button className="bg-purple-text w-1/5 rounded-full text-white h-auto flex justify-center text-center items-center">
+
+          {/* Search button */}
+          <button
+            type="submit"
+            className="bg-purple-text shrink-0 px-6 sm:px-0 sm:w-1/5 rounded-full text-white h-11 flex justify-center items-center"
+          >
             {!isLoading ? <p>Search</p> : <div className="loader"></div>}
           </button>
         </div>
@@ -121,7 +126,7 @@ const FilterComponent = ({ initialData ,userRole }) => {
         {findData && findData.length > 0 ? (
           <CardEventComponent userRole={userRole} eventData={findData} filteredCategory={filteredCategory} />
         ) : (
-          
+
           <div className="w-full">
             <Image
               className="mx-auto mt-8"

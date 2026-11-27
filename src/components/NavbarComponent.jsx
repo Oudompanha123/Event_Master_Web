@@ -36,9 +36,10 @@ export const NavbarComponent = ({ className, onMenuClick }) => {
 
     useEffect(() => {
         if (pathname.startsWith('/event-detail') || pathname.startsWith('/attendees')) {
-            getEventById(eId)
+            setEventName(undefined);
+            getEventById(eventId);
         }
-    }, [pathname])
+    }, [pathname, eventId])
 
     const userRole = userInfo?.role;
 
@@ -61,67 +62,67 @@ export const NavbarComponent = ({ className, onMenuClick }) => {
     return (
         <div className={`${className ?? ''} justify-between gap-3 sticky top-0 z-50 bg-white flex items-center py-3 px-4 sm:px-6 lg:px-10 xl:px-14 border-b-[1px]`}>
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-            {onMenuClick && (
-                <button
-                    type="button"
-                    onClick={onMenuClick}
-                    aria-label="Open menu"
-                    className="lg:hidden -ml-1 p-2 rounded-lg hover:bg-gray-100 shrink-0"
-                >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#344054" strokeWidth="2" strokeLinecap="round"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
-                </button>
-            )}
-            {!pathname.startsWith('/event-detail') && !pathname.startsWith('/attendees') ?
-                <h2 className="text-lg lg:text-xl font-semibold block truncate">
-                    {pathname === '/overview' ?
-                        'Overview' :
-                        pathname === '/members' ?
-                            'Member' :
-                            pathname === '/assets' ?
-                                'Assets' :
-                                pathname === '/events' || pathname.startsWith("/event-detail") || pathname === "/attendees" ?
-                                    'Events' :
-                                    pathname === '/user-request' ?
-                                        'Notification' :
-                                        pathname === '/organization-profile' ?
-                                            "Organization Profile" :
-                                            pathname === '/user-profile' ?
-                                                "User Profile" :
-                                                pathname === '/account-setting' ?
-                                                    'Account Setting' :
-                                                    'Default'}
-                </h2>
-                :
-                <div>
-                    <div className="hidden lg:flex text-sm breadcrumbs">
-                        <ul className="">
-                            <li>
-                                <Link href={'/event-detail/1'}>{eventName ? eventName : '...'}</Link>
-                            </li>
-                            <li>
-                                <Link href={`/attendees/${eventId}`}>Attendees</Link>
-                            </li>
-                            <li>
-                                <Link href={'/events'}>
-                                    Events
-                                </Link>
-                            </li>
-                        </ul>
+                {onMenuClick && (
+                    <button
+                        type="button"
+                        onClick={onMenuClick}
+                        aria-label="Open menu"
+                        className="lg:hidden -ml-1 p-2 rounded-lg hover:bg-gray-100 shrink-0"
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#344054" strokeWidth="2" strokeLinecap="round"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+                    </button>
+                )}
+                {!pathname.startsWith('/event-detail') && !pathname.startsWith('/attendees') ?
+                    <h2 className="text-lg lg:text-xl font-semibold block truncate">
+                        {pathname === '/overview' ?
+                            'Overview' :
+                            pathname === '/members' ?
+                                'Member' :
+                                pathname === '/assets' ?
+                                    'Assets' :
+                                    pathname === '/events' || pathname.startsWith("/event-detail") || pathname === "/attendees" ?
+                                        'Events' :
+                                        pathname === '/user-request' ?
+                                            'Notification' :
+                                            pathname === '/organization-profile' ?
+                                                "Organization Profile" :
+                                                pathname === '/user-profile' ?
+                                                    "User Profile" :
+                                                    pathname === '/account-setting' ?
+                                                        'Account Setting' :
+                                                        'Default'}
+                    </h2>
+                    :
+                    <div>
+                        <div className="hidden lg:flex text-sm breadcrumbs">
+                            <ul className="">
+                                <li>
+                                    <Link href={`/event-detail/${eventId}`}>{eventName ? eventName : '...'}</Link>
+                                </li>
+                                <li>
+                                    <Link href={`/attendees/${eventId}`}>Attendees</Link>
+                                </li>
+                                <li>
+                                    <Link href={'/events'}>
+                                        Events
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="flex lg:hidden text-sm breadcrumbs">
+                            <ul className="">
+                                <li>
+                                    <Link href={'/attendees'}>Attendees</Link>
+                                </li>
+                                <li>
+                                    <Link href={'/events'}>
+                                        Events
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div className="flex lg:hidden text-sm breadcrumbs">
-                        <ul className="">
-                            <li>
-                                <Link href={'/attendees'}>Attendees</Link>
-                            </li>
-                            <li>
-                                <Link href={'/events'}>
-                                    Events
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            }
+                }
             </div>
             <div className="flex items-center gap-3 sm:gap-6 lg:gap-10 shrink-0">
                 <div className="bg-[#F7F9FB] p-2 rounded-full hidden cursor-pointer">
