@@ -1,32 +1,25 @@
 'use client'
 
-import { toast, ToastContainer } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
-import {useForm} from "react-hook-form";
-import {useRouter} from "next/navigation";
-import { forgetPasswordAction } from "@/features/auth/reset-password/api/forgetPasswordAction";
 import { useState } from 'react';
-
-// API errors come back as ProblemDetail: field errors in `Errors`, otherwise `detail`.
-function apiErrorMessage(res) {
-    if (res?.Errors && typeof res.Errors === "object") return Object.values(res.Errors).join(", ");
-    return res?.detail || res?.message || "Something went wrong. Please try again.";
-}
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { forgetPasswordAction } from "@/features/auth/reset-password/api/forgetPasswordAction";
+import { apiErrorMessage } from "@/features/auth/reset-password/model/apiErrorMessage";
+import { Button } from "@/shared/ui/kit/button";
+import { Input } from "@/shared/ui/kit/input";
+import { FormField, authInputClass } from "@/shared/ui/form-field";
 
 const ForgotPasswordComponent = () => {
-
     const [isLoading, setIsloading] = useState(false);
-
-    const initialData = {
-        email: "",
-    };
 
     const {
         register,
         handleSubmit,
-        formState: {errors, isValid}
+        formState: { errors, isValid }
     } = useForm({
-        defaultValues: initialData,
+        defaultValues: { email: "" },
         mode: "onChange"
     });
 
@@ -35,65 +28,44 @@ const ForgotPasswordComponent = () => {
     const onSubmit = async (data) => {
         setIsloading(true);
         const response = await forgetPasswordAction(data.email);
+        if (response.status === 'CREATED') {
+            router.push(`/verify-otp?email=${encodeURIComponent(data.email)}`);
+            return;
+        }
         setIsloading(false);
-        if(response.status === 'CREATED'){
-            router.push(`/verify-otp?email=${encodeURIComponent(data.email)}`)   
-        }
-        else{
-            error(apiErrorMessage(response));
-        }
-        
-    };
-
-    function error(message){
-        toast.error(message, {
-            position: "top-center"
-          });
+        toast.error(apiErrorMessage(response));
     };
 
     return (
-        <div className="absolute flex justify-center sm:pt-[200px] sm:pl-0 md:pl-[30%] lg:pl-[50%] lg:pt-[350px] w-full md:w-[70%] lg:w-[39%]">
-            <ToastContainer autoClose={2000}/>
-            <form className='mt-[238px] lg:mt-[20px] 2xl:mt-[50px] ' onSubmit={handleSubmit(onSubmit)}>
-                <div className="mt-5">
-                
-                    <h2 className="text-[20px] flex justify-center lg:mt-[-100px] mt-[10px] md:mt-6  text-center md:text-3xl leading-9 font-extrabold text-purple-text-head">
-                        Forgot Password?
-                    </h2>
-                    <p className="flex justify-center greyUi mt-2 md:mt-6">Please enter your email to reset password</p>
-                </div>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-8">
+            <div className="space-y-3 text-center">
+                <h1 className="text-2xl font-extrabold text-purple-text-head sm:text-3xl">Forgot Password?</h1>
+                <p className="text-sm text-muted-foreground sm:text-base">Please enter your email to reset password</p>
+            </div>
 
-                <div className="lg:-mt-px mt-6 sm:mt-16 2xl:mt-[40px]">
-                    <label htmlFor="email" className="text-sm font-medium primary-text block mb-2">Email</label>
-                    <div>
-                        <input
-                            type="text"
-                            id="email"
-                            className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} w-full sm:w-[500px] shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block  p-3`}
-                            placeholder="Enter your email"
-                            {...register("email", {
-                                required: "Email is required",
-                                pattern: {
-                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                    message: "Enter a valid email address"
-                                }
-                            })}
-                        />
-                    </div>
-                    {errors.email && <span className="text-red-600 text-sm">{errors.email.message}</span>}
-                </div>
+            <FormField id="email" label="Email" error={errors.email?.message}>
+                <Input
+                    id="email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="Enter your email"
+                    aria-invalid={!!errors.email}
+                    className={authInputClass}
+                    {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                            message: "Enter a valid email address"
+                        }
+                    })}
+                />
+            </FormField>
 
-                <div className="flex justify-center mt-10">
-                    <button
-                        id="continue"
-                        className={`flex justify-center w-full bg-purple-text text-white font-medium text-sm rounded-3xl  py-3.5 shadow-md shadow-violet-400 ${!isValid ? "opacity-50 cursor-not-allowed" : "hover:bg-violet-500"}`}
-                        disabled={!isValid}
-                    >
-                        {isLoading ? <div className='loader'></div> : <p>Continue</p> } 
-                    </button>
-                </div>
-            </form>
-        </div>
+            <Button type="submit" id="continue" disabled={!isValid || isLoading} className="h-12 w-full rounded-full shadow-md shadow-primary/30">
+                {isLoading && <Loader2 className="animate-spin" aria-hidden="true" />}
+                Continue
+            </Button>
+        </form>
     );
 }
 
