@@ -77,7 +77,6 @@ export const updateCategoryAction = async (id, categoryName) => {
 
 export const getAllCategoryAction = async (page) => {
     const data = await getAllCategory(page);
-    revalidateTag('overview');
     return data
 }
 
@@ -115,7 +114,6 @@ export const getEventByNameAction = async (name) => {
 
 export const allCategoryAction = async () => {
     const data = await allCategory();
-    revalidateTag('overview');
     return data
 }
 

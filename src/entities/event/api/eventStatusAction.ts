@@ -5,7 +5,6 @@ import { revalidateTag } from "next/cache";
 
 export const getAllCategoryEventAction = async () => {
     const res = await getAllCategoryService();
-    revalidateTag('events')
     return res
 }
 
