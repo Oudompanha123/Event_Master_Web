@@ -3,193 +3,109 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { loginAction } from "@/features/auth/login/api/authAction";
 import { signIn } from "next-auth/react";
-import { loginService } from "@/shared/api/auth.service";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { Button } from "@/shared/ui/kit/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/ui/kit/card";
+import { FieldGroup } from "@/shared/ui/kit/field";
+import { Input } from "@/shared/ui/kit/input";
+import { FormField, authInputClass } from "@/shared/ui/form-field";
+import { PasswordInput } from "@/shared/ui/password-input";
+
+const EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const LoginComponent = () => {
-    const initialData = {
-        email: "",
-        password: "",
-    };
-
     const {
         register,
         handleSubmit,
         formState: { errors, isValid },
     } = useForm({
-        defaultValues: initialData,
+        defaultValues: { email: "", password: "" },
         mode: "onChange",
     });
 
-    const [isLocked, setIsLocked] = useState(true);
-    const handleLockClick = () => setIsLocked((prevState) => !(prevState));
-
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
 
     const onSubmit = async (data) => {
-
         setLoading(true);
-        const res = await signIn("credentials", {
-            redirect: false,
-            ...data,
-        });
-        console.log("res is  : ", res)
-        if (res.ok) {
-            toast.success('Login successfully', {
-                position: "top-center"
-            });
-            // /login and /overview live under different root layouts, so do a
+        const res = await signIn("credentials", { redirect: false, ...data });
+        if (res?.ok) {
+            toast.success("Login successfully");
+            // /login and /overview live under different layouts, so do a
             // full page load instead of a client-side transition between them.
             window.location.assign("/overview");
-
         } else {
             setLoading(false);
-            toast.error(res?.error && res.error !== "CredentialsSignin" ? res.error : "Incorrect ! please try again", {
-                position: "top-center"
-            });
+            toast.error(res?.error && res.error !== "CredentialsSignin" ? res.error : "Incorrect! Please try again");
         }
-    }
-
+    };
 
     return (
-        <div
-            className="absolute flex mt-11 flex-col h-screen justify-center lg:px-8 w-full p-8 xl:mx-[42%] xl:mt-2 xl:w-[45%] xl:right-[10%]">
-            <div className="mt-8 sm:mx-auto w-full sm:w-full sm:max-w-md flex justify-center ">
-                <div className="bg-white py-6 md:py-8 w-[110%] shadow rounded-[40px] px-3 md:px-12">
-                    <ToastContainer autoClose={2000} />
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="mb-12 -mt-3 rounded-radiusUi">
-                            <h2 className="mt-6 px-2 text-center text-3xl md:text-4xl font-bold flex justify-center">
-                                Login
-                            </h2>
-                            <p className="mt-5 flex justify-center greyUi">
-                                Welcome back! Please enter your information
-                            </p>
-                        </div>
+        <Card className="w-full max-w-md gap-8 rounded-[32px] border-0 py-8 shadow-xl sm:rounded-[40px] sm:py-10">
+            <CardHeader className="gap-3 px-6 text-center sm:px-10">
+                <CardTitle className="text-3xl font-bold md:text-4xl">Login</CardTitle>
+                <CardDescription className="text-base">Welcome back! Please enter your information</CardDescription>
+            </CardHeader>
 
-                        <div className="col-span-6 sm:col-span-3">
-                            <label
-                                htmlFor="email"
-                                className="text-sm font-medium primary-text block mb-2"
-                            >
-                                Email <span className="text-red-600">*</span>
-                            </label>
-                            <div>
-                                <input
-                                    type="text"
-                                    id="email"
-                                    className={`${errors.email
-                                            ? "border-red-700 focus:border-red-600"
-                                            : "border-gray-300"
-                                        } shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
-                                    placeholder="Enter your email"
-                                    {...register("email", {
-                                        required: "Email is required",
-                                        pattern: {
-                                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                            message: "Enter a valid email address",
-                                        },
-                                    })}
-                                />
-                            </div>
-                            {errors.email && (
-                                <span className="text-red-600 text-sm">
-                                    {errors.email.message}
-                                </span>
-                            )}
-                        </div>
+            <CardContent className="px-6 sm:px-10">
+                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                    <FieldGroup className="gap-5">
+                        <FormField id="email" label="Email" required error={errors.email?.message}>
+                            <Input
+                                id="email"
+                                type="email"
+                                autoComplete="email"
+                                placeholder="Enter your email"
+                                aria-invalid={!!errors.email}
+                                className={authInputClass}
+                                {...register("email", {
+                                    required: "Email is required",
+                                    pattern: { value: EMAIL, message: "Enter a valid email address" },
+                                })}
+                            />
+                        </FormField>
 
-                        <div className="col-span-6 sm:col-span-3 mt-6">
-                            <label
-                                htmlFor="password"
-                                className="text-sm font-medium primary-text block mb-2"
-                            >
-                                Password <span className="text-red-600">*</span>
-                            </label>
-                            <div className={"relative"}>
-                                <input
-                                    type={isLocked ? "Password" : "text"}
-                                    id="password"
-                                    className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 ${errors.password
-                                            ? "border-red-700 focus:border-red-600"
-                                            : "border-gray-300"
-                                        }`}
-                                    placeholder="Enter your password"
-                                    {...register("password", {
-                                        required: "Password is required",
-                                        minLength: {
-                                            value: 8,
-                                            message: "Password requires at least 8 characters",
-                                        },
-                                    })}
-                                />
-                                <div
-                                    className="absolute top-4 right-3 cursor-pointer"
-                                    onClick={handleLockClick}
-                                >
-                                    <Image
-                                        src={
-                                            isLocked ? "/icons/lock-slash.svg" : "/icons/unlock.svg"
-                                        }
-                                        width={20}
-                                        height={20}
-                                        alt={isLocked ? "lock icon" : "unlock icon"}
-                                    />
-                                </div>
-                            </div>
-                            {errors.password && (
-                                <span className="text-red-600 text-sm">
-                                    {errors.password.message}
-                                </span>
-                            )}
-                        </div>
+                        <FormField id="password" label="Password" required error={errors.password?.message}>
+                            <PasswordInput
+                                id="password"
+                                autoComplete="current-password"
+                                placeholder="Enter your password"
+                                aria-invalid={!!errors.password}
+                                className={authInputClass}
+                                {...register("password", {
+                                    required: "Password is required",
+                                    minLength: { value: 8, message: "Password requires at least 8 characters" },
+                                })}
+                            />
+                        </FormField>
+                    </FieldGroup>
 
-                        <div className="mt-3 flex items-center justify-end">
-                            <div className="text-sm leading-5">
-                                <Link
-                                    href={`/forgot-password`}
-                                    className="text-purple-text hover:text-violet-500 font-medium"
-                                >
-                                    Forgot password?
-                                </Link>
-                            </div>
-                        </div>
+                    <div className="mt-3 flex justify-end">
+                        <Link href="/forgot-password" className="text-sm font-medium text-purple-text hover:underline">
+                            Forgot password?
+                        </Link>
+                    </div>
 
-                        <div className="flex justify-center mt-8 mb-6">
-                            <button
-                                type="submit"
-                                id="login"
-                                className={`bg-purple-text text-white font-medium text-sm rounded-3xl px-32 py-3.5  shadow-md shadow-violet-400  ${!isValid
-                                        ? "opacity-50 cursor-not-allowed"
-                                        : "hover:bg-violet-500"
-                                    }`}
-                                disabled={!isValid}
-                            >
-                                {/*loading*/}
-                                {loading ? <div className='loader'></div> : "Login"}
-                            </button>
-                        </div>
+                    <Button
+                        type="submit"
+                        id="login"
+                        disabled={!isValid || loading}
+                        className="mt-8 h-12 w-full rounded-full shadow-md shadow-primary/30"
+                    >
+                        {loading && <Loader2 className="animate-spin" aria-hidden="true" />}
+                        Login
+                    </Button>
 
-                        <p className="flex justify-center primary-text mb-4">
-                            Don't have an account?<b>&nbsp;</b>
-                            <Link
-                                href={`/signup`}
-                                className="text-purple-text hover:text-violet-500 font-medium"
-                            >
-                                Sign Up
-                            </Link>
-                        </p>
-                    </form>
-                </div>
-            </div>
-            <ToastContainer/>
-        </div>
+                    <p className="mt-6 text-center text-primary-text">
+                        Don&apos;t have an account?{" "}
+                        <Link href="/signup" className="font-medium text-purple-text hover:underline">
+                            Sign Up
+                        </Link>
+                    </p>
+                </form>
+            </CardContent>
+        </Card>
     );
 };
 

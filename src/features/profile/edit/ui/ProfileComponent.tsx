@@ -68,7 +68,7 @@ function ProfileComponent() {
                 Current Password <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <input type={showPasswords.currentPassword ? "text" : "password"} className={`${errors.currentPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                <input type={showPasswords.currentPassword ? "text" : "password"} className={`${errors.currentPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                   placeholder="Enter your current password" id="current-password" name="currentPassword"
                   {...register("currentPassword", {
                     required: "Current password is required",
@@ -94,7 +94,7 @@ function ProfileComponent() {
                 New Password <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <input type={showPasswords.newPassword ? "text" : "password"} className={`${errors.newPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                <input type={showPasswords.newPassword ? "text" : "password"} className={`${errors.newPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                   placeholder="Enter your new password" name="newPassword"
                   {...register("newPassword", {
                     required: "New password is required",
@@ -120,7 +120,7 @@ function ProfileComponent() {
                 Confirm Password <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <input type={showPasswords.confirmPassword ? "text" : "password"} className={`${errors.confirmPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                <input type={showPasswords.confirmPassword ? "text" : "password"} className={`${errors.confirmPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                   placeholder="Confirm your new password" id="confirm-password" name="confirmPassword"
                   {...register("confirmPassword", {
                     required: "Confirm password is required",

@@ -1,73 +1,90 @@
-import { RedirectBackComponent } from "@/shared/ui/RedirectButtonComponent"
 import Image from "next/image"
-import { AgendaComponent } from "@/entities/agenda/ui/AgendaComponent";
 import Link from "next/link"
+import { notFound } from "next/navigation"
+import { CalendarDays, MapPin } from "lucide-react"
+import { AgendaComponent } from "@/entities/agenda/ui/AgendaComponent";
 import { getEventById } from "@/entities/event/api/landingService"
 import { getFormAction } from "@/entities/event/api/landingAction"
+import { cn } from "@/shared/lib/utils"
+import { formatEventDate, posterSrc } from "@/shared/lib/poster"
+import { RedirectBackComponent } from "@/shared/ui/RedirectButtonComponent"
+import { Badge } from "@/shared/ui/kit/badge"
+import { Button } from "@/shared/ui/kit/button"
+import { Card } from "@/shared/ui/kit/card"
 
 const Page = async (props) => {
-  const { id } = await props.params;
-    const data = await getEventById(id);
-    const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-    const inputDate = data?.payload?.startDateTime;
-    const formattedDate = formatDate(inputDate);
-    const formated = formattedDate;
-    const imageUrl = data?.payload?.poster;
-    const isValidUrl = imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://');
-    const form = await getFormAction(id);
+    const { id } = await props.params;
+    const [data, form] = await Promise.all([getEventById(id), getFormAction(id)]);
+    const event = data?.payload;
+    if (!event) notFound();
+
+    const agenda = event.agenda?.data?.agenda ?? [];
+    const full = form?.status == 400;
 
     return (
         <div className="container">
-            <RedirectBackComponent link={'/'} />
-            <section className="p-6 rounded-3xl border-2 border-slate-100 drop-shadow-sm bg-white">
-                <div className="h-[350px] lgh-[450px] relative">
-                    <Image src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`}
-                        className="h-[350px] lg:h-[450px] object-cover rounded-2xl"
-                        fill
-                        alt="blog-image"
-                    />
+            <RedirectBackComponent link="/" />
+
+            <Card className="gap-0 overflow-hidden rounded-3xl border-slate-100 p-4 shadow-xs sm:p-6">
+                <div className="relative aspect-video max-h-112.5 w-full overflow-hidden rounded-2xl bg-muted">
+                    <Image src={posterSrc(event.poster)} alt="" fill priority sizes="(min-width: 1380px) 1350px, 100vw" className="object-cover" />
                 </div>
-                <div className="space-y-6 mt-6">
-                    <div className="flex justify-between items-center">
-                        <h2 className="text-xl lg:text-2xl font-semibold">{data?.payload?.eventName}</h2>
-                        <button className={`text-sm lg:text-base ${data?.payload?.isOpen ? 'bg-blue-200 text-blue-800' : 'bg-red-200 text-red-800'} px-6 py-1.5 rounded-full`}>
-                            {data?.payload?.isOpen ? 'Open' : 'Close'}
-                        </button>
+                <div className="mt-6 space-y-5">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                        <h1 className="text-2xl font-semibold lg:text-3xl">{event.eventName}</h1>
+                        <Badge
+                            className={cn(
+                                "rounded-full px-4 py-1 text-sm",
+                                event.isOpen ? "bg-blue-100 text-blue-800" : "bg-red-100 text-red-800",
+                            )}
+                        >
+                            {event.isOpen ? "Open" : "Closed"}
+                        </Badge>
                     </div>
-                    <p className="text-sm lg:text-base w-full lg:w-2/3 font-light">
-                        {data?.payload?.description}
-                    </p>
-                    <p>
-                        <span className="text-sm lg:text-base font-semibold">Location:</span>   {data?.payload?.location}
-                    </p>
-                    <button className="bg-blue-200 text-blue-800 text-sm lg:text-base px-6 py-3 rounded-full">{formated}</button>
+                    <p className="max-w-3xl text-sm text-muted-foreground lg:text-base">{event.description}</p>
+                    <dl className="flex flex-wrap gap-x-8 gap-y-3 text-sm lg:text-base">
+                        <div className="flex items-center gap-2">
+                            <dt><MapPin className="size-5 text-muted-foreground" aria-hidden="true" /><span className="sr-only">Location</span></dt>
+                            <dd>{event.location}</dd>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <dt><CalendarDays className="size-5 text-muted-foreground" aria-hidden="true" /><span className="sr-only">Date</span></dt>
+                            <dd>{formatEventDate(event.startDateTime)}</dd>
+                        </div>
+                    </dl>
                 </div>
-            </section>
-            <section className="py-8 space-y-6">
-                <h2 className="text-xl lg:text-2xl font-semibold">Agenda</h2>
-                {data?.payload?.agenda?.data?.agenda?.map((x, index) => (
-                    <AgendaComponent
-                        key={index}
-                        no={index + 1}
-                        startTime={x?.startTime}
-                        endTime={x?.endTime}
-                        title={x?.topic}
-                        description={x?.description}
-                        speaker={x?.speaker}
-                    />
-                ))}
-                <div className="w-full flex justify-end text-end pt-8">
-                    {form.status == 400 ?
-                        <p className="text-red-600">
-                            {!data?.payload?.isOpen ?
-                                "Can't register due to event closed"
-                                :
-                                "Attendee full can't register"
-                            }
-                        </p>
-                        :
-                        <Link href={`/register/${id}`} className={`${!data?.payload?.isOpen && 'hidden'} text-sm lg:text-base px-9 font-bold py-4 rounded-full bg-purple-text text-white`}>Join Event</Link>
-                    }
+            </Card>
+
+            <section className="space-y-6 py-8">
+                <h2 className="text-xl font-semibold lg:text-2xl">Agenda</h2>
+                {agenda.length ? (
+                    <ol className="space-y-4">
+                        {agenda.map((x, index) => (
+                            <AgendaComponent
+                                key={index}
+                                no={index + 1}
+                                startTime={x?.startTime}
+                                endTime={x?.endTime}
+                                title={x?.topic}
+                                description={x?.description}
+                                speaker={x?.speaker}
+                            />
+                        ))}
+                    </ol>
+                ) : (
+                    <p className="text-sm text-muted-foreground">The agenda hasn&apos;t been published yet.</p>
+                )}
+
+                <div className="flex justify-end pt-4">
+                    {!event.isOpen ? (
+                        <p className="font-medium text-destructive">Registration is closed for this event.</p>
+                    ) : full ? (
+                        <p className="font-medium text-destructive">This event is full.</p>
+                    ) : (
+                        <Button asChild className="h-12 w-full rounded-full px-9 font-bold sm:w-auto">
+                            <Link href={`/register/${id}`}>Join Event</Link>
+                        </Button>
+                    )}
                 </div>
             </section>
         </div>

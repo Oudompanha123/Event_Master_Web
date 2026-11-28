@@ -2,7 +2,7 @@ import { Calendar1, CalendarTick, People, Profile2User } from "@/shared/ui/icons
 
 export const OverviewCardComponent = ({ title, count, logo }) => {
     return (
-        <div className={`space-y-5 overflow-hidden relative p-4 bg-gradient-to-r 
+        <div className={`space-y-5 overflow-hidden relative p-4 bg-linear-to-r 
         ${logo == "event" ? 'from-violet-500 to-blue-300'
                 : logo == "published" ? 'from-blue-300 to-blue-300/50'
                     : logo == "attendee" ? 'from-[#9288ff] to-[#948BFF]/50' : 'from-violet-400 to-violet-400/50'} rounded-2xl text-white`}

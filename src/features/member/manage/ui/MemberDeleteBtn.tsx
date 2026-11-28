@@ -19,8 +19,8 @@ export const MemberDeleteBtn = () => {
                             <img className="mx-auto" src="/images/reject.svg" alt="reject-image" />
                             <p className="py-4 text-center text-xl font-semibold mx-auto">Are you sure you want to remove this member?</p>
                             <div className="flex space-x-6 justify-center">
-                                <Link className="bg-greenUi text-white rounded-full py-2 px-9" href={'#'}>Yes</Link>
-                                <Link className="bg-redUi text-white rounded-full py-2 px-9" href={'#'}>No</Link>
+                                <Link className="bg-green-ui text-white rounded-full py-2 px-9" href={'#'}>Yes</Link>
+                                <Link className="bg-red-ui text-white rounded-full py-2 px-9" href={'#'}>No</Link>
                             </div>
                         </div>
                     </div>

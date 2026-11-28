@@ -86,7 +86,7 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
                             Event Category
                         </Label>
                         <Listbox.Button
-                            className={`relative ${height} h-[42px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${
+                            className={`relative ${height} h-[42px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-hidden sm:text-sm sm:leading-6 ${
                                 !selected ? "text-gray-400" : "bg-white text-gray-400"
                             }`}
                         >
@@ -110,7 +110,7 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >
-                            <Listbox.Options className="absolute z-10 mt-1 overflow-auto rounded-2xl bg-white h-72 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                            <Listbox.Options className="absolute z-10 mt-1 overflow-auto rounded-2xl bg-white h-72 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-hidden sm:text-sm">
                                 {options?.map((option) => (
                                     <Listbox.Option
                                         key={option.categoryId}
@@ -128,7 +128,7 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
                                                 <span
                                                     className={`${
                                                         selected ? "font-medium" : "font-normal"
-                                                    } ${option.categoryId === 999 ? "text-greenUi" : ""} h-full w-full`}
+                                                    } ${option.categoryId === 999 ? "text-green-ui" : ""} h-full w-full`}
                                                 >
                                                     {option.categoryName}
                                                 </span>
@@ -143,7 +143,7 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
                                                     </span>
                                                 )}
                                                 {option.categoryId === 999 && (
-                                                    <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-greenUi">
+                                                    <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-green-ui">
                                                         <Add size="20" />
                                                     </span>
                                                 )}
@@ -170,7 +170,7 @@ export const SelectModifyV2 = ({ height, label, func ,categoryName,eventId}) => 
                         type="text"
                         name="category"
                         id="category"
-                        className={`${error ? "border-red-600" : "greyUi"} shadow-sm bg-white border primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                        className={`${error ? "border-red-600" : "greyUi"} shadow-xs bg-white border primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                         placeholder="Category"
                         value={newCategory}
                         onChange={(e) => setNewCategory(e.target.value)}

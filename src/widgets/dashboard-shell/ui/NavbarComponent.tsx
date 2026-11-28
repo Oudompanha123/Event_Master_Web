@@ -1,167 +1,167 @@
 'use client'
 
-import Image from "next/image"
-import defaultProfile from "../../../../public/images/default-profile.jpg"
-import { usePathname, useSearchParams } from "next/navigation"
-import { NotificationMenu } from "./NotificationMenu"
-import { CreateEventButton } from "@/features/event/create";
+import { Fragment, useEffect, useMemo, useState } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { jwtDecode } from "jwt-decode"
+import { Building2, Menu, UserRound } from "lucide-react"
+import defaultProfile from "../../../../public/images/default-profile.jpg"
+import { NotificationMenu } from "./NotificationMenu"
+import { CreateEventButton } from "@/features/event/create"
 import { getEventByIdAction } from "@/entities/event/api/eventFormAction"
 import { getOrganizationAction } from "@/entities/organization/api/orgAction"
-import { useEffect, useState } from "react"
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/kit/avatar"
+import { Button } from "@/shared/ui/kit/button"
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/shared/ui/kit/breadcrumb"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/shared/ui/kit/dropdown-menu"
 
-export const NavbarComponent = ({ className, onMenuClick }) => {
-    const [eventName, setEventName] = useState<any>();
-    const pathname = usePathname();
-    let url = pathname;
-    let eId = url.split('/').pop()
+const TITLES: Record<string, string> = {
+    "/overview": "Overview",
+    "/members": "Member",
+    "/assets": "Assets",
+    "/events": "Events",
+    "/user-request": "Notification",
+    "/organization-profile": "Organization Profile",
+    "/user-profile": "User Profile",
+    "/account-setting": "Account Setting",
+}
 
-    const param = useSearchParams()
-    const eName = param.get('name')
-    // searchParam for server 
-    const eventId = pathname.split('/')[2];
-    const { data: session, status } = useSession();
-    let userInfo;
+const initials = (name?: string) =>
+    (name ?? "")
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((w) => w[0]?.toUpperCase())
+        .join("") || "EM"
 
-    if (status === 'authenticated' && session?.user?.token) {
-        userInfo = jwtDecode(session.user.token);
-    }
+export const NavbarComponent = ({ className, onMenuClick }: { className?: string; onMenuClick?: () => void }) => {
+    const pathname = usePathname()
+    const { data: session, status } = useSession()
+    const userInfo = useMemo(
+        () => (status === "authenticated" && session?.user?.token ? jwtDecode(session.user.token) : undefined),
+        [session, status],
+    )
+    const userRole = userInfo?.role
 
-    const getEventById = async (id) => {
-        const res = await getEventByIdAction(id);
-        setEventName(res?.payload?.eventName)
-    }
-
+    // event pages show breadcrumbs instead of a title
+    const onEventPage = pathname.startsWith("/event-detail") || pathname.startsWith("/attendees")
+    const eventId = pathname.split("/")[2]
+    const [eventName, setEventName] = useState<string>()
     useEffect(() => {
-        if (pathname.startsWith('/event-detail') || pathname.startsWith('/attendees')) {
-            setEventName(undefined);
-            getEventById(eventId);
-        }
-    }, [pathname, eventId])
-
-    const userRole = userInfo?.role;
+        if (!onEventPage || !eventId) return
+        setEventName(undefined)
+        getEventByIdAction(eventId).then((res) => setEventName(res?.payload?.eventName))
+    }, [onEventPage, eventId])
 
     // The token's organization is a snapshot from login time; load the live one,
     // and pick up edits made on the organization profile page.
-    const [org, setOrg] = useState(null);
+    const [org, setOrg] = useState<any>(null)
     useEffect(() => {
-        if (status !== 'authenticated') return;
+        if (status !== "authenticated") return
         getOrganizationAction()
-            .then(res => res?.payload && setOrg(res.payload))
-            .catch(err => console.error("Error loading organization: ", err));
-        const onUpdated = (e) => e.detail && setOrg(e.detail);
-        window.addEventListener('organization-updated', onUpdated);
-        return () => window.removeEventListener('organization-updated', onUpdated);
-    }, [status]);
-    const orgName = org?.orgName ?? userInfo?.organization?.orgName;
-    const orgLogo = org?.logo ?? userInfo?.organization?.logo;
-    const logoSrc = orgLogo && /^(http|https):\/\//.test(orgLogo) ? orgLogo : defaultProfile;
+            .then((res) => res?.payload && setOrg(res.payload))
+            .catch((err) => console.error("Error loading organization: ", err))
+        const onUpdated = (e) => e.detail && setOrg(e.detail)
+        window.addEventListener("organization-updated", onUpdated)
+        return () => window.removeEventListener("organization-updated", onUpdated)
+    }, [status])
+    const orgName = org?.orgName ?? userInfo?.organization?.orgName
+    const orgLogo = org?.logo ?? userInfo?.organization?.logo
+    const logoSrc = orgLogo && /^(http|https):\/\//.test(orgLogo) ? orgLogo : defaultProfile.src
 
     return (
-        <div className={`${className ?? ''} justify-between gap-3 sticky top-0 z-50 bg-white flex items-center py-3 px-4 sm:px-6 lg:px-10 xl:px-14 border-b-[1px]`}>
-            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+        <header className={`sticky top-0 z-50 flex items-center justify-between gap-3 border-b border-border bg-white px-4 py-3 sm:px-6 lg:px-10 xl:px-14 ${className ?? ""}`}>
+            <div className="flex min-w-0 items-center gap-2 sm:gap-3">
                 {onMenuClick && (
-                    <button
-                        type="button"
-                        onClick={onMenuClick}
-                        aria-label="Open menu"
-                        className="lg:hidden -ml-1 p-2 rounded-lg hover:bg-gray-100 shrink-0"
-                    >
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#344054" strokeWidth="2" strokeLinecap="round"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
-                    </button>
+                    <Button variant="ghost" size="icon" onClick={onMenuClick} aria-label="Open menu" className="-ml-1 shrink-0 lg:hidden">
+                        <Menu className="size-6" />
+                    </Button>
                 )}
-                {!pathname.startsWith('/event-detail') && !pathname.startsWith('/attendees') ?
-                    <h2 className="text-lg lg:text-xl font-semibold block truncate">
-                        {pathname === '/overview' ?
-                            'Overview' :
-                            pathname === '/members' ?
-                                'Member' :
-                                pathname === '/assets' ?
-                                    'Assets' :
-                                    pathname === '/events' || pathname.startsWith("/event-detail") || pathname === "/attendees" ?
-                                        'Events' :
-                                        pathname === '/user-request' ?
-                                            'Notification' :
-                                            pathname === '/organization-profile' ?
-                                                "Organization Profile" :
-                                                pathname === '/user-profile' ?
-                                                    "User Profile" :
-                                                    pathname === '/account-setting' ?
-                                                        'Account Setting' :
-                                                        'Default'}
-                    </h2>
-                    :
-                    <div>
-                        <div className="hidden lg:flex text-sm breadcrumbs">
-                            <ul className="">
-                                <li>
-                                    <Link href={`/event-detail/${eventId}`}>{eventName ? eventName : '...'}</Link>
-                                </li>
-                                <li>
-                                    <Link href={`/attendees/${eventId}`}>Attendees</Link>
-                                </li>
-                                <li>
-                                    <Link href={'/events'}>
-                                        Events
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="flex lg:hidden text-sm breadcrumbs">
-                            <ul className="">
-                                <li>
-                                    <Link href={'/attendees'}>Attendees</Link>
-                                </li>
-                                <li>
-                                    <Link href={'/events'}>
-                                        Events
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                }
+                {onEventPage ? (
+                    <Breadcrumb className="min-w-0">
+                        <BreadcrumbList className="flex-nowrap">
+                            <BreadcrumbItem>
+                                <BreadcrumbLink asChild>
+                                    <Link href="/events">Events</Link>
+                                </BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator />
+                            <BreadcrumbItem className="min-w-0">
+                                {pathname.startsWith("/event-detail") ? (
+                                    <BreadcrumbPage className="truncate">{eventName ?? "..."}</BreadcrumbPage>
+                                ) : (
+                                    <BreadcrumbLink asChild>
+                                        <Link href={`/event-detail/${eventId}`} className="truncate">{eventName ?? "..."}</Link>
+                                    </BreadcrumbLink>
+                                )}
+                            </BreadcrumbItem>
+                            {pathname.startsWith("/attendees") && (
+                                <Fragment>
+                                    <BreadcrumbSeparator />
+                                    <BreadcrumbItem>
+                                        <BreadcrumbPage>Attendees</BreadcrumbPage>
+                                    </BreadcrumbItem>
+                                </Fragment>
+                            )}
+                        </BreadcrumbList>
+                    </Breadcrumb>
+                ) : (
+                    <h1 className="truncate text-lg font-semibold lg:text-xl">{TITLES[pathname] ?? "Default"}</h1>
+                )}
             </div>
-            <div className="flex items-center gap-3 sm:gap-6 lg:gap-10 shrink-0">
-                <div className="bg-[#F7F9FB] p-2 rounded-full hidden cursor-pointer">
-                    {/* <NotificationMenu /> */}
-                    <Image src={'/icons/icon.svg'} width={24} height={24} alt="" />
-                </div>
-                {/* <NotificationCard /> */}
-                <div tabIndex={0} role="button" className="bg-[#F7F9FB] p-1 rounded-full hidden cursor-pointer lg:block">
+
+            <div className="flex shrink-0 items-center gap-2 sm:gap-4 lg:gap-8">
+                <div className="hidden rounded-full bg-background-ui p-1 sm:block">
                     <NotificationMenu />
                 </div>
-                {userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN" ? <CreateEventButton /> : ''}
-                <Link href={'/user-profile'}>
-                    <div className="flex items-center gap-4">
-                        <div className="hidden lg:block">
-                            <p className="font-semibold text-end text-sm">{orgName}</p>
-                            <p className="text-xs text-greyUi">{userInfo?.sub}</p>
-                        </div>
-                        <div className="w-[48px] h-[48px] hidden lg:block">
-                            <Image
-                                className="rounded-full w-full h-full object-cover"
-                                src={logoSrc}
-                                alt="organization logo"
-                                height={48}
-                                width={48}
-                            />
-                        </div>
-                        <div className="w-[36px] h-[36px] block lg:hidden">
-                            <Image
-                                className="rounded-full w-full h-full object-cover"
-                                src={logoSrc}
-                                alt="organization logo"
-                                height={48}
-                                width={48}
-                            />
-                            {/* <Image className="rounded-full" src={userInfo?.organization?.logo != "" ? userInfo?.organization?.logo : defaultProfile} height={32} width={32} /> */}
-                        </div>
-                    </div>
-                </Link>
+                {(userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN") && <CreateEventButton />}
+                <DropdownMenu>
+                    <DropdownMenuTrigger className="flex items-center gap-3 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                        <span className="hidden text-right lg:block">
+                            <span className="block text-sm font-semibold">{orgName}</span>
+                            <span className="block text-xs text-grey-ui">{userInfo?.sub}</span>
+                        </span>
+                        <Avatar className="size-9 lg:size-12">
+                            <AvatarImage src={logoSrc} alt="Organization logo" className="object-cover" />
+                            <AvatarFallback>{initials(orgName)}</AvatarFallback>
+                        </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56">
+                        <DropdownMenuLabel className="font-normal">
+                            <span className="block truncate text-sm font-semibold">{orgName}</span>
+                            <span className="block truncate text-xs text-muted-foreground">{userInfo?.sub}</span>
+                        </DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem asChild>
+                            <Link href="/user-profile">
+                                <UserRound /> User Profile
+                            </Link>
+                        </DropdownMenuItem>
+                        {userRole === "ROLE_ADMIN" && (
+                            <DropdownMenuItem asChild>
+                                <Link href="/organization-profile">
+                                    <Building2 /> Organization Profile
+                                </Link>
+                            </DropdownMenuItem>
+                        )}
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
-        </div>
+        </header>
     )
 }

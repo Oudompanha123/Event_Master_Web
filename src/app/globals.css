@@ -1,151 +1,308 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-*{
-  padding: 0;
-  margin: 0;
+@custom-variant dark (&:is(.dark *));
+
+/* daisyUI 5 (Tailwind v4 plugin). Kept while components move to shadcn/ui; removed in the last phase. */
+@plugin "daisyui" {
+  themes: light --default;
 }
 
-@media (max-width: 640px) {
-  .hideOnPhone {
+/* ---------------------------------------------------------------------------------------------
+   Brand tokens (each one becomes utilities: --color-purple -> bg-purple, text-purple, ...)
+   --------------------------------------------------------------------------------------------- */
+@theme {
+  --shadow-soft: 0 0 1px rgba(0, 0, 0, 0.4);
+
+  --background-image-pattern: url('/images/pattern.jpg');
+  --background-image-noice: url('/images/noice-bg.jpg');
+
+  --border-width-1px: 1px;
+
+  --radius-radius-ui: 15px;
+  --radius-radius64: 64px;
+
+  --color-purple: #7a44ff;
+  --color-purple-text-head: #4c179b;
+  --color-primary-purple: #ece8ff;
+  --color-purple-text: #7939ef;
+  --color-primary-text: #344054;
+  --color-blue-ui: #551fff;
+  --color-green-ui: #038446;
+  --color-red-ui: #d72222;
+  --color-grey-ui: #808080;
+  --color-softwhite-ui: #f7f7f7;
+  --color-background-ui: #f7f9fb;
+  --color-soft-green-ui: #e3f4db;
+  --color-soft-red-ui: #ffeceb;
+  --color-table-bg: #f0f1f3;
+  --color-member-border: #0000000d;
+
+  /* shadcn InputOTP's fake caret */
+  --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+  @keyframes caret-blink {
+    0%, 70%, 100% { opacity: 1; }
+    20%, 50% { opacity: 0; }
+  }
+}
+
+/* shadcn/ui semantic tokens -> utilities (bg-primary, text-muted-foreground, rounded-lg, ...) */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* shadcn/ui theme values mapped to the EventMaster brand (the brand colors in @theme above). */
+:root {
+  --site-container: none; /* see `container` below */
+  --radius: 0.75rem;
+  --background: #ffffff;
+  --foreground: #344054; /* primary-text */
+  --card: #ffffff;
+  --card-foreground: #344054;
+  --popover: #ffffff;
+  --popover-foreground: #344054;
+  --primary: #7939ef; /* purple-text: the brand button color */
+  --primary-foreground: #ffffff;
+  --secondary: #ece8ff; /* primary-purple */
+  --secondary-foreground: #4c179b; /* purple-text-head */
+  --muted: #f7f9fb; /* background-ui */
+  --muted-foreground: #808080; /* grey-ui */
+  --accent: #ece8ff;
+  --accent-foreground: #4c179b;
+  --destructive: #d72222; /* red-ui */
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #7a44ff; /* purple */
+  --chart-1: #7a44ff;
+  --chart-2: #551fff;
+  --chart-3: #038446;
+  --chart-4: #fbbc04;
+  --chart-5: #d72222;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #344054;
+  --sidebar-primary: #7939ef;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ece8ff;
+  --sidebar-accent-foreground: #4c179b;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: #7a44ff;
+}
+
+/* shadcn's default dark palette. Nothing sets `.dark` yet; kept so the kit's dark: styles have values. */
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* `container` with the site's own widths: full width, then 640 / 728 / 984 / 1380px.
+   This rule is emitted after Tailwind's built-in container rules, so its max-width wins. */
+@media (width >= 640px) {
+  :root { --site-container: 640px; }
+}
+@media (width >= 728px) {
+  :root { --site-container: 728px; }
+}
+@media (width >= 984px) {
+  :root { --site-container: 984px; }
+}
+@media (width >= 1380px) {
+  :root { --site-container: 1380px; }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+  max-width: var(--site-container);
+}
+
+@layer base {
+  /* Global reset. It must stay in `base`: in `utilities` it comes after Tailwind's utilities
+     and, at the same zero specificity as :where()-based utilities such as space-x-* / space-y-*,
+     it would override them. */
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  /* default border color (Tailwind v4 defaults to currentcolor) and focus outline color */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* The design hides scrollbars everywhere (pages still scroll): the standard property where it
+     exists, ::-webkit-scrollbar for older Chrome and Safari. */
+  @supports (scrollbar-width: none) {
+    * {
+      scrollbar-width: none;
+    }
+  }
+  *::-webkit-scrollbar {
     display: none;
   }
 }
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+@layer components {
+  /* react-paginate (DataTable): page buttons */
+  .pagination {
+    list-style: none;
+    height: 100%;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+  .page-item {
+    display: flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0 0.25rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid #e5e7eb;
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+
+  .page-item a {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    align-content: center;
+  }
+
+  /* scoped: a bare `.active` with !important would restyle anything else using that class name */
+  .pagination .active {
+    background-color: var(--color-primary-purple);
+    border-radius: 50%;
+  }
+
+  /* Spinner shown inside buttons while a request runs: <div class="loader"></div> */
+  .loader {
+    width: 25px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(farthest-side, #fff 94%, #0000) top/8px 8px no-repeat,
+      conic-gradient(#0000 30%, #fff);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+    mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+    animation: spinner 1s infinite linear;
+  }
+
+  /* Knock notification feed (NotificationMenu) */
+  .rnf-notification-cell__unread-dot {
+    position: absolute;
+    top: 6px;
+    right: 6px !important;
+    width: 6px;
+    height: 6px;
+    border-radius: 6px;
+  }
+
+  .rnf-notification-feed-popover__inner {
+    border-radius: 16px !important;
+  }
+
+  .rnf-dropdown select,
+  .rnf-dropdown svg {
+    display: none !important;
+  }
+
+  /* wrong-input feedback */
+  .shake-animation {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shake-animation {
+      animation: none;
+    }
   }
 }
 
-.table-row-gap > tbody > tr:not(:last-child) {
-  margin-bottom: 32px; /* Adjust this value to change the gap */
-  display: block;
-}
-
-
-body {
-  scroll-behavior: smooth;
-  color: #344054;
-  /* color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
-  
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-*::-webkit-scrollbar {
-  display: none;
-}
-* {
-  -ms-overflow-style: none;  
-  scrollbar-width: none; 
-}
-
-.pagination {
-  list-style: none;
-  height: 100%;
-  width: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.active {
-  background-color: #ECE8FF !important;
-  border-radius: 50%;
-}
-
-.page-item {
-  display: flex;
-  width: 2.5rem; 
-  height: 2.5rem;
-  margin: 0 0.25rem;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  border: 1px solid #e5e7eb;
-  background-color: #fff;
-  color: #000;
-  cursor: pointer;
-  font-size: 0.875rem;
-}
-
-.page-item a {
-  height: 100%;
-  width: 100%;
-  text-align: center;
-  align-content: center;
-}
-
-/* HTML: <div class="loader"></div> */
-.loader {
-  width: 25px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: 
-    radial-gradient(farthest-side,#fff 94%,#0000) top/8px 8px no-repeat,
-    conic-gradient(#0000 30%,#fff);
-  -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 8px),#000 0);
-  animation: l13 1s infinite linear;
-}
-@keyframes l13{ 
-  100%{transform: rotate(1turn)}
-}
-
-.loader_purple {
-  width: 25px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: 
-    radial-gradient(farthest-side,#7A44FF 94%,#0000) top/8px 8px no-repeat,
-    conic-gradient(#0000 30%,#7A44FF);
-  -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 8px),#000 0);
-  animation: l13 1s infinite linear;
-}
-@keyframes l13{ 
-  100%{transform: rotate(1turn)}
-}
-
-.rnf-notification-cell__unread-dot {
-  position: absolute;
-  top: 6px;
-  right: 6px !important;
-  width: 6px;
-  height: 6px;
-  border-radius: 6px;
-  background-color: 6px;
-  border: 1px solid 6px;
-}
-
-.rnf-notification-feed-popover__inner {
-  border-radius: 16px !important;
-}
-
-.rnf-dropdown 
-select,
-.rnf-dropdown 
-svg {
-  display: none !important;
+@keyframes spinner {
+  100% { transform: rotate(1turn); }
 }
 
 @keyframes shake {
@@ -153,8 +310,3 @@ svg {
   10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
   20%, 40%, 60%, 80%, 100% { transform: translateX(5px); }
 }
-
-.shake-animation {
-  animation: shake 0.5s ease-in-out;
-}
-

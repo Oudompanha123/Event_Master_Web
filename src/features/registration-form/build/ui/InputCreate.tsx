@@ -15,10 +15,10 @@ export const InputCreate = ({ type, name, id, func }) => {
                     disabled
                     placeholder={`Please enter your ${name.toLowerCase()}`}
                     name={`${name}`}
-                    className="px-4 border w-[100%] focus:outline-none text-sm rounded-2xl p-3.5 block"
+                    className="px-4 border w-full focus:outline-hidden text-sm rounded-2xl p-3.5 block"
                     type={type}
                 />
-                <div onClick={() => handleRemove(id)} className={`${id === 0 && 'hidden'} ${id === 1 && 'hidden'} cursor-pointer absolute -top-2 -right-2 bg-white rounded-full shadow-sm border-1px`}>
+                <div onClick={() => handleRemove(id)} className={`${id === 0 && 'hidden'} ${id === 1 && 'hidden'} cursor-pointer absolute -top-2 -right-2 bg-white rounded-full shadow-xs border-1px`}>
                     <Minus size="18" className="text-red-600" />
                 </div>
             </div>

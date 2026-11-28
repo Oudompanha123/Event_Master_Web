@@ -6,49 +6,46 @@ import { TeamCardComponent } from "@/widgets/about/ui/TeamCardComponent";
 import featureData from "@/shared/mocks/feature.json"
 import teamData from "@/shared/mocks/team.json"
 
-const Page = () => {
-    return (
-        <div className="container overflow-hidden">
-            <section className="bg-pattern bg-cover text-center mt-24">
-                <h1 className="text-4xl lg:text-6xl font-semibold">About Event Master</h1>
-                <p className="text-sm text-slate-500 lg:text-xl font-light mt-10 w-full lg:w-1/2 mx-auto">Created by KPS students with expert mentors,
-                    our Event Management System simplifies managing
-                    events like weddings, sports, and conferences. Users
-                    can join events without an account, while admins
-                    efficiently handle event creation, materials, and
-                    task delegation.
+const Page = () => (
+    <div className="container overflow-hidden">
+        <section className="relative bg-pattern bg-cover pt-12 pb-16 text-center lg:pt-24 lg:pb-48">
+            <h1 className="text-4xl font-semibold sm:text-5xl lg:text-6xl">About Event Master</h1>
+            <p className="mx-auto mt-6 max-w-2xl text-sm text-muted-foreground sm:text-base lg:mt-10 lg:text-xl">
+                Created by KPS students with expert mentors, our Event Management System simplifies managing events like
+                weddings, sports, and conferences. Users can join events without an account, while admins efficiently handle
+                event creation, materials, and task delegation.
+            </p>
+            <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 hidden justify-between px-[8%] lg:flex">
+                <Image src={arrowLeftImage} alt="" width={208} height={249} />
+                <Image src={arrowRightImage} alt="" width={208} height={249} />
+            </div>
+        </section>
+
+        <section className="relative lg:-mt-24">
+            <h2 className="text-center text-3xl font-semibold sm:text-4xl lg:text-6xl">Our Features</h2>
+            <div className="relative mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8 lg:px-16">
+                {featureData.payload.map((x) => (
+                    <AboutCardComponent key={x.title} title={x.title} detail={x.detail} logo={x.logo} />
+                ))}
+                <div aria-hidden="true" className="absolute top-1/4 left-1/3 z-10 hidden size-96 rounded-full bg-purple-text/35 blur-3xl lg:block" />
+            </div>
+        </section>
+
+        <section className="mt-20 lg:mt-28">
+            <div className="space-y-4 text-center lg:space-y-6">
+                <h2 className="text-3xl font-semibold sm:text-4xl lg:text-6xl">Meet Our Core Teams</h2>
+                <p className="mx-auto max-w-2xl text-sm text-muted-foreground lg:text-base">
+                    Young and talented developers, shaping the future of event management with their exceptional skills and
+                    innovative ideas.
                 </p>
-                <div className="hidden lg:flex justify-center gap-[712px]">
-                    <Image src={arrowLeftImage} alt="" width={208} height={249} />
-                    <Image src={arrowRightImage} alt="" width={208} height={249} />
-                </div>
-                <div className="h-20"></div>
-            </section>
-            <section className="relative lg:-top-40">
-                <h2 className="text-4xl lg:text-6xl font-semibold text-center">Our Features</h2>
-                <div className="lg:px-16 grid grid-col-1 lg:grid-cols-2 gap-8 mt-8 relative">
-                    {featureData.payload.map((x, index) => (
-                        <AboutCardComponent key={index} title={x.title} detail={x.detail} logo={x.logo} />
-                    ))}
-                    <div className="h-96 w-96 hidden lg:block bg-purple-text/35 rounded-full blur-3xl absolute left-1/3 top-1/4 z-10"></div>
-                </div>
-            </section>
-            <section>
-                <div className="text-center space-y-6 mt-12 lg:mt-0">
-                    <h2 className="text-4xl lg:text-6xl font-semibold">Meet Our Core Teams</h2>
-                    <p className="font-light text-sm lg:text-base w-full lg:w-1/2 mx-auto">Young and talented developers, shaping the
-                        future of event management with their exceptional
-                        skills and innovative ideas.
-                    </p>
-                </div>
-                <div className="flex flex-wrap items-start gap-16 mt-16 justify-center">
-                    {teamData.payload.map((x, index) => (
-                        <TeamCardComponent key={index} img={x.image} name={x.name} quote={x.quote} />
-                    ))}
-                </div>
-            </section>
-        </div>
-    )
-}
+            </div>
+            <div className="mt-12 grid grid-cols-2 justify-items-center gap-x-4 gap-y-10 sm:gap-x-8 md:grid-cols-3 lg:mt-16 lg:grid-cols-4 lg:gap-y-16">
+                {teamData.payload.map((x) => (
+                    <TeamCardComponent key={x.name} img={x.image} name={x.name} quote={x.quote} />
+                ))}
+            </div>
+        </section>
+    </div>
+)
 
 export default Page

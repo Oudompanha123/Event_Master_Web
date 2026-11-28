@@ -1,19 +1,20 @@
-'use client'
+import Image from "next/image";
 
-const VerifyComponent = () => {
-
-    return (
-        <div className="absolute flex justify-center sm:pt-[700px] mt-[440px] sm:mt-[60px] lg:pt-[600px] 2xl:pt-[700px] w-full sm:w-full md:w-[100%] lg:w-[100%] h-[100%]">
-            <form>
-                <div className="lg:mt-[-130px] mt-5">
-                    <h2 className="text-center text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
-                        Congratulations!
-                    </h2>
-                    <p className="flex justify-center greyUi mt-6">You have set up the new password successfully.</p>
-                </div>
-            </form>
+const VerifyComponent = () => (
+    <div className="flex flex-col items-center gap-6 text-center">
+        <Image
+            src="/images/verify-success.gif"
+            alt=""
+            width={300}
+            height={300}
+            unoptimized
+            className="size-52 sm:size-64"
+        />
+        <div className="space-y-3">
+            <h1 className="text-2xl font-extrabold text-purple-text-head sm:text-3xl">Congratulations!</h1>
+            <p className="text-sm text-muted-foreground sm:text-base">You have set up the new password successfully.</p>
         </div>
-    )
-}
-export default VerifyComponent
+    </div>
+);
 
+export default VerifyComponent

@@ -1,121 +1,91 @@
 'use client'
 
-import { use, useEffect, useState } from "react";
-import { RedirectBackComponent } from "@/shared/ui/RedirectButtonComponent"
-
-import { useForm } from "react-hook-form"
-import { getFormAction } from "@/entities/event/api/landingAction";
-import { Boolean } from "@/features/registration-form/fill";
-import { InputField } from "@/features/registration-form/fill";
+import { use, useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { getFormAction } from "@/entities/event/api/landingAction";
 import { addAttendeeToEventAction } from "@/entities/event/api/eventFormAction";
+import { Boolean, InputField } from "@/features/registration-form/fill";
+import { RedirectBackComponent } from "@/shared/ui/RedirectButtonComponent"
+import { Button } from "@/shared/ui/kit/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/kit/card";
+import { Skeleton } from "@/shared/ui/kit/skeleton";
+
+type FormFieldDef = { fieldType: string };
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = use(params);
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [registerForm, setRegisterForm] = useState<FormFieldDef[]>();
 
-    const notify = (status: string | number, detail?: string) => {
-        if (status == "OK") {
-            toast.success("Your submission has been recorded.", {
-                position: "top-center"
-            });
-        }
-        if (status == 400) {
-            toast.error(`Your submission has been not recorded., ${detail}`, {
-                position: "top-center"
-            });
-        }
-    }
+    useEffect(() => {
+        getFormAction(id).then((res) => setRegisterForm(res?.payload?.data?.form ?? []));
+    }, [id]);
 
-    const {
-        watch,
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
-    const [registerForm, setRegisterForm] = useState<any>();
-
-    const gen = watch("gender");
-
-    const onSubmit = (data) => {
-    };
-
-    const getData = async (id) => {
-        const res = await getFormAction(id);
-        setRegisterForm(res?.payload?.data?.form)
-    }
-
-    const submit = async (v) => {
-        v.preventDefault();
-        setLoading(true)
-        const formData = new FormData(v.target);
-        const data = {};
-        let allFieldsFilled = true; // Flag to check if all fields are filled
-
-        formData.forEach((value, key) => {
-            const trimmedKey = key.toLowerCase().replace(/\s+/g, '');
-            data[trimmedKey] = value;
-
-            // Check if any field is empty
-            if (!value) {
-                allFieldsFilled = false;
-            }
+    const submit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const data: Record<string, FormDataEntryValue> = {};
+        let allFieldsFilled = true;
+        new FormData(e.currentTarget).forEach((value, key) => {
+            data[key.toLowerCase().replace(/\s+/g, '')] = value;
+            if (!value) allFieldsFilled = false;
         });
 
-        // If any field is empty, do not proceed with the API call
         if (!allFieldsFilled) {
-            setLoading(false)
-            notify(400, "make sure you have fill each information.");
+            toast.error("Please fill in every field.");
             return;
         }
 
-        router.push('/');
-        const sendData = {
-            data: data,
-            eventId: id
-        };
-        const res = await addAttendeeToEventAction(sendData);
-
-        setLoading(false)
-        setTimeout(() => {
-            notify('OK');
-        }, 300);
+        setLoading(true);
+        try {
+            const res = await addAttendeeToEventAction({ data, eventId: id });
+            if (res?.status === "CREATED") {
+                toast.success("Your submission has been recorded.");
+                router.push('/');
+                return;
+            }
+            toast.error(`Your submission was not recorded. ${res?.detail ?? ""}`.trim());
+        } catch {
+            toast.error("Cannot reach the server. Please try again.");
+        }
+        setLoading(false);
     };
-
-    useEffect(() => {
-        getData(id)
-    }, [])
 
     return (
         <div className="container">
-            <RedirectBackComponent link={'/'} />
-            <div className="p-6 rounded-3xl border-2 border-slate-100 bg-white drop-shadow-sm">
-                <h2 className="font-bold text-2xl mb-8">Register Form</h2>
-                <form action="" className="space-y-4 lg:space-y-6" onSubmit={submit}>
-                    <div className="grid grid-cols-2 gap-8">
-                        {registerForm?.map((x, index) => {
-                            const [inputType, inputName] = x.fieldType.split(",");
-                            return (
-                                <>
-                                    {inputType == 'boolean' ?
-                                        <Boolean name={inputName} />
-                                        :
-                                        <InputField key={index} type={inputType} name={inputName} />
-                                    }
-                                </>
-                            )
-                        })}
-                    </div>
-                    <div className="w-full flex justify-end">
-                        <button type="submit" className="rounded-full w-32 flex justify-center text-sm lg:text-base px-8 py-3 bg-purple-text text-white font-bold">
-                            <p className={`${!loading ? 'block' : 'hidden'}`}>Submit</p>
-                            <div className={`loader ${loading ? 'block' : 'hidden'}`}></div>
-                        </button>
-                    </div>
-                </form>
-            </div>
+            <RedirectBackComponent link={`/detail/${id}`} label="Back to event" />
+            <Card className="rounded-3xl border-slate-100 shadow-xs">
+                <CardHeader>
+                    <CardTitle><h1 className="text-2xl font-bold">Register Form</h1></CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <form className="space-y-8" onSubmit={submit} noValidate>
+                        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+                            {registerForm === undefined
+                                ? Array.from({ length: 4 }, (_, i) => (
+                                    <div key={i} className="space-y-2">
+                                        <Skeleton className="h-4 w-24" />
+                                        <Skeleton className="h-12 w-full rounded-2xl" />
+                                    </div>
+                                ))
+                                : registerForm.map((x) => {
+                                    const [inputType, inputName] = x.fieldType.split(",");
+                                    return inputType == 'boolean'
+                                        ? <Boolean key={inputName} name={inputName} />
+                                        : <InputField key={inputName} type={inputType} name={inputName} />
+                                })}
+                        </div>
+                        <div className="flex justify-end">
+                            <Button type="submit" disabled={loading || !registerForm?.length} className="h-12 w-full rounded-full px-10 font-bold sm:w-auto">
+                                {loading && <Loader2 className="animate-spin" aria-hidden="true" />}
+                                Submit
+                            </Button>
+                        </div>
+                    </form>
+                </CardContent>
+            </Card>
         </div>
     )
 }

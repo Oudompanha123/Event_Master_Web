@@ -48,14 +48,14 @@ export const CategoryEditAction = ({ cateId, name }) => {
                         type="text"
                         name="category"
                         id="category"
-                        className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
+                        className="shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5"
                         placeholder="Category"
                         value={categoryName}
                         onChange={(e) => setCategoryName(e.target.value)}
                     />
                     <div className="flex justify-end space-x-3">
                         <div onClick={() => (document.getElementById(`update_category_${cateId}`) as HTMLDialogElement | null)?.close()} className="flex items-center px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
-                        <button onClick={() => handleUpdate()} type="submit" className="min-w-32 save border rounded-2xl bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3">
+                        <button onClick={() => handleUpdate()} type="submit" className="min-w-32 save border rounded-2xl bg-green-ui text-white flex justify-center text-center items-center px-4 gap-3">
                             {!isSend ?
                                 <div className="flex justify-center text-center items-center gap-3">
                                     <Image

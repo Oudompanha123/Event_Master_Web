@@ -1,148 +1,98 @@
 'use client'
 
 import Image from "next/image"
-// import logo from "../../public/images/event-master-logo.png"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useMemo, useState } from "react"
+import { useSession } from "next-auth/react"
+import { jwtDecode } from "jwt-decode"
+import { BellRing, Box, CalendarDays, ChevronDown, LayoutDashboard, Settings, Users, type LucideIcon } from "lucide-react"
 import logo from "../../../../public/images/event-master.png"
-import { ArrowDown2, Buildings2, Calendar1, I3Dcube, Layer, LogoutCurve, Notification, People, Personalcard, Setting2 } from "@/shared/ui/icons"
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { LogoutAction } from "@/features/auth/logout";
-import { useSession } from "next-auth/react";
-import { jwtDecode } from "jwt-decode";
+import { LogoutAction } from "@/features/auth/logout"
+import { cn } from "@/shared/lib/utils"
+import { Separator } from "@/shared/ui/kit/separator"
 
-export const SidebarComponent = ({ className }) => {
-    const [data, setData] = useState<any>();
-    const { data: session, status } = useSession();
-    const pathname = usePathname();
-    const [click, setClick] = useState(pathname === "/organization-profile" || pathname === "/user-profile");
-    const [userInfo, setUserInfo] = useState<any>();
-    useEffect(() => {
-        let test;
-        if (status === 'authenticated' && session?.user?.token) {
-            setUserInfo(jwtDecode(session.user.token));
-            test = jwtDecode(session.user.token)
-        }
-        const userRole = test?.role;
-        // const userRole = userInfo?.role;
-        if (userRole === "ROLE_USER") {
-            setData({
-                "data": [
-                    {
-                        "link": "/overview",
-                        "name": "Overview",
-                        "icon": "overview"
-                    }, ,
-                    {
-                        "link": "/members",
-                        "name": "Members",
-                        "icon": "members"
-                    },
-                    {
-                        "link": "/assets",
-                        "name": "Assets",
-                        "icon": "assets"
-                    },
-                    {
-                        "link": "/events",
-                        "name": "Events",
-                        "icon": "events"
-                    }
-                ]
-            });
-        } else if (userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN") {
-            setData({
-                "data": [
-                    {
-                        "link": "/overview",
-                        "name": "Overview",
-                        "icon": "overview"
-                    },
-                    {
-                        "link": "/members",
-                        "name": "Members",
-                        "icon": "members"
-                    },
-                    {
-                        "link": "/assets",
-                        "name": "Assets",
-                        "icon": "assets"
-                    },
-                    {
-                        "link": "/events",
-                        "name": "Events",
-                        "icon": "events"
-                    },
-                    {
-                        "link": "/user-request",
-                        "name": "User Request",
-                        "icon": "request"
-                    }
-                ]
-            })
-        }
-    }, [session, status]);
+type NavItem = { href: string; label: string; icon: LucideIcon; roles: string[]; also?: (path: string) => boolean }
+
+const ALL = ["ROLE_USER", "ROLE_SUB_ADMIN", "ROLE_ADMIN"]
+const STAFF = ["ROLE_SUB_ADMIN", "ROLE_ADMIN"]
+
+const NAV: NavItem[] = [
+    { href: "/overview", label: "Overview", icon: LayoutDashboard, roles: ALL },
+    { href: "/members", label: "Members", icon: Users, roles: ALL },
+    { href: "/assets", label: "Assets", icon: Box, roles: ALL },
+    // an event's detail and attendee pages belong to Events
+    { href: "/events", label: "Events", icon: CalendarDays, roles: ALL, also: (p) => p.startsWith("/event-detail") || p.startsWith("/attendees") },
+    { href: "/user-request", label: "User Request", icon: BellRing, roles: STAFF },
+]
+
+const SETTINGS = [
+    { href: "/organization-profile", label: "Organization Profile", roles: ["ROLE_ADMIN"] },
+    { href: "/user-profile", label: "User Profile", roles: ALL },
+]
+
+const itemClass = (active: boolean) =>
+    cn(
+        "flex w-full items-center gap-3 rounded-radius-ui px-4 py-3 text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        active ? "bg-primary text-primary-foreground" : "text-primary-text hover:bg-accent hover:text-accent-foreground",
+    )
+
+export const SidebarComponent = ({ className }: { className?: string }) => {
+    const pathname = usePathname()
+    const { data: session, status } = useSession()
+    const role = useMemo(() => {
+        if (status !== "authenticated" || !session?.user?.token) return undefined
+        return jwtDecode(session.user.token)?.role
+    }, [session, status])
+
+    const inSettings = SETTINGS.some((s) => s.href === pathname)
+    const [settingsOpen, setSettingsOpen] = useState(inSettings)
+
+    const items = role ? NAV.filter((n) => n.roles.includes(role)) : []
+    const settings = role ? SETTINGS.filter((s) => s.roles.includes(role)) : []
 
     return (
-        <div className={`${className} space-y-4 p-4 2xl:p-5 border-r-1px bg-white`}>
-            <Link prefetch={true} href={'/overview'}>
-                <div className="p-2 lg:p-2 flex items-center gap-4">
-                    <Image src={logo} height={192} width={192} alt="EventMaster" className="w-full max-w-[192px] h-auto" />
-                    {/* <h2 className="hidden xl:block text-xl font-semibold">EventMaster</h2> */}
-                </div>
+        <div className={cn("flex flex-col gap-4 border-r border-border bg-white p-4 2xl:p-5", className)}>
+            <Link prefetch href="/overview" className="block p-2">
+                <Image src={logo} height={192} width={192} alt="EventMaster" className="h-auto w-full max-w-48" priority />
             </Link>
-            <hr />
-            <div className="w-full">
-                {data?.data?.map((x, index) => (
-                    <Link prefetch={true} onClick={() => setClick(false)} href={x.link} key={index}>
-                        <div className={`space-x-3 px-3 lg:px-4 py-3 flex justify-start rounded-radiusUi w-full items-center 
-                            ${pathname === x.link && "text-white bg-purple-text"} 
-                            ${x.name == "Events" && pathname === "/attendees" ? "text-white bg-purple-text" : ""}
-                            ${x.name == "Events" && pathname.startsWith("/event-detail") ? "text-white bg-purple-text" : ""}
-                            ${x.name == "Events" && pathname.startsWith("/attendees") ? "text-white bg-purple-text" : ""}`}
-                        >
-                            {x.icon == 'overview' ? <Layer size="20" color={`${pathname === "/overview" ? "#FFFFFF" : '#344054'}`} variant="Bulk" />
-                                : x.icon == "members" ? <People size="20" color={`${pathname === "/members" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
-                                    : x.icon == 'assets' ? <I3Dcube size="20" color={`${pathname === "/assets" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
-                                        : x.icon == "events" ? <Calendar1 size="20" color={`${pathname === "/events" || pathname === "/attendees" || pathname.startsWith("/event-detail") || pathname.startsWith("/attendees") ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
-                                            : x.icon == "request" ? <Notification size="20" color={`${pathname === "/user-request" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
-                                                : x.icon == "setting" ? <Setting2 size="20" color={`${pathname === "/account-setting" ? '#FFFFFF' : '#344054'}`} variant="Bulk" />
-                                                    : x.icon == "logout" ? <LogoutCurve size="20" color="#344054" variant="Bulk" /> : <LogoutCurve size="24" color="#344054" variant="Bulk" />}
-                            <p className="text-base">{x.name}</p>
-                        </div>
-                    </Link>
-                ))}
-                {/* dropdown sidebar  */}
-                <ul className={`w-full p-0 w-ful cursor-pointer rounded-radiusUi block`}>
-                    {/* <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-center xl:justify-start items-center gap-3 rounded-radiusUi px-4 py-3 ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`}> */}
-                    <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-between xl:justify-between items-center gap-3 rounded-radiusUi px-4 py-3`}>
-                        <div className="flex items-center space-x-3">
-                            <Setting2 size="20" color={`${pathname === "/organization-profile" || pathname === "/user-profile" ? '#344054' : '#344054'}`} variant="Bulk" />
-                            <div className="flex items-center justify-between">
-                                <p className={`text-base w-[124px] font-normal ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-primary-text" : 'text-primary-text'}`}>
-                                    Account Setting
-                                </p>
-                            </div>
-                        </div>
-                        <ArrowDown2 className={`${click && 'rotate-180 duration-300'} duration-300`} size="20" color="#344054" variant="Outline" />
-                    </h2>
-                    <ul className={`${!click && 'hidden'}`}>
-                        <li className={`${userInfo?.role == 'ROLE_USER' || userInfo?.role == 'ROLE_SUB_ADMIN' ? '!hidden' : 'flex'}`}>
-                            <Link prefetch={true} className={`rounded-radiusUi w-full flex gap-3 pl-12 py-3 !text-base ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
-                                {/* <Buildings2 size="20" color={`${pathname === "/organization-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" /> */}
-                                Organization Profile
+            <Separator />
+            <nav aria-label="Main" className="flex flex-col gap-1">
+                {items.map(({ href, label, icon: Icon, also }) => {
+                    const active = pathname === href || Boolean(also?.(pathname))
+                    return (
+                        <Link prefetch key={href} href={href} aria-current={active ? "page" : undefined} className={itemClass(active)}>
+                            <Icon className="size-5 shrink-0" aria-hidden="true" />
+                            {label}
+                        </Link>
+                    )
+                })}
+
+                <button
+                    type="button"
+                    onClick={() => setSettingsOpen((o) => !o)}
+                    aria-expanded={settingsOpen}
+                    aria-controls="sidebar-settings"
+                    className={cn(itemClass(false), "justify-between")}
+                >
+                    <span className="flex items-center gap-3">
+                        <Settings className="size-5 shrink-0" aria-hidden="true" />
+                        Account Setting
+                    </span>
+                    <ChevronDown className={cn("size-5 transition-transform duration-300", settingsOpen && "rotate-180")} aria-hidden="true" />
+                </button>
+                {settingsOpen && (
+                    <div id="sidebar-settings" className="flex flex-col gap-1">
+                        {settings.map(({ href, label }) => (
+                            <Link prefetch key={href} href={href} aria-current={pathname === href ? "page" : undefined} className={cn(itemClass(pathname === href), "pl-12")}>
+                                {label}
                             </Link>
-                        </li>
-                        <li className="flex">
-                            <Link prefetch={true} className={`rounded-radiusUi w-full flex gap-3 hover:!bg-none pl-12 py-3 !text-base ${pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`} href={'/user-profile'}>
-                                {/* <Personalcard size="20" color={`${pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" /> */}
-                                User Profile
-                            </Link>
-                        </li>
-                    </ul>
-                </ul>
+                        ))}
+                    </div>
+                )}
+
                 <LogoutAction />
-            </div>
+            </nav>
         </div>
     )
 }

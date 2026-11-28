@@ -1,218 +1,130 @@
 'use client'
 
+import { Fragment, useEffect, useState, type FormEvent } from "react"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { Loader2, Search } from "lucide-react"
 import { callingServiceAction } from "@/features/event/search/api/findEventAction"
-import Link from "next/link"
-import { useEffect, useState } from "react"
 import { SelectDropdownLanding } from "@/features/event/search/ui/SelectDropDownLanding"
 import { SelectStatusLanding } from "@/features/event/search/ui/SelectStatusLanding"
-import { useRouter } from "next/navigation"
+import { EventCard } from "@/entities/event"
 import { TitleComponent } from "@/shared/ui/TitleComponent"
-import Image from "next/image"
-import { SelectDropdown } from "@/entities/category";
+import { Button } from "@/shared/ui/kit/button"
+import { Input } from "@/shared/ui/kit/input"
+import { Label } from "@/shared/ui/kit/label"
 
+const fieldClass = "h-12 rounded-full bg-white px-4"
+
+/** Landing-page search: filters + results. Results replace the category lists (`?search=true`). */
 export const SearchBar = () => {
     const [findData, setFindData] = useState<any>();
     const [search, setSearch] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
-    const [empty, setEmpty] = useState(false);
     const [dropDownValue, setDropDownValue] = useState('');
-    const [statusValue, setStatusValue] = useState('');
+    const [statusValue, setStatusValue] = useState<boolean | ''>('');
     const [isLoading, setIsLoading] = useState(false);
-    const categoryArr = new Array(findData?.payload?.length).fill(0);
     const router = useRouter()
 
-    const fetchData = async (event) => {
+    const fetchData = async (event: FormEvent) => {
         event.preventDefault();
         if (search === '' && startTime === '' && endTime === '' && statusValue === '' && dropDownValue === '') {
             setFindData(undefined);
-            setEmpty(true)
             router.push(`/`, { scroll: false });
             return;
         }
         setIsLoading(true)
-        const searchData = {
+        const data = await callingServiceAction({
             eventName: search,
             startDateTime: `${startTime}T12:00:00`,
             endDateTime: `${endTime}T12:00:00`,
             status: statusValue,
-            categoryName: dropDownValue
-        };
-        const data = await callingServiceAction(searchData); //move to action for cors
+            categoryName: dropDownValue,
+        });
         router.replace('/?search=true', { scroll: false });
         setFindData(data);
         setIsLoading(false)
     };
 
-    const getDropDownValue = (v) => setDropDownValue(v)
-    const getStatusValue = (v) => setStatusValue(v)
-
+    // clearing every filter brings the category lists back
     useEffect(() => {
-        const allInputsEmpty = [
-            search,
-            startTime,
-            endTime,
-            statusValue,
-            dropDownValue
-        ].every(value => value === '');
-
-        if (allInputsEmpty) {
+        const allEmpty = [search, startTime, endTime, statusValue, dropDownValue].every((v) => v === '');
+        if (allEmpty) {
             router.push('/', { scroll: false });
-            setSearch('')
-            setStartTime('')
-            setEndTime('')
-            setDropDownValue('')
-            setStatusValue('')
             setFindData(undefined)
-            return;
         }
     }, [search, startTime, endTime, statusValue, dropDownValue]);
 
+    const groups = Array.isArray(findData?.payload) ? findData.payload : [];
+
     return (
         <div>
-            <form onSubmit={fetchData}>
-                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                    {/* <SelectDropdown func={getDropDownValue}/> */}
-                    <SelectDropdownLanding height="" label="" func={getDropDownValue} />
-                    <SelectStatusLanding func={getStatusValue} />
-                    <div className="mb-5">
-                        <label
-                            htmlFor="start-date"
-                            className="text-sm font-semibold text-primary-text block mb-2 "
-                        >
-                            Start Date
-                        </label>
-                        <input
-                            onChange={(e) => setStartTime(e.target.value)}
-                            type="date"
-                            name="startDate"
-                            id="startDate"
-                            className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none"
-                        />
+            <form onSubmit={fetchData} className="space-y-5">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+                    <SelectDropdownLanding func={setDropDownValue} />
+                    <SelectStatusLanding func={setStatusValue} />
+                    <div className="space-y-2">
+                        <Label htmlFor="startDate" className="font-semibold text-primary-text">Start Date</Label>
+                        <Input id="startDate" name="startDate" type="date" value={startTime} onChange={(e) => setStartTime(e.target.value)} className={fieldClass} />
                     </div>
-                    <div className="mb-5">
-                        <label
-                            htmlFor="end-date"
-                            className="text-sm font-semibold text-primary-text block mb-2 "
-                        >
-                            End Date
-                        </label>
-                        <input
-                            onChange={(e) => setEndTime(e.target.value)}
-                            type="date"
-                            name="endDate"
-                            id="endDate"
-                            className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none"
-                        />
+                    <div className="space-y-2">
+                        <Label htmlFor="endDate" className="font-semibold text-primary-text">End Date</Label>
+                        <Input id="endDate" name="endDate" type="date" value={endTime} onChange={(e) => setEndTime(e.target.value)} className={fieldClass} />
                     </div>
                 </div>
-                <div className="relative z-3 lg:mb-5 flex justify-center w-full gap-5">
-                    <div className="flex grid-cols-2 w-4/5">
-                        <input
-                            onChange={(e) => setSearch(e.target.value)}
-                            className="border border-gray-200 input pl-10 focus:outline-none text-primary-text  rounded-full w-full h-11 "
+
+                <div className="flex gap-3 sm:gap-5">
+                    <div className="relative min-w-0 flex-1">
+                        <Search className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                        <Input
                             id="search"
                             name="search"
-                            type="text"
-                            placeholder="Search..."
+                            type="search"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder="Search events..."
+                            aria-label="Search events by name"
+                            className={`${fieldClass} pl-11`}
                         />
-                        <div className="absolute left-0 inset-y-0 flex items-center ">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 ml-3 text-gray-400"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                />
-                            </svg>
-                        </div>
                     </div>
-                    <button className="bg-purple-text w-1/5 rounded-full text-white h-auto flex justify-center text-center items-center">
-                        {!isLoading ? <p>Search</p> : <div className="loader"></div>}
-                    </button>
+                    <Button type="submit" disabled={isLoading} className="h-12 shrink-0 rounded-full px-6 sm:w-40">
+                        {isLoading ? <Loader2 className="animate-spin" aria-hidden="true" /> : <Search className="sm:hidden" aria-hidden="true" />}
+                        <span className="sr-only sm:not-sr-only">Search</span>
+                    </Button>
                 </div>
             </form>
 
-            {/* searched data  */}
-            <section>
-                {findData !== undefined &&
-                    <>
-                        {
-                            categoryArr.map((x, index) => (
-                                <>
-                                    <div className="mt-8">
-                                        <TitleComponent title={findData.payload[index].cateName} />
-                                    </div>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
-                                        {findData.payload[index]?.events?.map((x, index) => {
-                                            const imageUrl = x?.poster;
-                                            const isValidUrl = imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://');
-                                            const formatDate = dateString => new Date(dateString).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-                                            const inputDate = x?.startDate;
-                                            const formattedDate = formatDate(inputDate);
-                                            const formated = formattedDate;
-                                            return (
-                                                <div key={index} className="shadow-md rounded-3xl">
-                                                    <div className="relative">
-                                                        <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
-                                                            <img src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`} alt="event-image" className="rounded-t-3xl h-full object-cover !w-full" />
-                                                        </div>
-                                                        <div className="absolute top-0 right-0 p-6 ">
-                                                            <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${x.isOpen ? 'text-blueUi' : 'text-redUi'}`}>
-                                                                {x.isOpen ? 'Open' : 'Close'}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div className="bg-white px-6 py-8 rounded-b-3xl flex flex-col justify-between h-[305.72px]">
-                                                        <div className="space-y-4">
-                                                            <div className="flex gap-3 items-center">
-                                                                <img className="h-10 w-10 rounded-full" src="https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/headway-F2KRf_QfCqw-unsplash.jpgbff2c2b3-3340-421f-b8bf-06cf683bb395?alt=media&token=19e9782d-0cca-4105-ab02-d627bd515ac" alt="orgImage" />
-                                                                <p className="text-sm font-medium">{x?.orgName}</p>
-                                                            </div>
-                                                            <div className="flex text-sm justify-between font-medium">
-                                                                <p className="max-w-64 line-clamp-1">{x?.address}</p>
-                                                                <p>{formated}</p>
-                                                            </div>
-                                                            <div className="flex flex-col gap-3">
-                                                                <h2 className="text-lg lg:text-xl font-bold max-w-64 line-clamp-1">{x?.eventName}</h2>
-                                                                <p className="text-sm lg:text-base line-clamp-2 font-medium">
-                                                                    {x?.description}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="flex justify-between">
-                                                            <Link href={`/detail/${x.eventId}`} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
-                                                            <Link href={`/register/${x.eventId}`} className={`${!x.isOpen && 'hidden'} text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text`}>Join Event</Link>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                </>
-                            ))
-                        }
-                    </>
-                }
-                {findData?.payload?.length == 0 &&
-                    <div className="w-full">
-                        <Image
-                            className="mx-auto mt-8"
-                            src="/images/Search-pana.svg"
-                            alt="empty image"
-                            width={512}
-                            height={512}
-                            priority
-                        />
+            {/* results */}
+            <section aria-live="polite">
+                {groups.map((group) => (
+                    <Fragment key={group.cateName}>
+                        <div className="mt-10">
+                            <TitleComponent title={group.cateName} />
+                        </div>
+                        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8 xl:grid-cols-3">
+                            {group.events?.map((x) => (
+                                <EventCard
+                                    key={x.eventId}
+                                    id={x.eventId}
+                                    poster={x.poster}
+                                    title={x.eventName}
+                                    description={x.description}
+                                    location={x.address}
+                                    company={x.orgName}
+                                    date={x.startDate}
+                                    status={x.isOpen}
+                                />
+                            ))}
+                        </div>
+                    </Fragment>
+                ))}
+                {findData && groups.length === 0 && (
+                    <div className="mt-8 text-center">
+                        <Image className="mx-auto h-auto w-full max-w-sm" src="/images/Search-pana.svg" alt="" width={512} height={512} />
+                        <p className="mt-2 font-medium text-muted-foreground">No events match your search.</p>
                     </div>
-                }
-            </section >
-        </div >
+                )}
+            </section>
+        </div>
     )
 }

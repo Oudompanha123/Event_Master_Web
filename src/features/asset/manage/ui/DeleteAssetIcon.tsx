@@ -27,17 +27,17 @@ export const DeleteAssetComponent = () => {
             </div>
             <div className="button flex justify-center items-center gap-4 mt-10 pb-4">
               <input
-                className=" border w-28 h-9 rounded-full bg-redUi text-white font-bold text-sm cursor-pointer"
+                className=" border w-28 h-9 rounded-full bg-red-ui text-white font-bold text-sm cursor-pointer"
                 type="button"
                 value="Yes"
               />
               <form method="dialog">
-                <button className="btn btn-sm border w-28 h-9 rounded-full bg-greyUi text-white font-bold text-sm cursor-pointer">
+                <button className="btn btn-sm border w-28 h-9 rounded-full bg-grey-ui text-white font-bold text-sm cursor-pointer">
                   No
                 </button>
               </form>
               {/* <input
-                className=" border w-28 h-9 rounded-full bg-greyUi text-white font-bold text-sm cursor-pointer"
+                className=" border w-28 h-9 rounded-full bg-grey-ui text-white font-bold text-sm cursor-pointer"
                 type="button"
                 value="No"
               /> */}

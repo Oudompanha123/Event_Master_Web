@@ -174,7 +174,7 @@ export default function DataTable<TData = any>({
 
   // round the outer corners of the first and last cell so each row is a pill
   const edge = (index) =>
-    index === 0 ? "rounded-l-radiusUi" : index === lastColumn ? "rounded-r-radiusUi" : "";
+    index === 0 ? "rounded-l-radius-ui" : index === lastColumn ? "rounded-r-radius-ui" : "";
 
   return (
     <div className="flex flex-col w-full">
@@ -214,7 +214,7 @@ export default function DataTable<TData = any>({
             {visibleRows.map((row) => (
               <tr
                 key={row.id}
-                className={`h-14 shadow-soft text-primary-text odd:bg-softwhiteUi even:bg-white ${rowClassName}`}
+                className={`h-14 shadow-soft text-primary-text odd:bg-softwhite-ui even:bg-white ${rowClassName}`}
               >
                 {row.getVisibleCells().map((cell, index) => (
                   <td

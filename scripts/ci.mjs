@@ -49,6 +49,12 @@ const steps = [
     cmd: node("scripts/check-fsd.mjs"),
   },
   {
+    name: "Tailwind coverage",
+    why: "Every file using classes must be in tailwind.config.js `content`, or its classes are dropped and the UI renders unstyled.",
+    fix: "Add the folder to `content` in tailwind.config.js (or scan ./src/**).",
+    cmd: node("scripts/check-tailwind.mjs"),
+  },
+  {
     name: "Security audit",
     why: "Fails on high or critical advisories in production dependencies.",
     fix: "Run `npm audit --omit=dev` for details; upgrade the package or pin a patched version in both `resolutions` (yarn) and `overrides` (npm).",

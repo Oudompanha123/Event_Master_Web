@@ -38,7 +38,7 @@ export const InputField = ({ type, name }) => {
             <input
                 placeholder={`Please enter your ${name.toLowerCase()}`}
                 name={name}
-                className="px-4 border w-[100%] focus:outline-none text-sm rounded-2xl p-3.5 block"
+                className="px-4 border w-full focus:outline-hidden text-sm rounded-2xl p-3.5 block"
                 type={type}
                 value={value}
                 onChange={handleChange}

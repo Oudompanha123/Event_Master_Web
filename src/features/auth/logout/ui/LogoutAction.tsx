@@ -1,46 +1,57 @@
 'use client'
 
-import { LogoutCurve } from "@/shared/ui/icons"
+import { LogOut } from "lucide-react"
 import { signOut } from "next-auth/react"
-import Link from "next/link"
-import { RxCross2 } from "react-icons/rx"
+import { cn } from "@/shared/lib/utils"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/shared/ui/kit/alert-dialog"
 
-export const LogoutAction = () => {
+/**
+ * "Logout" item with a confirmation dialog. State-based (no element ids), so it works however
+ * many copies of the sidebar are mounted (desktop column + mobile drawer).
+ */
+export const LogoutAction = ({ className }: { className?: string }) => {
     return (
-        <div>
-            {/* <Image className="cursor-pointer" onClick={() => (document.getElementById('category_action') as HTMLDialogElement | null)?.showModal()} src="/icons/trash.svg" width={20} height={20} /> */}
-            <div onClick={() => (document.getElementById('logout_action') as HTMLDialogElement | null)?.showModal()} className={`cursor-pointer space-x-3 px-4 py-4 flex justify-start rounded-radiusUi w-full items-center`}>
-                <LogoutCurve size="20" color="#344054" variant="Bulk" />
-                <p className="text-base">Logout</p>
-            </div>
-            <dialog id="logout_action" className="modal">
-                <div className="modal-box w-[310px] justity-center  ">
-                    <form method="dialog" className="justify-end flex">
-                        <button type="submit">
-                            <RxCross2 className="absolute right-[20px] top-[20px] w-6 h-6 " />
-                        </button>
-                    </form>
-                    <div className="justify-center flex">
-                        <img src="/images/logout.svg" alt="delete" className="w-[58%] mb-3" />
-                    </div>
-                    <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
-                        Are you sure,you want to
-                    </p>
-                    <p className="justify-center w-full flex text-primary-text font-bold  text-lg  text-center">
-                        logout?
-                    </p>
-                    <div className="modal-action ">
-                        <form method="dialog" className=" flex justify-around w-full mb-4 mt-3 px-3">
-                            <button className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700" value="yes">
-                                <p onClick={() => signOut()} className="text-white font-semibold">Yes</p>
-                            </button>
-                            <button className="h-9 rounded-3xl bg-[#888888] w-[100px] hover:bg-gray-500" value="cancel">
-                                <p className="text-white font-semibold">No</p>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </dialog>
-        </div>
+        <AlertDialog>
+            <AlertDialogTrigger asChild>
+                <button
+                    type="button"
+                    className={cn(
+                        "flex w-full items-center gap-3 rounded-radius-ui px-4 py-3 text-left text-base text-primary-text transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                        className,
+                    )}
+                >
+                    <LogOut className="size-5 shrink-0" aria-hidden="true" />
+                    Logout
+                </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="max-w-[340px] rounded-3xl">
+                <AlertDialogHeader className="items-center text-center sm:text-center">
+                    <img src="/images/logout.svg" alt="" className="mb-2 w-[58%]" />
+                    <AlertDialogTitle className="text-lg font-bold text-primary-text">
+                        Are you sure you want to log out?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>You will need to sign in again to use the dashboard.</AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="flex-row justify-center gap-3 sm:justify-center">
+                    <AlertDialogCancel className="w-[100px] rounded-full">No</AlertDialogCancel>
+                    <AlertDialogAction
+                        className="w-[100px] rounded-full bg-destructive text-white hover:bg-destructive/90"
+                        onClick={() => signOut()}
+                    >
+                        Yes
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
     )
 }

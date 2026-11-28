@@ -64,7 +64,7 @@ const Page = async (props) => {
                 </div>
                 <div className="w-full xl:w-1/2 rounded-3xl relative bg-[#7B61FF] space-y-8 p-8 overflow-hidden">
                     <h2 className="text-white text-2xl font-bold w-4/5">Let's manage your event with us</h2>
-                    <p className="text-xs lg:text-sm text-white w-4/5 absolute z-20 !leading-relaxed">
+                    <p className="text-xs lg:text-sm text-white w-4/5 absolute z-20 leading-relaxed!">
                         Forge a Strategic Alliance with Our Esteemed Team,
                         Renowned htmlFor Its Meticulous Approach to Event Planning,
                         Impeccable Execution, and the Ability to Craft Timeless

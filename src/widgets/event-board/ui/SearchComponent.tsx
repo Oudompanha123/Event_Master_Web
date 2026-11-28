@@ -28,7 +28,7 @@ export default function SearchComponent({ eventData,userRole }) {
             type="text"
             onChange={e => setText(e.target.value)}
             placeholder="Search"
-            className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-12 border rounded-3xl pl-10"
+            className="font-medium text-xs lg:text-base focus:outline-hidden focus:border-purple-text w-full h-12 border rounded-3xl pl-10"
           />
           <IoSearchOutline className="w-[24px] h-[24px] -mt-9 ml-3" />
         </div>

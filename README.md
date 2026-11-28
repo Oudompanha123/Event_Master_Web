@@ -60,6 +60,7 @@ Rules to keep the structure working:
 | Lockfile in sync | Jenkins and the Dockerfile run `npm ci`, which fails if `package-lock.json` does not match `package.json`. After `yarn add`, also run `npm install --package-lock-only --ignore-scripts`. |
 | Type check | `tsc --noEmit` |
 | FSD rules | `scripts/check-fsd.mjs` enforces the rules in [Project structure](#project-structure). |
+| Tailwind coverage | `scripts/check-tailwind.mjs` fails if a file that uses classes is outside `content` in `tailwind.config.js`. Those classes would silently be missing from the CSS, and that part of the UI would render unstyled. |
 | Security audit | Fails on high or critical advisories in production dependencies. |
 | Production build | The same `next build` the Docker image runs. Stop `yarn dev` first, because both write to `.next`. |
 

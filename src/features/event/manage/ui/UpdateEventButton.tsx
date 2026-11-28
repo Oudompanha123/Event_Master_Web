@@ -25,7 +25,7 @@ interface SelectedCategory {
 
 export const UpdateEventButton = () => {
   const [hide, setHide] = useState(false);
-  const [previewSrc, setPreviewSrc] = useState(""); // Added state htmlFor image preview source
+  const [previewSrc, setPreviewSrc] = useState(""); // Added state for image preview source
   const [category, setCategory] = useState<SelectedCategory | undefined>();
   const [isPost, setIsPost] = useState(false);
 
@@ -101,7 +101,7 @@ export const UpdateEventButton = () => {
           />
         </svg>
       </button>
-      <dialog id="updateEventCard" className="modal !m-0">
+      <dialog id="updateEventCard" className="modal m-0!">
         <div className="modal-box w-11/12 lg:w-1/2 lg:max-w-5xl p-8">
           <div className="flex justify-between">
             <h3 className="font-bold text-xl">Update Event</h3>
@@ -186,7 +186,7 @@ export const UpdateEventButton = () => {
                     className={`${errors.name
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter event name"
                   />
                   {errors.name && (
@@ -201,8 +201,8 @@ export const UpdateEventButton = () => {
                     categoryName={category?.categoryName}
                     eventId={undefined}
                     {...register("category")}
-                    label={`!font-medium`}
-                    height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                    label={`font-medium!`}
+                    height={`!rounded-borderUi h-[49.82px]! rounded-2xl! shadow-xs bg-white ring-gray-300! border-gray-300! primary-text sm:text-sm focus:outline-hidden !focus:border-purple-text block w-full p-3.5`}
                   />
                   {errors.category && (
                     <span className="text-red-600 text-sm">
@@ -229,7 +229,7 @@ export const UpdateEventButton = () => {
                     className={`${errors.startDate
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="MM/DD/YYYY 6:00 AM"
                   />
                   {errors.startDate && (
@@ -260,7 +260,7 @@ export const UpdateEventButton = () => {
                     className={`${errors.endDate
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="MM/DD/YYYY 6:00 AM"
                   />
                   {errors.endDate && (
@@ -288,7 +288,7 @@ export const UpdateEventButton = () => {
                     className={`${errors.duration
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter duration"
                   />
                   {errors.duration && (
@@ -314,7 +314,7 @@ export const UpdateEventButton = () => {
                     className={`${errors.maxAttendee
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter maximum attendee"
                   />
                   {errors.maxAttendee && (
@@ -342,7 +342,7 @@ export const UpdateEventButton = () => {
                     className={`${errors.address
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter address"
                   />
                   {errors.address && (
@@ -370,7 +370,7 @@ export const UpdateEventButton = () => {
                     className={`${errors.description
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter description..."
                   />
                   {errors.description && (
