@@ -68,7 +68,9 @@ export default function MaterialComponent({
 
   useEffect(() => {
     fetchMaterial(), fetchData(), fatchAsset(), fetchCountMaterial();
-  }, [saveSuccess, checkedRows, isDeleteDialogOpen, cancelUpdate]);
+    // refetch only after something changed on the server (save, update, delete);
+    // ticking checkboxes or opening the delete dialog doesn't reload the list
+  }, [saveSuccess, cancelUpdate]);
 
   useEffect(() => {
     searchNameMaterial();
@@ -130,7 +132,8 @@ export default function MaterialComponent({
   };
 
   const handleCancelUpdate = () => {
-    setCancelUpdate(!cancelUpdate); // Toggle cancelUpdate state
+    // functional update so two quick calls both trigger a refetch
+    setCancelUpdate((prev) => !prev);
   };
 
   const deleteSelectedRows = async () => {
@@ -153,6 +156,7 @@ export default function MaterialComponent({
       success("Delete materail selected successfully!");
       setSelectAllChecked(false); // Uncheck the "Select All" checkbox
       handleClearSearch();
+      if (idsToDelete.length > 0) handleCancelUpdate(); // reload list and counts
       // alert("Selected materials deleted successfully!");
     } catch (error) {
       console.error("Error deleting materials:", error);
