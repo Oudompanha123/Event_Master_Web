@@ -1,36 +1,54 @@
 'use client';
 
-import {useState} from 'react';
-import {useForm} from 'react-hook-form';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Image from 'next/image';
-import {useRouter} from 'next/navigation';
 import Link from 'next/link';
-import {ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {getOrganizationDetails} from "@/entities/session/api/org.service";
+import { useRouter } from 'next/navigation';
+import { Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
+import { getOrganizationDetails } from "@/entities/session/api/org.service";
 import signupAction from "@/features/auth/signup/api/signupAction";
-import {registerUserAction} from "@/features/auth/signup/api/registerUserAction";
+import { registerUserAction } from "@/features/auth/signup/api/registerUserAction";
+import { Button } from "@/shared/ui/kit/button";
+import { Card, CardContent } from "@/shared/ui/kit/card";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/shared/ui/kit/dialog";
+import { Input } from "@/shared/ui/kit/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/kit/tabs";
+import { FormField, authInputClass } from "@/shared/ui/form-field";
+import { PasswordInput } from "@/shared/ui/password-input";
+
+const EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+const initialData = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    phoneNumber: '',
+    organizationCode: '',
+};
+
+type Role = 'admin' | 'user';
 
 const SignupComponent = () => {
-    const initialData = {
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        phoneNumber: '',
-        organizationCode: '',
-    };
-
-    const [isAdminSelected, setIsAdminSelected] = useState(false);
-    const [isLocked, setIsLocked] = useState(true);
-    const [isKeyLocked, setIsKeyLocked] = useState(true);
+    const [role, setRole] = useState<Role>('user');
+    const isAdminSelected = role === 'admin';
     const [orgDetails, setOrgDetails] = useState(null);
+    const [orgDialogOpen, setOrgDialogOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const {
         register,
         handleSubmit,
-        formState: {errors, isValid},
+        formState: { errors },
         watch,
         reset,
     } = useForm({
@@ -38,20 +56,13 @@ const SignupComponent = () => {
         defaultValues: initialData,
     });
 
-    const handleAdminClick = () => {
-        setIsAdminSelected(true);
+    const changeRole = (value: string) => {
+        setRole(value as Role);
         reset(initialData);
     };
-
-    const handleUserClick = () => {
-        setIsAdminSelected(false);
-        reset(initialData);
-    };
-
-    const handleLockClick = () => setIsLocked((prevState) => !prevState);
-    const handleKeyLockClick = () => setIsKeyLocked((prevState) => !prevState);
 
     const router = useRouter();
+    const verifyHref = `/verify-register?email=${encodeURIComponent(watch('email'))}`;
 
     const onSubmit = async (data) => {
         setLoading(true);
@@ -76,270 +87,176 @@ const SignupComponent = () => {
         if (!isAdminSelected) {
             const orgData = await getOrganizationDetails(data.organizationCode);
             setOrgDetails(orgData);
-
-            const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
-            if (modal) {
-                modal.showModal();
-            } else {
-                console.error('Modal element not found');
-            }
+            setOrgDialogOpen(true);
         } else {
-            router.push(`/verify-register?email=${data.email}`);
+            router.push(`/verify-register?email=${encodeURIComponent(data.email)}`);
         }
 
         setLoading(false);
     };
 
     return (
-        <div className="w-[calc(100%-2rem)] max-w-xl h-auto p-5 sm:p-8 mt-16 sm:mt-20 md:w-[80%] lg:w-[65%] xl:max-w-none xl:left-6 xl:mt-32 xl:mx-[42%] 2xl:mt-[10%] 2xl:left-5 xl:w-[45%] bg-white rounded-[32px] sm:rounded-[40px] shadow-md absolute">
-            <ToastContainer autoClose={2000}/>
-            <div className="flex justify-center xl:justify-start pt-4 sm:pt-8 pb-6 sm:px-6 focus:outline-hidden">
-                <button
-                    type="button"
-                    id="admin-button"
-                    className={`font-medium text-sm rounded-[100px] pl-9 pr-14 sm:px-12 py-3.5 -mr-10 ${isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-xs bg-white border border-gray-300 primary-text z-10'}`}
-                    onClick={handleAdminClick}
-                >
-                    ADMIN
-                </button>
-                <button
-                    type="button"
-                    id="user-button"
-                    className={`font-medium text-sm rounded-[100px] px-9 sm:px-12 py-3.5 ${!isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-xs bg-white border border-gray-300 primary-text z-10'}`}
-                    onClick={handleUserClick}
-                >
-                    USER
-                </button>
-            </div>
+        <Card className="w-full max-w-2xl rounded-[32px] border-0 py-8 shadow-xl sm:rounded-[40px] sm:py-10">
+            <CardContent className="px-5 sm:px-10">
+                <Tabs value={role} onValueChange={changeRole} className="gap-6">
+                    <TabsList aria-label="Account type" className="mx-auto h-12! w-full max-w-xs rounded-full border bg-white p-1 lg:mx-0">
+                        {(['admin', 'user'] as const).map((r) => (
+                            <TabsTrigger
+                                key={r}
+                                value={r}
+                                id={`${r}-button`}
+                                className="h-full rounded-full text-sm font-medium tracking-wide text-primary-text uppercase data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+                            >
+                                {r}
+                            </TabsTrigger>
+                        ))}
+                    </TabsList>
 
-            <div className="w-full h-full">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-6 gap-5 sm:gap-6 sm:px-3">
-                        <div className="col-span-6 md:col-span-3">
-                            <label htmlFor="name" className="text-sm font-medium primary-text block mb-2">
-                                Full Name <span className="text-red-600 text-sm">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                className={`${errors.name ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
-                                placeholder="Enter your full name"
-                                {...register('name', {
-                                    required: 'Full Name is required',
-                                })}
-                            />
-                            {errors.name && <span className="text-red-600 text-sm">{errors.name.message}</span>}
-                        </div>
-
-                        <div className="col-span-6 md:col-span-3">
-                            <label htmlFor="email" className="text-sm font-medium primary-text block mb-2">
-                                Email <span className="text-red-600 text-sm">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="email"
-                                className={`${errors.email ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
-                                placeholder="Enter your email"
-                                {...register('email', {
-                                    required: 'Email is required',
-                                    pattern: {
-                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                        message: 'Enter a valid email address',
-                                    },
-                                })}
-                            />
-                            {errors.email && <span className="text-red-600 text-sm">{errors.email.message}</span>}
-                        </div>
-
-                        <div className="col-span-6 md:col-span-3">
-                            <label htmlFor="password" className="text-sm font-medium primary-text block mb-2">
-                                Password <span className="text-red-600">*</span>
-                            </label>
-                            <div className={'relative'}>
-                                <input
-                                    type={isLocked ? 'password' : 'text'}
-                                    id="password"
-                                    className={`${errors.password ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
-                                    placeholder="Enter your password"
-                                    {...register('password', {
-                                        required: 'Password is required',
-                                        minLength: {
-                                            value: 8,
-                                            message: 'Password requires at least 8 characters',
-                                        },
-                                    })}
-                                />
-                                <div className={'absolute top-4 right-3 cursor-pointer'} onClick={handleLockClick}>
-                                    <Image
-                                        src={`${isLocked ? '/icons/lock-slash.svg' : '/icons/unlock.svg'}`}
-                                        width={20}
-                                        height={20}
-                                        alt={isLocked ? 'lock icon' : 'unlock icon'}
+                    <TabsContent value={role}>
+                        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                            <div className="grid gap-5 sm:grid-cols-2">
+                                <FormField id="name" label="Full Name" required error={errors.name?.message}>
+                                    <Input
+                                        id="name"
+                                        autoComplete="name"
+                                        placeholder="Enter your full name"
+                                        aria-invalid={!!errors.name}
+                                        className={authInputClass}
+                                        {...register('name', { required: 'Full Name is required' })}
                                     />
-                                </div>
-                            </div>
-                            {errors.password && <span className="text-red-600 text-sm">{errors.password.message}</span>}
-                        </div>
+                                </FormField>
 
-                        <div className="col-span-6 md:col-span-3">
-                            <label htmlFor="confirm-password" className="text-sm font-medium primary-text block mb-2">
-                                Confirm Password <span className="text-red-600">*</span>
-                            </label>
-                            <div className={'relative'}>
-                                <input
-                                    type={isKeyLocked ? 'password' : 'text'}
-                                    id="confirm-password"
-                                    className={`${errors.confirmPassword ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
-                                    placeholder="Enter your confirm password"
-                                    {...register('confirmPassword', {
-                                        required: 'Confirm Password is required',
-                                        validate: (value) => value === watch('password') || 'Passwords do not match',
-                                    })}
-                                />
-                                <div className={'absolute top-4 right-3 cursor-pointer'} onClick={handleKeyLockClick}>
-                                    <Image
-                                        src={`${isKeyLocked ? '/icons/lock-slash.svg' : '/icons/unlock.svg'}`}
-                                        width={20}
-                                        height={20}
-                                        alt={isKeyLocked ? 'lock icon' : 'unlock icon'}
+                                <FormField id="email" label="Email" required error={errors.email?.message}>
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        autoComplete="email"
+                                        placeholder="Enter your email"
+                                        aria-invalid={!!errors.email}
+                                        className={authInputClass}
+                                        {...register('email', {
+                                            required: 'Email is required',
+                                            pattern: { value: EMAIL, message: 'Enter a valid email address' },
+                                        })}
                                     />
-                                </div>
-                            </div>
-                            {errors.confirmPassword && (
-                                <span className="text-red-600 text-sm">{errors.confirmPassword.message}</span>
-                            )}
-                        </div>
+                                </FormField>
 
-                        {isAdminSelected && (
-                            <div className="col-span-6">
-                                <label htmlFor="phone-number" className="text-sm font-medium primary-text block mb-2">
-                                    Phone Number <span className="text-red-600 text-sm">*</span>
-                                </label>
-                                <input
-                                    type="text"
+                                <FormField id="password" label="Password" required error={errors.password?.message}>
+                                    <PasswordInput
+                                        id="password"
+                                        autoComplete="new-password"
+                                        placeholder="Enter your password"
+                                        aria-invalid={!!errors.password}
+                                        className={authInputClass}
+                                        {...register('password', {
+                                            required: 'Password is required',
+                                            minLength: { value: 8, message: 'Password requires at least 8 characters' },
+                                        })}
+                                    />
+                                </FormField>
+
+                                <FormField id="confirm-password" label="Confirm Password" required error={errors.confirmPassword?.message}>
+                                    <PasswordInput
+                                        id="confirm-password"
+                                        autoComplete="new-password"
+                                        placeholder="Confirm your password"
+                                        aria-invalid={!!errors.confirmPassword}
+                                        className={authInputClass}
+                                        {...register('confirmPassword', {
+                                            required: 'Confirm Password is required',
+                                            validate: (value) => value === watch('password') || 'Passwords do not match',
+                                        })}
+                                    />
+                                </FormField>
+
+                                <FormField
                                     id="phone-number"
-                                    className={`${errors.phoneNumber ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
-                                    placeholder="Enter your phone number"
-                                    {...register('phoneNumber', {
-                                        required: 'Phone Number is required',
-                                        pattern: {
-                                            value: /^0\d{8,}$/,
-                                            message: 'phone number must be number, start with 0, more than 8 digits',
-                                        },
-                                    })}
-                                />
-                                {errors.phoneNumber && (
-                                    <span className="text-red-600 text-sm">{errors.phoneNumber.message}</span>
-                                )}
-                            </div>
-                        )}
-
-                        {!isAdminSelected && (
-                            <div
-                                className="w-full col-span-6 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-                                <div className="w-full">
-                                    <label htmlFor="phone-number"
-                                           className="text-sm font-medium primary-text block mb-2">
-                                        Phone Number <span className="text-red-600 text-sm">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
+                                    label="Phone Number"
+                                    required
+                                    error={errors.phoneNumber?.message}
+                                    className={isAdminSelected ? 'sm:col-span-2' : undefined}
+                                >
+                                    <Input
                                         id="phone-number"
-                                        className={`${errors.phoneNumber ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
+                                        type="tel"
+                                        autoComplete="tel"
                                         placeholder="Enter your phone number"
+                                        aria-invalid={!!errors.phoneNumber}
+                                        className={authInputClass}
                                         {...register('phoneNumber', {
                                             required: 'Phone Number is required',
+                                            ...(isAdminSelected && {
+                                                pattern: {
+                                                    value: /^0\d{8,}$/,
+                                                    message: 'phone number must be number, start with 0, more than 8 digits',
+                                                },
+                                            }),
                                         })}
                                     />
-                                    {errors.phoneNumber && (
-                                        <span className="text-red-600 text-sm">{errors.phoneNumber.message}</span>
-                                    )}
-                                </div>
-                                <div className="w-full">
-                                    <label htmlFor="organization-code"
-                                           className="text-sm font-medium primary-text block mb-2">
-                                        Organization Code <span className="text-red-600 text-sm">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="organization-code"
-                                        className={`${errors.organizationCode ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
-                                        placeholder="Enter your organization code"
-                                        {...register('organizationCode', {
-                                            required: 'Organization Code is required',
-                                        })}
-                                    />
-                                    {errors.organizationCode && (
-                                        <span className="text-red-600 text-sm">{errors.organizationCode.message}</span>
-                                    )}
-                                </div>
-                            </div>
-                        )}
-                    </div>
+                                </FormField>
 
-                    <div className="flex justify-center pt-10 pb-4 sm:pb-6 mb-3">
-                        <div className="w-full max-w-xs">
-                            <button
+                                {!isAdminSelected && (
+                                    <FormField id="organization-code" label="Organization Code" required error={errors.organizationCode?.message}>
+                                        <Input
+                                            id="organization-code"
+                                            placeholder="Enter your organization code"
+                                            aria-invalid={!!errors.organizationCode}
+                                            className={authInputClass}
+                                            {...register('organizationCode', { required: 'Organization Code is required' })}
+                                        />
+                                    </FormField>
+                                )}
+                            </div>
+
+                            <Button
                                 type="submit"
                                 id="sign-up"
-                                className={`bg-purple-text text-white font-medium text-sm rounded-3xl w-full flex justify-center py-3.5 hover:bg-violet-500 shadow-md shadow-violet-400 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 disabled={loading}
+                                className="mx-auto mt-10 flex h-12 w-full max-w-xs rounded-full shadow-md shadow-primary/30"
                             >
-                                {loading ? <div className='loader'></div> : "Sign Up"}
-                            </button>
-                            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                                <div className="modal-box w-full sm:w-[360px] h-auto min-h-[400px]">
-                                    <h3 className="font-bold text-lg text-center">Organization Profile</h3>
-                                    <Image
-                                        className="mx-auto max-w-2xl md:text-center mt-5"
-                                        src={`/images/event-master-logo.png`}
-                                        alt={`logo`}
-                                        width={111}
-                                        height={111}
-                                        property=""
-                                    />
-                                    {orgDetails && (
-                                        <div className="modal-action">
-                                            <div className="w-full max-w-[350px] m-auto">
-                                                <div className="flex justify-between">
-                                                    <p className="font-medium text-base w-1/2">Organization Code</p>
-                                                    <p className="font-medium text-base w-1/2 pl-10">{orgDetails.code}</p>
-                                                </div>
+                                {loading && <Loader2 className="animate-spin" aria-hidden="true" />}
+                                Sign Up
+                            </Button>
 
-                                                <div className="flex justify-between mt-2">
-                                                    <p className="font-medium text-base w-1/2">Organization Name</p>
-                                                    <p className="font-medium text-base w-1/2 pl-10">{orgDetails.orgName}</p>
-                                                </div>
+                            <p className="mt-6 text-center text-primary-text">
+                                Already have an account?{" "}
+                                <Link href="/login" className="font-medium text-purple-text hover:underline">
+                                    Log In
+                                </Link>
+                            </p>
+                        </form>
+                    </TabsContent>
+                </Tabs>
+            </CardContent>
 
-                                                <div className="flex justify-between mt-2">
-                                                    <p className="font-medium text-base w-1/2">Address</p>
-                                                    <p className="font-medium text-base w-1/2 break-words pl-10">{orgDetails.address}</p>
-                                                </div>
-
-                                                <div className="flex justify-between w-[300px] m-auto mb-4 mt-4">
-                                                    <button
-                                                        className="border w-[110px] border-primary-text h-10 rounded-3xl"
-                                                        onClick={() => (document.getElementById('my_modal_5') as HTMLDialogElement | null)?.close()}
-                                                    >
-                                                        <p className="font-semibold">Cancel</p>
-                                                    </button>
-
-                                                    <button className="border w-[110px] bg-[#8C59FE] h-10 rounded-3xl"
-                                                            value="confirm">
-                                                        <Link href={`/verify-register?email=${watch('email')}`}
-                                                              className="text-white font-semibold">Confirm</Link>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </dialog>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+            <Dialog open={orgDialogOpen} onOpenChange={setOrgDialogOpen}>
+                <DialogContent className="rounded-3xl sm:max-w-sm">
+                    <DialogHeader className="items-center text-center sm:text-center">
+                        <DialogTitle className="text-lg font-bold">Organization Profile</DialogTitle>
+                        <DialogDescription>Confirm this is the organization you want to join.</DialogDescription>
+                    </DialogHeader>
+                    <Image className="mx-auto" src="/images/event-master-logo.png" alt="" width={111} height={111} />
+                    {orgDetails && (
+                        <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
+                            <dt className="font-medium text-muted-foreground">Organization Code</dt>
+                            <dd className="font-medium break-words">{orgDetails.code}</dd>
+                            <dt className="font-medium text-muted-foreground">Organization Name</dt>
+                            <dd className="font-medium break-words">{orgDetails.orgName}</dd>
+                            <dt className="font-medium text-muted-foreground">Address</dt>
+                            <dd className="font-medium break-words">{orgDetails.address}</dd>
+                        </dl>
+                    )}
+                    <DialogFooter className="flex-row justify-center gap-3 sm:justify-center">
+                        <Button variant="outline" className="w-28 rounded-full" onClick={() => setOrgDialogOpen(false)}>
+                            Cancel
+                        </Button>
+                        <Button asChild className="w-28 rounded-full">
+                            <Link href={verifyHref}>Confirm</Link>
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        </Card>
     );
 };
 
