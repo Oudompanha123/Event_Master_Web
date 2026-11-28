@@ -15,7 +15,6 @@ const knockClient = new Knock(process.env.KNOCK_SECRET_API_KEY);
 
 export async function getAllMembersAction(page) {
   const data = await getAllMemberService(page);
-  revalidateTag("member");
   return data;
 }
 
@@ -66,6 +65,5 @@ export async function updateMemberAction(memberId, role) {
 
 export async function searchMemberAction(memberName, page?: number | string) {
   const data = await searchMemberService(memberName, page);
-  revalidateTag("member");
   return data;
 }

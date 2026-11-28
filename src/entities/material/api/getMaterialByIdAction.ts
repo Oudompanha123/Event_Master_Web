@@ -1,10 +1,8 @@
 "use server";
-import { revalidateTag } from "next/cache";
 import { getMaterialById } from "@/entities/material/api/materialService";
 
 async function getMaterialByIdAction(id) {
   const data = await getMaterialById(id)
-  revalidateTag("materials");
   return data;
   }
   export default getMaterialByIdAction;

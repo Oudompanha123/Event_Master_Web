@@ -46,7 +46,6 @@ export async function handleAsset(assetInput) {
 }
 export const getAllAssetAction = async (page) => {
   const data = await getAllAssetService(page);
-  revalidateTag("overview");
 
   return data;
 };
@@ -101,6 +100,5 @@ export async function handleDeleteAsset(id) {
 
 export const getAllAssetNoPageAction = async () => {
   const data = await getAllAssetServiceNoPage();
-  revalidateTag("asset");
   return data;
 };
