@@ -1,0 +1,35 @@
+import { headerToken } from "@/shared/api/headerToken";
+
+export const resendOtp = async (email) => {
+    const res = await fetch(`${process.env.API_URL}auth/resend?email=${encodeURIComponent(email)}`,
+        {   
+            method: 'POST'
+        }
+    )
+    const data = await res.json();
+    return data;
+}
+
+export const verify = async (email, otp) => { 
+    const res = await fetch(`${process.env.API_URL}auth/verify?otp=${encodeURIComponent(otp)}&email=${encodeURIComponent(email)}`,
+        {   
+            method: 'PUT'
+        }
+    )
+    const data = await res.json();
+    return data;
+}
+
+export const changePassword = async (email, otp, newPassword) => { 
+    const res = await fetch(`${process.env.API_URL}auth/set-new-password?otp=${encodeURIComponent(otp)}&email=${encodeURIComponent(email)}`,
+        {   
+            method: 'PUT',
+            body: JSON.stringify(newPassword),
+            headers : {
+                "Content-Type": "application/json"
+            }
+        }
+    )
+    const data = await res.json();
+    return data;
+}

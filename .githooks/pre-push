@@ -1,0 +1,10 @@
+#!/bin/sh
+# Runs the local CI before every `git push` (enabled automatically by `yarn install`; see the "prepare" script).
+# The production build is included; set CI_QUICK=1 to skip it for a single push:
+#   CI_QUICK=1 git push
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+if [ "$CI_QUICK" = "1" ]; then
+  exec node scripts/ci.mjs --quick
+fi
+exec node scripts/ci.mjs

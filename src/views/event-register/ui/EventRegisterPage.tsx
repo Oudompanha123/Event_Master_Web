@@ -1,0 +1,123 @@
+'use client'
+
+import { use, useEffect, useState } from "react";
+import { RedirectBackComponent } from "@/shared/ui/RedirectButtonComponent"
+
+import { useForm } from "react-hook-form"
+import { getFormAction } from "@/entities/event/api/landingAction";
+import { Boolean } from "@/features/registration-form/fill";
+import { InputField } from "@/features/registration-form/fill";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { addAttendeeToEventAction } from "@/entities/event/api/eventFormAction";
+
+const Page = ({ params }: { params: Promise<{ id: string }> }) => {
+    const { id } = use(params);
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+
+    const notify = (status: string | number, detail?: string) => {
+        if (status == "OK") {
+            toast.success("Your submission has been recorded.", {
+                position: "top-center"
+            });
+        }
+        if (status == 400) {
+            toast.error(`Your submission has been not recorded., ${detail}`, {
+                position: "top-center"
+            });
+        }
+    }
+
+    const {
+        watch,
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+    const [registerForm, setRegisterForm] = useState<any>();
+
+    const gen = watch("gender");
+
+    const onSubmit = (data) => {
+    };
+
+    const getData = async (id) => {
+        const res = await getFormAction(id);
+        setRegisterForm(res?.payload?.data?.form)
+    }
+
+    const submit = async (v) => {
+        v.preventDefault();
+        setLoading(true)
+        const formData = new FormData(v.target);
+        const data = {};
+        let allFieldsFilled = true; // Flag to check if all fields are filled
+
+        formData.forEach((value, key) => {
+            const trimmedKey = key.toLowerCase().replace(/\s+/g, '');
+            data[trimmedKey] = value;
+
+            // Check if any field is empty
+            if (!value) {
+                allFieldsFilled = false;
+            }
+        });
+
+        // If any field is empty, do not proceed with the API call
+        if (!allFieldsFilled) {
+            setLoading(false)
+            notify(400, "make sure you have fill each information.");
+            return;
+        }
+
+        router.push('/');
+        const sendData = {
+            data: data,
+            eventId: id
+        };
+        const res = await addAttendeeToEventAction(sendData);
+
+        setLoading(false)
+        setTimeout(() => {
+            notify('OK');
+        }, 300);
+    };
+
+    useEffect(() => {
+        getData(id)
+    }, [])
+
+    return (
+        <div className="container">
+            <RedirectBackComponent link={'/'} />
+            <div className="p-6 rounded-3xl border-2 border-slate-100 bg-white drop-shadow-sm">
+                <h2 className="font-bold text-2xl mb-8">Register Form</h2>
+                <form action="" className="space-y-4 lg:space-y-6" onSubmit={submit}>
+                    <div className="grid grid-cols-2 gap-8">
+                        {registerForm?.map((x, index) => {
+                            const [inputType, inputName] = x.fieldType.split(",");
+                            return (
+                                <>
+                                    {inputType == 'boolean' ?
+                                        <Boolean name={inputName} />
+                                        :
+                                        <InputField key={index} type={inputType} name={inputName} />
+                                    }
+                                </>
+                            )
+                        })}
+                    </div>
+                    <div className="w-full flex justify-end">
+                        <button type="submit" className="rounded-full w-32 flex justify-center text-sm lg:text-base px-8 py-3 bg-purple-text text-white font-bold">
+                            <p className={`${!loading ? 'block' : 'hidden'}`}>Submit</p>
+                            <div className={`loader ${loading ? 'block' : 'hidden'}`}></div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    )
+}
+
+export default Page

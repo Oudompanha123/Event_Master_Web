@@ -1,9 +1,1 @@
-import NewFormComponent from "./_components/NewFormComponent";
-
-const Page = () => {
-  return (
-      <NewFormComponent/>
-  );
-}; 
-
-export default Page;
+export { default } from "@/views/organization-profile";

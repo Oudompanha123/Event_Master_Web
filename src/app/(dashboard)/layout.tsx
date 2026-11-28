@@ -1,10 +1,10 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
-import "../globals.css";
-import DashboardShell from "@/components/DashboardShell";
+import "@/app/globals.css";
+import DashboardShell from "@/widgets/dashboard-shell/ui/DashboardShell";
 import { getServerSession } from "next-auth";
-import SessionProvider from "../../components/SessionProvider";
+import SessionProvider from "@/app/_providers/SessionProvider";
 import { Knock } from "@knocklabs/node";
-import { authOption } from "@/lib/auth";
+import { authOption } from "@/shared/config/auth";
 import { jwtDecode } from "jwt-decode";
 import { ToastContainer } from "react-toastify";
 import { redirect } from "next/navigation";
