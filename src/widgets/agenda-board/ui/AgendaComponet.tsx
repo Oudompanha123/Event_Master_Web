@@ -116,7 +116,7 @@ export default function AgendaComponent({id,userRole}) {
               </p>
 
               {(data?.description || data?.speaker) && (
-                <hr className="h-[1px] w-full bg-gray-300" />
+                <hr className="h-px w-full bg-gray-300" />
               )}
               {data.description && (
                 <p className="text-base font-regular text-primary-text">

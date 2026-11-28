@@ -2,7 +2,7 @@ import React from "react";
 
 export const RegisterFormConferrence = () => {
   return (
-    <div className=" m-auto w-full rounded-2xl h-[50%] bg-white shadow-[#D5D4DC] shadow  py-6 px-4">
+    <div className=" m-auto w-full rounded-2xl h-[50%] bg-white shadow-[#D5D4DC] shadow-sm  py-6 px-4">
       <div className="text-primary-text font-semibold text-xl flex mb-4 content-center gap-2 ">
         <div className="content-center">
           <img
@@ -42,7 +42,7 @@ export const RegisterFormConferrence = () => {
 
             <select
               name="gender"
-              className=" select select-bordered text-primary-text sm:text-sm rounded-xl block w-full p-3 focus:outline-none"
+              className=" select select-bordered text-primary-text sm:text-sm rounded-xl block w-full p-3 focus:outline-hidden"
               required
             >
               <option disabled selected>

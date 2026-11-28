@@ -87,7 +87,7 @@ export const SearchBar = () => {
                             type="date"
                             name="startDate"
                             id="startDate"
-                            className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none"
+                            className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-hidden"
                         />
                     </div>
                     <div className="mb-5">
@@ -102,7 +102,7 @@ export const SearchBar = () => {
                             type="date"
                             name="endDate"
                             id="endDate"
-                            className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none"
+                            className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-hidden"
                         />
                     </div>
                 </div>
@@ -110,7 +110,7 @@ export const SearchBar = () => {
                     <div className="flex grid-cols-2 w-4/5">
                         <input
                             onChange={(e) => setSearch(e.target.value)}
-                            className="border border-gray-200 input pl-10 focus:outline-none text-primary-text  rounded-full w-full h-11 "
+                            className="border border-gray-200 input pl-10 focus:outline-hidden text-primary-text  rounded-full w-full h-11 "
                             id="search"
                             name="search"
                             type="text"
@@ -161,10 +161,10 @@ export const SearchBar = () => {
                                                 <div key={index} className="shadow-md rounded-3xl">
                                                     <div className="relative">
                                                         <div className="relative h-[300px] w-full object-cover rounded-t-3xl">
-                                                            <img src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`} alt="event-image" className="rounded-t-3xl h-full object-cover !w-full" />
+                                                            <img src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`} alt="event-image" className="rounded-t-3xl h-full object-cover w-full!" />
                                                         </div>
                                                         <div className="absolute top-0 right-0 p-6 ">
-                                                            <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${x.isOpen ? 'text-blueUi' : 'text-redUi'}`}>
+                                                            <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${x.isOpen ? 'text-blue-ui' : 'text-red-ui'}`}>
                                                                 {x.isOpen ? 'Open' : 'Close'}
                                                             </span>
                                                         </div>

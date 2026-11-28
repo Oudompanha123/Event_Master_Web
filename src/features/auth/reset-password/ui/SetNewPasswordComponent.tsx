@@ -55,11 +55,11 @@ const SetNewPasswordComponent = ({email, otp}) => {
     };
 
     return (
-        <div className="absolute flex justify-center sm:pt-[400px] md:pl-[30%] lg:pl-[50%] lg:pt-[380px] 2xl:pt-[370px] w-full md:w-[70%] lg:w-[39%] h-[100%]">
+        <div className="absolute flex justify-center sm:pt-[400px] md:pl-[30%] lg:pl-[50%] lg:pt-[380px] 2xl:pt-[370px] w-full md:w-[70%] lg:w-[39%] h-full">
             <ToastContainer autoClose={2000}/>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mt-[210px] sm:mt-[20px] lg:mt-[-75px] lg:text-xl flex justify-center">
-                    <h2 className="mt-6 sm:mt-[1px] text-center md:text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
+                    <h2 className="mt-6 sm:mt-px text-center md:text-3xl leading-9 font-extrabold text-purple-text-head flex justify-center">
                         Set New password
                     </h2>
                     {/* <p className="flex justify-center greyUi mt-4">Please enter your new password</p> */}
@@ -74,7 +74,7 @@ const SetNewPasswordComponent = ({email, otp}) => {
                             <input
                                 type={isLocked ? "password" : "text"}
                                 id="password"
-                                className={` w-full shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block p-3.5 ${
+                                className={` w-full shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block p-3.5 ${
                                     errors.password ? "border-red-700 focus:border-red-600" : "border-gray-300"
                                 }`}
                                 placeholder="Enter your password"
@@ -111,7 +111,7 @@ const SetNewPasswordComponent = ({email, otp}) => {
                             <input
                                 type={isKeyLocked ? "password" : "text"}
                                 id="confirm-password"
-                                className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 ${
+                                className={`shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5 ${
                                     errors.confirmPassword ? "border-red-700 focus:border-red-600" : "border-gray-300"
                                 }`}
                                 placeholder="Enter your confirm password"

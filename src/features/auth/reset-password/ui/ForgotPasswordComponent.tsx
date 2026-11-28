@@ -63,13 +63,13 @@ const ForgotPasswordComponent = () => {
                     <p className="flex justify-center greyUi mt-2 md:mt-6">Please enter your email to reset password</p>
                 </div>
 
-                <div className="lg:mt-[-1px] mt-6 sm:mt-16 2xl:mt-[40px]">
+                <div className="lg:-mt-px mt-6 sm:mt-16 2xl:mt-[40px]">
                     <label htmlFor="email" className="text-sm font-medium primary-text block mb-2">Email</label>
                     <div>
                         <input
                             type="text"
                             id="email"
-                            className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} w-full sm:w-[500px] shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block  p-3`}
+                            className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} w-full sm:w-[500px] shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block  p-3`}
                             placeholder="Enter your email"
                             {...register("email", {
                                 required: "Email is required",

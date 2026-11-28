@@ -423,7 +423,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
           )}
         </div>
       )}
-      <dialog id={`my_modal_updateEvent${eventId}`} className="modal !m-0">
+      <dialog id={`my_modal_updateEvent${eventId}`} className="modal m-0!">
         <div className="modal-box w-11/12 lg:w-1/2 lg:max-w-5xl p-8">
           <div className="flex justify-between">
             <h3 className="font-bold text-xl">Update Event</h3>
@@ -479,7 +479,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                     className={`${errors.name
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter event name"
                     onChange={(e) => setEventName(e.target.value)}
                   />
@@ -495,8 +495,8 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                     categoryName={eventCategory?.categoryName}
                     func={handleCategorySelect}
                     {...register("category")}
-                    label={`!font-medium`}
-                    height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                    label={`font-medium!`}
+                    height={`!rounded-borderUi h-[49.82px]! rounded-2xl! shadow-xs bg-white ring-gray-300! border-gray-300! primary-text sm:text-sm focus:outline-hidden !focus:border-purple-text block w-full p-3.5`}
                   />
                   {errors.category && <span className="text-red-600 text-sm">{errors.category.message}</span>}
                 </div>
@@ -520,7 +520,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                     className={`${errors.startDate
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="MM/DD/YYYY 6:00 AM"
                     onChange={(e) => { setStartDate(e.target.value); triggerHourChange() }}
                   />
@@ -553,7 +553,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                     className={`${errors.endDate
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="MM/DD/YYYY 6:00 AM"
                     onChange={(e) => { setEndDate(e.target.value); triggerHourChange() }}
                   />
@@ -583,7 +583,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                     className={`${errors.duration
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter duration"
                     onChange={(e) => { setDiffChange(e.target.value); triggerHourChange() }}
                   />
@@ -611,7 +611,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                     className={`${errors.maxAttendee
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter maximum attendee"
                     onChange={(e) => { setMaxAttendee(e.target.value); triggerHourChange() }}
                   />
@@ -641,7 +641,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                     className={`${errors.address
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter address"
                     onChange={(e) => { setAddress(e.target.value); triggerHourChange() }}
                   />
@@ -671,7 +671,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                     className={`${errors.description
                       ? "border-red-700 focus:border-red-600"
                       : "border-gray-300"
-                      } shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                      } shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                     placeholder="Enter description..."
                     onChange={(e) => { setDescription(e.target.value); triggerHourChange() }}
                   />
@@ -693,7 +693,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                 <div onClick={() => { (document.getElementById(`my_modal_updateEvent${eventId}`) as HTMLDialogElement | null)?.close(); }} className="px-6 py-3 rounded-2xl border-1px border-borderUi cursor-pointer">Cancel</div>
                 <button
                   type="submit"
-                  className="save border rounded-2xl min-w-32 bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
+                  className="save border rounded-2xl min-w-32 bg-green-ui text-white flex justify-center text-center items-center px-4 gap-3 "
                 >
                   {!loading ? (
                     <div className="flex gap-3">
@@ -787,7 +787,7 @@ export const EventActionButton = ({ eventName, startDate, endDate, duration, add
                 value="yes"
               >
                 <p className={`text-white font-semibold al ${loading && 'hidden'}`}>Yes</p>
-                <div className={`loader ${!loading && '!hidden'}`}></div>
+                <div className={`loader ${!loading && 'hidden!'}`}></div>
               </button>
 
               <button

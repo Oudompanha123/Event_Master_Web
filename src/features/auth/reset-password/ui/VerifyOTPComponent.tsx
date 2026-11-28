@@ -70,7 +70,7 @@ const VerifyOTPComponent = ({email}) => {
     }
 
     return (
-        <div className="absolute flex justify-center sm:pt-[200px] md:pl-[30%] lg:pl-0 lg:pt-[330px] w-full md:w-[70%] lg:w-[39%] lg:left-[30%] h-[100%]">
+        <div className="absolute flex justify-center sm:pt-[200px] md:pl-[30%] lg:pl-0 lg:pt-[330px] w-full md:w-[70%] lg:w-[39%] lg:left-[30%] h-full">
             <ToastContainer autoClose={2000}/>
             <form className="mt-[235px] lg:mt-[20px] 2xl:mt-[100px]">
                 <div className="lg:mt-[-100px] text-md mt-3 mb-8">
@@ -103,7 +103,7 @@ const VerifyOTPComponent = ({email}) => {
                     </button>
                 </div>
                 
-                    <div className="mb-2 mr-6 cursor-pointer flex justify-end text-blueUi mt-3">
+                    <div className="mb-2 mr-6 cursor-pointer flex justify-end text-blue-ui mt-3">
                         <div onClick={handleResendOtp}>
                         {isLoadingResendOTP ? <div className="flex gap-2">OTP is Sending <p className='loader_purple'></p> </div> : <span>Resend OTP</span> } 
                         </div>

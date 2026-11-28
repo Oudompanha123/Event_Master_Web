@@ -13,7 +13,7 @@ export const RegisterActionComponent = ({ memberId }) => {
     return (
         <div className="flex gap-3">
             <div>
-                <button className="px-5 py-2 bg-greenUi text-white rounded-full text-xs lg:text-base" value="update"
+                <button className="px-5 py-2 bg-green-ui text-white rounded-full text-xs lg:text-base" value="update"
                  onClick={() => (document.getElementById(`approve_user_action_${memberId}`) as HTMLDialogElement | null)?.showModal()}>Approve</button>
                 <dialog id={`approve_user_action_${memberId}`} className="modal">
                     <div className="modal-box w-[310px] justity-center  ">
@@ -33,8 +33,8 @@ export const RegisterActionComponent = ({ memberId }) => {
                         </p>
                         <div className="modal-action flex justify-center">
                             {/* <div className="flex space-x-6 justify-center mb-4 mt-3">
-                                <Link className="bg-greenUi h-9 text-white w-[100px] font-semibold rounded-full py-2 px-9" href={'#'}>Yes</Link>
-                                <button onClick={() => (document.getElementById(`approve_user_actin_${memberId}`) as HTMLDialogElement | null)?.close()} className="bg-redUi h-9 text-white w-[100px] font-semibold rounded-full py-2 px-9">No</button>
+                                <Link className="bg-green-ui h-9 text-white w-[100px] font-semibold rounded-full py-2 px-9" href={'#'}>Yes</Link>
+                                <button onClick={() => (document.getElementById(`approve_user_actin_${memberId}`) as HTMLDialogElement | null)?.close()} className="bg-red-ui h-9 text-white w-[100px] font-semibold rounded-full py-2 px-9">No</button>
                             </div> */}
                             <form method="dialog" className=" flex justify-around w-full mb-4 mt-3 px-3">
                                 <button onClick={handleUpdate} className=" h-9 rounded-3xl bg-red-600  w-[100px] hover:bg-red-700" value="yes">
@@ -49,7 +49,7 @@ export const RegisterActionComponent = ({ memberId }) => {
                 </dialog>
             </div>
             <div>
-                <button className="px-5 py-2 bg-redUi text-white rounded-full text-xs lg:text-base" value="delete"
+                <button className="px-5 py-2 bg-red-ui text-white rounded-full text-xs lg:text-base" value="delete"
                 onClick={() => (document.getElementById(`reject_user_action_${memberId}`) as HTMLDialogElement | null)?.showModal()}>Reject</button>
                 <dialog id={`reject_user_action_${memberId}`} className="modal">
                     <div className="modal-box w-[310px] justity-center  ">

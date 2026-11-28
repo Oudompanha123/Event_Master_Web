@@ -91,7 +91,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
     return (
         <div className="container">
             <RedirectBackComponent link={'/'} />
-            <div className="p-6 rounded-3xl border-2 border-slate-100 bg-white drop-shadow-sm">
+            <div className="p-6 rounded-3xl border-2 border-slate-100 bg-white drop-shadow-xs">
                 <h2 className="font-bold text-2xl mb-8">Register Form</h2>
                 <form action="" className="space-y-4 lg:space-y-6" onSubmit={submit}>
                     <div className="grid grid-cols-2 gap-8">

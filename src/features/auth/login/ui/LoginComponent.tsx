@@ -61,10 +61,10 @@ const LoginComponent = () => {
         <div
             className="absolute flex mt-11 flex-col h-screen justify-center lg:px-8 w-full p-8 xl:mx-[42%] xl:mt-2 xl:w-[45%] xl:right-[10%]">
             <div className="mt-8 sm:mx-auto w-full sm:w-full sm:max-w-md flex justify-center ">
-                <div className="bg-white py-6 md:py-8 w-[110%] shadow rounded-[40px] px-3 md:px-12">
+                <div className="bg-white py-6 md:py-8 w-[110%] shadow-sm rounded-[40px] px-3 md:px-12">
                     <ToastContainer autoClose={2000} />
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="mb-12 -mt-3 rounded-radiusUi">
+                        <div className="mb-12 -mt-3 rounded-radius-ui">
                             <h2 className="mt-6 px-2 text-center text-3xl md:text-4xl font-bold flex justify-center">
                                 Login
                             </h2>
@@ -87,7 +87,7 @@ const LoginComponent = () => {
                                     className={`${errors.email
                                             ? "border-red-700 focus:border-red-600"
                                             : "border-gray-300"
-                                        } shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                        } shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                                     placeholder="Enter your email"
                                     {...register("email", {
                                         required: "Email is required",
@@ -116,7 +116,7 @@ const LoginComponent = () => {
                                 <input
                                     type={isLocked ? "Password" : "text"}
                                     id="password"
-                                    className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5 ${errors.password
+                                    className={`shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5 ${errors.password
                                             ? "border-red-700 focus:border-red-600"
                                             : "border-gray-300"
                                         }`}

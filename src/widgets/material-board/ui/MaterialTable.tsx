@@ -106,7 +106,7 @@ interface MaterialTableMeta {
 const metaOf = (table: Table<MaterialRow>) => table.options.meta as MaterialTableMeta;
 
 const inputClass = (hasError: unknown, extra = "") =>
-  `border text-primary-text text-base px-2 h-10 rounded-xl font-normal focus:outline-none ${extra} ${
+  `border text-primary-text text-base px-2 h-10 rounded-xl font-normal focus:outline-hidden ${extra} ${
     hasError ? "border-red-600 shake-animation" : ""
   }`;
 
@@ -454,7 +454,7 @@ export function MaterialTable({
           const value = row.original._isNew ? v.handler : v.handlerId;
           return (
             <select
-              className={`border text-black text-sm rounded-xl block w-28 p-2.5 focus:outline-none ${
+              className={`border text-black text-sm rounded-xl block w-28 p-2.5 focus:outline-hidden ${
                 editable ? "" : "appearance-none"
               }`}
               value={value ?? ""}
@@ -557,7 +557,7 @@ export function MaterialTable({
       showIndex={false}
       minWidth="1100px"
       containerClassName="min-h-[500px] pb-40"
-      headerClassName="h-14 drop-shadow text-primary-text bg-[#F0F1F3] uppercase text-sm"
+      headerClassName="h-14 drop-shadow-sm text-primary-text bg-[#F0F1F3] uppercase text-sm"
       cellClassName="px-2 py-2 text-sm"
       rowClassName="hover:bg-gray-50"
       emptyTitle={isSearching ? "No results found" : "You don’t have any material!"}

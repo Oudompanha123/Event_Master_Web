@@ -91,7 +91,7 @@ export default function Dropdown({
     <Listbox value={selected} onChange={() => {}} disabled={readOnly}>
       {({ open }) => (
         <div className="relative">
-            <ListboxButton className="relative h-[42px] cursor-default rounded-xl bg-white pl-2 w-[190px] pr-8 text-left text-black ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 z-20">
+            <ListboxButton className="relative h-[42px] cursor-default rounded-xl bg-white pl-2 w-[190px] pr-8 text-left text-black ring-1 ring-inset ring-gray-200 focus:outline-hidden sm:text-sm sm:leading-6 z-20">
             <span
               className="flex items-center gap-1 min-w-0"
               title={Array.isArray(selected) ? selected.map((p) => p.name).join(", ") : ""}
@@ -103,7 +103,7 @@ export default function Dropdown({
                 selected.map((person) => (
                   <span
                     key={person.id}
-                    className="flex items-center gap-1 py-[1px] rounded-xl min-w-0"
+                    className="flex items-center gap-1 py-px rounded-xl min-w-0"
                   >
                     <img
                       src={person.avatar || DEFAULT_AVATAR}
@@ -149,7 +149,7 @@ export default function Dropdown({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <ListboxOptions className="absolute z-50 mt-1 max-h-56 w-52 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <ListboxOptions className="absolute z-50 mt-1 max-h-56 w-52 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-hidden sm:text-sm">
               {memberData?.map((person) => (
                 <ListboxOption
                   key={person.id}
@@ -176,7 +176,7 @@ export default function Dropdown({
                           src={person.avatar || DEFAULT_AVATAR}
                           onError={handleAvatarError}
                           alt=""
-                          className="h-5 w-5 flex-shrink-0 rounded-full object-cover"
+                          className="h-5 w-5 shrink-0 rounded-full object-cover"
                         />
                         <span
                           className={classNames(

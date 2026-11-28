@@ -21,7 +21,7 @@ interface AssetTableProps {
 }
 
 const Pill = ({ className = "", children }: { className?: string; children: ReactNode }) => (
-  <div className={`border rounded-radiusUi px-3 py-1 text-center ${className}`}>{children}</div>
+  <div className={`border rounded-radius-ui px-3 py-1 text-center ${className}`}>{children}</div>
 );
 
 export function AssetTable({ data, totalRecord, userRole }: AssetTableProps) {
@@ -31,7 +31,7 @@ export function AssetTable({ data, totalRecord, userRole }: AssetTableProps) {
       {
         accessorKey: "qty",
         header: "Qty",
-        cell: ({ getValue }) => <Pill className={getValue<number>() <= 0 ? "text-redUi" : ""}>{getValue<number>()}</Pill>,
+        cell: ({ getValue }) => <Pill className={getValue<number>() <= 0 ? "text-red-ui" : ""}>{getValue<number>()}</Pill>,
       },
       { accessorKey: "unit", header: "Unit", cell: ({ getValue }) => <Pill>{getValue<string>()}</Pill> },
       { accessorKey: "createdAt", header: "Created At", cell: ({ getValue }) => <Pill>{getValue<string>()}</Pill> },
@@ -41,7 +41,7 @@ export function AssetTable({ data, totalRecord, userRole }: AssetTableProps) {
         cell: ({ row }) => {
           const outOfStock = row.original.qty <= 0;
           return (
-            <Pill className={outOfStock ? "bg-softRedUi" : "bg-softGreenUi"}>
+            <Pill className={outOfStock ? "bg-soft-red-ui" : "bg-soft-green-ui"}>
               {outOfStock ? "Out of stock" : "In stock"}
             </Pill>
           );

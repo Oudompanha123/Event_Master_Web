@@ -35,10 +35,10 @@ export default function DashboardShell({ children }) {
             <div
                 onClick={() => setOpen(false)}
                 aria-hidden="true"
-                className={`lg:hidden fixed inset-0 z-[60] bg-black/40 transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                className={`lg:hidden fixed inset-0 z-60 bg-black/40 transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0 pointer-events-none"}`}
             />
             <aside
-                className={`fixed lg:sticky top-0 left-0 z-[70] lg:z-auto h-screen w-[260px] max-w-[80vw] lg:w-[240px] 2xl:w-[260px] shrink-0 bg-white transition-transform duration-300 lg:translate-x-0 ${open ? "translate-x-0 shadow-xl" : "-translate-x-full"}`}
+                className={`fixed lg:sticky top-0 left-0 z-70 lg:z-auto h-screen w-[260px] max-w-[80vw] lg:w-[240px] 2xl:w-[260px] shrink-0 bg-white transition-transform duration-300 lg:translate-x-0 ${open ? "translate-x-0 shadow-xl" : "-translate-x-full"}`}
             >
                 <SidebarComponent className="h-full overflow-y-auto" />
             </aside>
@@ -46,7 +46,7 @@ export default function DashboardShell({ children }) {
                 <NavbarComponent className="" onMenuClick={() => setOpen(true)} />
                 <div
                     data-theme="light"
-                    className="p-4 sm:p-6 lg:px-10 xl:px-14 bg-backgroundUi min-h-[92%]"
+                    className="p-4 sm:p-6 lg:px-10 xl:px-14 bg-background-ui min-h-[92%]"
                 >
                     {children}
                 </div>

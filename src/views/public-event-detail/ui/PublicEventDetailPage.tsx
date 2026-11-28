@@ -19,7 +19,7 @@ const Page = async (props) => {
     return (
         <div className="container">
             <RedirectBackComponent link={'/'} />
-            <section className="p-6 rounded-3xl border-2 border-slate-100 drop-shadow-sm bg-white">
+            <section className="p-6 rounded-3xl border-2 border-slate-100 drop-shadow-xs bg-white">
                 <div className="h-[350px] lgh-[450px] relative">
                     <Image src={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`}
                         className="h-[350px] lg:h-[450px] object-cover rounded-2xl"

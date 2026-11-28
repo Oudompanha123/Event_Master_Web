@@ -95,7 +95,7 @@ export const SidebarComponent = ({ className }) => {
             <div className="w-full">
                 {data?.data?.map((x, index) => (
                     <Link prefetch={true} onClick={() => setClick(false)} href={x.link} key={index}>
-                        <div className={`space-x-3 px-3 lg:px-4 py-3 flex justify-start rounded-radiusUi w-full items-center 
+                        <div className={`space-x-3 px-3 lg:px-4 py-3 flex justify-start rounded-radius-ui w-full items-center 
                             ${pathname === x.link && "text-white bg-purple-text"} 
                             ${x.name == "Events" && pathname === "/attendees" ? "text-white bg-purple-text" : ""}
                             ${x.name == "Events" && pathname.startsWith("/event-detail") ? "text-white bg-purple-text" : ""}
@@ -113,9 +113,9 @@ export const SidebarComponent = ({ className }) => {
                     </Link>
                 ))}
                 {/* dropdown sidebar  */}
-                <ul className={`w-full p-0 w-ful cursor-pointer rounded-radiusUi block`}>
-                    {/* <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-center xl:justify-start items-center gap-3 rounded-radiusUi px-4 py-3 ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`}> */}
-                    <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-between xl:justify-between items-center gap-3 rounded-radiusUi px-4 py-3`}>
+                <ul className={`w-full p-0 w-ful cursor-pointer rounded-radius-ui block`}>
+                    {/* <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-center xl:justify-start items-center gap-3 rounded-radius-ui px-4 py-3 ${pathname === "/organization-profile" || pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`}> */}
+                    <h2 onClick={() => setClick(!click)} className={`menu-title flex justify-between xl:justify-between items-center gap-3 rounded-radius-ui px-4 py-3`}>
                         <div className="flex items-center space-x-3">
                             <Setting2 size="20" color={`${pathname === "/organization-profile" || pathname === "/user-profile" ? '#344054' : '#344054'}`} variant="Bulk" />
                             <div className="flex items-center justify-between">
@@ -127,14 +127,14 @@ export const SidebarComponent = ({ className }) => {
                         <ArrowDown2 className={`${click && 'rotate-180 duration-300'} duration-300`} size="20" color="#344054" variant="Outline" />
                     </h2>
                     <ul className={`${!click && 'hidden'}`}>
-                        <li className={`${userInfo?.role == 'ROLE_USER' || userInfo?.role == 'ROLE_SUB_ADMIN' ? '!hidden' : 'flex'}`}>
-                            <Link prefetch={true} className={`rounded-radiusUi w-full flex gap-3 pl-12 py-3 !text-base ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
+                        <li className={`${userInfo?.role == 'ROLE_USER' || userInfo?.role == 'ROLE_SUB_ADMIN' ? 'hidden!' : 'flex'}`}>
+                            <Link prefetch={true} className={`rounded-radius-ui w-full flex gap-3 pl-12 py-3 text-base! ${pathname === "/organization-profile" ? "text-white bg-purple-text" : ''}`} href={'/organization-profile'}>
                                 {/* <Buildings2 size="20" color={`${pathname === "/organization-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" /> */}
                                 Organization Profile
                             </Link>
                         </li>
                         <li className="flex">
-                            <Link prefetch={true} className={`rounded-radiusUi w-full flex gap-3 hover:!bg-none pl-12 py-3 !text-base ${pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`} href={'/user-profile'}>
+                            <Link prefetch={true} className={`rounded-radius-ui w-full flex gap-3 hover:bg-none! pl-12 py-3 text-base! ${pathname === "/user-profile" ? "text-white bg-purple-text" : ''}`} href={'/user-profile'}>
                                 {/* <Personalcard size="20" color={`${pathname === "/user-profile" ? '#FFFFFF' : '#344054'}`} variant="Bulk" /> */}
                                 User Profile
                             </Link>

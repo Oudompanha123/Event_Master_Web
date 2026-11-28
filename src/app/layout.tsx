@@ -2,6 +2,8 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "@/app/globals.css";
 import NextTopLoader from 'nextjs-toploader';
 import { ToastContainer } from "react-toastify";
+import { TooltipProvider } from "@/shared/ui/kit/tooltip";
+import { Toaster } from "@/shared/ui/kit/sonner";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -28,9 +30,12 @@ export default function RootLayout({ children }) {
           easing="ease"
           speed={200}
           shadow="0 0 10px #7939EF,0 0 8px #7939EF"
-         
+
         />
-        {children}
+        {/* shadcn/ui: tooltips need one provider; sonner toasts (react-toastify stays until it is replaced) */}
+        <TooltipProvider>{children}</TooltipProvider>
+        <Toaster position="top-center" richColors />
+
       </body>
     </html>
   );

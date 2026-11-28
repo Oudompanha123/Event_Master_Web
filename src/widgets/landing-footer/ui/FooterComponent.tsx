@@ -19,7 +19,7 @@ export const FooterComponent = () => {
                     <a href="https://www.facebook.com/ksignhrd" target="_blank">
                         <Image
                             src={facebookIcon}
-                            className="p-1 rounded-full border-1px border-greyUi"
+                            className="p-1 rounded-full border-1px border-grey-ui"
                             width={32}
                             height={32}
                             alt="facebook-icon"
@@ -28,7 +28,7 @@ export const FooterComponent = () => {
                     <a href="https://maps.app.goo.gl/pSM8FKj1BayJ7uph7" target="_blank">
                         <Image
                             src={googleIcon}
-                            className="p-1 rounded-full border-1px border-greyUi"
+                            className="p-1 rounded-full border-1px border-grey-ui"
                             width={32}
                             height={32}
                             alt="google-icon"

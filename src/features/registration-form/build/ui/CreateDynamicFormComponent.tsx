@@ -138,11 +138,11 @@ export const CreateDynamicForm = ({ id ,userRole }) => {
             </div>
           </div>
           <div className="flex items-center gap-4 justify-end mt-6">
-            <button onClick={() => setPopUp(true)}  className={`${userRole == "ROLE_USER" && "hidden"} rounded-2xl w-32 border-purple-text border-[1px] text-purple-text font-semibold antialiased py-3 h-full`}>
+            <button onClick={() => setPopUp(true)}  className={`${userRole == "ROLE_USER" && "hidden"} rounded-2xl w-32 border-purple-text border-1px text-purple-text font-semibold antialiased py-3 h-full`}>
               Add field
             </button>
             {choosedField.length !== 0 && (
-              <button onClick={() => handleCreateForm(id)} className="rounded-2xl w-32 border-purple-text border-[1px] text-white bg-purple-text font-semibold antialiased py-3 h-full flex justify-center">
+              <button onClick={() => handleCreateForm(id)} className="rounded-2xl w-32 border-purple-text border-1px text-white bg-purple-text font-semibold antialiased py-3 h-full flex justify-center">
                 <p className={`${!loading ? 'block' : 'hidden'}`}>Save</p>
                 <div className={`loader ${loading ? 'block' : 'hidden'}`}></div>
               </button>
@@ -188,11 +188,11 @@ export const CreateDynamicForm = ({ id ,userRole }) => {
               onChange={(e) => setFieldName(e.target.value)}
               value={fieldName}
               type="text"
-              className="bg-gray-50 px-4 py-2 rounded-2xl border border-slate-200 focus:outline-none w-full"
+              className="bg-gray-50 px-4 py-2 rounded-2xl border border-slate-200 focus:outline-hidden w-full"
             />
           </div>
           <div className="space-x-3 flex justify-end">
-            <button onClick={() => handleAddFieldName()} className="px-4 py-3 flex items-center gap-2 rounded-2xl bg-[#038446] duration-300 text-white">
+            <button onClick={() => handleAddFieldName()} className="px-4 py-3 flex items-center gap-2 rounded-2xl bg-green-ui duration-300 text-white">
               <Image src="/icons/edit.svg" alt="Add Icon" width={20} height={20} priority />
               Confirm
             </button>

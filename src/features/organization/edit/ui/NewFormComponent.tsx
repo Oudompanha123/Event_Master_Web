@@ -202,7 +202,7 @@ const NewFormComponent = () => {
                 <input
                   type="text"
                   id="text"
-                  className={`shadow-sm cursor-default bg-gray-100 border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                  className={`shadow-xs cursor-default bg-gray-100 border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                   value={organizationCode}
                   readOnly
                 />
@@ -214,7 +214,7 @@ const NewFormComponent = () => {
                 />
                 {copied && (
                   <div className="absolute right-6 sm:right-24 md:right-32 lg:right-52 xl:right-56 2xl:right-64 -mt-10">
-                    <div className="bg-white shadow-md rounded p-2">
+                    <div className="bg-white shadow-md rounded-sm p-2">
                       <p className="text-green-500 text-sm">copied!</p>
                     </div>
                   </div>
@@ -234,7 +234,7 @@ const NewFormComponent = () => {
                   type="text"
                   id="orgName"
                   name="orgName"
-                  className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                  className={`shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                   placeholder="Enter full name"
                   value={organizationName}
                   onChange={(e) => setOrganizationName(e.target.value)}
@@ -255,7 +255,7 @@ const NewFormComponent = () => {
                   type="text"
                   id="address"
                   name="address"
-                  className={`shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                  className={`shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                   placeholder="Enter address"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}

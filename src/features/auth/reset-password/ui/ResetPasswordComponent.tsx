@@ -50,7 +50,7 @@ const ResetPasswordComponent = () => {
                         width={600}
                         height={200}
                     />
-                    <div className="flex text-[11px] sm:text-[17px] md:inline-flex sm:flex-row md:flex-row justify-between sm:w-[550px] md: w-[100%] md:space-y-0 md:space-x-3">
+                    <div className="flex text-[11px] sm:text-[17px] md:inline-flex sm:flex-row md:flex-row justify-between sm:w-[550px] md: w-full md:space-y-0 md:space-x-3">
                         <p className={`text-gray-600 ml-0 sm:ml-[-13px] lg:ml-[-17px] ${pathname === '/forgot-password' ? 'text-purple-text' : ''}`}>
                             Forgot password
                         </p>
@@ -60,7 +60,7 @@ const ResetPasswordComponent = () => {
                         <p className={`text-gray-600 pr-[17px] sm:pr-[30px] ${pathname === '/set-new-password' ? 'text-purple-text' : ''}`}>
                             New password
                         </p>
-                        <p className={`text-gray-600 sm:!mr-[-8px] ${pathname === '/verify' ? 'text-purple-text' : ''}`}>
+                        <p className={`text-gray-600 sm:mr-[-8px]! ${pathname === '/verify' ? 'text-purple-text' : ''}`}>
                             Success
                         </p>
                     </div>

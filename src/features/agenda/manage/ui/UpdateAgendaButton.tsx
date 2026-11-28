@@ -73,7 +73,7 @@ function UpdateAgenda({ inputList, setInputList, errors, setErrors, id }) {
                   <input
                     type="text"
                     name="topic"
-                    className="appearance-none input input-bordered font-medium text-sm w-full rounded-xl focus:outline-none focus:border-purple-text"
+                    className="appearance-none input input-bordered font-medium text-sm w-full rounded-xl focus:outline-hidden focus:border-purple-text"
                     placeholder="Enter the Topic"
                     value={x.topic}
                     onChange={(e) => handleInputChange(e, i)}
@@ -100,7 +100,7 @@ function UpdateAgenda({ inputList, setInputList, errors, setErrors, id }) {
                         type="time"
                         id="start-time"
                         name="startTime"
-                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
+                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-hidden"
                         min="09:00"
                         max="18:00"
                         value={x.startTime}
@@ -127,7 +127,7 @@ function UpdateAgenda({ inputList, setInputList, errors, setErrors, id }) {
                         type="time"
                         id="end-time"
                         name="endTime"
-                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
+                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-hidden"
                         min="09:00"
                         max="18:00"
                         value={x.endTime}
@@ -149,7 +149,7 @@ function UpdateAgenda({ inputList, setInputList, errors, setErrors, id }) {
                     <input
                       type="text"
                       name="speaker"
-                      className="input input-bordered font-medium text-sm w-full rounded-xl focus:outline-none focus:border-purple-text"
+                      className="input input-bordered font-medium text-sm w-full rounded-xl focus:outline-hidden focus:border-purple-text"
                       placeholder="Enter the Speaker"
                       value={x.speaker}
                       onChange={(e) => handleInputChange(e, i)}
@@ -166,7 +166,7 @@ function UpdateAgenda({ inputList, setInputList, errors, setErrors, id }) {
 
                   <textarea
                     name="description"
-                    className="textarea textarea-bordered font-medium text-sm w-full rounded-xl h-20 focus:outline-none focus:border-purple-text"
+                    className="textarea textarea-bordered font-medium text-sm w-full rounded-xl h-20 focus:outline-hidden focus:border-purple-text"
                     placeholder="Enter the description..."
                     value={x.description}
                     onChange={(e) => handleInputChange(e, i)}

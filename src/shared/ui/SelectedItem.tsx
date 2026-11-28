@@ -3,7 +3,7 @@ import React from 'react';
 
 const SelectedItem = ({ item, removeItem }) => {
   return (
-    <div className="selected-item flex items-center space-x-2 p-1 rounded bg-gray-200 dark:bg-gray-200">
+    <div className="selected-item flex items-center space-x-2 p-1 rounded-sm bg-gray-200 dark:bg-gray-200">
       <span className=" text-primary-text">{item.label}</span>
       <svg
         className="w-4 h-4 text-gray-800 dark:text-gray-500 cursor-pointer"

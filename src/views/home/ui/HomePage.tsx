@@ -27,7 +27,7 @@ export default async function Home(props) {
       <section className="bg-pattern bg-cover md:bg-contain relative lg:-top-16 2xl:top-0">
         <div className="text-center space-y-8 mt-16 lg:mt-0 lg:relative lg:top-24">
           <div className="space-y-8 mb-8">
-            <h1 className="!leading-snug font-bold text-5xl md:text-6xl lg:text-[64px] w-full lg:w-3/4 2xl:w-1/2 mx-auto">Bringing everyone <br className="hidden lg:block"></br>all together</h1>
+            <h1 className="leading-snug! font-bold text-5xl md:text-6xl lg:text-[64px] w-full lg:w-3/4 2xl:w-1/2 mx-auto">Bringing everyone <br className="hidden lg:block"></br>all together</h1>
             <p className="text-sm md:text-base w-full md:w-3/4 lg:w-1/3 xl:w-1/3 mx-auto font-medium">Unite, Celebrate, Create: Bringing Everyone Together
               htmlFor Unforgettable Events, Perfectly Realized with Seamless
               Planning and Exquisite Execution.
@@ -52,7 +52,7 @@ export default async function Home(props) {
           </div>
           <Image height={450} src={racingImage} placeholder='blur' className="rounded-3xl relative -top-32 h-[450px] object-cover" alt="racingImage" />
         </div>
-        <div className="hidden lg:block bg-gradient-to-t from-white to-transparent h-[200px] w-full absolute -bottom-0 left-0"></div>
+        <div className="hidden lg:block bg-linear-to-t from-white to-transparent h-[200px] w-full absolute -bottom-0 left-0"></div>
       </section>
       {/* category section */}
       <section className="space-y-12 py-32">
