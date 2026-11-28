@@ -123,7 +123,7 @@ export const MemberRoleComponent = ({
           tabIndex={0}
           role="button"
           onClick={toggleDropdown}
-          className="btn btn-sm border rounded-radiusUi w-[122px] h-8"
+          className="btn btn-sm border rounded-radius-ui w-[122px] h-8"
           style={{
             color: getRoleColor(memberRoles),
             borderColor: getRoleColor(memberRoles),

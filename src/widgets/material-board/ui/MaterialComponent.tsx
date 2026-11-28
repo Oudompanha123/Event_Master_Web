@@ -305,7 +305,7 @@ export default function MaterialComponent({
           {rows.length > 0 && (
             <button
               type="submit"
-              className="px-6 h-11 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-3 bg-blue-700 w-32 hover:border-blueUi hover:bg-blue-800"
+              className="px-6 h-11 rounded-2xl border-1px border-borderUi flex items-center justify-center gap-3 bg-blue-700 w-32 hover:border-blue-ui hover:bg-blue-800"
               onClick={handleSave}
             >
               {/* <AddSquare size="24" variant="Bold" className="text-white" /> */}

@@ -160,7 +160,7 @@ function FormComponent({ className, getAllMember }: { className?: string; getAll
           <div className="profile w-full lg:w-[22%] flex flex-col items-center">
             <div className="rounded-full lg:mt-10 mx-auto w-fit relative">
               <Image src={profileImage && /^(http|https):\/\//.test(profileImage) ? profileImage : defaultProfile} alt="logo" className={`${changeImage && 'hidden'} h-[140px] w-[140px] sm:h-[180px] sm:w-[180px] xl:h-[200px] xl:w-[200px] object-cover rounded-full overflow-hidden`} id="picture" width={200} height={200} />
-              <img src="" className="mx-auto !h-[140px] !w-[140px] sm:!h-[180px] sm:!w-[180px] xl:!h-[200px] xl:!w-[200px] hidden rounded-full object-cover" id="damn" alt="Damn" />
+              <img src="" className="mx-auto h-[140px]! w-[140px]! sm:h-[180px]! sm:w-[180px]! xl:h-[200px]! xl:w-[200px]! hidden rounded-full object-cover" id="damn" alt="Damn" />
               {!isLock && (
                 <>
                   <label htmlFor="image-upload" className={`absolute bottom-2 right-2 w-8 h-8 bg-slate-100  rounded-full flex justify-center items-center p-1 duration-300 hover:bg-slate-200 cursor-pointer`}>
@@ -187,7 +187,7 @@ function FormComponent({ className, getAllMember }: { className?: string; getAll
                 <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Name <span className="text-red-500">*</span>
                 </label>
-                <input type="text" id="name" name="name" className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                <input type="text" id="name" name="name" className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                   placeholder="Enter your name"
                   onChange={(e) => setUserName(e.target.value)}
                   disabled={isLock}
@@ -205,7 +205,7 @@ function FormComponent({ className, getAllMember }: { className?: string; getAll
                   Gender <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <select className={`${errors.gender ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id="gender"
+                  <select className={`${errors.gender ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`} id="gender"
                     disabled={isLock} onChange={(e) => setGender(e.target.value)}
                     {...register("gender", { required: "Gender is required" })}>
                     <option value="Female">Female</option>
@@ -227,7 +227,7 @@ function FormComponent({ className, getAllMember }: { className?: string; getAll
                   Your Email <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <input type="email" id="email" name="email" className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                  <input type="email" id="email" name="email" className={`${errors.email ? "border-red-700 focus:border-red-600" : "border-gray-300"} border-gray-300"} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                     placeholder="Enter your email" value={email} disabled={isLock} onChange={(e) => setEmail(e.target.value)} readOnly
                     // value={getAllMember.email}
                     {...register("email", {
@@ -251,7 +251,7 @@ function FormComponent({ className, getAllMember }: { className?: string; getAll
                 <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Date <span className="text-red-500">*</span>
                 </label>
-                <input type="date" id="date" name="date" className={`${errors.date ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                <input type="date" id="date" name="date" className={`${errors.date ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                   disabled={isLock} onChange={(e) => setDate(e.target.value)}
                   {...register("date", { required: "Date is required" })}
                 />
@@ -266,7 +266,7 @@ function FormComponent({ className, getAllMember }: { className?: string; getAll
                 <label htmlFor="phone" className="mb-1 text-sm font-medium">
                   Phone Number <span className="text-red-500">*</span>
                 </label>
-                <input type="text" placeholder="Phone number" name="phoneNumber" className={`${errors.phoneNumber ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`} id="phone"
+                <input type="text" placeholder="Phone number" name="phoneNumber" className={`${errors.phoneNumber ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`} id="phone"
                   disabled={isLock} onChange={(e) => setPhoneNumber(e.target.value)}
                   {...register("phoneNumber", {
                     required: "Phone number is required",
@@ -287,7 +287,7 @@ function FormComponent({ className, getAllMember }: { className?: string; getAll
                 <label htmlFor="address" className="mb-1 text-sm font-medium">
                   Address <span className="text-red-500">*</span>
                 </label>
-                <input type="text" placeholder="" name="address" className={`${errors.address ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                <input type="text" placeholder="" name="address" className={`${errors.address ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                   id="address" disabled={isLock} onChange={(e) => setAddress(e.target.value)}
                   {...register("address", { required: "Address is required" })}
                 />

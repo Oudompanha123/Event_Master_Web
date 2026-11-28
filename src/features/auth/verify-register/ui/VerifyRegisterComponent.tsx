@@ -88,7 +88,7 @@ const VerifyRegisterComponent = ({email}) => {
                     {isLoading ? <div className='loader'></div> : <p>Continue</p>}
                 </button>
 
-                <div className="mb-2 mr-6 cursor-pointer flex justify-end text-blueUi mt-3">
+                <div className="mb-2 mr-6 cursor-pointer flex justify-end text-blue-ui mt-3">
                     <div onClick={handleResendOtp}>
                         {isLoadingResendOTP ?
                             <div className="flex gap-2">OTP is Sending <p className='loader_purple'></p></div> :

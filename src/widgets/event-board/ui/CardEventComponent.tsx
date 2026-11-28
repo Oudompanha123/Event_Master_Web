@@ -90,10 +90,10 @@ export default function CardEventComponent({ eventData, userRole }) {
                           </p>
                           <div className="modal-action">
                             <form method="dialog" className="flex justify-around w-full mb-4 mt-3 px-3">
-                              <button onClick={() => handleChangeEventStatus(data?.eventId, data?.isOpen)} className="h-9 rounded-3xl bg-[#038446] w-[100px] hover:bg-green-700" value="yes">
+                              <button onClick={() => handleChangeEventStatus(data?.eventId, data?.isOpen)} className="h-9 rounded-3xl bg-green-ui w-[100px] hover:bg-green-700" value="yes">
                                 <p className="text-white font-semibold">Yes</p>
                               </button>
-                              <button className="h-9 rounded-3xl bg-redUi w-[100px] hover:bg-red-700" value="cancel">
+                              <button className="h-9 rounded-3xl bg-red-ui w-[100px] hover:bg-red-700" value="cancel">
                                 <p className="text-white font-semibold">No</p>
                               </button>
                             </form>
@@ -140,7 +140,7 @@ export default function CardEventComponent({ eventData, userRole }) {
                   </Link>
                   <Link
                     href={`/event-detail/${data.eventId}`}
-                    className="flex-1 flex items-center justify-center rounded-full bg-[#7939EF] text-white antialiased h-10 px-3 text-sm font-medium whitespace-nowrap transition duration-300 ease-in-out hover:bg-violet-700 active:bg-violet-800 focus:outline-none focus:ring focus:ring-violet-500 active:scale-[98%]"
+                    className="flex-1 flex items-center justify-center rounded-full bg-[#7939EF] text-white antialiased h-10 px-3 text-sm font-medium whitespace-nowrap transition duration-300 ease-in-out hover:bg-violet-700 active:bg-violet-800 focus:outline-hidden focus:ring-3 focus:ring-violet-500 active:scale-[98%]"
                   >
                     View event detail
                   </Link>

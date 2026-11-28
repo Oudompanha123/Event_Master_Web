@@ -67,12 +67,12 @@ export const AssetPopupComponent = () => {
             <div className="">
               <div className="">
                 <label htmlFor="">Asset Name</label>
-                <span className="text-redUi">*</span>
+                <span className="text-red-ui">*</span>
                 <input
                   type="text"
                   id="assetName"
                   name="assetName"
-                  className="sm:w-full mt-2 shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                  className="sm:w-full mt-2 shadow-xs bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5"
                   placeholder="Enter asset name"
                   {...register("assetName", {
                     required: "asset name is required",
@@ -91,13 +91,13 @@ export const AssetPopupComponent = () => {
               <div className="flex gap-6 mt-4">
                 <div className="w-full">
                   <label htmlFor="">Quantity</label>
-                  <span className="text-redUi">*</span>
+                  <span className="text-red-ui">*</span>
                   <input
                     type="number"
                     step={0.01}
                     id=""
                     name="qty"
-                    className="shadow-sm mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                    className="shadow-xs mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5"
                     placeholder="Enter quantity"
                     {...register("qty", {
                       required: "quantity is required",
@@ -115,12 +115,12 @@ export const AssetPopupComponent = () => {
                 </div>
                 <div className="w-full">
                   <label htmlFor="">Unit</label>
-                  <span className="text-redUi">*</span>
+                  <span className="text-red-ui">*</span>
                   <input
                     type="text"
                     id=""
                     name="unit"
-                    className="shadow-sm mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                    className="shadow-xs mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5"
                     placeholder="Enter unit"
                     {...register("unit", {
                       required: "unit is required",

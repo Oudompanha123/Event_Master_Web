@@ -60,7 +60,7 @@ export const SelectDropdownLanding = ({ height, label, func }) => {
                             Event Category
                         </Label>
                         <Listbox.Button
-                            className={`relative ${height} h-[48px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-none sm:text-sm sm:leading-6 ${!selected ? " text-gray-400" : "bg-white text-black"
+                            className={`relative ${height} h-[48px] bg-white cursor-default rounded-3xl pl-4 pr-8 w-full text-left ring-1 ring-inset ring-gray-200 focus:outline-hidden sm:text-sm sm:leading-6 ${!selected ? " text-gray-400" : "bg-white text-black"
                                 }`}
                         >
                             <span className="block truncate ">
@@ -83,7 +83,7 @@ export const SelectDropdownLanding = ({ height, label, func }) => {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >
-                            <Listbox.Options className="absolute z-10 mt-1 h-fit max-h-[250px] overflow-auto rounded-2xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                            <Listbox.Options className="absolute z-10 mt-1 h-fit max-h-[250px] overflow-auto rounded-2xl bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-hidden sm:text-sm">
                                 {options.map((option) => (
                                     <Listbox.Option
                                         onClick={() => handleSelect(option)}

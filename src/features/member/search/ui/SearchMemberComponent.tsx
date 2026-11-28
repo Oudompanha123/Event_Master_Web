@@ -30,7 +30,7 @@ export const SearchMemberComponent = () => {
           id="searchBar"
           name="searchBar"
           placeholder="Search by name"
-          className="font-medium text-xs lg:text-base focus:outline-none focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
+          className="font-medium text-xs lg:text-base focus:outline-hidden focus:border-purple-text w-full h-11 border rounded-3xl pl-10"
           {...register("searchBar")}
           onChange={(e) => {
             handlesearch(e.target.value);

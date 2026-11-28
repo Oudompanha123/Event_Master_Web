@@ -93,11 +93,11 @@ const SignupComponent = () => {
     return (
         <div className="w-[calc(100%-2rem)] max-w-xl h-auto p-5 sm:p-8 mt-16 sm:mt-20 md:w-[80%] lg:w-[65%] xl:max-w-none xl:left-6 xl:mt-32 xl:mx-[42%] 2xl:mt-[10%] 2xl:left-5 xl:w-[45%] bg-white rounded-[32px] sm:rounded-[40px] shadow-md absolute">
             <ToastContainer autoClose={2000}/>
-            <div className="flex justify-center xl:justify-start pt-4 sm:pt-8 pb-6 sm:px-6 focus:outline-none">
+            <div className="flex justify-center xl:justify-start pt-4 sm:pt-8 pb-6 sm:px-6 focus:outline-hidden">
                 <button
                     type="button"
                     id="admin-button"
-                    className={`font-medium text-sm rounded-[100px] pl-9 pr-14 sm:px-12 py-3.5 -mr-10 ${isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-sm bg-white border border-gray-300 primary-text z-10'}`}
+                    className={`font-medium text-sm rounded-[100px] pl-9 pr-14 sm:px-12 py-3.5 -mr-10 ${isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-xs bg-white border border-gray-300 primary-text z-10'}`}
                     onClick={handleAdminClick}
                 >
                     ADMIN
@@ -105,7 +105,7 @@ const SignupComponent = () => {
                 <button
                     type="button"
                     id="user-button"
-                    className={`font-medium text-sm rounded-[100px] px-9 sm:px-12 py-3.5 ${!isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-sm bg-white border border-gray-300 primary-text z-10'}`}
+                    className={`font-medium text-sm rounded-[100px] px-9 sm:px-12 py-3.5 ${!isAdminSelected ? 'bg-purple-text text-white z-20' : 'shadow-xs bg-white border border-gray-300 primary-text z-10'}`}
                     onClick={handleUserClick}
                 >
                     USER
@@ -122,7 +122,7 @@ const SignupComponent = () => {
                             <input
                                 type="text"
                                 id="name"
-                                className={`${errors.name ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                className={`${errors.name ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                                 placeholder="Enter your full name"
                                 {...register('name', {
                                     required: 'Full Name is required',
@@ -138,7 +138,7 @@ const SignupComponent = () => {
                             <input
                                 type="text"
                                 id="email"
-                                className={`${errors.email ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                className={`${errors.email ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                                 placeholder="Enter your email"
                                 {...register('email', {
                                     required: 'Email is required',
@@ -159,7 +159,7 @@ const SignupComponent = () => {
                                 <input
                                     type={isLocked ? 'password' : 'text'}
                                     id="password"
-                                    className={`${errors.password ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                    className={`${errors.password ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                                     placeholder="Enter your password"
                                     {...register('password', {
                                         required: 'Password is required',
@@ -189,7 +189,7 @@ const SignupComponent = () => {
                                 <input
                                     type={isKeyLocked ? 'password' : 'text'}
                                     id="confirm-password"
-                                    className={`${errors.confirmPassword ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                    className={`${errors.confirmPassword ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                                     placeholder="Enter your confirm password"
                                     {...register('confirmPassword', {
                                         required: 'Confirm Password is required',
@@ -218,7 +218,7 @@ const SignupComponent = () => {
                                 <input
                                     type="text"
                                     id="phone-number"
-                                    className={`${errors.phoneNumber ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                    className={`${errors.phoneNumber ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                                     placeholder="Enter your phone number"
                                     {...register('phoneNumber', {
                                         required: 'Phone Number is required',
@@ -245,7 +245,7 @@ const SignupComponent = () => {
                                     <input
                                         type="text"
                                         id="phone-number"
-                                        className={`${errors.phoneNumber ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                        className={`${errors.phoneNumber ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                                         placeholder="Enter your phone number"
                                         {...register('phoneNumber', {
                                             required: 'Phone Number is required',
@@ -263,7 +263,7 @@ const SignupComponent = () => {
                                     <input
                                         type="text"
                                         id="organization-code"
-                                        className={`${errors.organizationCode ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-sm bg-white border primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5`}
+                                        className={`${errors.organizationCode ? 'border-red-700 focus:border-red-600' : 'border-gray-300'} shadow-xs bg-white border primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5`}
                                         placeholder="Enter your organization code"
                                         {...register('organizationCode', {
                                             required: 'Organization Code is required',
@@ -318,7 +318,7 @@ const SignupComponent = () => {
 
                                                 <div className="flex justify-between w-[300px] m-auto mb-4 mt-4">
                                                     <button
-                                                        className="border w-[110px] border-[#344054] h-10 rounded-3xl"
+                                                        className="border w-[110px] border-primary-text h-10 rounded-3xl"
                                                         onClick={() => (document.getElementById('my_modal_5') as HTMLDialogElement | null)?.close()}
                                                     >
                                                         <p className="font-semibold">Cancel</p>

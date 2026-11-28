@@ -10,7 +10,7 @@ import Image from "next/image";
 export function CountMaterialComponent({data}) {
   return (
     <div className="grid grid-cols-1 py-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
-    <div className="w-auto bg-white rounded-3xl drop-shadow flex px-3.5 py-1">
+    <div className="w-auto bg-white rounded-3xl drop-shadow-sm flex px-3.5 py-1">
       <div className="flex items-center">
         <div className="bg-[#624F9D] p-2.5 rounded-full">
           <Image
@@ -33,7 +33,7 @@ export function CountMaterialComponent({data}) {
       </div>
     </div>
 
-    <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5">
+    <div className="w-auto py-2 bg-white rounded-3xl drop-shadow-sm flex px-3.5">
       <div className="flex items-center">
         <div className="bg-[#FBBC04] p-2.5 rounded-full">
           <HiOutlineSwatch size="30" color="#ffffff" />
@@ -49,7 +49,7 @@ export function CountMaterialComponent({data}) {
       </div>
     </div>
 
-    <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5">
+    <div className="w-auto py-2 bg-white rounded-3xl drop-shadow-sm flex px-3.5">
       <div className="flex items-center">
         <div className="bg-[#551FFF] p-2.5 rounded-full">
           <TiFlashOutline size="32" color="#ffffff" />
@@ -65,9 +65,9 @@ export function CountMaterialComponent({data}) {
       </div>
     </div>
 
-    <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5">
+    <div className="w-auto py-2 bg-white rounded-3xl drop-shadow-sm flex px-3.5">
       <div className="flex items-center">
-        <div className="bg-[#038446] p-2.5 rounded-full">
+        <div className="bg-green-ui p-2.5 rounded-full">
           <Image
             className=""
             src="/icons/clipboard.svg"
@@ -88,7 +88,7 @@ export function CountMaterialComponent({data}) {
       </div>
     </div>
 
-    <div className="w-auto py-2 bg-white rounded-3xl drop-shadow flex px-3.5">
+    <div className="w-auto py-2 bg-white rounded-3xl drop-shadow-sm flex px-3.5">
       <div className="flex items-center">
         <div className="bg-[#D72222] p-2.5 rounded-full">
           <Image

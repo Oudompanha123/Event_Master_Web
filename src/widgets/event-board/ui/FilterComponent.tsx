@@ -68,7 +68,7 @@ const FilterComponent = ({ initialData, userRole }) => {
               type="date"
               name="startDate"
               id="startDate"
-              className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none"
+              className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-hidden"
             />
           </div>
           <div className="mb-5">
@@ -80,7 +80,7 @@ const FilterComponent = ({ initialData, userRole }) => {
               type="date"
               name="endDate"
               id="endDate"
-              className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-none"
+              className="border text-primary-text sm:text-sm rounded-3xl block w-full p-3 focus:outline-hidden"
             />
           </div>
         </div>
@@ -105,7 +105,7 @@ const FilterComponent = ({ initialData, userRole }) => {
             </div>
             <input
               onChange={(e) => setSearch(e.target.value)}
-              className="input input-bordered border-[1px] pl-11 text-primary-text hover:border-gray-400 focus:outline-none focus:border-purple-text rounded-full w-full h-11"
+              className="input input-bordered border-1px pl-11 text-primary-text hover:border-gray-400 focus:outline-hidden focus:border-purple-text rounded-full w-full h-11"
               id="search"
               name="search"
               type="text"

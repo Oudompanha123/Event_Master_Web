@@ -34,7 +34,7 @@ export function ChangeRoleComponent({ role, onConfirm, onClose }) {
           >
             <button
               type="button"
-              className="h-9 rounded-3xl bg-[#038446] w-[100px] hover:bg-[#3e8563]"
+              className="h-9 rounded-3xl bg-green-ui w-[100px] hover:bg-[#3e8563]"
               onClick={onConfirm}
             >
               <p className="text-white font-semibold">Yes</p>

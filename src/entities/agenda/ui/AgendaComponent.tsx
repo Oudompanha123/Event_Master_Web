@@ -1,6 +1,6 @@
 export const AgendaComponent = ({ no, startTime, endTime, title, description, speaker }) => {
     return (
-        <div className="flex rounded-3xl border-1px py-5 odd:bg-softwhiteUi even:bg-white">
+        <div className="flex rounded-3xl border-1px py-5 odd:bg-softwhite-ui even:bg-white">
             <div className="px-4">
                 <div className={`w-[2.4px] ${no % 2 !== 0 ? "bg-green-500" : "bg-purple-text"} h-full`}></div>
             </div>

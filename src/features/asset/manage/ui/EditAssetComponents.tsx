@@ -81,14 +81,14 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
             <div className=" ">
               <div className="text-center  flex flex-col justify-start items-start">
                 <label htmlFor="">
-                  Asset Name <span className="text-redUi">*</span>
+                  Asset Name <span className="text-red-ui">*</span>
                 </label>
                 <input
                   value={handleName}
                   type="text"
                   id="assetName"
                   name="assetName"
-                  className="sm:w-full mt-2 shadow-sm bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                  className="sm:w-full mt-2 shadow-xs bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5"
                   placeholder="Enter asset name"
                   {...register("assetName", {
                     required: "asset name is required",
@@ -110,13 +110,13 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
               <div className="flex gap-6 mt-4 items-start text-start justify-start ">
                 <div className="w-full">
                   <label htmlFor="">Quantity</label>
-                  <span className="text-redUi">*</span>
+                  <span className="text-red-ui">*</span>
                   <input
                     value={handleQty}
                     type="number"
                     id="qty"
                     name="qty"
-                    className="shadow-sm mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                    className="shadow-xs mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5"
                     placeholder="Enter quantity"
                     {...register("qty", {
                       required: "quantity is required",
@@ -135,13 +135,13 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                 </div>
                 <div className="w-full">
                   <label htmlFor="">Unit</label>
-                  <span className="text-redUi">*</span>
+                  <span className="text-red-ui">*</span>
                   <input
                     value={handleUnit}
                     type="text"
                     id="unit"
                     name="unit"
-                    className="shadow-sm mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-none focus:border-purple-text block w-full p-3.5"
+                    className="shadow-xs mt-2 bg-white border border-gray-300 primary-text sm:text-sm rounded-2xl focus:outline-hidden focus:border-purple-text block w-full p-3.5"
                     placeholder="Enter unit"
                     {...register("unit", {
                       required: "unit is required",
@@ -174,7 +174,7 @@ export const EditAssetComponents = ({ assetEdit, name, qty, unit }) => {
                 <button
                   type="submit"
                   //onClick={() => (assetEdit)}
-                  className="save border rounded-2xl min-w-32 bg-greenUi text-white flex justify-center text-center items-center px-4 gap-3 "
+                  className="save border rounded-2xl min-w-32 bg-green-ui text-white flex justify-center text-center items-center px-4 gap-3 "
                 >
                   {!isLoading ? (
                     <div className="flex gap-3">

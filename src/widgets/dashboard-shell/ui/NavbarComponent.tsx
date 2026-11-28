@@ -60,7 +60,7 @@ export const NavbarComponent = ({ className, onMenuClick }) => {
     const logoSrc = orgLogo && /^(http|https):\/\//.test(orgLogo) ? orgLogo : defaultProfile;
 
     return (
-        <div className={`${className ?? ''} justify-between gap-3 sticky top-0 z-50 bg-white flex items-center py-3 px-4 sm:px-6 lg:px-10 xl:px-14 border-b-[1px]`}>
+        <div className={`${className ?? ''} justify-between gap-3 sticky top-0 z-50 bg-white flex items-center py-3 px-4 sm:px-6 lg:px-10 xl:px-14 border-b-1px`}>
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                 {onMenuClick && (
                     <button
@@ -138,7 +138,7 @@ export const NavbarComponent = ({ className, onMenuClick }) => {
                     <div className="flex items-center gap-4">
                         <div className="hidden lg:block">
                             <p className="font-semibold text-end text-sm">{orgName}</p>
-                            <p className="text-xs text-greyUi">{userInfo?.sub}</p>
+                            <p className="text-xs text-grey-ui">{userInfo?.sub}</p>
                         </div>
                         <div className="w-[48px] h-[48px] hidden lg:block">
                             <Image

@@ -8,7 +8,7 @@ export const EventToggle = ({ id,userRole,userId,endDate }) => {
     const [tab, setTab] = useState('a');
     return (
         <div>
-            <div className="w-fit flex p-2 rounded-2xl bg-backgroundUi">
+            <div className="w-fit flex p-2 rounded-2xl bg-background-ui">
                 <p className={`${tab == 'a' && 'bg-white'} cursor-pointer w-32 text-center py-2 rounded-xl`} onClick={() => setTab('a')}>Material</p>
                 <p className={`${tab == 'b' && 'bg-white'} cursor-pointer w-32 text-center py-2 rounded-xl`} onClick={() => setTab('b')}>Agenda</p>
             </div>

@@ -250,7 +250,7 @@ export const CreateEventButton = () => {
                 <AddSquare size="24" color="#344054" variant="Bold" />
                 <p className="text-sm hidden lg:block">New Event</p>
             </div>
-            <dialog id="my_modal_event_create" className="modal !m-0">
+            <dialog id="my_modal_event_create" className="modal m-0!">
                 <div className="modal-box w-11/12 lg:w-1/2 lg:max-w-5xl p-8">
                     <div className="flex justify-between">
                         <h3 className="font-bold text-xl">Create Event</h3>
@@ -289,7 +289,7 @@ export const CreateEventButton = () => {
                                         type="text"
                                         name="name"
                                         id="name"
-                                        className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        className={`${errors.name ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter event name"
                                     />
                                     {errors.name && <div className="text-red-600 text-sm mt-2">{errors.name.message}</div>}
@@ -299,8 +299,8 @@ export const CreateEventButton = () => {
                                         func={handleCategorySelect}
                                         more={random}
                                         {...register("category")}
-                                        label={`!font-medium`}
-                                        height={`!rounded-borderUi !h-[49.82px] !rounded-2xl shadow-sm bg-white !ring-gray-300 !border-gray-300 primary-text sm:text-sm focus:outline-none !focus:border-purple-text block w-full p-3.5`}
+                                        label={`font-medium!`}
+                                        height={`!rounded-borderUi h-[49.82px]! rounded-2xl! shadow-xs bg-white ring-gray-300! border-gray-300! primary-text sm:text-sm focus:outline-hidden !focus:border-purple-text block w-full p-3.5`}
                                     />
                                     {errors.category && <span className="text-red-600 text-sm">{errors.category.message}</span>}
                                 </div>
@@ -322,7 +322,7 @@ export const CreateEventButton = () => {
                                         type="datetime-local"
                                         name="startDate"
                                         id="startdate"
-                                        className={`${errors.startDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        className={`${errors.startDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         onChange={(e) => { setStartDate(e.target.value); triggerHourChange() }}
                                     />
@@ -346,7 +346,7 @@ export const CreateEventButton = () => {
                                         type="datetime-local"
                                         name="endDate"
                                         id="enddate"
-                                        className={`${errors.endDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        className={`${errors.endDate ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="MM/DD/YYYY 6:00 AM"
                                         onChange={(e) => { setEndDate(e.target.value); triggerHourChange() }}
                                     />
@@ -364,7 +364,7 @@ export const CreateEventButton = () => {
                                         type="text"
                                         name="duration"
                                         id="duration"
-                                        className={`${errors.duration ? "border-red-700 focus:border-red-600" : "border-gray-300"} cursor-not-allowed shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        className={`${errors.duration ? "border-red-700 focus:border-red-600" : "border-gray-300"} cursor-not-allowed shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Duration in hours"
                                     />
                                     {errors.duration && <div className="text-red-600 text-sm mt-2">{errors.duration.message}</div>}
@@ -380,7 +380,7 @@ export const CreateEventButton = () => {
                                         type="number"
                                         name="maxAttendee"
                                         id="max"
-                                        className={`${errors.maxAttendee ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        className={`${errors.maxAttendee ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter maximum attendee"
                                     />
                                     {errors.maxAttendee && <div className="text-red-600 text-sm mt-2">{errors.maxAttendee.message}</div>}
@@ -398,7 +398,7 @@ export const CreateEventButton = () => {
                                         type="test"
                                         name="address"
                                         id="address"
-                                        className={`${errors.address ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        className={`${errors.address ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter address"
                                     />
                                     {errors.address && <div className="text-red-600 text-sm mt-2">{errors.address.message}</div>}
@@ -416,7 +416,7 @@ export const CreateEventButton = () => {
                                         rows={5}
                                         name="description"
                                         id="description"
-                                        className={`${errors.description ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5`}
+                                        className={`${errors.description ? "border-red-700 focus:border-red-600" : "border-gray-300"} shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5`}
                                         placeholder="Enter description..."
                                     />
                                     {errors.description && <div className="text-red-600 text-sm mt-2">{errors.description.message}</div>}

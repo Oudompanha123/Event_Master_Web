@@ -13,21 +13,21 @@ export const EventCardComponent = async ({ img, title, location, description, co
     return (
         <div className="shadow-md rounded-3xl">
             <div className="relative">
-                <div className="relative !h-[300px] w-full object-cover rounded-t-3xl">
+                <div className="relative h-[300px]! w-full object-cover rounded-t-3xl">
                     {/* <MegaImage
                         src={img}
-                        className={'rounded-t-3xl !h-full object-cover'}
+                        className={'rounded-t-3xl h-full! object-cover'}
                     /> */}
                     <Image
                         src={img}
                         alt=""
                         fill
-                        className={'rounded-t-3xl !h-full object-cover'}
+                        className={'rounded-t-3xl h-full! object-cover'}
                     />
                 </div>
                 {/* <Image src={img} width={500} height={300} className="rounded-t-3xl h-[300px] w-full object-cover" alt="racingImage" /> */}
                 <div className="absolute top-0 right-0 p-6 ">
-                    <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${status ? 'text-blueUi' : 'text-redUi'}`}>
+                    <span className={`bg-white text-sm rounded-full py-2 px-4 font-semibold ${status ? 'text-blue-ui' : 'text-red-ui'}`}>
                         {status ? 'Open' : 'Close'}
                     </span>
                 </div>
@@ -53,7 +53,7 @@ export const EventCardComponent = async ({ img, title, location, description, co
                     <Link href={`/detail/${id}`} className="text-sm border-1px font-semibold rounded-full border-purple-text text-purple-text px-6 py-3">View Detail</Link>
                     <div>
                         {form.status == 400 ?
-                            <p className={`text-red-600 text-sm ${!status && '!hidden'}`}>Attendee full</p>
+                            <p className={`text-red-600 text-sm ${!status && 'hidden!'}`}>Attendee full</p>
                             :
                             <Link href={`/register/${id}`} className={`${!status && 'hidden'} text-sm rounded-full font-semibold bg-purple-text text-white px-6 py-3 border-1px border-purple-text`}>Join Event</Link>
                         }

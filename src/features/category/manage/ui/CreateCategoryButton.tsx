@@ -60,7 +60,7 @@ const CreateCategoryButton = () => {
                             type="text"
                             name="category"
                             id="category"
-                            className="shadow-sm bg-white border greyUi primary-text sm:text-sm focus:outline-none focus:border-purple-text rounded-2xl block w-full p-3.5"
+                            className="shadow-xs bg-white border greyUi primary-text sm:text-sm focus:outline-hidden focus:border-purple-text rounded-2xl block w-full p-3.5"
                             placeholder="Category"
                             value={categoryName}
                             onChange={(e) => setCategoryName(e.target.value)}
