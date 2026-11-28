@@ -19,7 +19,13 @@ export const InfiniteLoad = ({ name }) => {
         await delay(500);
         const page = currentPage + 1;
         const res = await getEventByCategoryNameAction({ name, page })
-        setEvent((prevEvent) => [...prevEvent, ...res])
+        // past the last page the API answers 404 with no payload: that just means "no more events"
+        const more = Array.isArray(res) ? res : [];
+        if (more.length === 0) {
+            setStopLoad(true);
+            return;
+        }
+        setEvent((prevEvent) => [...prevEvent, ...more])
         setCurrentrPage(page)
         setTrackLength(event.length)
         if (event.length == trackLength) { setStopLoad(true) }
