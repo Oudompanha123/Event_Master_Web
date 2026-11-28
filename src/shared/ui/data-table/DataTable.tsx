@@ -1,8 +1,8 @@
 "use client";
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import ReactPaginate from "react-paginate";
+import { usePathname, useSearchParams } from "next/navigation";
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import {
   flexRender,
   getCoreRowModel,
@@ -10,12 +10,13 @@ import {
   getSortedRowModel,
   useReactTable,
   type ColumnDef,
-  type PaginationState,
   type RowData,
   type SortingState,
   type TableMeta,
-  type Updater,
 } from "@tanstack/react-table";
+import { cn } from "@/shared/lib/utils";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/kit/table";
+import { DataTablePagination } from "./DataTablePagination";
 
 // extra per-column styling read by DataTable (see `meta` below)
 declare module "@tanstack/react-table" {
@@ -49,40 +50,20 @@ export interface DataTableProps<TData> {
 }
 
 /**
- * Shared table for the dashboard, built on TanStack Table (headless) and
- * styled like the existing EventMaster tables.
+ * Shared dashboard table: TanStack Table (headless) rendered with shadcn/ui's Table.
  *
- * Columns use the normal TanStack column-def format. Extra styling goes in
- * `meta`:
- *   { accessorKey: "email", header: "Email",
- *     meta: { className: "w-64", headerClassName: "text-center" } }
+ * Columns use the normal TanStack column-def format. Extra styling goes in `meta`:
+ *   { accessorKey: "email", header: "Email", meta: { className: "w-64", headerClassName: "text-center" } }
  *
  * Pagination
- *   - Server side (default when `totalRecord` is given): the page lives in the
- *     URL as `?page=N` (1-based), like the old RPaginate. Other query params,
- *     e.g. `?query=`, are kept when the page changes.
+ *   - Server side (when `totalRecord` is given): the page lives in the URL as `?page=N` (1-based);
+ *     other query params (e.g. `?query=`) are kept. Page buttons are real links.
  *   - Client side: leave out `totalRecord` and the table pages `data` itself.
  *   - `paginate={false}` turns pagination off.
  *
- * @param {object}   props
- * @param {Array}    props.columns            TanStack column defs
- * @param {Array}    props.data               rows for the current page
- * @param {number}  [props.totalRecord]       total rows on the server (server-side paging)
- * @param {number}  [props.pageSize=8]
- * @param {boolean} [props.paginate=true]
- * @param {boolean} [props.showIndex=true]    adds the "NO" column, offset by page
- * @param {boolean} [props.enableSorting=false] click headers to sort the rows shown
- * @param {Function}[props.getRowId]          stable row key, e.g. row => row.memberId
- * @param {string}  [props.emptyTitle]
- * @param {string}  [props.emptyDescription]
- * @param {string}  [props.emptyImage]
- * @param {string}  [props.minWidth="640px"]  table min width before it scrolls sideways
- * @param {string}  [props.rowClassName]      extra classes for every body row
- * @param {string}  [props.headerClassName]   classes for <thead> (replaces the default look)
- * @param {string}  [props.cellClassName]     padding/text classes for every <td> and <th>
- * @param {string}  [props.containerClassName] extra classes for the scroll container
- * @param {object}  [props.meta]              TanStack table meta, readable in cells as
- *                                            `table.options.meta` (e.g. edit state)
+ * The *ClassName props are merged over the defaults (not replacing them).
+ * `minWidth` is the width below which the table scrolls sideways instead of squashing columns.
+ * `meta` is TanStack table meta, readable in cells as `table.options.meta` (e.g. edit state).
  */
 export default function DataTable<TData = any>({
   columns,
@@ -97,13 +78,12 @@ export default function DataTable<TData = any>({
   emptyDescription = "Please try another search!",
   emptyImage = "/images/empty-amico.png",
   minWidth = "640px",
-  rowClassName = "",
-  headerClassName = "h-14 shadow-soft text-primary-text bg-white uppercase",
-  cellClassName = "px-5 py-2 text-xs xl:text-base",
-  containerClassName = "",
+  rowClassName,
+  headerClassName,
+  cellClassName,
+  containerClassName,
   meta,
 }: DataTableProps<TData>) {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -124,7 +104,7 @@ export default function DataTable<TData = any>({
         id: "__index",
         header: "No",
         enableSorting: false,
-        meta: { className: "w-16" },
+        meta: { className: "w-14 text-muted-foreground", headerClassName: "w-14" },
         // number rows across pages: page 2 starts at 9 when pageSize is 8
         cell: ({ row, table }) => {
           const visible = table.getRowModel().rows.findIndex((r) => r.id === row.id);
@@ -140,10 +120,7 @@ export default function DataTable<TData = any>({
     columns: allColumns,
     getRowId,
     meta,
-    state: {
-      sorting,
-      pagination: { pageIndex, pageSize },
-    },
+    state: { sorting, pagination: { pageIndex, pageSize } },
     enableSorting,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
@@ -151,109 +128,92 @@ export default function DataTable<TData = any>({
     manualPagination: !paginate || isServerPaging,
     getPaginationRowModel: paginate && !isServerPaging ? getPaginationRowModel() : undefined,
     pageCount: isServerPaging ? Math.ceil(totalRecord / pageSize) : undefined,
-    onPaginationChange: (updater: Updater<PaginationState>) => {
-      const next = typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
-      goToPage(next.pageIndex);
-    },
   });
-
-  function goToPage(index: number) {
-    if (!isServerPaging) {
-      setClientPage(index);
-      return;
-    }
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("page", String(index + 1));
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
-  }
 
   const pageCount = table.getPageCount();
   const visibleRows = table.getRowModel().rows;
   const isEmpty = rows.length === 0;
-  const lastColumn = table.getVisibleLeafColumns().length - 1;
+  const total = isServerPaging ? totalRecord : rows.length;
 
-  // round the outer corners of the first and last cell so each row is a pill
-  const edge = (index) =>
-    index === 0 ? "rounded-l-radius-ui" : index === lastColumn ? "rounded-r-radius-ui" : "";
+  const pageHref = (index: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(index + 1));
+    return `${pathname}?${params.toString()}`;
+  };
 
   return (
-    <div className="flex flex-col w-full">
-      <div className={`w-full overflow-x-auto ${containerClassName}`}>
-        <table
-          className="w-full px-1 border-separate border-spacing-y-3 text-left"
-          style={{ minWidth }}
-        >
-          <thead className={headerClassName}>
+    <div className="flex w-full flex-col gap-4">
+      <div className={cn("w-full overflow-hidden rounded-2xl border", containerClassName)}>
+        <Table style={{ minWidth }}>
+          <TableHeader className={cn("bg-muted", headerClassName)}>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="text-xs lg:text-base">
-                {headerGroup.headers.map((header, index) => {
+              <TableRow key={headerGroup.id} className="hover:bg-transparent">
+                {headerGroup.headers.map((header) => {
                   const canSort = header.column.getCanSort();
                   const sorted = header.column.getIsSorted();
+                  const content = header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext());
+                  const SortIcon = sorted === "asc" ? ArrowUp : sorted === "desc" ? ArrowDown : ArrowUpDown;
                   return (
-                    <th
+                    <TableHead
                       key={header.id}
                       scope="col"
-                      className={`${cellClassName} font-medium ${edge(index)} ${
-                        header.column.columnDef.meta?.headerClassName ?? ""
-                      } ${canSort ? "cursor-pointer select-none" : ""}`}
-                      onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
                       aria-sort={sorted === "asc" ? "ascending" : sorted === "desc" ? "descending" : undefined}
+                      className={cn(
+                        "h-12 px-4 text-xs font-semibold tracking-wide text-muted-foreground uppercase",
+                        cellClassName,
+                        header.column.columnDef.meta?.headerClassName,
+                      )}
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                      {sorted === "asc" && " ▲"}
-                      {sorted === "desc" && " ▼"}
-                    </th>
+                      {canSort ? (
+                        <button
+                          type="button"
+                          onClick={header.column.getToggleSortingHandler()}
+                          className="-mx-1 inline-flex items-center gap-1.5 rounded px-1 uppercase hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          {content}
+                          <SortIcon className="size-3.5" aria-hidden="true" />
+                        </button>
+                      ) : (
+                        content
+                      )}
+                    </TableHead>
                   );
                 })}
-              </tr>
+              </TableRow>
             ))}
-          </thead>
-          <tbody>
+          </TableHeader>
+          <TableBody>
             {visibleRows.map((row) => (
-              <tr
-                key={row.id}
-                className={`h-14 shadow-soft text-primary-text odd:bg-softwhite-ui even:bg-white ${rowClassName}`}
-              >
-                {row.getVisibleCells().map((cell, index) => (
-                  <td
-                    key={cell.id}
-                    className={`${cellClassName} ${edge(index)} ${
-                      cell.column.columnDef.meta?.className ?? ""
-                    }`}
-                  >
+              <TableRow key={row.id} className={cn("text-primary-text", rowClassName)}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id} className={cn("h-14 px-4 text-sm", cellClassName, cell.column.columnDef.meta?.className)}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
+                  </TableCell>
                 ))}
-              </tr>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
+
+        {isEmpty && (
+          <div className="flex min-h-[40vh] w-full flex-col items-center justify-center gap-2 px-4 pb-10 text-center">
+            <Image src={emptyImage} alt="" width={180} height={180} unoptimized={emptyImage.endsWith(".gif")} />
+            <p className="text-xl font-semibold text-primary-text sm:text-2xl">{emptyTitle}</p>
+            {emptyDescription && <p className="text-muted-foreground sm:text-lg">{emptyDescription}</p>}
+          </div>
+        )}
       </div>
 
-      {isEmpty && (
-        <div className="justify-center min-h-[40vh] w-full space-y-2 pb-10 flex flex-col items-center">
-          <Image src={emptyImage} alt="" width={180} height={180} priority />
-          <p className="text-center text-2xl font-semibold text-primary-text">{emptyTitle}</p>
-          {emptyDescription && (
-            <p className="text-center text-xl text-gray-500">{emptyDescription}</p>
-          )}
-        </div>
-      )}
-
       {paginate && !isEmpty && pageCount > 1 && (
-        <div className="w-full flex justify-end mt-8 mb-8">
-          <ReactPaginate
-            containerClassName="pagination"
-            activeClassName="active"
-            pageClassName="page-item"
-            breakLabel="..."
-            previousLabel="Prev"
-            nextLabel="Next"
+        <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
+          <p className="text-sm text-muted-foreground">
+            Showing {pageIndex * pageSize + 1}–{Math.min((pageIndex + 1) * pageSize, total)} of {total}
+          </p>
+          <DataTablePagination
+            pageIndex={Math.min(pageIndex, pageCount - 1)}
             pageCount={pageCount}
-            forcePage={Math.min(pageIndex, pageCount - 1)}
-            onPageChange={({ selected }) => table.setPageIndex(selected)}
+            hrefFor={isServerPaging ? pageHref : undefined}
+            onPageChange={isServerPaging ? undefined : setClientPage}
           />
         </div>
       )}

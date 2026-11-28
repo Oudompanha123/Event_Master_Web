@@ -1,5 +1,3 @@
-import { Plus_Jakarta_Sans } from "next/font/google";
-import "@/app/globals.css";
 import DashboardShell from "@/widgets/dashboard-shell/ui/DashboardShell";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/app/_providers/SessionProvider";
@@ -7,9 +5,8 @@ import { Knock } from "@knocklabs/node";
 import { authOption } from "@/shared/config/auth";
 import { jwtDecode } from "jwt-decode";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { redirect } from "next/navigation";
-
-const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Dashboard",
@@ -20,7 +17,7 @@ export const metadata = {
   },
 };
 
-export default async function RootLayout({ children }) {
+export default async function DashboardLayout({ children }) {
   const session = await getServerSession(authOption);
   if (!session?.user?.token) redirect('/login')
 
@@ -33,14 +30,14 @@ export default async function RootLayout({ children }) {
     email: userInfo?.sub,
   });
 
+  // The root layout already provides <html>, <body> and the font. react-toastify stays here until
+  // the dashboard features move to Sonner.
   return (
-    <html lang="en">
-      <body className={jakarta.className}>
-        <ToastContainer autoClose={2000} />
-        <SessionProvider session={session}>
-          <DashboardShell>{children}</DashboardShell>
-        </SessionProvider>
-      </body>
-    </html>
+    <>
+      <ToastContainer autoClose={2000} />
+      <SessionProvider session={session}>
+        <DashboardShell>{children}</DashboardShell>
+      </SessionProvider>
+    </>
   );
 }

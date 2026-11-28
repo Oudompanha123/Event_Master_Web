@@ -218,45 +218,6 @@
 }
 
 @layer components {
-  /* react-paginate (DataTable): page buttons */
-  .pagination {
-    list-style: none;
-    height: 100%;
-    width: fit-content;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .page-item {
-    display: flex;
-    width: 2.5rem;
-    height: 2.5rem;
-    margin: 0 0.25rem;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    border: 1px solid #e5e7eb;
-    background-color: #fff;
-    color: #000;
-    cursor: pointer;
-    font-size: 0.875rem;
-  }
-
-  .page-item a {
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    align-content: center;
-  }
-
-  /* scoped: a bare `.active` with !important would restyle anything else using that class name */
-  .pagination .active {
-    background-color: var(--color-primary-purple);
-    border-radius: 50%;
-  }
-
   /* Spinner shown inside buttons while a request runs: <div class="loader"></div> */
   .loader {
     width: 25px;
