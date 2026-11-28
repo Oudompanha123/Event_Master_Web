@@ -66,11 +66,53 @@ const steps = [
   },
   {
     name: "Docker image",
+    why: "Same build as the pipeline's Docker Build stage, with the Dockerfile's ARGs taken from .env.",
     skip: () => !args.has("--docker") && "pass --docker to include",
     fix: "Is Docker Desktop running? Then fix the error above (Dockerfile).",
-    cmd: ["docker", ["build", "-t", "event-master-web:local-ci", "."]],
+    // Jenkins passes the Dockerfile's ARGs (API_URL, NEXTAUTH_URL, ...) as --build-arg; without
+    // them `next build` inside the image fails (e.g. "Invalid URL"). Only the names go on the
+    // command line; Docker reads the values from the environment, so secrets stay out of logs.
+    cmd: ["docker", ["build", ...dockerBuildArgNames().flatMap((n) => ["--build-arg", n]), "-t", "event-master-web:local-ci", "."]],
+    env: dockerBuildArgEnv,
   },
 ];
+
+/** ARG names declared in the Dockerfile. */
+function dockerfileArgs() {
+  const file = path.join(root, "Dockerfile");
+  if (!fs.existsSync(file)) return [];
+  return [...fs.readFileSync(file, "utf8").matchAll(/^\s*ARG\s+([A-Za-z_][A-Za-z0-9_]*)/gm)].map((m) => m[1]);
+}
+
+/** KEY=VALUE pairs from .env (the image build can't read it: .dockerignore excludes it). */
+function readDotEnv() {
+  const file = path.join(root, ".env");
+  if (!fs.existsSync(file)) return {};
+  const out = {};
+  for (const line of fs.readFileSync(file, "utf8").split(/\r?\n/)) {
+    const m = /^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$/.exec(line);
+    if (m && !line.trimStart().startsWith("#")) out[m[1]] = m[2].replace(/^(['"])(.*)\1$/, "$2");
+  }
+  return out;
+}
+
+/** Values for the Dockerfile's ARGs: the real environment wins, then .env. */
+function dockerBuildArgEnv() {
+  const dotenv = readDotEnv();
+  const env = {};
+  for (const name of dockerfileArgs()) {
+    const value = process.env[name] ?? dotenv[name];
+    if (value !== undefined) env[name] = value;
+  }
+  return env;
+}
+
+function dockerBuildArgNames() {
+  const env = dockerBuildArgEnv();
+  const missing = dockerfileArgs().filter((n) => !(n in env));
+  if (missing.length && args.has("--docker")) console.warn(`  ! no value for Docker build arg(s): ${missing.join(", ")} (set them in .env)`);
+  return Object.keys(env);
+}
 
 const results = [];
 const started = Date.now();
@@ -86,7 +128,8 @@ for (const step of steps) {
     await step.before?.();
     const [cmd, cmdArgs] = step.cmd;
     // only the bare "npm" fallback needs a shell (npm is npm.cmd on Windows)
-    const r = spawnSync(cmd, cmdArgs, { cwd: root, stdio: "inherit", shell: cmd === "npm" });
+    const env = step.env ? { ...process.env, ...step.env() } : process.env;
+    const r = spawnSync(cmd, cmdArgs, { cwd: root, stdio: "inherit", shell: cmd === "npm", env });
     if (r.status !== 0) throw new Error(`exited with code ${r.status ?? r.error?.message}`);
     results.push({ name: step.name, status: "passed", secs: (Date.now() - t0) / 1000 });
   } catch (err) {
