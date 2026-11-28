@@ -1,11 +1,12 @@
 "use client";
-import { useMemo, type ReactNode } from "react";
+import { useMemo } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 import type { Role } from "@/shared/types/auth";
 import DataTable from "@/shared/ui/data-table/DataTable";
 import { DeleteAssetComponent, EditAssetComponents } from "@/features/asset/manage";
+import { cn } from "@/shared/lib/utils";
+import { Badge } from "@/shared/ui/kit/badge";
 
-// asset cells are shown as small bordered pills
 export interface Asset {
   assetId: number;
   assetName: string;
@@ -20,30 +21,30 @@ interface AssetTableProps {
   userRole?: Role | string;
 }
 
-const Pill = ({ className = "", children }: { className?: string; children: ReactNode }) => (
-  <div className={`border rounded-radius-ui px-3 py-1 text-center ${className}`}>{children}</div>
-);
-
 export function AssetTable({ data, totalRecord, userRole }: AssetTableProps) {
   const columns = useMemo(() => {
     const cols: ColumnDef<Asset>[] = [
-      { accessorKey: "assetName", header: "Asset Name", cell: ({ getValue }) => <Pill>{getValue<string>()}</Pill> },
+      { accessorKey: "assetName", header: "Asset Name", meta: { className: "font-medium" } },
       {
         accessorKey: "qty",
         header: "Qty",
-        cell: ({ getValue }) => <Pill className={getValue<number>() <= 0 ? "text-red-ui" : ""}>{getValue<number>()}</Pill>,
+        meta: { className: "tabular-nums" },
+        cell: ({ getValue }) => <span className={getValue<number>() <= 0 ? "font-medium text-red-ui" : ""}>{getValue<number>()}</span>,
       },
-      { accessorKey: "unit", header: "Unit", cell: ({ getValue }) => <Pill>{getValue<string>()}</Pill> },
-      { accessorKey: "createdAt", header: "Created At", cell: ({ getValue }) => <Pill>{getValue<string>()}</Pill> },
+      { accessorKey: "unit", header: "Unit" },
+      { accessorKey: "createdAt", header: "Created At", meta: { className: "text-muted-foreground" } },
       {
         id: "status",
         header: "Status",
         cell: ({ row }) => {
           const outOfStock = row.original.qty <= 0;
           return (
-            <Pill className={outOfStock ? "bg-soft-red-ui" : "bg-soft-green-ui"}>
+            <Badge
+              variant="outline"
+              className={cn("rounded-full border-0 px-2.5", outOfStock ? "bg-soft-red-ui text-red-ui" : "bg-soft-green-ui text-green-ui")}
+            >
               {outOfStock ? "Out of stock" : "In stock"}
-            </Pill>
+            </Badge>
           );
         },
       },

@@ -9,6 +9,7 @@ import { jwtDecode } from "jwt-decode"
 import { Suspense } from "react"
 import 'react-toastify/dist/ReactToastify.css';
 import { CategoryTable } from "@/widgets/category-table/ui/CategoryTable";
+import { PageSection } from "@/shared/ui/page-section";
 
 const Page = async (props) => {
   const searchParams = await props.searchParams;
@@ -83,13 +84,10 @@ const Page = async (props) => {
                 </div>
             </section>
             <section className="w-full h-fit">
-                <div className="space-y-8 rounded-3xl p-6 border-2 border-slate-100 bg-white">
-                    <div className="flex justify-between items-center">
-                        <h2 className="md:text-lg xl:text-xl font-semibold text-primary-text">Event Category</h2>
-                        <div className={`${userRole == 'ROLE_USER' ? 'hidden' : 'block'}`}>
-                            <CreateCategoryButton />
-                        </div>
-                    </div>
+                <PageSection
+                    title="Event Category"
+                    actions={userRole !== 'ROLE_USER' ? <CreateCategoryButton /> : undefined}
+                >
                     <Suspense>
                         <CategoryTable
                             data={cateData?.payload}
@@ -97,7 +95,7 @@ const Page = async (props) => {
                             userRole={userRole}
                         />
                     </Suspense>
-                </div>
+                </PageSection>
             </section>
         </div>
     )

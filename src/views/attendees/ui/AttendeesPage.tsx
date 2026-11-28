@@ -1,58 +1,42 @@
-import {
-  getAttendeeByEventIdService,
-  searchAttendeeByNameOrPhoneService,
-} from "@/entities/attendee/api/attendeeService";
+import { getServerSession } from "next-auth";
+import { jwtDecode } from "jwt-decode";
+import { getAttendeeByEventIdService, searchAttendeeByNameOrPhoneService } from "@/entities/attendee/api/attendeeService";
+import { getEventById } from "@/entities/event/api/landingService";
 import SearchAttendeeComponent from "@/features/attendee/search/ui/SearchAttendeeComponent";
 import { AttendeeTable } from "@/widgets/attendee-table/ui/AttendeeTable";
-import { getEventById } from "@/entities/event/api/landingService";
-import { getServerSession } from "next-auth";
 import { authOption } from "@/shared/config/auth";
-import { jwtDecode } from "jwt-decode";
+import { PageSection } from "@/shared/ui/page-section";
 
 export default async function AttendeePage(props) {
   const { id } = await props.params;
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
   const page = searchParams?.page;
-
-  const attendeeData = await getAttendeeByEventIdService(id, page);
-  const eventData = await getEventById(id);
-
-  const searchAttendee = query
-    ? await searchAttendeeByNameOrPhoneService(id, query)
-    : attendeeData;
-
-  let headerResponse = await searchAttendeeByNameOrPhoneService(id, "");
-  let header = headerResponse?.payload?.[0]?.data
-    ? Object.keys(headerResponse.payload[0].data)
-    : [];
-
-  const session = await getServerSession(authOption);
-
-  let userInfo = jwtDecode(session?.user?.token);
-  const userRole = userInfo.role;
-
   const isSearch = !!query;
 
+  // the column list comes from the first attendee's form answers (an empty search returns all)
+  const [attendeeData, eventData, headerResponse, session] = await Promise.all([
+    isSearch ? searchAttendeeByNameOrPhoneService(id, query) : getAttendeeByEventIdService(id, page),
+    getEventById(id),
+    searchAttendeeByNameOrPhoneService(id, ""),
+    getServerSession(authOption),
+  ]);
+  const header = headerResponse?.payload?.[0]?.data ? Object.keys(headerResponse.payload[0].data) : [];
+  const userRole = jwtDecode(session?.user?.token).role;
+
   return (
-    <div className="main bg-white h-auto p-6 rounded-3xl">
-      <div className="flex flex-col lg:flex-row w-full justify-between px-[3px]">
-        <div className="lg:w-[650px] md:w-full w-full">
-          <a className="md:text-lg xl:text-xl font-semibold text-primary-text">
-            Show All Attendees in {eventData?.payload?.eventName} Event
-          </a>
-        </div>
-        <SearchAttendeeComponent />
-      </div>
-      <div className="w-full">
-        <AttendeeTable
-          data={searchAttendee?.payload}
-          totalRecord={isSearch ? undefined : attendeeData?.totalRecord}
-          header={header}
-          userRole={userRole}
-          isSearch={isSearch}
-        />
-      </div>
-    </div>
+    <PageSection
+      title="Attendees"
+      description={eventData?.payload?.eventName}
+      actions={<SearchAttendeeComponent className="lg:max-w-md" />}
+    >
+      <AttendeeTable
+        data={attendeeData?.payload}
+        totalRecord={isSearch ? undefined : attendeeData?.totalRecord}
+        header={header}
+        userRole={userRole}
+        isSearch={isSearch}
+      />
+    </PageSection>
   );
 }

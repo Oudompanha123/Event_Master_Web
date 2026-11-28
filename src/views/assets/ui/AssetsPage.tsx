@@ -1,48 +1,32 @@
-import { AssetPopupComponent } from "@/features/asset/manage/ui/CreateNewAssetComponent";
-import { AssetTable } from "@/widgets/asset-table/ui/AssetTable";
-import { SearchAssetComponent } from "@/features/asset/search/ui/SearchAssetComponent";
-import {
-  getAllAssetService,
-  searchAssetByName,
-} from "@/entities/asset/api/assetService";
 import { getServerSession } from "next-auth";
 import { jwtDecode } from "jwt-decode";
+import { AssetPopupComponent } from "@/features/asset/manage/ui/CreateNewAssetComponent";
+import { SearchAssetComponent } from "@/features/asset/search/ui/SearchAssetComponent";
+import { AssetTable } from "@/widgets/asset-table/ui/AssetTable";
+import { getAllAssetService, searchAssetByName } from "@/entities/asset/api/assetService";
 import { authOption } from "@/shared/config/auth";
-export default async function assetPage(props) {
+import { PageSection } from "@/shared/ui/page-section";
+
+export default async function AssetPage(props) {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
   const page = searchParams?.page;
-  const dataasset = await getAllAssetService(page);
-  const searchasset = await searchAssetByName(query, 1); // search results start at page 1
-  const data = query == "" || query == null ? dataasset : searchasset;
+  // search results start at page 1
+  const data = query ? await searchAssetByName(query, 1) : await getAllAssetService(page);
   const session = await getServerSession(authOption);
-  let userInfo = jwtDecode(session?.user?.token);
-  const userRole = userInfo.role;
+  const userRole = jwtDecode(session?.user?.token).role;
 
   return (
-    <>
-      <div className="contain bg-white w-full lg:w-full rounded-3xl box-border">
-        <div className="head flex flex-col gap-2 lg:flex-row lg:justify-between p-6 ">
-          <div className="md:text-lg xl:text-xl font-semibold text-primary-text">
-            Asset Management
-          </div>
-          <div className="search_bar flex gap-7 lg:w-3/4 justify-between ">
-            <SearchAssetComponent />
-            <div className={`${userRole === "ROLE_USER" && "hidden"}`}>
-              <AssetPopupComponent />
-            </div>
-          </div>
-        </div>
-        <div className="px-6">
-          <div className="box-border mt-0 overflow-scroll">
-            <AssetTable
-              data={data?.payload}
-              totalRecord={query ? undefined : data?.totalRecord}
-              userRole={userRole}
-            />
-          </div>
-        </div>
-      </div>
-    </>
+    <PageSection
+      title="Asset Management"
+      actions={
+        <>
+          <SearchAssetComponent className="lg:max-w-md" />
+          {userRole !== "ROLE_USER" && <AssetPopupComponent />}
+        </>
+      }
+    >
+      <AssetTable data={data?.payload} totalRecord={query ? undefined : data?.totalRecord} userRole={userRole} />
+    </PageSection>
   );
 }
