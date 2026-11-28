@@ -3,12 +3,11 @@ import {
   searchAttendeeByNameOrPhoneService,
 } from "@/services/dashboard/attendeeService";
 import SearchAttendeeComponent from "../../_components/SearchAttendeeComponent";
-import AttendeeTableComponent from "../../_components/AttendeeTableComponent";
+import { AttendeeTable } from "../../_components/tables/AttendeeTable";
 import { getEventById } from "@/services/clientPage/landingService";
 import { getServerSession } from "next-auth";
 import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { jwtDecode } from "jwt-decode";
-import { RPaginate } from "../../_components/paginate/RPaginate";
 
 export default async function AttendeePage({ params: { id }, searchParams }) {
   const query = searchParams?.query || "";
@@ -16,7 +15,6 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
 
   const attendeeData = await getAttendeeByEventIdService(id, page);
   const eventData = await getEventById(id);
-  const attendeeInEvent = attendeeData?.payload?.length || 0;
 
   const searchAttendee = query
     ? await searchAttendeeByNameOrPhoneService(id, query)
@@ -33,10 +31,6 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
   const userRole = userInfo.role;
 
   const isSearch = !!query;
-  const noAttendees = !isSearch && attendeeInEvent === 0;
-  const noSearchResults =
-    isSearch &&
-    (!searchAttendee.payload || searchAttendee.payload.length === 0);
 
   return (
     <div className="main bg-white h-auto p-6 rounded-3xl">
@@ -48,21 +42,14 @@ export default async function AttendeePage({ params: { id }, searchParams }) {
         </div>
         <SearchAttendeeComponent />
       </div>
-      <div className="w-full overflow-scroll">
-        <AttendeeTableComponent
-          parentData={searchAttendee}
-          eventId={id}
-          userRole={userRole}
-          attendeeInEvent={attendeeInEvent}
-          isSearch={isSearch}
+      <div className="w-full">
+        <AttendeeTable
+          data={searchAttendee?.payload}
+          totalRecord={isSearch ? undefined : attendeeData?.totalRecord}
           header={header}
-          page={page}
+          userRole={userRole}
+          isSearch={isSearch}
         />
-        {!noAttendees && !noSearchResults && (
-          <div className="w-full flex justify-end mt-8">
-            <RPaginate totalData={attendeeData?.totalRecord} />
-          </div>
-        )}
       </div>
     </div>
   );

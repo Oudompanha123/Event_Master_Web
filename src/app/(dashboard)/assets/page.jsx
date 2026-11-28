@@ -1,5 +1,5 @@
 import { AssetPopupComponent } from "../_components/CreateNewAssetComponent";
-import { AssetTableComponent } from "../_components/assetTableComponent";
+import { AssetTable } from "../_components/tables/AssetTable";
 import { SearchAssetComponent } from "../_components/SearchAssetComponent";
 import {
   getAllAssetService,
@@ -13,7 +13,6 @@ export default async function assetPage({ searchParams }) {
   const page = searchParams?.page;
   const dataasset = await getAllAssetService(page);
   const searchasset = await searchAssetByName(query);
-  const nullsearch = searchasset.totalRecord;
   const data = query == "" || query == null ? dataasset : searchasset;
   const session = await getServerSession(authOption);
   let userInfo = jwtDecode(session?.user?.token);
@@ -35,11 +34,10 @@ export default async function assetPage({ searchParams }) {
         </div>
         <div className="px-6">
           <div className="box-border mt-0 overflow-scroll">
-            <AssetTableComponent
-              data={data}
-              query={query}
-              nullsearch={nullsearch}
-              page={page}
+            <AssetTable
+              data={data?.payload}
+              totalRecord={query ? undefined : data?.totalRecord}
+              userRole={userRole}
             />
           </div>
         </div>

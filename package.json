@@ -14,6 +14,7 @@
     "@knocklabs/node": "^0.6.11",
     "@knocklabs/react": "^0.2.22",
     "@plaiceholder/next": "^3.0.0",
+    "@tanstack/react-table": "8.20.5",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
     "firebase": "^10.12.2",
