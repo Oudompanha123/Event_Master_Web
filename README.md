@@ -25,6 +25,53 @@ EventMaster, developed by the Korea Software HRD Center, is a web application de
 - Notification
 - Verify OTP
 
+## Project structure
+
+`src/` follows [Feature-Sliced Design](https://feature-sliced.design). A layer may only import from the layers below it:
+
+```text
+app → views → widgets → features → entities → shared
+```
+
+| Layer | What goes there | Examples |
+| --- | --- | --- |
+| `app/` | Next.js routing only: layouts, route handlers, providers. Each `page.tsx` is one line that re-exports its view. | `app/(dashboard)/members/page.tsx`, `app/_providers` |
+| `views/` | One slice per page. It composes widgets and features. Named `views` because Next.js reserves `src/pages` for the Pages Router. | `views/members`, `views/event-detail` |
+| `widgets/` | Large self-contained blocks of a page. | `widgets/dashboard-shell`, `widgets/material-board`, `widgets/asset-table` |
+| `features/` | User actions, grouped by domain: `features/<domain>/<action>`. | `features/auth/login`, `features/event/create`, `features/asset/manage` |
+| `entities/` | Business entities: their API calls and server actions, plus display-only UI. | `entities/event`, `entities/member`, `entities/material` |
+| `shared/` | Code with no business meaning. | `shared/ui` (DataTable, icons), `shared/api/headerToken`, `shared/config/auth` |
+
+Inside a slice, code is split into segments: `ui/` (components), `model/` (types, helpers) and `api/` (server actions and fetch services).
+
+Rules to keep the structure working:
+
+1. **Import another slice through its public API**: `import { CreateEventButton } from "@/features/event/create"`, not `…/create/ui/CreateEventButton`. Inside a slice, use direct paths.
+2. **Import `api/` files by path**: for example `@/entities/event/api/eventService`. They are never re-exported from a slice's `index.ts`, because some of them are server-only (`getServerSession`, `next/headers`) and would break the build if a client component pulled them in through an index.
+3. **In server components** (files without `"use client"`), import client components from their own file, for example `@/features/auth/login/ui/LoginComponent`. If a server component imports a slice's `index.ts`, Next.js ships every client component that index re-exports to that page.
+4. **Entities may use each other's `api/`** where a server action needs it (duplicating an event also copies its agenda and materials). Keep UI cross-imports between slices of the same layer out.
+
+## Local CI
+
+`git push` runs the local CI first and stops the push if a check fails. `yarn install` turns this on, through the `prepare` script, which points git at `.githooks/`.
+
+| Check | Why |
+| --- | --- |
+| Lockfile in sync | Jenkins and the Dockerfile run `npm ci`, which fails if `package-lock.json` does not match `package.json`. After `yarn add`, also run `npm install --package-lock-only --ignore-scripts`. |
+| Type check | `tsc --noEmit` |
+| FSD rules | `scripts/check-fsd.mjs` enforces the rules in [Project structure](#project-structure). |
+| Security audit | Fails on high or critical advisories in production dependencies. |
+| Production build | The same `next build` the Docker image runs. Stop `yarn dev` first, because both write to `.next`. |
+
+Run it by hand:
+
+```bash
+yarn ci          # everything above (about a minute)
+yarn ci:quick    # skip the production build
+yarn ci:docker   # also build the Docker image, like the pipeline's Docker Build stage
+CI_QUICK=1 git push   # push with the quick checks only
+```
+
 ## CI/CD
 
 The pipeline mirrors the API's (`Event_Master_API/Jenkinsfile`) and runs on the same Jenkins and

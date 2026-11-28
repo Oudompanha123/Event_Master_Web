@@ -1,6 +1,6 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
-import "../globals.css";
-import ResetPasswordComponent from "@/app/(reset-password)/_components/ResetPasswordComponent";
+import "@/app/globals.css";
+import ResetPasswordComponent from "@/features/auth/reset-password/ui/ResetPasswordComponent";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 

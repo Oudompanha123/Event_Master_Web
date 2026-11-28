@@ -1,7 +1,7 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
-import "../globals.css";
-import { NavbarComponent } from "./_componenets/NavbarComponent";
-import { FooterComponent } from "./_componenets/FooterComponent";
+import "@/app/globals.css";
+import { NavbarComponent } from "@/widgets/landing-header/ui/NavbarComponent";
+import { FooterComponent } from "@/widgets/landing-footer/ui/FooterComponent";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
