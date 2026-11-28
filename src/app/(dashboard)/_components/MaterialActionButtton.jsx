@@ -1,10 +1,53 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import DeleteDialog from "./DeleteDialog";
+import deleteMaterialMultiple from "@/app/actions/material/deleteMaterialMultipleAction";
 
-export function MaterialActionButton({ data , onEdit, userRole, handler,userId  }) {
+const DEFAULT_AVATAR = "/images/default-profile.png";
+
+// swap a broken/missing profile picture for the default avatar
+const handleAvatarError = (e) => {
+  if (!e.currentTarget.src.endsWith(DEFAULT_AVATAR)) e.currentTarget.src = DEFAULT_AVATAR;
+};
+
+// small "picture + name" chip used for the handler and each supporter
+const PersonChip = ({ name, picture }) => (
+  <div className="inline-flex items-center rounded-3xl bg-[#F8F2F2] pr-3 py-[2px] pl-[2px] max-w-full">
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img
+      src={picture || DEFAULT_AVATAR}
+      onError={handleAvatarError}
+      alt=""
+      className="w-8 h-8 rounded-full object-cover shrink-0"
+    />
+    <p className="ms-2 text-sm font-bold text-gray-900 truncate max-w-36" title={name}>
+      {name}
+    </p>
+  </div>
+);
+
+export function MaterialActionButton({ data , onEdit, userRole, handler, userId, onDeleted }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const canDelete = userRole === "ROLE_ADMIN" || userRole === "ROLE_SUB_ADMIN";
+  const supporters = Array.isArray(data?.supporters)
+    ? data.supporters
+    : data?.supporters?.data ?? [];
+
+  const handleDelete = async () => {
+    setIsDeleteOpen(false);
+    try {
+      await deleteMaterialMultiple([data.materialId]);
+      toast.success("Delete material successfully!", { position: "top-center" });
+      onDeleted?.();
+    } catch (err) {
+      console.error("Delete material failed:", err);
+      toast.error("Can't delete this material, please try again.", { position: "top-center" });
+    }
+  };
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -117,6 +160,32 @@ export function MaterialActionButton({ data , onEdit, userRole, handler,userId  
                 </a>
                 </span>
               </li>
+              {canDelete && (
+                <>
+                  <hr />
+                  <li>
+                    <a
+                      className="gap-5 flex px-5 py-2 text-sm hover:bg-gray-100 active:bg-gray-200 rounded-lg cursor-pointer"
+                      role="menuitem"
+                      tabIndex="-1"
+                      onClick={() => {
+                        closeDropdown();
+                        setIsDeleteOpen(true);
+                      }}
+                    >
+                      <Image
+                        src="/icons/delete-red.svg"
+                        alt="delete"
+                        height={24}
+                        width={24}
+                      />
+                      <p className="text-primary-text text-base font-semibold">
+                        Delete
+                      </p>
+                    </a>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         )}
@@ -170,7 +239,22 @@ export function MaterialActionButton({ data , onEdit, userRole, handler,userId  
                     Quantity
                   </div>
                   <div className="text-large font-bold text-primary-text">
-                    {data?.qty} {data?.unit}
+                    {Number(data?.qty ?? 0).toLocaleString("en-US", { maximumFractionDigits: 2 })}
+                  </div>
+                </div>
+                <div className="flex mb-3 gap-8">
+                  <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%]">
+                    <Image
+                      src="/icons/quantity.svg"
+                      alt="unit"
+                      className="h-5 w-5"
+                      width={5}
+                      height={5}
+                    />
+                    Unit
+                  </div>
+                  <div className="text-large font-bold text-primary-text">
+                    {data?.unit || "-"}
                   </div>
                 </div>
                 <div className="flex mb-3 gap-8">
@@ -214,23 +298,14 @@ export function MaterialActionButton({ data , onEdit, userRole, handler,userId  
                     />
                     Handler
                   </div>
-                  <div className="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]">
-                    <Image
-                      src="/images/sok.png"
-                      alt="Handler image"
-                      className="w-8 h-8 rounded-full"
-                      width={50}
-                      height={50}
-                    />
-                    <div className="ms-1">
-                      <p className="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36">
-                        {data?.handlerName}
-                      </p>
-                    </div>
-                  </div>
+                  {data?.handlerName ? (
+                    <PersonChip name={data.handlerName} picture={data?.picture} />
+                  ) : (
+                    <span className="text-sm text-gray-400">No handler</span>
+                  )}
                 </div>
                 <div className="flex mb-5 gap-8">
-                  <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%] items-end">
+                  <div className="flex gap-4 text-sm font-semibold text-primary-text w-[30%] shrink-0 items-center self-start pt-2">
                     <img
                       src="/icons/supporter.svg"
                       alt=""
@@ -238,27 +313,29 @@ export function MaterialActionButton({ data , onEdit, userRole, handler,userId  
                     />
                     Supporter
                   </div>
-                  <div className="gap-2 flex">
-                    {Array.isArray(data?.supporters) &&
-                      data?.supporters.map((supporter, index) => (
-                        <div
-                          key={index}
-                          className="inline-flex items-center content-center rounded-3xl bg-[#F8F2F2] pr-2 pt-[1px] pl-[2px]"
-                        >
-                          <Image
-                            src="/images/sok.png"
-                            alt="Supporter image"
-                            className="w-8 h-8 rounded-full"
-                            width={50}
-                            height={50}
+                  <div className="gap-2 flex flex-wrap min-w-0">
+                    {supporters.length > 0 ? (
+                      <>
+                        {/* show at most 2 supporters, the rest collapse into "+N more" */}
+                        {supporters.slice(0, 2).map((supporter, index) => (
+                          <PersonChip
+                            key={supporter?.id ?? index}
+                            name={supporter?.name}
+                            picture={supporter?.avatar}
                           />
-                          <div className="ms-1">
-                            <p className="text-sm font-bold text-gray-900 truncate dark:text-white max-w-36">
-                              {supporter?.name}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
+                        ))}
+                        {supporters.length > 2 && (
+                          <p
+                            className="w-full text-sm font-semibold text-gray-500 pl-1"
+                            title={supporters.slice(2).map((s) => s?.name).join(", ")}
+                          >
+                            ... +{supporters.length - 2} more
+                          </p>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-sm text-gray-400 pt-2">No supporter</span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -266,6 +343,12 @@ export function MaterialActionButton({ data , onEdit, userRole, handler,userId  
           </div>
         </dialog>
       )}
+
+      <DeleteDialog
+        isOpen={isDeleteOpen}
+        onClose={() => setIsDeleteOpen(false)}
+        onDelete={handleDelete}
+      />
     </div>
   );
 }

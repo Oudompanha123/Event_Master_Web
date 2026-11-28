@@ -384,6 +384,7 @@ const MaterialRow = ({
             userRole={userRole}
             handler={editedData.handlerId}
             userId={userId}
+            onDeleted={handleCancelUpdate} // refetch the material list and counts
           />
         )}
       </td>

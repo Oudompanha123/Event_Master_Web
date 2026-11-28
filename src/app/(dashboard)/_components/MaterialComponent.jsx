@@ -253,10 +253,10 @@ export default function MaterialComponent({
 
   const validateInputs = (list) => {
     const today = new Date().toISOString().split("T")[0];
+    let formIsValid = true;
 
     const newErrors = list.map((item) => {
       const error = { name: "", qty: "", unit: "", dueDate: "" };
-      const today = new Date().toISOString().split("T")[0];
       if (!item.materialName) {
         error.name = "Name is required.";
       }
@@ -280,6 +280,7 @@ export default function MaterialComponent({
     });
 
     setErrors(newErrors);
+    return newErrors;
   };
 
   //handler save create new material in multiple in save button
@@ -296,27 +297,26 @@ export default function MaterialComponent({
       supporters: row.supporterIds,
     }));
 
-    const invalidField = materials.find(
-      (material) =>
-        !material || !material.materialName || !material.qty || !material.unit
-    );
-
-    if (invalidField) {
-      validateInputs(rows);
+    // validate every row (name, qty, unit, due date) before sending anything
+    const rowErrors = validateInputs(rows);
+    if (rowErrors.some((e) => e.name || e.qty || e.unit || e.dueDate)) {
       error("Invalid! Please input all required fields.");
       return;
     }
 
+    if (isLoading) return; // ignore double clicks while saving
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       await CreateMultipleMaterial(materials);
       success("Create Materail succussfully!");
-      setIsLoading(false);
-      setSaveSuccess(true);
       setRows([]);
-    } catch (error) {
+      setErrors([]);
+      setSaveSuccess((prev) => !prev); // toggle so the list always refetches
+    } catch (err) {
+      console.error("Create material failed:", err);
+      error(`Unsuccussfully! ${typeof err === "string" ? err : err?.message ?? "input data is invalid!"}`);
+    } finally {
       setIsLoading(false);
-      error("Unsuccussfully! input data is invalid!");
     }
   };
 

@@ -36,7 +36,7 @@ export const CreateAgendaService = async (data, id) => {
 
     if (!res.ok) {
       const errorText = await res.text();
-      throw `Error: ${errorText}`;
+      throw new Error(errorText);
     }
 
     const dataAgenda = await res.json();
@@ -76,7 +76,7 @@ export const UpdateAgendaService = async (data, id) => {
 
     if (!res.ok) {
       const errorText = await res.text();
-      throw `Error: ${errorText}`;
+      throw new Error(errorText);
     }
 
     const dataAgenda = await res.json();

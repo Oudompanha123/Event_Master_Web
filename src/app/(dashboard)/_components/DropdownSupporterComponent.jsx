@@ -10,6 +10,14 @@ import { CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import { getAllMemberForMaterialCreateService } from "@/services/dashboard/memberService";
 
+const DEFAULT_AVATAR =
+  "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=";
+
+// swap a broken profile picture (e.g. missing file on the API) for the default avatar
+const handleAvatarError = (e) => {
+  if (e.currentTarget.src !== DEFAULT_AVATAR) e.currentTarget.src = DEFAULT_AVATAR;
+};
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -28,9 +36,7 @@ export default function Dropdown({
       res?.payload?.map((member) => ({
         id: member.memberId,
         name: member.memberName,
-        avatar:
-          member.picture ||
-          "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=", // Use a placeholder if no picture
+        avatar: member.picture || DEFAULT_AVATAR, // Use a placeholder if no picture
       }))
     );
   };
@@ -98,9 +104,10 @@ export default function Dropdown({
                     className="flex items-center gap-1 py-[1px] rounded-xl min-w-0"
                   >
                     <img
-                      src={person.avatar}
+                      src={person.avatar || DEFAULT_AVATAR}
+                      onError={handleAvatarError}
                       alt=""
-                      className="h-5 w-5 ml-1 rounded-full shrink-0"
+                      className="h-5 w-5 ml-1 rounded-full shrink-0 object-cover"
                     />
                     <span className="truncate">
                       {/* two supporters share the box, so show first names only */}
@@ -164,9 +171,10 @@ export default function Dropdown({
                           className="h-4 w-4 rounded-xl text-blue-500"
                         />
                         <img
-                          src={person.avatar}
+                          src={person.avatar || DEFAULT_AVATAR}
+                          onError={handleAvatarError}
                           alt=""
-                          className="h-5 w-5 flex-shrink-0 rounded-full"
+                          className="h-5 w-5 flex-shrink-0 rounded-full object-cover"
                         />
                         <span
                           className={classNames(

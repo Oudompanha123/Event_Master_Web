@@ -73,7 +73,7 @@ export const CreateMultipleMaterialService = async (data) => {
 
     if (!res.ok) {
       const errorText = await res.text();
-      throw `Error: ${errorText}`;
+      throw new Error(errorText);
     }
 
     const dataMaterial = await res.json();
@@ -94,10 +94,13 @@ export const DeleteMaterialService = async (listId) => {
       headers: header,
       body: JSON.stringify({ 'materialIds': listId }),
     });
-    const data = await res.json();
-    return data;
+    if (!res.ok) {
+      throw new Error(await res.text());
+    }
+    return await res.json();
   } catch (err) {
     console.log("error material service", err);
+    throw err;
   }
 };
 
@@ -113,7 +116,7 @@ export const UpdateMaterialService = async (data, id) => {
 
     if (!res.ok) {
       const errorText = await res.text();
-      throw `Error: ${errorText}`;
+      throw new Error(errorText);
     }
 
     const materialData = await res.json();
@@ -135,7 +138,7 @@ export const UpdateMaterialStatusService = async (status, MaterialId) => {
 
     if (!res.ok) {
       const errorText = await res.text();
-      throw `Error: ${errorText}`;
+      throw new Error(errorText);
     }
 
     const materialData = await res.json();

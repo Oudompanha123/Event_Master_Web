@@ -13,16 +13,25 @@ export const EventDetail = ({ eventData,userRole }) => {
 
   return (
     <div className="m-auto w-full rounded-3xl h-[50%] bg-white py-5 ">
-      <div
-        className="w-[96%] ml-[2%] h-68 bg-cover bg-center rounded-2xl flex justify-end p-3 mb-4"
-        style={{
-          backgroundImage: `url(${event?.poster})`,
-          height: "256px",
-        }}
-        alt="Event Photo"
-      >
-        <span className={`${userRole == "ROLE_USER" && "hidden"}`}>
-        <UpdateEventButton />
+      <div className="relative w-[96%] ml-[2%] h-56 sm:h-72 lg:h-96 rounded-2xl overflow-hidden bg-gray-100 mb-4">
+        {event?.poster && (
+          <>
+            {/* blurred copy fills the empty space around the poster */}
+            <div
+              className="absolute inset-0 bg-cover bg-center scale-110 blur-2xl opacity-60"
+              style={{ backgroundImage: `url(${event.poster})` }}
+              aria-hidden="true"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={event.poster}
+              alt={event?.eventName ?? "Event poster"}
+              className="relative w-full h-full object-contain"
+            />
+          </>
+        )}
+        <span className={`absolute top-3 right-3 z-10 ${userRole == "ROLE_USER" ? "hidden" : ""}`}>
+          <UpdateEventButton />
         </span>
       </div>
 
