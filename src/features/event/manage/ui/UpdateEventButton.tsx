@@ -25,7 +25,7 @@ interface SelectedCategory {
 
 export const UpdateEventButton = () => {
   const [hide, setHide] = useState(false);
-  const [previewSrc, setPreviewSrc] = useState(""); // Added state htmlFor image preview source
+  const [previewSrc, setPreviewSrc] = useState(""); // Added state for image preview source
   const [category, setCategory] = useState<SelectedCategory | undefined>();
   const [isPost, setIsPost] = useState(false);
 

@@ -1,0 +1,5 @@
+{
+  // Tailwind CSS v4 directives (@theme, @plugin, @utility, @apply, @custom-variant) are valid
+  // in frontend/src/app/globals.css; VS Code's plain-CSS linter just doesn't know them.
+  "css.lint.unknownAtRules": "ignore"
+}

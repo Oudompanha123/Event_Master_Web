@@ -1,29 +1,13 @@
-import { Plus_Jakarta_Sans } from "next/font/google";
-import "@/app/globals.css";
 import { NavbarComponent } from "@/widgets/landing-header/ui/NavbarComponent";
 import { FooterComponent } from "@/widgets/landing-footer/ui/FooterComponent";
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
 
-const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
-
-export const metadata = {
-  title: "EventMaster",
-  description: "EventMaster is a comprehensive, user-friendly event management system that streamlines every aspect of event planning and execution.",
-  icons: {
-    icon: "/images/event-master-2.png"
-  }
-};
-
-export default function RootLayout({ children }) {
+// The root layout already provides <html>, <body>, the font and the toaster.
+export default function PublicLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={jakarta.className}>
-        <ToastContainer autoClose={2000} />
-        <NavbarComponent />
-        {children}
-        <FooterComponent />
-      </body>
-    </html>
+    <>
+      <NavbarComponent />
+      <main>{children}</main>
+      <FooterComponent />
+    </>
   );
 }

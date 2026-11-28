@@ -3,6 +3,7 @@
 import { getEventByCategoryNameAction } from "@/entities/event/api/landingAction";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import { Loader2 } from "lucide-react";
 import { EventInCategory } from "@/widgets/landing-event-list/ui/EventInCategory";
 
 export const InfiniteLoad = ({ name }) => {
@@ -39,18 +40,9 @@ export const InfiniteLoad = ({ name }) => {
         <>
             <EventInCategory data={event} />
             {!stopLoad &&
-                <div
-                    className="flex invisible justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"
-                    ref={ref}
-                >
-                    <div
-                        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                        role="status"
-                    >
-                        <span className="!absolute -m-px! h-px! w-px! overflow-hidden! whitespace-nowrap! border-0! p-0! [clip:rect(0,0,0,0)]!">
-                            Loading...
-                        </span>
-                    </div>
+                <div ref={ref} role="status" className="col-span-full flex items-center justify-center p-4 text-purple-text">
+                    <Loader2 className="size-8 animate-spin motion-reduce:animate-none" aria-hidden="true" />
+                    <span className="sr-only">Loading more events...</span>
                 </div>}
         </>
     );
