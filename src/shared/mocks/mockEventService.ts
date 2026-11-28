@@ -5,7 +5,7 @@ const mockEventService = async () => {
       {
         eventId: 2,
         eventName: "Design Skill & Tech Session",
-        description: "Join us htmlFor an engaging and insightful session where creativity meets technology! Our Design Skill & Tech Session is tailored htmlFor professionals and enthusiasts looking to enhance their design capabilities with cutting-edge technological tools.",
+        description: "Join us for an engaging and insightful session where creativity meets technology! Our Design Skill & Tech Session is tailored for professionals and enthusiasts looking to enhance their design capabilities with cutting-edge technological tools.",
         startDate: "2024-08-24T09:12:49.818",
         endDate: "2024-05-24T19:12:49.818",
         duration: "10h",

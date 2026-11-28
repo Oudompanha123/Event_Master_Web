@@ -1,30 +1,23 @@
-import { EventCardComponent } from "@/entities/event/ui/EventCardComponent";
+import { EventCard } from "@/entities/event/ui/EventCard";
 
+/** Cards for a page of a category's events (category page + infinite scroll). */
 export const EventInCategory = ({ data }) => {
+    if (!Array.isArray(data)) return null
     return (
         <>
-            {data ? (
-                data?.map((x, index) => {
-                    const imageUrl = x?.poster;
-                    const isValidUrl = imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://');
-                    return (
-                        <EventCardComponent
-                            key={index}
-                            img={isValidUrl ? imageUrl : `https://firebasestorage.googleapis.com/v0/b/cloud-storage-next-8e2cc.appspot.com/o/paolo-feser-d6UCfbY3zMc-unsplash.jpg?alt=media&token=9624e26d-387d-4aa2-a802-f4065464745f`}
-                            title={x?.eventName}
-                            description={x?.description}
-                            location={x?.location}
-                            company={x?.orgName}
-                            date={x?.startDate}
-                            status={x?.isOpen}
-                            id={x?.eventId}
-                        />
-                    )
-                })
-
-            ) :
-                ''
-            }
+            {data.map((x) => (
+                <EventCard
+                    key={x?.eventId}
+                    id={x?.eventId}
+                    poster={x?.poster}
+                    title={x?.eventName}
+                    description={x?.description}
+                    location={x?.location}
+                    company={x?.orgName}
+                    date={x?.startDate}
+                    status={x?.isOpen}
+                />
+            ))}
         </>
     )
 }
